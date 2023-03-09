@@ -48,3 +48,14 @@ Write a shell. Your shell should:
 
 The readline() function can cause memory leaks. You don’t have to fix them. But that doesn’t mean your own code, yes the code you wrote, can have memory leaks.
 
+## Bonus Part
+
+Your program has to implement:
+
+- `&&` and `||` with parenthesis for priorities.
+- Wildcards `*` should work for the current working directory.
+
+The bonus part will only be assessed if the mandatory part is PERFECT. Perfect means the mandatory part has been integrally done and works without malfunctioning. If you have not passed ALL the mandatory requirements, your bonus part will not be evaluated at all.
+
+**Note:** The `readline()` function can cause memory leaks. You don't have to fix them. But that doesn't mean your own code, yes the code you wrote, can have memory leaks.
+
