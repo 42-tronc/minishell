@@ -2,6 +2,15 @@
 
 This project is about creating a simple shell - your own little bash - and will give you a lot of experience with processes and file descriptors.
 
+<details>
+  <summary><u>Table of Contents</u></summary>
+
+- [Mandatory Part](#mandatory-part)
+- [Bonus Part](#bonus-part)
+
+</details>
+
+
 ## Mandatory part
 
 | | |
