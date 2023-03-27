@@ -1,5 +1,7 @@
 # minishell
 
+[![Norminette](https://github.com/42-tronc/minishell/actions/workflows/norm.yml/badge.svg)](https://github.com/42-tronc/minishell/actions/workflows/norm.yml)
+
 This project is about creating a simple shell - your own little bash - and will give you a lot of experience with processes and file descriptors.
 
 <details>
