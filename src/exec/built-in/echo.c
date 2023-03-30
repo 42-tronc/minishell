@@ -6,9 +6,13 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/03/30 16:30:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 16:41:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
+// #include "../"
+
+#include <stdio.h>
 
 /* ECHO
 
@@ -16,3 +20,9 @@ X	->	print with \n
 -n	->	print without \n
 	--n non
  */
+
+int	main(void)
+{
+	printf("cc bg\n");
+	return 0;
+}
