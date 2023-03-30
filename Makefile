@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/01/17 15:48:31 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/03/30 16:41:43 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,17 +71,22 @@ CFLAGS := -Wall -Wextra -Werror
 FSANITIZE = -fsanitize=address
 RM := rm -rf
 
-OBJ_DIR := obj/
-OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
-
 LIBFT_DIR := libft/
 LIBFT_NAME := $(LIBFT_DIR)libft.a
 
 
 # --------- PROJECT VARIABLES ---------
-NAME := foobar
-HEADER := foobar.h
-SRC := foobar.c
+NAME := minishell
+
+SRC_FOLDER := src/
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
+# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_PRINTF) $(SRC_GNL))
+OBJ_DIR := obj/
+OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
+
+HEADER := header/minishell.h
+DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
+SRC_BUILTIN := echo.c
 
 
 # -------------- RECIPES --------------
@@ -91,8 +96,11 @@ $(NAME): $(LIBFT_NAME) $(OBJ)
 	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
 
-$(OBJ_DIR)%.o : %.c $(HEADER)
+$(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+# $(OBJ_DIR)%.o : %.c $(HEADER)
+# 	$(CC) $(CFLAGS) -o $@ -c $<
 
 rsc:
 	@$(MAKE) -sC $(LIBFT_DIR)
