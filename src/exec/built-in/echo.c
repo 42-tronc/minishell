@@ -6,11 +6,9 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/03/31 16:11:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 16:27:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
-// #include "../"
 
 #include <stdio.h>
 
@@ -22,6 +20,31 @@ X	->	print with \n
 --n ->	text
  */
 
+int need_newline(char *str)
+{
+	int i = 0;
+
+	if (str == NULL) {
+		return 0;
+	}
+
+	if (str[i] == '-') {
+		i++;
+		if (str[i] == 'n') {
+			i++;
+			while (str[i] != '\0' && str[i] == 'n') {
+				i++;
+			}
+			if (str[i] == '\0') {
+				return 1;
+			}
+		}
+	}
+
+	return 0;
+}
+
+
 int	need_newline(char *str)
 {
 	int	i;
@@ -29,13 +52,12 @@ int	need_newline(char *str)
 	i = 1;
 	if (str && str[0] == '-')
 	{
+		if (str && str[1] != 'n')
+			return (1);
 		while (str[i] && str[i] == 'n')
 			i++;
 		if (str[i] && str[i] != 'n')
-		{
-			printf("not an 'n'\n");
 			return (1);
-		}
 	}
 	else
 		return (1);
@@ -44,17 +66,14 @@ int	need_newline(char *str)
 
 int	main(int ac, char **av)
 {
-	// if (ac >= 3)
-	// {
-	// 	printf("cc bg\n");
-	// 	// if (need_newline())
-	// 		printf("loli");
-	// 	else
-	// 		printf("loli\n");
-	// 	return (0);
-	// }
-	(void) ac;
-	printf("arg = '%s'\n", av[1]);
-	printf("Need new line = %d\n", need_newline(av[1]));
+	if (ac >= 2)
+	{
+		printf("Need new line = %d\n", need_newline(av[1]));
+		if (need_newline(av[1]))
+			printf("loli\n");
+		else
+			printf("loli");
+	}
+	printf("pop");
 	return (0);
 }
