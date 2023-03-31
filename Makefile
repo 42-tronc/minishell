@@ -6,7 +6,7 @@
 #    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/03/31 13:21:21 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/03/31 13:44:34 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ RESET		:= \033[0m
 
 
 # ---------- BASIC VARIABLES ----------
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -I./header
 FSANITIZE = -fsanitize=address
 RM := rm -rf
 
@@ -52,7 +52,7 @@ LIBFT_NAME := $(LIBFT_DIR)libft.a
 NAME := minishell
 
 SRC_FOLDER := src/
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 # SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_PRINTF) $(SRC_GNL))
 OBJ_DIR := obj/
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
@@ -60,6 +60,10 @@ OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 HEADER := header/minishell.h
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c
+
+HDR_PARSING = header/parsing.h
+DIR_PARSING := $(SRC_FOLDER)/parsing/
+SCR_PARSING := tokens.c
 
 
 # -------------- RECIPES --------------
@@ -72,8 +76,8 @@ $(NAME): $(LIBFT_NAME) $(OBJ)
 $(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-# $(OBJ_DIR)%.o : %.c $(HEADER)
-# 	$(CC) $(CFLAGS) -o $@ -c $<
+$(OBJ_DIR)%.o : $(DIR_PARSING)%.c $(HEADER)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 rsc:
 	@$(MAKE) -sC $(LIBFT_DIR)
