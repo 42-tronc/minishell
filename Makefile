@@ -3,39 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
+#    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/03/31 13:08:37 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/03/31 13:44:34 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
-
-# --------- GLOBAL VARIABLES ----------
-SHELL := bash
-.SHELLFLAGS := -eu -o pipefail -c # strict bash mode
-MAKEFLAGS += --warn-undefined-variables # warn about Make variables that don’t exist
-.DELETE_ON_ERROR:
-
-
-# ------------ FORMATTING -------------
-# see https://misc.flogisoft.com/bash/tip_colors_and_formatting
-FG_BLACK 			:= \033[30m
-FG_RED 				:= \033[31m
-FG_GREEN 			:= \033[32m
-FG_YELLOW 			:= \033[33m
-FG_BLUE 			:= \033[34m
-FG_MAGENTA 			:= \033[35m
-FG_CYAN 			:= \033[36m
-FG_LIGHT_GRAY 		:= \033[37m
-FG_DEFAULT 			:= \033[39m
-FG_DARK_GRAY 		:= \033[90m
-FG_LIGHT_RED 		:= \033[91m
-FG_LIGHT_GREEN 		:= \033[92m
-FG_LIGHT_YELLOW 	:= \033[93m
-FG_LIGHT_BLUE 		:= \033[94m
-FG_LIGHT_MAGENTA 	:= \033[95m
-FG_LIGHT_CYAN 		:= \033[96m
-FG_WHITE 			:= \033[97m
 
 BG_BLACK 			:= \033[40m
 BG_RED 				:= \033[41m
@@ -67,7 +40,7 @@ RESET		:= \033[0m
 
 
 # ---------- BASIC VARIABLES ----------
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -I./header
 FSANITIZE = -fsanitize=address
 RM := rm -rf
 
@@ -79,7 +52,7 @@ LIBFT_NAME := $(LIBFT_DIR)libft.a
 NAME := minishell
 
 SRC_FOLDER := src/
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 # SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_PRINTF) $(SRC_GNL))
 OBJ_DIR := obj/
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
@@ -87,6 +60,10 @@ OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 HEADER := header/minishell.h
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c
+
+HDR_PARSING = header/parsing.h
+DIR_PARSING := $(SRC_FOLDER)/parsing/
+SCR_PARSING := tokens.c
 
 
 # -------------- RECIPES --------------
@@ -99,8 +76,8 @@ $(NAME): $(LIBFT_NAME) $(OBJ)
 $(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-# $(OBJ_DIR)%.o : %.c $(HEADER)
-# 	$(CC) $(CFLAGS) -o $@ -c $<
+$(OBJ_DIR)%.o : $(DIR_PARSING)%.c $(HEADER)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 rsc:
 	@$(MAKE) -sC $(LIBFT_DIR)
@@ -116,23 +93,13 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-	@$(MAKE) $@ -sC $(LIBFT_DIR)
-	@echo -e "$(FG_RED)FClean:\t\t $(FG_LIGHT_GRAY)$(UNDERLINE)$(NAME)$(RESET) has been deleted."
+	make clean
+	make fclean -C libft
 
-re: fclean
-	@$(MAKE) rsc
-	@$(MAKE) all
+re : fclean
+	make all
 
-debug: makefolder rsc $(LIBFT_NAME) $(OBJ)
-	${CC} $(FSANITIZE) ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
+norm :
+	norminette ./src ./libft
 
-run :
-	make re
-	./$(NAME) $(ARG)
-
-#test: all
-#	${CC} -o test.out tests.c $(NAME)
-#	@./test.out | cat -e
-#	$(RM) test.out
-
-.PHONY: all rsc makefolder clean fclean re debug test
+.PHONY : all lib clean fclean re norm
