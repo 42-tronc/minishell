@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/03/30 16:41:43 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/03/31 13:05:50 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,7 @@ SRC_BUILTIN := echo.c
 all: makefolder rsc $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
-	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
+	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
 
 $(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
