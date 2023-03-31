@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/30 14:41:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/03/31 11:17:48 by arthurasced      ###   ########lyon.fr   */
+/*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
+/*   Updated: 2023/03/31 11:36:24 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSING_H
+# define PARSING_H
 
-# include "../libft/header/libft.h"
-# include "parsing.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
-# include <stdlib.h>
-# include <stdio.h>
+typedef struct s_token	t_token;
+
+struct s_token {
+	char	*token;
+	char	*token_id;
+	void	*next;
+};
 
 #endif

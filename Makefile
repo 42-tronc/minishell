@@ -6,7 +6,7 @@
 #    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 10:09:37 by arthurasced       #+#    #+#              #
-#    Updated: 2023/03/30 15:20:00 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/03/31 11:50:36 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME = test
 
 LIBFT = libft/libft.a
 HEADER = minishell.h
+HDR_PARSING = parsing.h
+
 SRCS = src/parsing_tokens.c
 
 OBJS = $(SRCS:.c=.o)
@@ -24,14 +26,14 @@ RM = rm -rf
 
 all : $(NAME)
 
-%.o : %.c ./inc/$(HEADER)
+%.o : %.c ./inc/$(HEADER) ./inc/$(HDR_PARSING)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 lib :
 	make -C libft
 
 $(NAME) : lib $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -lreadline $(LIBFT) -o $(NAME)
 
 
 clean : 
