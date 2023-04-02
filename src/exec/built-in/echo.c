@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/02 20:14:42 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/02 20:16:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../../../header/minishell.h"
 
 /**
  * @brief checks if a newline is needed by looking for any '-n'
