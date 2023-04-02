@@ -20,31 +20,12 @@ X	->	print with \n
 --n ->	text
  */
 
-int need_newline(char *str)
-{
-	int i = 0;
-
-	if (str == NULL) {
-		return 0;
-	}
-
-	if (str[i] == '-') {
-		i++;
-		if (str[i] == 'n') {
-			i++;
-			while (str[i] != '\0' && str[i] == 'n') {
-				i++;
-			}
-			if (str[i] == '\0') {
-				return 1;
-			}
-		}
-	}
-
-	return 0;
-}
-
-
+/**
+ * @brief checks if a newline is needed by looking for any '-n'
+ *
+ * @param str string to check
+ * @return int 1 if needed, 0 if not
+ */
 int	need_newline(char *str)
 {
 	int	i;
