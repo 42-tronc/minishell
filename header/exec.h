@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 15:28:10 by croy             ###   ########lyon.fr   */
+/*   Created: 2023/04/03 15:26:14 by croy              #+#    #+#             */
+/*   Updated: 2023/04/03 15:28:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXEC_H
+# define EXEC_H
 
-# include "../libft/header/libft.h"
-# include "parsing.h"
-# include "exec.h"
-
-# include <stdio.h>
+# include <limits.h>
+# include <unistd.h>
 
 #endif
