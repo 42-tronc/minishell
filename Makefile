@@ -6,7 +6,7 @@
 #    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/03/31 13:44:34 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/04/03 10:32:05 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SRC_BUILTIN := echo.c
 
 HDR_PARSING = header/parsing.h
 DIR_PARSING := $(SRC_FOLDER)/parsing/
-SCR_PARSING := tokens.c
+SCR_PARSING := tokens.c parsing.c
 
 
 # -------------- RECIPES --------------
