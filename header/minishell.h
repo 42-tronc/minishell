@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 17:08:07 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 17:13:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../libft/header/libft.h"
 # include "exec.h"
-# include "parsing.h"
+// # include "parsing.h"
 
 # include <stdio.h>
 
