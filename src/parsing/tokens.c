@@ -6,28 +6,32 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/03/31 13:45:29 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 13:49:38 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lstadd_token_back(t_token **lst, t_token *new)
+void	ft_tokenadd_back(t_token **lst, t_token *new)
 {
 	t_token	*temp;
 
-	if (!lst && !*lst)
-		*lst = new;
-	else
+	if (lst == NULL)
 	{
-		temp = *lst;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new;
+		return ;
 	}
+	temp = *lst;
+	if (!temp)
+	{
+		*lst = new;
+		return ;
+	}
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }
 
-t_token	*ft_lstnew_token(void *content)
+t_token	*ft_tokennew(void *content)
 {
 	t_token	*dst;
 
@@ -36,31 +40,47 @@ t_token	*ft_lstnew_token(void *content)
 		return (NULL);
 	if (dst)
 	{
-		dst->token = content;
+		dst->token = (char *)content;
 		dst->next = NULL;
 	}
 	return (dst);
 }
 
-void	getting_line(t_token *tokens)
+void	add_token(t_token **tokens, char *str, int begin, int end)
 {
-	char	*str;
-	
-	(void)tokens;
-	str = (char *)ft_calloc(1, sizeof(char));
-	while (1)
+	char	*token;
+	int		i;
+
+	token = malloc(sizeof(char) * (end - begin + 1));
+	if (!token)
+		return ;
+	i = 0;
+	while (begin < end)
 	{
-		str = gnl_str_join(str, readline("minishell>"));
-		printf("%s\n", str);
+		token[i] = str[begin];
+		begin++;
+		i++;
 	}
+	token[i] = '\0';
+	ft_tokenadd_back(tokens, ft_tokennew(token));
 }
 
-int	main(void)
+void	getting_line(t_token *tokens)
 {
-	t_token	*tokens;
-	
-	tokens = NULL;
-	getting_line(tokens);
-	printf("Hello\n");
-	return (0);
+	int		i;
+	int		j;
+	char	*str;
+
+	str = readline("minishell>");
+	i = 0;
+	while (str && str[i])
+	{
+		j = i;
+		while (str[i] != ' ' && str[i])
+			i++;
+		add_token(&tokens, str, j, i);
+		while (str[i] == ' ' && str[i])
+			i++;
+	}
+	free(str);
 }

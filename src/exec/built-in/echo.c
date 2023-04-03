@@ -1,0 +1,4 @@
+void	nul(void)
+{
+	return ;
+}
