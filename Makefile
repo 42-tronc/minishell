@@ -6,7 +6,7 @@
 #    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/03 13:27:01 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/04/03 14:20:31 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,16 +53,15 @@ NAME := minishell
 
 SRC_FOLDER := src/
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
-# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_PRINTF) $(SRC_GNL))
 OBJ_DIR := obj/
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 HEADER := header/minishell.h
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
-SRC_BUILTIN := echo.c
+SRC_BUILTIN := echo.c pwd.c
 
 HDR_PARSING = header/parsing.h
-DIR_PARSING := $(SRC_FOLDER)/parsing/
+DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c parsing.c
 
 
