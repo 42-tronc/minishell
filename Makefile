@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/02 19:58:16 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/03 14:20:31 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 HEADER := header/minishell.h
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
-SRC_BUILTIN := echo.c
+SRC_BUILTIN := echo.c pwd.c
 
 
 # -------------- RECIPES --------------
