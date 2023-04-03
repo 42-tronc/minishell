@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:26:14 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 17:08:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 23:23:24 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,7 @@
 
 # include <limits.h>
 # include <unistd.h>
+
+int	ft_pwd(void);
 
 #endif
