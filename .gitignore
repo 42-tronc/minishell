@@ -6,6 +6,9 @@
 # !*/ then unignores anything that is a directory. This is crucial.
 # !*.* unignores all files with an extension.
 
+# Ignore vscode config
+.vscode
+
 # Prerequisites
 *.d
 
