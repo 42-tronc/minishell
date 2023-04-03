@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/03 16:59:22 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/03 17:02:03 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,6 @@ HEADER := header/minishell.h
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c pwd.c
 
-HDR_PARSING = header/parsing.h
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c parsing.c
 
