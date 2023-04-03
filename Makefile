@@ -6,7 +6,7 @@
 #    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/03 11:20:57 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/04/03 13:27:01 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ RESET		:= \033[0m
 
 
 # ---------- BASIC VARIABLES ----------
-CFLAGS := -Wall -Wextra -Werror -I./header
+CFLAGS := -Wall -Wextra -Werror -I./header -g3
 FSANITIZE = -fsanitize=address -g3
 RM := rm -rf
 

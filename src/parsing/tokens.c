@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/03 11:19:35 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 13:49:38 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@ void	ft_tokenadd_back(t_token **lst, t_token *new)
 {
 	t_token	*temp;
 
-	if (!lst)
-		return ;
-	if (!*lst)
-		*lst = new;
-	else
+	if (lst == NULL)
 	{
-		temp = *lst;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new;
+		return ;
 	}
+	temp = *lst;
+	if (!temp)
+	{
+		*lst = new;
+		return ;
+	}
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }
 
 t_token	*ft_tokennew(void *content)
@@ -38,33 +40,29 @@ t_token	*ft_tokennew(void *content)
 		return (NULL);
 	if (dst)
 	{
-		dst->token = content;
+		dst->token = (char *)content;
 		dst->next = NULL;
 	}
 	return (dst);
 }
 
-void	add_token(t_token *tokens, char *str, int begin, int end)
+void	add_token(t_token **tokens, char *str, int begin, int end)
 {
 	char	*token;
+	int		i;
 
-	token = malloc(sizeof(char) * (end - begin + 2));
+	token = malloc(sizeof(char) * (end - begin + 1));
 	if (!token)
 		return ;
-	while (begin <= end)
+	i = 0;
+	while (begin < end)
 	{
-		token[begin] = str[begin];
+		token[i] = str[begin];
 		begin++;
+		i++;
 	}
-	token[begin] = '\0';
-	ft_tokenadd_back(&tokens, ft_tokennew(token));
-}
-
-void print_tokens_linked_list(t_token* head) {
-    while (head != NULL) {
-        printf("%s\n", head->token);
-        head = head->next;
-    }
+	token[i] = '\0';
+	ft_tokenadd_back(tokens, ft_tokennew(token));
 }
 
 void	getting_line(t_token *tokens)
@@ -72,16 +70,17 @@ void	getting_line(t_token *tokens)
 	int		i;
 	int		j;
 	char	*str;
-	
+
 	str = readline("minishell>");
 	i = 0;
 	while (str && str[i])
 	{
 		j = i;
-		while (str[i] != ' ')
+		while (str[i] != ' ' && str[i])
 			i++;
-		add_token(tokens, str, j, i);
+		add_token(&tokens, str, j, i);
+		while (str[i] == ' ' && str[i])
+			i++;
 	}
-	print_tokens_linked_list(tokens);
 	free(str);
 }
