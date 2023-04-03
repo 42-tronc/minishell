@@ -80,8 +80,8 @@ NAME := minishell
 HEADER := header/minishell.h
 
 SRC_FOLDER := src/
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 OBJ_DIR := obj/
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
