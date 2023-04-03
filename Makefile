@@ -3,12 +3,39 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
+#    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/03 14:20:31 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/03 16:22:43 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
+
+# --------- GLOBAL VARIABLES ----------
+SHELL := bash
+.SHELLFLAGS := -eu -o pipefail -c # strict bash mode
+MAKEFLAGS += --warn-undefined-variables # warn about Make variables that don’t exist
+.DELETE_ON_ERROR:
+
+
+# ------------ FORMATTING -------------
+# see https://misc.flogisoft.com/bash/tip_colors_and_formatting
+FG_BLACK 			:= \033[30m
+FG_RED 				:= \033[31m
+FG_GREEN 			:= \033[32m
+FG_YELLOW 			:= \033[33m
+FG_BLUE 			:= \033[34m
+FG_MAGENTA 			:= \033[35m
+FG_CYAN 			:= \033[36m
+FG_LIGHT_GRAY 		:= \033[37m
+FG_DEFAULT 			:= \033[39m
+FG_DARK_GRAY 		:= \033[90m
+FG_LIGHT_RED 		:= \033[91m
+FG_LIGHT_GREEN 		:= \033[92m
+FG_LIGHT_YELLOW 	:= \033[93m
+FG_LIGHT_BLUE 		:= \033[94m
+FG_LIGHT_MAGENTA 	:= \033[95m
+FG_LIGHT_CYAN 		:= \033[96m
+FG_WHITE 			:= \033[97m
 
 BG_BLACK 			:= \033[40m
 BG_RED 				:= \033[41m
@@ -40,8 +67,8 @@ RESET		:= \033[0m
 
 
 # ---------- BASIC VARIABLES ----------
-CFLAGS := -Wall -Wextra -Werror -I./header -g3
-FSANITIZE = -fsanitize=address -g3
+CFLAGS := -Wall -Wextra -Werror -lreadline
+FSANITIZE = -fsanitize=address
 RM := rm -rf
 
 LIBFT_DIR := libft/
@@ -52,7 +79,8 @@ LIBFT_NAME := $(LIBFT_DIR)libft.a
 NAME := minishell
 
 SRC_FOLDER := src/
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
+# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
 OBJ_DIR := obj/
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
@@ -69,11 +97,8 @@ SCR_PARSING := tokens.c parsing.c
 all: makefolder rsc $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
-	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
+	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
-
-debug : $(LIBFT_NAME) $(OBJ)
-	$(CC) $(CFLAGS) $(FSANITIZE) -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 
 $(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $<
@@ -95,13 +120,21 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-	make clean
-	make fclean -C libft
+	@$(MAKE) $@ -sC $(LIBFT_DIR)
+	@echo -e "$(FG_RED)FClean:\t\t $(FG_LIGHT_GRAY)$(UNDERLINE)$(NAME)$(RESET) has been deleted."
 
-re : fclean
-	make all
+re: fclean
+	@$(MAKE) rsc
+	@$(MAKE) all
+
+debug: makefolder rsc $(LIBFT_NAME) $(OBJ)
+	${CC} $(FSANITIZE) ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
+
+run :
+	make re
+	./$(NAME) $(ARG)
 
 norm :
 	norminette ./src ./libft
 
-.PHONY : all lib clean fclean re norm debug
+.PHONY: all rsc makefolder clean fclean re debug norm
