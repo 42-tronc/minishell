@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/03 16:35:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 13:49:38 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "minishell.h"
 
 void	ft_tokenadd_back(t_token **lst, t_token *new)
 {
