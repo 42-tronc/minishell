@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/03 16:22:43 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/03 16:33:25 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,8 +79,7 @@ LIBFT_NAME := $(LIBFT_DIR)libft.a
 NAME := minishell
 
 SRC_FOLDER := src/
-# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 OBJ_DIR := obj/
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
