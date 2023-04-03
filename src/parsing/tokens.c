@@ -6,17 +6,19 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/03/31 13:45:29 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 11:19:35 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lstadd_token_back(t_token **lst, t_token *new)
+void	ft_tokenadd_back(t_token **lst, t_token *new)
 {
 	t_token	*temp;
 
-	if (!lst && !*lst)
+	if (!lst)
+		return ;
+	if (!*lst)
 		*lst = new;
 	else
 	{
@@ -27,7 +29,7 @@ void	ft_lstadd_token_back(t_token **lst, t_token *new)
 	}
 }
 
-t_token	*ft_lstnew_token(void *content)
+t_token	*ft_tokennew(void *content)
 {
 	t_token	*dst;
 
@@ -42,25 +44,44 @@ t_token	*ft_lstnew_token(void *content)
 	return (dst);
 }
 
-void	getting_line(t_token *tokens)
+void	add_token(t_token *tokens, char *str, int begin, int end)
 {
-	char	*str;
-	
-	(void)tokens;
-	str = (char *)ft_calloc(1, sizeof(char));
-	while (1)
+	char	*token;
+
+	token = malloc(sizeof(char) * (end - begin + 2));
+	if (!token)
+		return ;
+	while (begin <= end)
 	{
-		str = gnl_str_join(str, readline("minishell>"));
-		printf("%s\n", str);
+		token[begin] = str[begin];
+		begin++;
 	}
+	token[begin] = '\0';
+	ft_tokenadd_back(&tokens, ft_tokennew(token));
 }
 
-int	main(void)
+void print_tokens_linked_list(t_token* head) {
+    while (head != NULL) {
+        printf("%s\n", head->token);
+        head = head->next;
+    }
+}
+
+void	getting_line(t_token *tokens)
 {
-	t_token	*tokens;
+	int		i;
+	int		j;
+	char	*str;
 	
-	tokens = NULL;
-	getting_line(tokens);
-	printf("Hello\n");
-	return (0);
+	str = readline("minishell>");
+	i = 0;
+	while (str && str[i])
+	{
+		j = i;
+		while (str[i] != ' ')
+			i++;
+		add_token(tokens, str, j, i);
+	}
+	print_tokens_linked_list(tokens);
+	free(str);
 }

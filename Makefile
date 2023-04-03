@@ -6,7 +6,7 @@
 #    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/03 10:32:05 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/04/03 11:20:57 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ RESET		:= \033[0m
 
 # ---------- BASIC VARIABLES ----------
 CFLAGS := -Wall -Wextra -Werror -I./header
-FSANITIZE = -fsanitize=address
+FSANITIZE = -fsanitize=address -g3
 RM := rm -rf
 
 LIBFT_DIR := libft/
@@ -73,6 +73,9 @@ $(NAME): $(LIBFT_NAME) $(OBJ)
 	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
 
+debug : $(LIBFT_NAME) $(OBJ)
+	$(CC) $(CFLAGS) $(FSANITIZE) -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
+
 $(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
@@ -102,4 +105,4 @@ re : fclean
 norm :
 	norminette ./src ./libft
 
-.PHONY : all lib clean fclean re norm
+.PHONY : all lib clean fclean re norm debug
