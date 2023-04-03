@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:00:46 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 15:13:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 17:18:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "minishell.h"
 
 /*
 Use: getcwd
