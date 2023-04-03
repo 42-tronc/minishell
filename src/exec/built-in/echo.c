@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/02 20:16:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 12:43:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	need_newline(char *str)
 	int	i;
 
 	i = 1;
-	if (!str)
-		return (1);
+	// if (!str)
+	// 	return (1);
 	if (str && str[0] == '-')
 	{
 		if (str && str[1] == 'n')
