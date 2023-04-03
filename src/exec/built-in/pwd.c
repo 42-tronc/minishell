@@ -6,12 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:00:46 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 14:43:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 15:13:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
-#include <limits.h>
 
 /*
 Use: getcwd
@@ -27,13 +26,13 @@ int	ft_pwd(void)
 	if (getcwd(cwd, BUFSIZ))
 		printf("PWD='%s'\n", cwd);
 	else
-		return (printf("Couldn't read the PWD\n"), 1);
+		return (perror("pwd"), 1);
 	return (0);
 }
 
-int	main(void)
+/* int	main(void)
 {
-	ft_pwd();
+	printf("exit code: '%d'\n", ft_pwd());
 	printf("pop");
 	return (0);
-}
+} */
