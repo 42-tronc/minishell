@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 23:33:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 23:39:21 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_cd(char *path)
 	}
 }
 
-int	main(int ac, char **av)
+/* int	main(int ac, char **av)
 {
 	if (ac >= 2)
 	{
@@ -47,4 +47,4 @@ int	main(int ac, char **av)
 	ft_pwd();
 	printf("pop");
 	return (0);
-}
+} */
