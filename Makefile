@@ -77,13 +77,13 @@ LIBFT_NAME := $(LIBFT_DIR)libft.a
 
 # --------- PROJECT VARIABLES ---------
 NAME := minishell
+HEADER := header/minishell.h
 
 SRC_FOLDER := src/
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 OBJ_DIR := obj/
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
-HEADER := header/minishell.h
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c pwd.c
 
