@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/03 16:22:43 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/03 17:19:54 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,8 @@ RESET		:= \033[0m
 
 
 # ---------- BASIC VARIABLES ----------
-CFLAGS := -Wall -Wextra -Werror -lreadline
-FSANITIZE = -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror -Ilibft/header/ -Iheader/ -lreadline
+FSANITIZE = -fsanitize=address -g3
 RM := rm -rf
 
 LIBFT_DIR := libft/
@@ -77,18 +77,17 @@ LIBFT_NAME := $(LIBFT_DIR)libft.a
 
 # --------- PROJECT VARIABLES ---------
 NAME := minishell
+HEADER := header/minishell.h
 
 SRC_FOLDER := src/
+OBJ_DIR := obj/
 # SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
-OBJ_DIR := obj/
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
-HEADER := header/minishell.h
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c pwd.c
 
-HDR_PARSING = header/parsing.h
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c parsing.c
 
