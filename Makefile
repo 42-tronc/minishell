@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
+#    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/04 14:11:38 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/04/04 16:02:07 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ FG_GREEN 			:= \033[32m
 FG_DEFAULT 			:= \033[39m
 FG_LIGHT_RED 		:= \033[91m
 FG_LIGHT_GREEN 		:= \033[92m
+FG_WHITE 			:= \033[97m
 
 BG_RED 				:= \033[41m
 BG_GREEN 			:= \033[42m
