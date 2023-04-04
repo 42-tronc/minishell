@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/03 13:49:38 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/03 14:17:31 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ void	add_token(t_token **tokens, char *str, int begin, int end)
 	ft_tokenadd_back(tokens, ft_tokennew(token));
 }
 
-void	getting_line(t_token *tokens)
+t_token *getting_line(void)
 {
+	t_token *tokens;
 	int		i;
 	int		j;
 	char	*str;
 
+	tokens = NULL;
 	str = readline("minishell>");
 	i = 0;
 	while (str && str[i])
@@ -83,4 +85,5 @@ void	getting_line(t_token *tokens)
 			i++;
 	}
 	free(str);
+	return (tokens);
 }
