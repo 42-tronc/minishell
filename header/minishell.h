@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 17:16:02 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 10:00:36 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft.h"
 # include "exec.h"
-// # include "parsing.h"
+# include "parsing.h"
 
 # include <stdio.h>
 

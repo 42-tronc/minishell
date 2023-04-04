@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
+#    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/04 11:15:56 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/04 14:11:38 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ RESET		:= \033[0m
 
 
 # ---------- BASIC VARIABLES ----------
-CFLAGS := -Wall -Wextra -Werror -Ilibft/header/ -Iheader/ -lreadline
+CFLAGS := -Wall -Wextra -Werror -Ilibft/header/ -Iheader/
 FSANITIZE = -fsanitize=address -g3
 RM := rm -rf
 
@@ -50,22 +50,22 @@ HEADER := header/minishell.h
 
 SRC_FOLDER := src/
 OBJ_DIR := obj/
-# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
+# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c pwd.c cd.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c parsing.c
+SCR_PARSING := tokens.c parsing.c envp.c
 
 
 # -------------- RECIPES --------------
 all: makefolder rsc $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
-	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
+	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
 
 $(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)

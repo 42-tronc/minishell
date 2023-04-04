@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/03 14:17:31 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 14:04:12 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_token	*ft_tokennew(void *content)
 	if (dst)
 	{
 		dst->token = (char *)content;
+		dst->token_id = NULL;
 		dst->next = NULL;
 	}
 	return (dst);
@@ -65,25 +66,71 @@ void	add_token(t_token **tokens, char *str, int begin, int end)
 	ft_tokenadd_back(tokens, ft_tokennew(token));
 }
 
-t_token *getting_line(void)
+static void	even_quote(char *str)
 {
-	t_token *tokens;
-	int		i;
-	int		j;
+	int	i;
+	int	nb_quote;
+	int	nb_dquote;
+
+	nb_quote = 0;
+	nb_dquote = 0;
+	i = -1;
+	while (str && str[++i])
+	{
+		if (str[i] == '\'')
+			nb_quote++;
+		if (str[i] == '\"')
+			nb_dquote++;
+	}
+	if (nb_quote % 2 != 0 || nb_dquote % 2 != 0)
+	{
+		free(str);
+		printf("error - quotes or double quotes not closed correctly\n");
+		exit (1);
+	}
+}
+
+static void	get_next_word(t_token **tokens, t_parsing *data, char *str)
+{
+	while (str && str[data->end])
+	{
+		
+	}
+}
+
+static void	cutting_line(t_token **tokens, t_parsing *data, char *str)
+{
+	while (str && str[data->end])
+	{
+		data->begin = data->end;
+		if (str[data->end] == ' ')
+			data->end++;
+		else if (str[data->end] == '\'' || str[data->end] == '\"'
+			|| ft_isalpha(str[data->end]))
+			return ;
+			// get_next_word(tokens, data, str);
+		// if (str[data->end] == '\'')
+		// 	till_next_quote(tokens, data, str);
+		// if (ft_isalpha(str[data->end]))
+	}
+}
+
+t_token	*getting_line(t_parsing *data)
+{
+	t_token	*tokens;
 	char	*str;
 
+	(void)data;
 	tokens = NULL;
 	str = readline("minishell>");
-	i = 0;
-	while (str && str[i])
-	{
-		j = i;
-		while (str[i] != ' ' && str[i])
-			i++;
-		add_token(&tokens, str, j, i);
-		while (str[i] == ' ' && str[i])
-			i++;
-	}
-	free(str);
-	return (tokens);
+	even_quote(str);
+	cutting_line(&tokens, data, str);
+	return (free(str), tokens);
 }
+
+		data->begin = data->end;
+		while (str[data->end] != ' ' && str[data->end])
+			data->end++;
+		add_token(&tokens, str, data->begin, data->end);
+		while (str[data->end] == ' ' && str[data->end])
+			data->end++;
