@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/04 13:44:45 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 16:19:50 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,23 @@ struct s_token {
 };
 
 struct s_parsing {
-	int	begin;
-	int	end;
+	int	i;
 	int	quote;
-	int	d_quote;
-	int	in_word;
+	int	dquote;
 };
-
+// envp.c functions
 t_list	*get_envp(char **envp);
 
+// parsing.c functions
 t_token	*getting_line(t_parsing *data);
+
+// tokens_lst.c functions
 void	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
-void	add_token(t_token **tokens, char *str, int begin, int end);
+
+// tokens.c functions
+void	cutting_line(t_token **tokens, t_parsing *data, char *str);
+void	get_next_word(t_token **tokens, t_parsing *data, char *str);
+int		get_word_size(t_parsing *data, char *str, int begin);
 
 #endif
