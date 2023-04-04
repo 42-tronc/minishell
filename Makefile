@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/04 10:26:30 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/04 11:15:56 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ FG_LIGHT_GREEN 		:= \033[92m
 BG_RED 				:= \033[41m
 BG_GREEN 			:= \033[42m
 BG_LIGHT_GREEN 		:= \033[102m
+BG_WHITE 			:= \033[107m
 
 BOLD		:= \033[1m
 ITALIC		:= \033[3m
