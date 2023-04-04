@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/03 16:26:12 by croy             ###   ########lyon.fr   */
+/*   Created: 2023/04/03 13:00:46 by croy              #+#    #+#             */
+/*   Updated: 2023/04/03 17:18:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_tokens_linked_list(t_token* head) {
-	t_token *temp;
+/*
+Use: getcwd
 
-	temp = head;
-    while (temp != NULL) {
-        printf("token:%s\n", temp->token);
-        temp = temp->next;
-    }
+	PATH_MAX (defined in limits.h)
+	FILENAME_MAX (defined in stdio.h)
+both of these are set to 4096 on my system (x86 Linux).
+*/
+int	ft_pwd(void)
+{
+	char	cwd[BUFSIZ];
+
+	if (getcwd(cwd, BUFSIZ))
+		printf("PWD='%s'\n", cwd);
+	else
+		return (perror("pwd"), 1);
+	return (0);
 }
 
 /* int	main(void)
 {
-	t_token	*tokens;
-
-	tokens = getting_line();
-	print_tokens_linked_list(tokens);
+	printf("exit code: '%d'\n", ft_pwd());
+	printf("pop");
 	return (0);
 } */

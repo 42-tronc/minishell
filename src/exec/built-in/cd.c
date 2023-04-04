@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 17:17:13 by croy             ###   ########lyon.fr   */
+/*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
+/*   Updated: 2023/04/03 23:39:21 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief checks if a newline is needed by looking for any '-n'
- *
- * @param str string to check
- * @return int 1 if needed, 0 if not
- */
-int	need_newline(char *str)
-{
-	int	i;
+/*
+NEED
+`cd -`	to go back in time
+`cd ~`	to go home
 
-	i = 1;
-	// if (!str)
-	// 	return (1);
-	if (str && str[0] == '-')
+*/
+
+void	ft_cd(char *path)
+{
+	// Change to home directory
+	if (!path || ft_strncmp(path, "~", 1) == 0)
 	{
-		if (str && str[1] == 'n')
-		{
-			i++;
-			while (str[i] && str[i] == 'n')
-				i++;
-			if (!str[i])
-				return (0);
-		}
+		if (chdir(getenv("HOME")) == -1)
+			perror("cd");
 	}
-	return (1);
+	else
+	{
+		// Change to the specified directory
+		if (chdir(path) == -1)
+			perror("cd");
+	}
 }
 
 /* int	main(int ac, char **av)
@@ -44,12 +40,11 @@ int	need_newline(char *str)
 	if (ac >= 2)
 	{
 		printf("param= '%s'\n", av[1]);
-		printf("Need new line = %d\n", need_newline(av[1]));
-		if (need_newline(av[1]))
-			printf("loli\n");
-		else
-			printf("loli");
+		ft_cd(av[1]);
 	}
+	else
+		ft_cd(NULL);
+	ft_pwd();
 	printf("pop");
 	return (0);
 } */
