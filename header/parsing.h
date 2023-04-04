@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/03 17:06:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 13:44:45 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-typedef struct s_token	t_token;
+typedef struct s_token		t_token;
+typedef struct s_parsing	t_parsing;
 
 struct s_token {
 	char	*token;
@@ -26,7 +27,17 @@ struct s_token {
 	t_token	*next;
 };
 
-t_token	*getting_line(void);
+struct s_parsing {
+	int	begin;
+	int	end;
+	int	quote;
+	int	d_quote;
+	int	in_word;
+};
+
+t_list	*get_envp(char **envp);
+
+t_token	*getting_line(t_parsing *data);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
 void	add_token(t_token **tokens, char *str, int begin, int end);
