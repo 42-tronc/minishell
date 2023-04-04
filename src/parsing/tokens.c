@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/04 14:04:12 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/04 16:02:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+/* #include "minishell.h"
 
 void	ft_tokenadd_back(t_token **lst, t_token *new)
 {
@@ -94,7 +94,7 @@ static void	get_next_word(t_token **tokens, t_parsing *data, char *str)
 {
 	while (str && str[data->end])
 	{
-		
+
 	}
 }
 
@@ -133,4 +133,4 @@ t_token	*getting_line(t_parsing *data)
 			data->end++;
 		add_token(&tokens, str, data->begin, data->end);
 		while (str[data->end] == ' ' && str[data->end])
-			data->end++;
+			data->end++; */
