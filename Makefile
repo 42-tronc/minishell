@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
+#    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/04 16:02:07 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/04 16:47:24 by arthurasced      ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c pwd.c cd.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c parsing.c envp.c
+SCR_PARSING := tokens.c parsing.c envp.c tokens_lst.c
 
 
 # -------------- RECIPES --------------
