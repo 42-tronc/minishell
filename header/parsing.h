@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/04 16:19:50 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 14:38:45 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@ struct s_parsing {
 	int	dquote;
 };
 // envp.c functions
-t_list	*get_envp(char **envp);
+t_list	*list_env(char **envp);
+char	*ft_getenv(char **envp, char *str);
+void	add_env(t_list *list_envp, char *var, char *value);
 
 // parsing.c functions
 t_token	*getting_line(t_parsing *data);
+void	right_symbols(t_parsing *p, char *str);
+void	even_quote(char *str);
 
 // tokens_lst.c functions
 void	ft_tokenadd_back(t_token **lst, t_token *new);
@@ -45,6 +49,10 @@ t_token	*ft_tokennew(void *content);
 // tokens.c functions
 void	cutting_line(t_token **tokens, t_parsing *data, char *str);
 void	get_next_word(t_token **tokens, t_parsing *data, char *str);
+void	get_symbols(t_token **tokens, t_parsing *p, char *str);
 int		get_word_size(t_parsing *data, char *str, int begin);
+int		ft_char(int c);
+
+void	print_tokens_linked_list(t_token *head);
 
 #endif
