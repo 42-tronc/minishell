@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/04 16:42:35 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 14:37:50 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,35 @@ void	even_quote(char *str)
 	}
 }
 
+void	right_symbols(t_parsing *p, char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str && str[++i])
+	{
+		p->quote = (p->quote + (!p->dquote && str[i] == '\'')) % 2;
+		p->dquote = (p->dquote + (!p->quote && str[i] == '\"')) % 2;
+		if (i >= 1 && p->quote == 0 && p->dquote == 0)
+		{
+			if (str[i] == '|' && str[i - 1] == '|')
+			{
+				printf ("error ||\n");
+				exit (1);
+			}
+		}
+		if (i >= 2 && p->quote == 0 && p->dquote == 0)
+		{
+			if ((str[i] == '>' && str[i - 1] == '>' && str[i - 2] == '>')
+				|| (str[i] == '<' && str[i - 1] == '<' && str[i - 2] == '<'))
+			{
+				printf ("error <<< or >>>\n");
+				exit (1);
+			}
+		}
+	}
+}
+
 t_token	*getting_line(t_parsing *p)
 {
 	t_token	*tokens;
@@ -57,17 +86,26 @@ t_token	*getting_line(t_parsing *p)
 
 	tokens = NULL;
 	str = readline("minishell>");
+	p->i = 0;
+	p->quote = 0;
+	p->dquote = 0;
 	even_quote(str);
+	right_symbols(p, str);
 	cutting_line(&tokens, p, str);
 	return (free(str), tokens);
 }
 
-// int	main(void)
+// int	main(int argc, char **argv, char **envp)
 // {
-// 	t_token		*tokens;
-// 	t_parsing	p;
+// 	// t_token		*tokens;
+// 	// t_parsing	p;
 
-// 	tokens = getting_line(&p);
-// 	print_tokens_linked_list(tokens);
+// 	// tokens = getting_line(&p);
+// 	// print_tokens_linked_list(tokens);
+
+// 	(void)argc;
+// 	(void)argv;
+// 	t_list *env = list_env(envp);
+// 	add_env(env, "HOME=", "test");
 // 	return (0);
 // }
