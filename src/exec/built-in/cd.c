@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/04/05 16:19:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 17:03:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ NEED
  */
 void	ft_cd(char *path, char **envp)
 {
+	char	*old_pwd;
+
 	// HOME Directory
 	if (!path || ft_strcmp(path, "~") == 0)
 		path = getenv("HOME");
@@ -38,15 +40,18 @@ void	ft_cd(char *path, char **envp)
 			printf("found oldpwd\n");
 		else
 		{
-			printf(RED "cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(envp, "OLDPWD"));
+			printf(RED"cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(envp, "OLDPWD"));
 			return;
 		}
 	}
 	// CHANGE Directory
+
+	getcwd(old_pwd, BUFSIZ);
 	if (chdir(path) == -1)
 		perror("cd");
 	else
 	{
+		// PWD=getcwd(cwd, BUFSIZ)
 		printf("NEW ");
 		ft_pwd();
 	}
