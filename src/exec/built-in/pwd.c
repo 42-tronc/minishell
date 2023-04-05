@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:00:46 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 17:18:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 11:42:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_pwd(void)
 	else
 		return (perror("pwd"), 1);
 	return (0);
+	// return (cwd);
 }
 
 /* int	main(void)
