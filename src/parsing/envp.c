@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/05 14:27:10 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 19:27:13 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ t_list	*list_env(char **envp)
 }
 
 /// @brief Get the value of a var passed in str inside envp.
-/// @param envp char **envp from main.
-/// @param str Strictly variable name /!\ no '=' /!\.
+/// @param envp t_list envp to get the linked list of envp.
+/// @param str Variable name with the '=' included /!\.
 /// @return char * from the variable passed.
-char	*ft_getenv(char **envp, char *str)
+char	*ft_getenv(t_list *list_env, char *str)
 {
-	int		i;
+	t_list	*temp;
 
-	i = -1;
-	while (envp[++i])
+	temp = list_env;
+	while (temp->next != NULL)
 	{
-		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0
-			&& envp[i][ft_strlen(str)] == '=')
-			return (ft_strdup(envp[i] + ft_strlen(str) + 1));
+		if (ft_strncmp(temp->content, str, ft_strlen(str)) == 0)
+			return (ft_strdup(temp->content + ft_strlen(str)));
+		temp = temp->next;
 	}
 	return (NULL);
 }
