@@ -6,131 +6,73 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/04 16:02:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 11:55:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* #include "minishell.h"
+#include "minishell.h"
 
-void	ft_tokenadd_back(t_token **lst, t_token *new)
+int	get_word_size(t_parsing *p, char *str, int i)
 {
-	t_token	*temp;
+	int	size;
 
-	if (lst == NULL)
+	size = 0;
+	while (str && str[i])
 	{
-		return ;
-	}
-	temp = *lst;
-	if (!temp)
-	{
-		*lst = new;
-		return ;
-	}
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
-}
-
-t_token	*ft_tokennew(void *content)
-{
-	t_token	*dst;
-
-	dst = malloc(sizeof(t_token));
-	if (!dst)
-		return (NULL);
-	if (dst)
-	{
-		dst->token = (char *)content;
-		dst->token_id = NULL;
-		dst->next = NULL;
-	}
-	return (dst);
-}
-
-void	add_token(t_token **tokens, char *str, int begin, int end)
-{
-	char	*token;
-	int		i;
-
-	token = malloc(sizeof(char) * (end - begin + 1));
-	if (!token)
-		return ;
-	i = 0;
-	while (begin < end)
-	{
-		token[i] = str[begin];
-		begin++;
+		if (str[i] == '\'' && p->dquote == 1)
+			size++;
+		else if (str[i] == '\"' && p->quote == 1)
+			size++;
+		else if (str[i] != '\'' && str[i] != '\"')
+			size++;
+		if (str[i] == ' ' && p->quote == 0 && p->dquote == 0)
+			return (size);
+		p->quote = (p->quote + (!p->dquote && str[i] == '\'')) % 2;
+		p->dquote = (p->dquote + (!p->quote && str[i] == '\"')) % 2;
 		i++;
 	}
-	token[i] = '\0';
-	ft_tokenadd_back(tokens, ft_tokennew(token));
+	return (size);
 }
 
-static void	even_quote(char *str)
+// Missing error managment and leaks are occuring in case of error.
+void	get_next_word(t_token **tokens, t_parsing *p, char *str)
 {
-	int	i;
-	int	nb_quote;
-	int	nb_dquote;
+	char	*word;
+	int		i;
 
-	nb_quote = 0;
-	nb_dquote = 0;
+	word = malloc(sizeof(char) * (get_word_size(p, str, p->i) + 1));
+	if (!word)
+		return ;
 	i = -1;
-	while (str && str[++i])
+	while (str && str[p->i])
 	{
-		if (str[i] == '\'')
-			nb_quote++;
-		if (str[i] == '\"')
-			nb_dquote++;
+		if (str[p->i] == ' ' && p->quote == 0 && p->dquote == 0)
+			break ;
+		p->quote = (p->quote + (!p->dquote && str[p->i] == '\'')) % 2;
+		p->dquote = (p->dquote + (!p->quote && str[p->i] == '\"')) % 2;
+		if (p->quote == 1 && str[p->i] == '\"')
+			word[++i] = '\"';
+		else if (p->dquote == 1 && str[p->i] == '\'')
+			word[++i] = '\'';
+		else if (str[p->i] != '\'' && str[p->i] != '\"')
+			word[++i] = str[p->i];
+		p->i++;
 	}
-	if (nb_quote % 2 != 0 || nb_dquote % 2 != 0)
-	{
-		free(str);
-		printf("error - quotes or double quotes not closed correctly\n");
-		exit (1);
-	}
+	word[++i] = '\0';
+	ft_tokenadd_back(tokens, ft_tokennew(word));
 }
 
-static void	get_next_word(t_token **tokens, t_parsing *data, char *str)
+void	cutting_line(t_token **tokens, t_parsing *p, char *str)
 {
-	while (str && str[data->end])
+	p->i = 0;
+	p->quote = 0;
+	p->dquote = 0;
+	while (str && str[p->i])
 	{
-
+		if (str[p->i] == ' ')
+			p->i++;
+		else if (str[p->i] == '\'' || str[p->i] == '\"' \
+			|| str[p->i] != ' ')
+			get_next_word(tokens, p, str);
 	}
 }
-
-static void	cutting_line(t_token **tokens, t_parsing *data, char *str)
-{
-	while (str && str[data->end])
-	{
-		data->begin = data->end;
-		if (str[data->end] == ' ')
-			data->end++;
-		else if (str[data->end] == '\'' || str[data->end] == '\"'
-			|| ft_isalpha(str[data->end]))
-			return ;
-			// get_next_word(tokens, data, str);
-		// if (str[data->end] == '\'')
-		// 	till_next_quote(tokens, data, str);
-		// if (ft_isalpha(str[data->end]))
-	}
-}
-
-t_token	*getting_line(t_parsing *data)
-{
-	t_token	*tokens;
-	char	*str;
-
-	(void)data;
-	tokens = NULL;
-	str = readline("minishell>");
-	even_quote(str);
-	cutting_line(&tokens, data, str);
-	return (free(str), tokens);
-}
-
-		data->begin = data->end;
-		while (str[data->end] != ' ' && str[data->end])
-			data->end++;
-		add_token(&tokens, str, data->begin, data->end);
-		while (str[data->end] == ' ' && str[data->end])
-			data->end++; */
