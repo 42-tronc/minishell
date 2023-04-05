@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/04/05 17:03:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 17:51:51 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,19 @@ NEED
  */
 void	ft_cd(char *path, char **envp)
 {
-	char	*old_pwd;
+	// char	*old_pwd;
 
 	// HOME Directory
 	if (!path || ft_strcmp(path, "~") == 0)
-		path = getenv("HOME");
+		path = ft_getenv(envp, "HOME");
 	// LAST Directory
 	else if (ft_strcmp(path, "-") == 0)
 	{
 		if (ft_getenv(envp, "OLDPWD"))
-			printf("found oldpwd\n");
+		{
+			printf("found oldpwd '%s'\n", ft_getenv(envp, "OLDPWD"));
+			path = ft_getenv(envp, "OLDPWD");
+		}
 		else
 		{
 			printf(RED"cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(envp, "OLDPWD"));
@@ -46,7 +49,7 @@ void	ft_cd(char *path, char **envp)
 	}
 	// CHANGE Directory
 
-	getcwd(old_pwd, BUFSIZ);
+	// getcwd(old_pwd, BUFSIZ);
 	if (chdir(path) == -1)
 		perror("cd");
 	else
