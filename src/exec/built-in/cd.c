@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/04/04 14:11:17 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 16:19:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,48 @@ NEED
 
 */
 
-void	ft_cd(char *path)
+/**
+ * @brief Goes into the directory specified (works with `~`)
+ * `-` will go to the last directory if available.
+ * `~` or `NULL` will go to the home directory
+ * @param path absolute or relative path to go to.
+ */
+void	ft_cd(char *path, char **envp)
 {
-	// Change to home directory
+	// HOME Directory
 	if (!path || ft_strcmp(path, "~") == 0)
+		path = getenv("HOME");
+	// LAST Directory
+	else if (ft_strcmp(path, "-") == 0)
 	{
-		if (chdir(getenv("HOME")) == -1)
-			perror("cd");
+		if (ft_getenv(envp, "OLDPWD"))
+			printf("found oldpwd\n");
+		else
+		{
+			printf(RED "cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(envp, "OLDPWD"));
+			return;
+		}
 	}
+	// CHANGE Directory
+	if (chdir(path) == -1)
+		perror("cd");
 	else
 	{
-		// Change to the specified directory
-		if (chdir(path) == -1)
-			perror("cd");
+		printf("NEW ");
+		ft_pwd();
 	}
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
-	printf("getenv HOME='%s'\n", getenv("HOME"));
+	printf("OG ");
+	ft_pwd();
 	if (ac >= 2)
 	{
-		printf("param= '%s'\n", av[1]);
-		ft_cd(av[1]);
+		// printf("\nparam= '%s'\n", av[1]);
+		ft_cd(av[1], envp);
 	}
 	else
-		ft_cd(NULL);
-	ft_pwd();
-	printf("pop");
+		ft_cd(NULL, envp);
 	return (0);
 }
