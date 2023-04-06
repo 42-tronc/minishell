@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/05 19:27:13 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 10:11:05 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+///
+ /// @brief Free a given list.
+ /// 
+ /// @param lst The list to be free'd.
+ ///
+void	free_list(t_list *lst)
+{
+	t_list *current;
+	t_list *temp1;
+
+	current = lst;
+	while (current != NULL)
+	{
+		temp1 = current;
+		current = current->next;
+		free(temp1->content);
+		free(temp1);
+	}
+}
 
 /// @brief Create a linked list out of the envp.
 /// @param envp envp variable out of the main.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/05 14:37:50 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 10:03:46 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ void	print_tokens_linked_list(t_token *head)
 	while (temp != NULL)
 	{
 		printf("token[%d]___%s___\n", i++, temp->token);
+		temp = temp->next;
+	}
+}
+
+void	print_list(t_list *head)
+{
+	t_list	*temp;
+
+	temp = head;
+	while (temp != NULL)
+	{
+		printf("%s\n", (char *)temp->content);
 		temp = temp->next;
 	}
 }
@@ -95,17 +107,20 @@ t_token	*getting_line(t_parsing *p)
 	return (free(str), tokens);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	// t_token		*tokens;
-// 	// t_parsing	p;
+int	main(int argc, char **argv, char **envp)
+{
+	t_token		*tokens;
+	t_list		*env;
+	t_parsing	p;
 
-// 	// tokens = getting_line(&p);
-// 	// print_tokens_linked_list(tokens);
-
-// 	(void)argc;
-// 	(void)argv;
-// 	t_list *env = list_env(envp);
-// 	add_env(env, "HOME=", "test");
-// 	return (0);
-// }
+	tokens = getting_line(&p);
+	print_tokens_linked_list(tokens);
+	free_token(tokens);
+	(void)argc;
+	(void)argv;
+	env = list_env(envp);
+	add_env(env, "HOME=", "test");
+	//print_list(env);
+	free_list(env);
+	return (0);
+}

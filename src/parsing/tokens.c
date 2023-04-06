@@ -29,6 +29,12 @@ int	get_word_size(t_parsing *p, char *str, int i)
 			size++;
 		else if (str[i] == '\"' && p->quote == 1)
 			size++;
+		else if (str[i] == '<' && (p->quote == 1 || p->dquote == 1))
+			size++;
+		else if (str[i] == '|' && (p->quote == 1 || p->dquote == 1))
+			size++;
+		else if (str[i] == '>' && (p->quote == 1 || p->dquote == 1))
+			size++;
 		else if (str[i] != '\'' && str[i] != '\"')
 			size++;
 		if (str[i] == ' ' && p->quote == 0 && p->dquote == 0)
@@ -50,17 +56,20 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str)
 	char	*word;
 	int		i;
 
-	word = malloc(sizeof(char) * (get_word_size(p, str, p->i) + 1));
+	word = ft_calloc(sizeof(char), (get_word_size(p, str, p->i) + 1));
 	if (!word)
 		return ;
 	i = -1;
 	while (str && str[p->i])
 	{
-		if (str[p->i] == ' ' && p->quote == 0 && p->dquote == 0)
-			break ;
 		p->quote = (p->quote + (!p->dquote && str[p->i] == '\'')) % 2;
 		p->dquote = (p->dquote + (!p->quote && str[p->i] == '\"')) % 2;
-		if (p->quote == 1 && str[p->i] == '\"')
+		if (str[p->i] == ' ' && p->quote == 0 && p->dquote == 0)
+			break ;
+		else if (p->quote == 0 && p->dquote == 0 && str[p->i] == '<')
+			break ;
+			// || str[p->i] == '>' || str[p->i] == '|'))
+		else if (p->quote == 1 && str[p->i] == '\"')
 			word[++i] = '\"';
 		else if (p->dquote == 1 && str[p->i] == '\'')
 			word[++i] = '\'';
@@ -68,7 +77,6 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str)
 			word[++i] = str[p->i];
 		p->i++;
 	}
-	word[++i] = '\0';
 	ft_tokenadd_back(tokens, ft_tokennew(word));
 }
 
