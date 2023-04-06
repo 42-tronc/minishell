@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/06 17:32:10 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 17:42:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_env(t_list *env)
 	current = env;
 	while (current)
 	{
-		printf("data: %d, next: %p\n", current->content, current->next);
+		printf("data: %s, next: %p\n", (char *)current->content, current->next);
 		current = current->next;
 	}
 }
