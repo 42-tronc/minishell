@@ -25,16 +25,20 @@ int	get_word_size(t_parsing *p, char *str, int i)
 	size = 0;
 	while (str && str[i])
 	{
+		p->quote = (p->quote + (!p->dquote && str[i] == '\'')) % 2;
+		p->dquote = (p->dquote + (!p->quote && str[i] == '\"')) % 2;
 		if (str[i] == '\'' && p->dquote == 1)
 			size++;
 		else if (str[i] == '\"' && p->quote == 1)
 			size++;
-		else if (str[i] != '\'' && str[i] != '\"')
+		else if (!ft_char(str[i]) && p->quote == 1)
+			size++;
+		else if (!ft_char(str[i]) && p->dquote == 1)
+			size++;
+		else if (str[i] != '\'' && str[i] != '\"' && ft_char(str[i]))
 			size++;
 		if (str[i] == ' ' && p->quote == 0 && p->dquote == 0)
 			return (size);
-		p->quote = (p->quote + (!p->dquote && str[i] == '\'')) % 2;
-		p->dquote = (p->dquote + (!p->quote && str[i] == '\"')) % 2;
 		i++;
 	}
 	return (size);
@@ -45,30 +49,32 @@ int	get_word_size(t_parsing *p, char *str, int i)
 /// @param tokens Linked list of tokens.
 /// @param p Data structure for the parsing.
 /// @param str Input from the function readline.
-void	get_next_word(t_token **tokens, t_parsing *p, char *str)
+/// @param i Counter that should ALWAYS be initialized at -1.
+void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 {
 	char	*word;
-	int		i;
 
-	word = malloc(sizeof(char) * (get_word_size(p, str, p->i) + 1));
+	word = ft_calloc(sizeof(char), (get_word_size(p, str, p->i) + 1));
 	if (!word)
 		return ;
-	i = -1;
 	while (str && str[p->i])
 	{
-		if (str[p->i] == ' ' && p->quote == 0 && p->dquote == 0)
-			break ;
 		p->quote = (p->quote + (!p->dquote && str[p->i] == '\'')) % 2;
 		p->dquote = (p->dquote + (!p->quote && str[p->i] == '\"')) % 2;
-		if (p->quote == 1 && str[p->i] == '\"')
+		if (p->quote == 0 && p->dquote == 0 && str[p->i] == ' ')
+			break ;
+		else if (p->quote == 0 && p->dquote == 0 && !ft_char(str[p->i]))
+			break ;
+		else if (p->quote == 1 && str[p->i] == '\"')
 			word[++i] = '\"';
 		else if (p->dquote == 1 && str[p->i] == '\'')
 			word[++i] = '\'';
-		else if (str[p->i] != '\'' && str[p->i] != '\"')
+		else if ((p->dquote == 1 || p->quote == 1) && !ft_char(str[p->i]))
+			word[++i] = str[p->i];
+		else if (ft_char(str[p->i]) && ft_char2(str[p->i]))
 			word[++i] = str[p->i];
 		p->i++;
 	}
-	word[++i] = '\0';
 	ft_tokenadd_back(tokens, ft_tokennew(word));
 }
 
@@ -78,7 +84,14 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str)
 /// 1 if it is any other char.
 int	ft_char(int c)
 {
-	if (c == ' ' || c == '|' || c == '<' || c == '>')
+	if (c == '|' || c == '<' || c == '>')
+		return (0);
+	return (1);
+}
+
+int	ft_char2(int c)
+{
+	if (c == '\'' || c == ' ' || c == '\"')
 		return (0);
 	return (1);
 }
@@ -95,7 +108,7 @@ void	get_symbols(t_token **tokens, t_parsing *p, char *str)
 
 	i = -1;
 	while (str && str[++i])
-		if (str[i] == ' ')
+		if (ft_char(str[p->i]))
 			break ;
 	symbol = malloc(sizeof(char) * i);
 	if (!symbol)
@@ -103,29 +116,11 @@ void	get_symbols(t_token **tokens, t_parsing *p, char *str)
 	i = -1;
 	while (str && str[p->i])
 	{
-		if (str[p->i] == ' ')
+		if (ft_char(str[p->i]))
 			break ;
 		symbol[++i] = str[p->i];
 		p->i++;
 	}
 	symbol[++i] = '\0';
 	ft_tokenadd_back(tokens, ft_tokennew(symbol));
-}
-
-/// @brief Choose what action to do based on the char in a string.
-/// @param tokens Linked list of tokens.
-/// @param p Data structure for the parsing.
-/// @param str Input from the function readline.
-void	cutting_line(t_token **tokens, t_parsing *p, char *str)
-{
-	while (str && str[p->i])
-	{
-		if (str[p->i] == ' ')
-			p->i++;
-		else if (str[p->i] == '\'' || str[p->i] == '\"' \
-			|| ft_char(str[p->i]))
-			get_next_word(tokens, p, str);
-		else
-			get_symbols(tokens, p, str);
-	}
 }
