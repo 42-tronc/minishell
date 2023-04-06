@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/04/05 17:51:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/06 17:31:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_cd(char *path, char **envp)
 	}
 }
 
-int	main(int ac, char **av, char **envp)
+/* int	main(int ac, char **av, char **envp)
 {
 	printf("OG ");
 	ft_pwd();
@@ -72,4 +72,4 @@ int	main(int ac, char **av, char **envp)
 	else
 		ft_cd(NULL, envp);
 	return (0);
-}
+} */
