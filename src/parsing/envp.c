@@ -12,15 +12,12 @@
 
 #include "minishell.h"
 
-///
- /// @brief Free a given list.
- /// 
- /// @param lst The list to be free'd.
- ///
+/// @brief Free a given list.
+/// @param lst The list to be free'd.
 void	free_list(t_list *lst)
 {
-	t_list *current;
-	t_list *temp1;
+	t_list	*current;
+	t_list	*temp1;
 
 	current = lst;
 	while (current != NULL)

@@ -91,6 +91,23 @@ void	right_symbols(t_parsing *p, char *str)
 	}
 }
 
+/// @brief Choose what action to do based on the char in a string.
+/// @param tokens Linked list of tokens.
+/// @param p Data structure for the parsing.
+/// @param str Input from the function readline.
+void	cutting_line(t_token **tokens, t_parsing *p, char *str)
+{
+	while (str && str[p->i])
+	{
+		if (str[p->i] == ' ')
+			p->i++;
+		else if (ft_char(str[p->i]))
+			get_next_word(tokens, p, str, -1);
+		else
+			get_symbols(tokens, p, str);
+	}
+}
+
 t_token	*getting_line(t_parsing *p)
 {
 	t_token	*tokens;
@@ -120,7 +137,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	env = list_env(envp);
 	add_env(env, "HOME=", "test");
-	//print_list(env);
+	print_list(env);
 	free_list(env);
 	return (0);
 }

@@ -50,8 +50,8 @@ t_token	*ft_tokennew(void *content)
 
 void	free_token(t_token *tokens)
 {
-	t_token *current;
-	t_token *temp1;
+	t_token	*current;
+	t_token	*temp1;
 
 	current = tokens;
 	while (current != NULL)
