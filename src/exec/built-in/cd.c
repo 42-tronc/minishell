@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: maplepy <maplepy@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/04/06 17:40:12 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 16:18:54 by maplepy          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_cd(char *path, t_list *env)
 		{
 			printf("found oldpwd '%s'\n", ft_getenv(env, "OLDPWD"));
 			path = ft_getenv(env, "OLDPWD");
+			// path = getenv("OLDPWD");
 		}
 		else
 		{
