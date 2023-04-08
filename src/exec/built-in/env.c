@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/08 16:34:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 16:47:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_env(t_list *env)
 	}
 }
 
-int	main(int ac, char **av, char **envp)
+/* int	main(int ac, char **av, char **envp)
 {
 	(void) ac;
 	(void) av;
@@ -35,4 +35,4 @@ int	main(int ac, char **av, char **envp)
 	print_env(env);
 
 	return (0);
-}
+} */
