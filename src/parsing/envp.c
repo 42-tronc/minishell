@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: maplepy <maplepy@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/06 10:11:05 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 16:20:17 by maplepy          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_getenv(t_list *list_env, char *str)
 	while (temp->next != NULL)
 	{
 		if (ft_strncmp(temp->content, str, ft_strlen(str)) == 0)
-			return (ft_strdup(temp->content + ft_strlen(str)));
+			return (ft_strdup(temp->content + ft_strlen(str) + 1));
 		temp = temp->next;
 	}
 	return (NULL);
