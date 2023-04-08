@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/06 10:11:05 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 16:50:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_getenv(t_list *list_env, char *str)
 /// @param list_envp Linked list of envp
 /// @param var Name of the variable with '=' at the end (IMPORTANT TO ADD =)
 /// @param value The value to be replace or added to the linked list
-void	add_env(t_list *list_envp, char *var, char *value)
+void	ft_setenv(t_list *list_envp, char *var, char *value)
 {
 	t_list	*temp;
 

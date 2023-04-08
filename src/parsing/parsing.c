@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/06 17:49:06 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 16:50:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_token	*getting_line(t_parsing *p)
 	(void)argc;
 	(void)argv;
 	env = list_env(envp);
-	add_env(env, "HOME=", "test");
+	ft_setenv(env, "HOME=", "test");
 	print_list(env);
 	free_list(env);
 	return (0);
