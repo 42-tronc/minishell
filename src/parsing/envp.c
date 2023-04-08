@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/08 17:44:22 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 17:45:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_getenv(t_list *list_env, char *str)
 /// @param list_envp Linked list of envp
 /// @param var Name of the variable with '=' at the end (IMPORTANT TO ADD =)
 /// @param value The value to be replace or added to the linked list
-void	ft_setenv(t_list *list_envp, char *var, char *value)
+int	ft_setenv(t_list *list_envp, char *var, char *value)
 {
 	t_list	*temp;
 	char	*var_prefixed;
@@ -78,7 +78,7 @@ void	ft_setenv(t_list *list_envp, char *var, char *value)
 	// Add `=` to var
 	var_prefixed = malloc((ft_strlen(var) + 2) * sizeof(char));
 	if (!var_prefixed)
-		return; // to change if malloc fails
+		return (-1); // to change if malloc fails
 	ft_strlcpy(var_prefixed, var, ft_strlen(var) + 2);
 	ft_strlcat(var_prefixed, "=", ft_strlen(var) + 2);
 	// printf("old var: `%s`\nnew var: `%s`\n", var, var_prefixed);
@@ -90,11 +90,13 @@ void	ft_setenv(t_list *list_envp, char *var, char *value)
 			free(temp->content);
 			temp->content = ft_strjoin(var_prefixed, value);
 			free(var_prefixed);
-			return ;
+			return (0);
 		}
 		temp = temp->next;
 	}
 	ft_lstadd_back(&list_envp, ft_lstnew(ft_strjoin(var_prefixed, value)));
+	free(var_prefixed);
+	return (0);
 }
 
 /*
