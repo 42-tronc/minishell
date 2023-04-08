@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/06 18:06:01 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 16:34:23 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,20 @@ void	print_env(t_list *env)
 	current = env;
 	while (current)
 	{
-		printf("data: %s, next: %p\n", (char *)current->content, current->next);
+		printf("%s\n", (char *)current->content);
+		// printf("data: %s, next: %p\n", (char *)current->content, current->next);
 		current = current->next;
 	}
 }
 
-int	main(void, void, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	// t_list	*list = malloc(sizeof(t_list));
-
-	// list->content = 1;
-	// list->next = malloc(sizeof(t_list));
-	// list->next->content = 2;
-	// list->next->next = NULL;
+	(void) ac;
+	(void) av;
 
 	t_list	*env;
-
 	env = list_env(envp);
 	print_env(env);
-	return 0;
+
+	return (0);
 }
