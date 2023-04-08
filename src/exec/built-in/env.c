@@ -6,13 +6,13 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/08 16:47:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 17:08:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_list *env)
+void	ft_env(t_list *env)
 {
 	t_list	*current;
 
@@ -32,7 +32,7 @@ void	print_env(t_list *env)
 
 	t_list	*env;
 	env = list_env(envp);
-	print_env(env);
+	ft_env(env);
 
 	return (0);
 } */
