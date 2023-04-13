@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
 /*   Updated: 2023/04/05 19:26:50 by arthurasced      ###   ########lyon.fr   */
@@ -22,6 +22,18 @@ void	print_tokens_linked_list(t_token *head)
 	while (temp != NULL)
 	{
 		printf("token[%d]___%s___\n", i++, temp->token);
+		temp = temp->next;
+	}
+}
+
+void	print_list(t_list *head)
+{
+	t_list	*temp;
+
+	temp = head;
+	while (temp != NULL)
+	{
+		printf("%s\n", (char *)temp->content);
 		temp = temp->next;
 	}
 }
@@ -79,6 +91,23 @@ void	right_symbols(t_parsing *p, char *str)
 	}
 }
 
+/// @brief Choose what action to do based on the char in a string.
+/// @param tokens Linked list of tokens.
+/// @param p Data structure for the parsing.
+/// @param str Input from the function readline.
+void	cutting_line(t_token **tokens, t_parsing *p, char *str)
+{
+	while (str && str[p->i])
+	{
+		if (str[p->i] == ' ')
+			p->i++;
+		else if (ft_char(str[p->i]))
+			get_next_word(tokens, p, str, -1);
+		else
+			get_symbols(tokens, p, str);
+	}
+}
+
 t_token	*getting_line(t_parsing *p)
 {
 	t_token	*tokens;
@@ -97,17 +126,18 @@ t_token	*getting_line(t_parsing *p)
 
 int	main(int argc, char **argv, char **envp)
 {
-	// t_token		*tokens;
-	// t_parsing	p;
+	t_token		*tokens;
+	t_list		*env;
+	t_parsing	p;
 
-	// tokens = getting_line(&p);
-	// print_tokens_linked_list(tokens);
-
+	tokens = getting_line(&p);
+	print_tokens_linked_list(tokens);
+	free_token(tokens);
 	(void)argc;
 	(void)argv;
-	t_list *env = list_env(envp);
-	printf("%s\n", ft_getenv(env, "HOME="));
+	env = list_env(envp);
 	add_env(env, "HOME=", "test");
-	printf("%s\n", ft_getenv(env, "HOME="));
+	print_list(env);
+	free_list(env);
 	return (0);
 }
