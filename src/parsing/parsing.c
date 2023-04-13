@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/05 14:37:50 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 19:26:50 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,19 @@ t_token	*getting_line(t_parsing *p)
 	return (free(str), tokens);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	// t_token		*tokens;
-// 	// t_parsing	p;
+int	main(int argc, char **argv, char **envp)
+{
+	// t_token		*tokens;
+	// t_parsing	p;
 
-// 	// tokens = getting_line(&p);
-// 	// print_tokens_linked_list(tokens);
+	// tokens = getting_line(&p);
+	// print_tokens_linked_list(tokens);
 
-// 	(void)argc;
-// 	(void)argv;
-// 	t_list *env = list_env(envp);
-// 	add_env(env, "HOME=", "test");
-// 	return (0);
-// }
+	(void)argc;
+	(void)argv;
+	t_list *env = list_env(envp);
+	printf("%s\n", ft_getenv(env, "HOME="));
+	add_env(env, "HOME=", "test");
+	printf("%s\n", ft_getenv(env, "HOME="));
+	return (0);
+}

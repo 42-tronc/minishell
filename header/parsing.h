@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/05 14:38:45 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 19:25:37 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ struct s_parsing {
 };
 // envp.c functions
 t_list	*list_env(char **envp);
-char	*ft_getenv(char **envp, char *str);
+char	*ft_getenv(t_list *list_envp, char *str);
 void	add_env(t_list *list_envp, char *var, char *value);
 
 // parsing.c functions
