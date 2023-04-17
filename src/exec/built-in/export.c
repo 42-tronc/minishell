@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/08 17:42:18 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 11:47:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,28 @@ could do with an index,
 
 void ft_sort_env(t_list *env)
 {
-    t_list *current;
-    t_list *next;
-    char *tmp;
+	t_list	*current;
+	t_list	*next;
+	char	*tmp;
 
-    if (env == NULL)
-        return;
-    current = env;
-    while (current->next)
-    {
-        next = current->next;
-        while (next)
-        {
-            if (strcmp(((char *)current->content), ((char *)next->content)) > 0)
-            {
-                tmp = current->content;
-                current->content = next->content;
-                next->content = tmp;
-            }
-            next = next->next;
-        }
-        current = current->next;
-    }
+	if (env == NULL)
+		return;
+	current = env;
+	while (current->next)
+	{
+		next = current->next;
+		while (next)
+		{
+			if (strcmp(current->content, next->content) > 0)
+			{
+				tmp = current->content;
+				current->content = next->content;
+				next->content = tmp;
+			}
+			next = next->next;
+		}
+		current = current->next;
+	}
 }
 
 
