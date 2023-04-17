@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/17 11:47:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 14:03:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ void ft_sort_env(t_list *env)
 	}
 }
 
+void	ft_export(t_list *env)
+{
+	printf("\n\n\n\n\tEXPORT HERE\n\n");
+	while (env)
+	{
+		printf("declare -x %s\n", (char *)env->content);
+		env = env->next;
+	}
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -56,6 +65,9 @@ int	main(int ac, char **av, char **envp)
 	t_list	*env;
 	env = list_env(envp);
 	ft_setenv(env, "MY_VAR", "world");
+	ft_env(env);
+	ft_export(env);
+	printf("\n\n\nCIAO BELLI BELLA\n\n\n\n");
 	ft_env(env);
 
 	return (0);
