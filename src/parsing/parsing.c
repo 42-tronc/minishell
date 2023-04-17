@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/05 19:26:50 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 16:50:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_token	*getting_line(t_parsing *p)
 	return (free(str), tokens);
 }
 
-int	main(int argc, char **argv, char **envp)
+/* int	main(int argc, char **argv, char **envp)
 {
 	t_token		*tokens;
 	t_list		*env;
@@ -136,8 +136,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	env = list_env(envp);
-	add_env(env, "HOME=", "test");
+	ft_setenv(env, "HOME=", "test");
 	print_list(env);
 	free_list(env);
 	return (0);
-}
+} */

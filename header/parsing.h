@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/05 14:38:45 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/04/08 17:45:07 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+# include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdlib.h>
-# include <stdio.h>
 
 typedef struct s_token		t_token;
 typedef struct s_parsing	t_parsing;
@@ -34,8 +33,8 @@ struct s_parsing {
 };
 // envp.c functions
 t_list	*list_env(char **envp);
-char	*ft_getenv(t_list *list_envp, char *str);
-void	add_env(t_list *list_envp, char *var, char *value);
+char	*ft_getenv(t_list *envp, char *str);
+int		ft_setenv(t_list *list_envp, char *var, char *value);
 void	free_list(t_list *lst);
 
 // parsing.c functions

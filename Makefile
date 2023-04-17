@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
+#    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/04 16:47:24 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/04/08 16:47:51 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ MAKEFLAGS += --warn-undefined-variables # warn about Make variables that don’t
 # ------------ FORMATTING -------------
 FG_RED 				:= \033[31m
 FG_GREEN 			:= \033[32m
+FG_LIGHT_GRAY 		:= \033[37m
 FG_DEFAULT 			:= \033[39m
 FG_LIGHT_RED 		:= \033[91m
 FG_LIGHT_GREEN 		:= \033[92m
@@ -56,7 +57,7 @@ SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
-SRC_BUILTIN := echo.c pwd.c cd.c
+SRC_BUILTIN := echo.c pwd.c cd.c env.c export.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c parsing.c envp.c tokens_lst.c
