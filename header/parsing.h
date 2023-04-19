@@ -28,9 +28,11 @@ struct s_token {
 };
 
 struct s_parsing {
-	int	i;
-	int	quote;
-	int	dquote;
+	int		i;
+	int		quote;
+	int		dquote;
+	int		var_name_len;
+	t_list	*env;
 };
 // envp.c functions
 t_list	*list_env(char **envp);
@@ -55,6 +57,8 @@ void	get_symbols(t_token **tokens, t_parsing *p, char *str);
 int		get_word_size(t_parsing *data, char *str, int begin);
 int		ft_char(int c);
 int		ft_char2(int c);
+
+void	navigate_tokens(t_token **tokens, t_parsing *p);
 
 void	print_tokens_linked_list(t_token *head);
 

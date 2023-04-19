@@ -59,7 +59,7 @@ DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := echo.c pwd.c cd.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c parsing.c envp.c tokens_lst.c
+SCR_PARSING := tokens.c parsing.c envp.c tokens_lst.c dollar.c
 
 
 # -------------- RECIPES --------------
@@ -97,7 +97,7 @@ re: fclean
 	@$(MAKE) all
 
 debug: makefolder rsc $(LIBFT_NAME) $(OBJ)
-	${CC} $(FSANITIZE) ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
+	${CC} $(FSANITIZE) ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 
 run :
 	make re

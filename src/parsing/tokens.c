@@ -44,6 +44,15 @@ int	get_word_size(t_parsing *p, char *str, int i)
 	return (size);
 }
 
+/// @brief Finds if we are insinde a simple quote or a double quote.
+/// @param p Data structure
+/// @param c Char to check.
+void	p_quote(t_parsing *p, char c)
+{
+	p->quote = (p->quote + (!p->dquote && c == '\'')) % 2;
+	p->dquote = (p->dquote + (!p->quote && c == '\"')) % 2;
+}
+
 /// @brief Malloc enough memory for our word, managing if we are inside quotes
 /// or double quotes or both and add it to the linked list.
 /// @param tokens Linked list of tokens.
@@ -59,8 +68,7 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 		return ;
 	while (str && str[p->i])
 	{
-		p->quote = (p->quote + (!p->dquote && str[p->i] == '\'')) % 2;
-		p->dquote = (p->dquote + (!p->quote && str[p->i] == '\"')) % 2;
+		p_quote(p, str[p->i]);
 		if (p->quote == 0 && p->dquote == 0 && str[p->i] == ' ')
 			break ;
 		else if (p->quote == 0 && p->dquote == 0 && !ft_char(str[p->i]))
@@ -70,6 +78,8 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 		else if (p->dquote == 1 && str[p->i] == '\'')
 			word[++i] = '\'';
 		else if ((p->dquote == 1 || p->quote == 1) && !ft_char(str[p->i]))
+			word[++i] = str[p->i];
+		else if ((p->dquote == 1 || p->quote == 1) && str[p->i] == ' ')
 			word[++i] = str[p->i];
 		else if (ft_char(str[p->i]) && ft_char2(str[p->i]))
 			word[++i] = str[p->i];
