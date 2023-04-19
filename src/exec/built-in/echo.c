@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/19 10:41:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 12:55:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	need_newline(char *str)
 	i = 1;
 	// if (!str)
 	// 	return (1);
+	// printf("NEED NEWLINE CHECKING\n\t`%s`\n", str);
 	if (str && str[0] == '-')
 	{
 		if (str && str[1] == 'n')
@@ -65,17 +66,37 @@ int	need_newline(char *str)
 	return (1);
 }
 
+void	ft_echo(int ac, char **av)
+{
+	int	i;
+	int	newline;
+
+	i = 1;
+	newline = 1;
+	// if `-n` then print without \n and skip the `-n`
+	if (av[i] && !need_newline(av[i]))
+	{
+		newline = 0;
+		i++;
+	}
+	// printf("\ti=%d ", i);
+	while (av[i] && !need_newline(av[i]))
+		i++;
+	while (av[i])
+	{
+		printf("%s", av[i]);
+		if (ac - 1 > i)
+			printf(" ");
+		i++;
+	}
+	if (newline)
+		printf("\n");
+	return;
+}
+
 int	main(int ac, char **av)
 {
-	if (ac >= 2)
-	{
-		printf("param= '%s'\n", av[1]);
-		printf("Need new line = %d\n", need_newline(av[1]));
-		if (need_newline(av[1]))
-			printf("loli\n");
-		else
-			printf("loli");
-	}
-	printf("pop");
+	if (ac > 1)
+		ft_echo(ac, av);
 	return (0);
 }
