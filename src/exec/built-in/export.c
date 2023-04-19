@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/18 16:35:55 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 10:21:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void ft_sort_env(t_list *env)
 	}
 }
 
-void	ft_setexport(t_list	*export, char *str)
+/* void	ft_setexport(t_list	*export, char *str)
 {
 	// check if `=` or not
 	int	i;
@@ -71,13 +71,12 @@ void	ft_setexport(t_list	*export, char *str)
 		i++;
 	}
 
-}
+} */
 
 void	ft_export(t_list *env)
 {
 	// OPERATIONS GO HERE BEFORE SORTING
 	// si export plusieurs mots
-
 
 
 	printf("\n\n\n\n\tEXPORT HERE\n\n");
@@ -90,7 +89,7 @@ void	ft_export(t_list *env)
 	}
 }
 
-int	main(int ac, char **av, char **envp)
+/* int	main(int ac, char **av, char **envp)
 {
 	(void) ac;
 	(void) av;
@@ -108,3 +107,4 @@ int	main(int ac, char **av, char **envp)
 
 	return (0);
 }
+ */

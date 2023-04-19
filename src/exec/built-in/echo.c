@@ -6,14 +6,40 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/03 17:17:13 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 10:41:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+TODO
+
+`-n -n`
+	should not display anything
+
+`-nnnn`
+	should not display anything
+
+`-n -n Hola`
+	`Hola`
+
+`-p`
+	`-p`
+
+`Hola -n`
+	`Hola -n`
+
+``
+	``
+
+`/n hola`
+	`n hola`
+
+ */
+
 /**
- * @brief checks if a newline is needed by looking for any '-n'
+ * @brief checks if a newline is needed by looking for any '-n' or '-nnnn...'
  *
  * @param str string to check
  * @return int 1 if needed, 0 if not
@@ -39,7 +65,7 @@ int	need_newline(char *str)
 	return (1);
 }
 
-/* int	main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	if (ac >= 2)
 	{
@@ -52,4 +78,4 @@ int	need_newline(char *str)
 	}
 	printf("pop");
 	return (0);
-} */
+}
