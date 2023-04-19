@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/19 13:27:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/19 13:45:08 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ int	need_newline(char *str)
 	return (1);
 }
 
+/**
+ * @brief print a string or an array of strings
+ *
+ * @param ac nb of args passed
+ * @param av array of args to print
+ */
 void	ft_echo(int ac, char **av)
 {
 	int	i;
