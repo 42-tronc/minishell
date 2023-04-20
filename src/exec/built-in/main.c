@@ -25,15 +25,26 @@ int main(int ac, char *av[], char **envp)
 			ft_cd(NULL, env);
 	}
 	else if (strcmp(av[1], "env") == 0)
-		printf("env()");
+	{
+		printf("env()\n");
+		ft_env(env);
+	}
 	else if (strcmp(av[1], "exit") == 0)
-		printf("exit_func()");
+	{
+		printf("exit_func()\n");
+	}
 	else if (strcmp(av[1], "export") == 0)
-		printf("export()");
+	{
+		printf("export()\n");
+	}
 	else if (strcmp(av[1], "pwd") == 0)
-		printf("pwd()");
+	{
+		printf("pwd()\n");
+	}
 	else if (strcmp(av[1], "unset") == 0)
-		printf("unset()");
+	{
+		printf("unset()\n");
+	}
 	else
 	{
 		printf("Invalid function: `%s`\n", av[1]);
