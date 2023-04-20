@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/08 17:45:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/18 16:23:01 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ t_list	*list_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
+		printf("adding: `%s`\n", envp[i]);
+		/*
+		2 strdup si y'a un `=`
+			si GDK_BACKEND=x11
+			go jusqua `=`
+			remplacer par un `\0` le `=`
+			strdup premier mot
+			++ pour skip lespace
+			strdup le deuxieme mot
+		sinon 1 strdup du premier mot
+		 */
 		ft_lstadd_back(&list_envp, ft_lstnew(ft_strdup(envp[i])));
 		i++;
 	}
