@@ -45,6 +45,11 @@ int main(int ac, char *av[], char **envp)
 	{
 		printf("unset()\n");
 	}
+	else if (strcmp(av[1], "fill") == 0)
+	{
+		printf("fill_env()\n");
+		fill_env(envp);
+	}
 	else
 	{
 		printf("Invalid function: `%s`\n", av[1]);
