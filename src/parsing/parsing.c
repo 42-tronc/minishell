@@ -124,21 +124,18 @@ t_token	*getting_line(t_parsing *p)
 	return (free(str), tokens);
 }
 
-/* int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_token		*tokens;
 	t_parsing	p;
 
+	(void)argc;
+	(void)argv;
 	tokens = getting_line(&p);
 	p.env = list_env(envp);
 	navigate_tokens(&tokens, &p);
 	print_tokens_linked_list(tokens);
 	free_token(tokens);
-	(void)argc;
-	(void)argv;
-	env = list_env(envp);
-	ft_setenv(env, "HOME=", "test");
-	print_list(env);
-	free_list(env);
+	free_list(p.env);
 	return (0);
-} */
+}

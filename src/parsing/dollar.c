@@ -17,156 +17,147 @@ int	next_char(char c)
 	if (c == '@' || c == '#' || c == '%' || c == '^' || c == '*' || c == '-'
 		|| c == '+' || c == '=' || c == '{' || c == '}' || c == '[' || c == ']'
 		|| c == '\\' || c == ':' || c == ',' || c == '.' || c == '/'
-		|| c == '?' || c == '~' || c == '$')
+		|| c == '?' || c == '~' || c == '$' || c == '\'' || c == '\"' || c == ' ')
 		return (0);
 	else
 		return (1);
 }
 
-int	find_dollar(char *str)
+int	processed_line(char *str)
 {
 	int	i;
+	int	keep;
 
 	i = -1;
+	keep = 0;
 	while (str && str[++i])
-		if (str[i] == '$')
-			return (1);
-	return (0);
+	{
+		if (i == 0 && str[i] == '$')
+			keep = 1;
+		if (i > 0 && str[i - 1] == '$' && (next_char(str[i]) || ft_isdigit(str[i])))
+			keep = 1;
+	}
+	return (keep);
 }
 
-int	get_size(char *str)
+char	*get_var_name(char *str)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*res;
 
 	i = 0;
 	while (str && str[i])
 	{
-		if (i == 0 && str[i] == '$')
-			break ;
-		else if (i != 0 && str[i] == '$' && str[i - 1] != '\\')
+		if (!next_char(str[i]))
 			break ;
 		i++;
 	}
-	return (i);
+	res = malloc(sizeof(char) * (i + 1));
+	if (!res)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		res[j] = str[j];
+		j++;
+	}
+	res[j] = '\0';
+	return (res);
 }
 
-char	*dup_till_charset(t_parsing *p, char *str)
+char	*get_before_dollar(char *str, t_parsing *p)
 {
-	char	*res;
-	int		size;
 	int		i;
-	int		j;
+	int		size;
+	char	*res;
 
-	size = get_size(str);
+	size = 0;
+	while (str && str[size])
+	{
+		if (str[size] == '$')
+			break ;
+		size++;
+	}
 	res = malloc(sizeof(char) * (size + 1));
 	if (!res)
 		return (NULL);
 	i = 0;
-	j = 0;
 	while (i < size)
 	{
-		res[j] = str[i];
-		j++;
+		res[i] = str[i];
 		i++;
 	}
-	res[j] = '\0';
-	p->i += i;
+	res[i] = '\0';
+	p->i += ft_strlen(res);
 	return (res);
 }
 
-char	*cut_var_name(t_parsing *p, char *var)
+static int	str_cpy_dollar(char *dst, char *src, int index)
 {
-	char	*name;
-	int		i;
+	size_t	i;
 
-	if (var && ft_isdigit(var[0]))
-		return (NULL);
 	i = 0;
-	while (var && var[i] && next_char(var[i]))
+	while (src && src[i])
+	{
+		dst[index] = ((char *)src)[i];
 		i++;
-	name = malloc(sizeof(char) * (i + 1));
-	if (!name)
-		return (NULL);
-	i = 0;
-	while (var && var[i] && next_char(var[i]))
-	{
-		name[i] = var[i];
-		i++;
+		index++;
 	}
-	name[i] = '\0';
-	p->i += i;
-	return (name);
+	return (index);
 }
 
-char	*dup_till_word(t_parsing *p, char *var)
+/**
+ * @brief allocates and return a new string being s1 + s2
+ *
+ * @param s1 first string
+ * @param s2 second string to add to s1
+ * @return char* concatenated string of s1+s2 NULL if allocation fails
+ */
+char	*ft_strjoin_dollar(char const *s1, char const *s2)
 {
-	char	*res;
-	char	*name;
-	char	*value;
+	size_t	index;
+	char	*dst;
 
-	if (var[0] == '$')
-	{
-		p->i++;
-		var++;
-	}
-	name = cut_var_name(p, var);
-	p->var_name_len = ft_strlen(name) + 1;
-	value = ft_getenv(p->env, name);
-	res = ft_strdup(value);
-	free(name);
-	free(value);
-	if (!res)
+	dst = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!dst)
 		return (NULL);
-	return (res);
+	index = str_cpy_dollar(dst, (char *)s1, 0);
+	index = str_cpy_dollar(dst, (char *)s2, index);
+	dst[index] = '\0';
+	return (dst);
 }
 
-int	get_index_dollar(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		if (str)
-	}
-}
 
 void	replace_var(t_token *temp, t_parsing *p)
 {
-	char	*dup_before;
-	char	*dup_var;
-	char	*expand;
-	char	*new_str;
-	int		skip;
+	char	*before;
+	char	*var_value;
+	char	*before_and_value;
+	char	*new_token;
+	char	*var_name;
 
-	p->i = 0;
-	while (find_dollar(temp->token))
-	{
-		dup_before = dup_till_charset(p, temp->token);
-		dup_var = dup_till_word(p, temp->token + p->i);
-		expand = ft_strjoin(dup_before, dup_var);
-		printf("expand=%s\n", expand);
-		skip = get_index_dollar(temp->token);
-		printf("%d\n", skip);
-		new_str = ft_strjoin(expand, temp->token + skip);
+		before = get_before_dollar(temp->token, p);
+		p->i++;
+		var_name = get_var_name(temp->token + p->i);
+		var_value = getenv(var_name);
+		before_and_value = ft_strjoin_dollar(before, var_value);
+		new_token = ft_strjoin_dollar(before_and_value, temp->token + ft_strlen(before) + ft_strlen(var_name) + 1);
 		free(temp->token);
-		temp->token = ft_strjoin(expand, new_str);
-		printf("token+p->i=%s\n", temp->token + p->i);
-		free(dup_before);
-		free(dup_var);
-		free(new_str);
-		free(expand);
-		if (temp->token[p->i] == '\0')
-			break ;
-		//expand = ft_strjoin(dup_before, ft_getenv(p->env, dup_var));
-		//printf("before :%s & var :%s, expand %s\n", dup_before, dup_var, expand);
-		//skip = ft_strlen(dup_before) + ft_strlen(ft_getenv(p->env, dup_var));
-		// free(temp->token);
-		// temp->token = ft_strjoin(expand, temp->token + skip);
-		// free(dup_before);
-		// free(dup_var);
-		// free(expand);
-	}
+		temp->token = ft_strdup(new_token);
+		// printf("before:%s\n", before);
+		// printf("p->i=%d\n", p->i);
+		// printf("str+p->i:%s\n", temp->token + p->i);
+		// printf("var_name:%s\n", var_name);
+		// printf("var_value:%s\n", var_value);
+		// printf("new_token:%s\n", new_token);
+		// printf("bav:%s\n", before_and_value);
+		// printf("b:%p, vv:%p, bav:%p, nt:%p, vn:%p, tt:%p\n", before, var_value, before_and_value, new_token, var_name, temp->token);
+		// free(var_value);
+		free(var_name);
+		free(before_and_value);
+		free(before);
+		free(new_token);
 }
 
 void	navigate_tokens(t_token **tokens, t_parsing *p)
@@ -176,8 +167,11 @@ void	navigate_tokens(t_token **tokens, t_parsing *p)
 	temp = *tokens;
 	while (temp)
 	{
-		if (find_dollar(temp->token))
+		while (processed_line(temp->token))
+		{
+			p->i = 0;
 			replace_var(temp, p);
+		}
 		temp = temp->next;
 	}
 }

@@ -30,7 +30,6 @@ struct s_parsing {
 	int		i;
 	int		quote;
 	int		dquote;
-	int		var_name_len;
 	t_list	*env;
 };
 // envp.c functions

@@ -21,15 +21,15 @@ EXPORT
 could do with an index,
  */
 
-int	main(int ac, char **av, char **envp)
-{
-	(void) ac;
-	(void) av;
+// int	main(int ac, char **av, char **envp)
+// {
+// 	(void) ac;
+// 	(void) av;
 
-	t_list	*env;
-	env = list_env(envp);
-	ft_setenv(env, "MY_VAR", "world");
-	ft_env(env);
+// 	t_list	*env;
+// 	env = list_env(envp);
+// 	ft_setenv(env, "MY_VAR", "world");
+// 	ft_env(env);
 
-	return (0);
-}
+// 	return (0);
+// }
