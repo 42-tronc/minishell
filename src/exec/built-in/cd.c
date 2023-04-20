@@ -27,7 +27,7 @@ NEED
  * `~` or `NULL` will go to the home directory
  * @param path absolute or relative path to go to.
  */
-void	ft_cd(char *path, t_env *env)
+void	ft_cd(char *path, t_list *env)
 {
 	// char	*old_pwd;
 

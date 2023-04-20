@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/04/20 11:45:35 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 16:00:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 
-	t_env	*env;
+	t_list	*env;
 	env = list_env(envp);
 	ft_setenv(env, "MY_VAR", "world");
 	ft_env(env);
