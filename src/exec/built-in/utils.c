@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/03 15:26:14 by croy              #+#    #+#             */
-/*   Updated: 2023/04/20 11:45:35 by croy             ###   ########lyon.fr   */
+/*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
+/*   Updated: 2023/04/20 11:39:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#include "minishell.h"
 
-# include <limits.h>
-# include <unistd.h>
+/*
+NEED
 
-# define RED	"\e[31;1m"
-# define RESET	"\e[0m"
-
-typedef struct s_env
-{
-	char			*var;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
-
-// char	*ft_pwd(void);
-void	ft_cd(char *path, t_env *env);
-void	ft_echo(int ac, char **av);
-void	ft_env(t_env *env);
-void	ft_export(t_env *env);
-int		ft_pwd(void);
-
-
-#endif
+	Fill env to linked list
+	Get value from var in linked list
+	Set value from var in linked list
+ */

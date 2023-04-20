@@ -8,7 +8,7 @@ int main(int ac, char *av[], char **envp)
 		return 0;
 	}
 
-	t_list	*env;
+	t_env	*env;
 	env = list_env(envp);
 
 	if (strcmp(av[1], "echo") == 0)
@@ -55,6 +55,6 @@ int main(int ac, char *av[], char **envp)
 }
 
 void	ft_echo(int ac, char **av);
-void	ft_env(t_list *env);
-void	ft_export(t_list *env);
+void	ft_env(t_env *env);
+void	ft_export(t_env *env);
 int		ft_pwd(void);

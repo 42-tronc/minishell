@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/20 10:56:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 11:45:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 /// @brief Free a given list.
 /// @param lst The list to be free'd.
-void	free_list(t_list *lst)
+void	free_list(t_env *lst)
 {
-	t_list	*current;
-	t_list	*temp1;
+	t_env	*current;
+	t_env	*temp1;
 
 	current = lst;
 	while (current != NULL)
@@ -32,10 +32,10 @@ void	free_list(t_list *lst)
 /// @brief Create a linked list out of the envp.
 /// @param envp envp variable out of the main.
 /// @return pointer to first element of the linked list.
-t_list	*list_env(char **envp)
+t_env	*list_env(char **envp)
 {
 	int		i;
-	t_list	*list_envp;
+	t_env	*list_envp;
 
 	list_envp = NULL;
 	i = 0;
@@ -62,9 +62,9 @@ t_list	*list_env(char **envp)
 /// @param envp t_list envp to get the linked list of envp.
 /// @param str Variable name with the '=' included /!\.
 /// @return char * from the variable passed.
-char	*ft_getenv(t_list *list_env, char *str)
+char	*ft_getenv(t_env *list_env, char *str)
 {
-	t_list	*temp;
+	t_env	*temp;
 
 	temp = list_env;
 	while (temp->next != NULL)
@@ -80,9 +80,9 @@ char	*ft_getenv(t_list *list_env, char *str)
 /// @param list_envp Linked list of envp
 /// @param var Name of the variable with '=' at the end (IMPORTANT TO ADD =)
 /// @param value The value to be replace or added to the linked list
-int	ft_setenv(t_list *list_envp, char *var, char *value)
+int	ft_setenv(t_env *list_envp, char *var, char *value)
 {
-	t_list	*temp;
+	t_env	*temp;
 	char	*var_prefixed;
 
 	temp = list_envp;

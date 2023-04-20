@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/19 10:21:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 11:45:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ export LOL==poopi
 
  */
 
-void ft_sort_env(t_list *env)
+void ft_sort_env(t_env *env)
 {
-	t_list	*current;
-	t_list	*next;
+	t_env	*current;
+	t_env	*next;
 	char	*tmp;
 
 	if (!env)
@@ -73,7 +73,7 @@ void ft_sort_env(t_list *env)
 
 } */
 
-void	ft_export(t_list *env)
+void	ft_export(t_env *env)
 {
 	// OPERATIONS GO HERE BEFORE SORTING
 	// si export plusieurs mots

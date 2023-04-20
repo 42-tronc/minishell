@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/08 16:50:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 11:45:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	print_tokens_linked_list(t_token *head)
 	}
 }
 
-void	print_list(t_list *head)
+void	print_list(t_env *head)
 {
-	t_list	*temp;
+	t_env	*temp;
 
 	temp = head;
 	while (temp != NULL)
