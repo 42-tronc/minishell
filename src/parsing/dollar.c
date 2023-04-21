@@ -68,7 +68,6 @@ char	*get_before_dollar(char *str, t_parsing *p)
 	return (res);
 }
 
-// /!\ free(var_value); /!\ 
 void	replace_var(t_token *temp, t_parsing *p)
 {
 	char	*before;

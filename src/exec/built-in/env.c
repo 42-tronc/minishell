@@ -12,15 +12,14 @@
 
 #include "minishell.h"
 
-void	ft_env(t_list *env)
+void	ft_env(t_env *env)
 {
-	t_list	*current;
+	t_env	*current;
 
 	current = env;
 	while (current)
 	{
-		printf("%s\n", (char *)current->content);
-		// printf("data: %s, next: %p\n", (char *)current->content, current->next);
+		printf("name: %s, value: %s\n", (char *)current->name, current->value);
 		current = current->next;
 	}
 }
@@ -30,7 +29,7 @@ void	ft_env(t_list *env)
 	(void) ac;
 	(void) av;
 
-	t_list	*env;
+	t_env	*env;
 	env = list_env(envp);
 	ft_env(env);
 

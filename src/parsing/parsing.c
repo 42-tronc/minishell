@@ -26,14 +26,15 @@ void	print_tokens_linked_list(t_token *head)
 	}
 }
 
-void	print_list(t_list *head)
+void	print_env(t_env *head)
 {
-	t_list	*temp;
+	t_env	*temp;
 
 	temp = head;
 	while (temp != NULL)
 	{
-		printf("%s\n", (char *)temp->content);
+		printf("%s ", (char *)temp->name);
+		printf("%s\n", (char *)temp->value);
 		temp = temp->next;
 	}
 }
@@ -135,6 +136,7 @@ t_token	*getting_line(t_parsing *p)
 // 	p.env = list_env(envp);
 // 	navigate_tokens(&tokens, &p);
 // 	print_tokens_linked_list(tokens);
+// 	print_env(p.env);
 // 	free_token(tokens);
 // 	free_list(p.env);
 // 	return (0);
