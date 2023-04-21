@@ -21,7 +21,7 @@ void	print_tokens_linked_list(t_token *head)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("token[%d]___%s___, strlen:%ld\n", i++, temp->token, ft_strlen(temp->token));
+		printf("token[%d]___%s___\n", i++, temp->token);
 		temp = temp->next;
 	}
 }
@@ -124,18 +124,18 @@ t_token	*getting_line(t_parsing *p)
 	return (free(str), tokens);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_token		*tokens;
-	t_parsing	p;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_token		*tokens;
+// 	t_parsing	p;
 
-	(void)argc;
-	(void)argv;
-	tokens = getting_line(&p);
-	p.env = list_env(envp);
-	navigate_tokens(&tokens, &p);
-	print_tokens_linked_list(tokens);
-	free_token(tokens);
-	free_list(p.env);
-	return (0);
-}
+// 	(void)argc;
+// 	(void)argv;
+// 	tokens = getting_line(&p);
+// 	p.env = list_env(envp);
+// 	navigate_tokens(&tokens, &p);
+// 	print_tokens_linked_list(tokens);
+// 	free_token(tokens);
+// 	free_list(p.env);
+// 	return (0);
+// }
