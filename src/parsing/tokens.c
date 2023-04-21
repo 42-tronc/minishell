@@ -44,15 +44,6 @@ int	get_word_size(t_parsing *p, char *str, int i)
 	return (size);
 }
 
-/// @brief Finds if we are insinde a simple quote or a double quote.
-/// @param p Data structure
-/// @param c Char to check.
-void	p_quote(t_parsing *p, char c)
-{
-	p->quote = (p->quote + (!p->dquote && c == '\'')) % 2;
-	p->dquote = (p->dquote + (!p->quote && c == '\"')) % 2;
-}
-
 /// @brief Malloc enough memory for our word, managing if we are inside quotes
 /// or double quotes or both and add it to the linked list.
 /// @param tokens Linked list of tokens.
@@ -86,24 +77,6 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 		p->i++;
 	}
 	ft_tokenadd_back(tokens, ft_tokennew(word));
-}
-
-/// @brief Check if the char is a space, a pipe or a < / >.
-/// @param c Char to check
-/// @return 0 if it is one of the char searched for,
-/// 1 if it is any other char.
-int	ft_char(int c)
-{
-	if (c == '|' || c == '<' || c == '>')
-		return (0);
-	return (1);
-}
-
-int	ft_char2(int c)
-{
-	if (c == '\'' || c == ' ' || c == '\"')
-		return (0);
-	return (1);
 }
 
 /// @brief Malloc enough memory for our symbole (|, <, <<, >, >>)
