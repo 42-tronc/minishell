@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 13:30:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 16:41:42 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,6 @@ export LOL==poopi
 
 
  */
-
-/* void ft_sort_env(t_env *env)
-{
-	t_env	*current;
-	t_env	*next;
-	char	*tmp;
-
-	if (!env)
-		return;
-	current = env;
-	while (current->next)
-	{
-		next = current->next;
-		while (next)
-		{
-			if (strcmp(current->var, next->var) > 0)
-			{
-				tmp = current->var;
-				current->var = next->var;
-				next->var = tmp;
-			}
-			next = next->next;
-		}
-		current = current->next;
-	}
-} */
 
 void	ft_sort_env(t_env *env)
 {
@@ -103,18 +77,28 @@ void	ft_sort_env(t_env *env)
 
 } */
 
-void	ft_export(t_env *env, char *var, char *value)
+void	ft_export(t_env *env, t_list *args)
 {
 	// OPERATIONS GO HERE BEFORE SORTING
 	// si export plusieurs mots
 
-
+	if (ft_setenv(env, "GTK_MODULES", "lol"))
+		printf("Error in set env\n");
+	if (ft_addenv(env, "NOT_GTK_MODULES", NULL))
+		printf("Error in add env\n");
+	if (args)
+	{
+		while (args)
+		{
+			// printf("%s\n", (char*)args->content);
+			args = args->next;
+		}
+	}
 	printf("\n\n\n\n\tEXPORT HERE\n\n");
 	ft_sort_env(env);
 	while (env)
 	{
 		printf("declare -x %s=\"%s\"\n", env->var, env->value);
-		// printf("declare -x %s=\"%s\"\n", (char *)env->var, var->value);
 		env = env->next;
 	}
 }
