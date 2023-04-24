@@ -62,7 +62,8 @@ t_env	*list_env(char **envp)
 		while (envp[i][++j])
 			if (envp[i][j] == '=')
 				break ;
-		ft_envadd_back(&list_envp, ft_envnew(ft_strndup(envp[i], j), ft_strdup(envp[i] + j + 1)));
+		ft_envadd_back(&list_envp, ft_envnew(ft_strndup(envp[i], j), \
+		ft_strdup(envp[i] + j + 1)));
 		i++;
 	}
 	return (list_envp);

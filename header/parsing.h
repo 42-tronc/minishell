@@ -13,7 +13,6 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "exec.h"
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
