@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/04/17 16:00:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/20 13:58:24 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_unset()
 
 }
 
-int	main(int ac, char **av, char **envp)
+/* int	main(int ac, char **av, char **envp)
 {
 	(void) ac;
 	(void) av;
@@ -37,4 +37,4 @@ int	main(int ac, char **av, char **envp)
 	ft_env(env);
 
 	return (0);
-}
+} */
