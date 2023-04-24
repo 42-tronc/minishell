@@ -1,14 +1,28 @@
 #include "minishell.h"
 
+t_list	*ft_av_to_list(int ac, char **av)
+{
+	int		i;
+	t_list	*arg_list;
+
+	i = 2;
+	arg_list = NULL;
+	while (i < ac)
+		ft_lstadd_back(&arg_list, ft_lstnew(av[i++]));
+	return (arg_list);
+}
+
 int main(int ac, char *av[], char **envp)
 {
+	t_env	*env;
+	t_list	*args;
+
 	if (ac < 2 || strlen(av[1]) == 0)
 	{
 		printf("Available functions: echo, cd, env, exit, export, pwd, unset\n");
 		return 0;
 	}
 
-	t_env	*env;
 	env = fill_env(envp);
 	if (strcmp(av[1], "echo") == 0)
 	{
@@ -37,7 +51,8 @@ int main(int ac, char *av[], char **envp)
 	else if (strcmp(av[1], "export") == 0)
 	{
 		printf("export()\n\n");
-		ft_export(env);
+		args = ft_av_to_list(ac, av);
+		ft_export(env, args);
 	}
 	/*
 	else if (strcmp(av[1], "pwd") == 0)
