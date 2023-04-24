@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 17:11:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 18:36:13 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,39 +117,41 @@ int	ft_addenv(t_env *env, char *var, char *value)
 	if (!value)
 		value = "";
 	ft_env_add_back(&env, ft_env_new(var, value));
+
+	printf("ADD:\t`%s`=`%s`\n\n", var, value);
 	return (0);
 }
 
 int	ft_setenv(t_env *env, char *var, char *value)
 {
-	t_env	*temp;
+	t_env	*current;
 
-	temp = env;
+	current = env;
 	if (!var)
 		return (1);
 	if (!value)
 		value = "";
-	while (temp)
+	while (current)
 	{
-		if (ft_strcmp(temp->var, var) == 0)
+		if (ft_strcmp(current->var, var) == 0)
 		{
-			// printf("OLD: `%s`=`%s`\n", temp->var, temp->value);
-			free(temp->value);
+			printf("CHANGE:\t`%s`=`%s`\n", current->var, current->value);
+			printf(ORANGE"\tB4 FREE: value\n"RESET);
+			free(current->value);
+			printf(ORANGE"\tPASSED FREE: value\n"RESET);
 
-			temp->value = ft_strdup(value);
-			if (!temp->value)
+			current->value = ft_strdup(value);
+			if (!current->value)
 				return (print_error(0), -1);
 				// return (-10);
-			// printf("NEW: `%s`=`%s`\n", temp->var, temp->value);
+			printf("TO:\t`%s`=`%s`\n\n", current->var, current->value);
 			return (0);
 		}
-		temp = temp->next;
+		current = current->next;
 	}
 	// maybe add ft_addenv
 	ft_addenv(env, var, value);
 	return (0);
-
-	// return (1);
 }
 
 void	print_error(int code)
