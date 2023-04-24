@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/08 17:45:07 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 12:14:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ struct s_parsing {
 };
 // envp.c functions
 t_list	*list_env(char **envp);
-char	*ft_getenv(t_list *envp, char *str);
-int		ft_setenv(t_list *list_envp, char *var, char *value);
+// char	*ft_getenv(t_list *envp, char *str);
+// int		ft_setenv(t_list *list_envp, char *var, char *value);
 void	free_list(t_list *lst);
 
 // parsing.c functions
