@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 18:38:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 18:40:21 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ export LOL="ww"	_ww="sadge"
 export LOL==poopi
 	LOL="=poopi"
 
-
- */
+*/
 
 void	ft_sort_env(t_env *env)
 {
@@ -58,24 +57,6 @@ void	ft_sort_env(t_env *env)
 		current = current->next;
 	}
 }
-
-
-/* void	ft_setexport(t_list	*export, char *str)
-{
-	// check if `=` or not
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-		{
-			ft_setenv(export, )
-		}
-		i++;
-	}
-
-} */
 
 void args_to_export(t_env *env, t_list *args)
 {
@@ -167,23 +148,3 @@ void	ft_export(t_env *env, t_list *args)
 		env = env->next;
 	}
 }
-
-/* int	main(int ac, char **av, char **envp)
-{
-	(void) ac;
-	(void) av;
-	t_list	*env;
-	// t_list	*export;
-
-	env = list_env(envp);
-	// export = list_env(envp);
-	ft_setenv(env, "MY_VAR", "world");
-	// printf("\n\n\n\tOG\n\n");
-	// ft_env(env);
-	// ft_export(export);
-	// printf("\n\n\n\tOG AGAIN\n\n");
-	// ft_env(env);
-
-	return (0);
-}
- */
