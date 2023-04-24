@@ -11,6 +11,8 @@ int main(int ac, char *av[], char **envp)
 	t_list	*env;
 	env = list_env(envp);
 
+	// t_env	*env;
+	// env = fill_env(envp);
 	if (strcmp(av[1], "echo") == 0)
 	{
 		printf("echo()\n");
