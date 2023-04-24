@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 12:56:15 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 16:40:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_env	*fill_env(char **envp)
 	return (ll_env);
 }
 
-char	*ft_getenv(t_env *ll_env, char *var)
+char	*ft_get_env(t_env *ll_env, char *var)
 {
 	t_env	*temp;
 
@@ -110,11 +110,25 @@ char	*ft_getenv(t_env *ll_env, char *var)
 	return (NULL);
 }
 
-int	ft_setenv(t_env *ll_env, char *var, char *replace)
+int	ft_add_env(t_env *ll_env, char *var, char *value)
+{
+	if (!var)
+		return (1);
+	if (!value)
+		value = "";
+	ft_env_add_back(&ll_env, ft_env_new(var, value));
+	return (0);
+}
+
+int	ft_set_env(t_env *ll_env, char *var, char *value)
 {
 	t_env	*temp;
 
 	temp = ll_env;
+	if (!var)
+		return (1);
+	if (!value)
+		value = "";
 	while (temp)
 	{
 		if (ft_strcmp(temp->var, var) == 0)
@@ -122,13 +136,15 @@ int	ft_setenv(t_env *ll_env, char *var, char *replace)
 			// printf("OLD: `%s`=`%s`\n", temp->var, temp->value);
 			free(temp->value);
 
-			temp->value = ft_strdup(replace);
+			temp->value = ft_strdup(value);
 			if (!temp->value)
-				return (-1);
+				return (-10);
 			// printf("NEW: `%s`=`%s`\n", temp->var, temp->value);
-			return (1);
+			return (0);
 		}
 		temp = temp->next;
 	}
-	return (0);
+	// maybe add ft_addenv
+
+	return (1);
 }
