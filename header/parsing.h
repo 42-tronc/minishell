@@ -17,6 +17,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define CHEVRON_L "<"
+# define CHEVRON_R ">"
+# define INFILE "infile"
+# define OUTFILE "outfile"
+# define CMD "command"
+# define ARG "argument"
+# define PIPE "|"
+
 typedef struct s_token		t_token;
 typedef struct s_parsing	t_parsing;
 typedef struct s_env		t_env;
@@ -24,6 +32,7 @@ typedef struct s_env		t_env;
 struct s_token {
 	char	*token;
 	char	*token_id;
+	t_token	*prev;
 	t_token	*next;
 };
 
@@ -31,7 +40,9 @@ struct s_parsing {
 	int		i;
 	int		quote;
 	int		dquote;
+	int		all_id;
 	t_env	*env;
+	
 };
 
 struct s_env {
@@ -72,7 +83,7 @@ int		ft_char2(int c);
 void	p_quote(t_parsing *p, char c);
 
 // dollar.c functions
-void	navigate_tokens(t_token **tokens, t_parsing *p);
+void	expand_tokens(t_token **tokens, t_parsing *p);
 void	replace_var(t_token *temp, t_parsing *p);
 char	*get_before_dollar(char *str, t_parsing *p);
 char	*get_var_name(char *str);
@@ -83,6 +94,14 @@ int		str_cpy_dollar(char *dst, char *src, int index);
 int		processed_line(char *str);
 int		next_char(char c);
 
+// identification.c functions
+void	id_tokens(t_token **tokens);
+int		command_arg_file(t_token *temp);
+int		first_token(t_token *temp);
+
+// identification2.c functions
+int		is_separator(t_token *temp);
+int		first_token(t_token *temp);
 
 void	print_tokens_linked_list(t_token *head);
 
