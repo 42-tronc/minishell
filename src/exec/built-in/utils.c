@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 16:44:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 16:44:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ int	ft_setenv(t_env *ll_env, char *var, char *value)
 
 			temp->value = ft_strdup(value);
 			if (!temp->value)
-				return (-10);
+				return (print_error(0), -1);
+				// return (-10);
 			// printf("NEW: `%s`=`%s`\n", temp->var, temp->value);
 			return (0);
 		}
@@ -147,4 +148,15 @@ int	ft_setenv(t_env *ll_env, char *var, char *value)
 	// maybe add ft_addenv
 
 	return (1);
+}
+
+void	print_error(int code)
+{
+	char	*error[1];
+
+	error[0] = "Malloc failed to allocate a memory space";
+
+	// should prob print to fd 2
+	printf(RED"Error: %s\n"RESET, error[code]);
+	exit(EXIT_FAILURE);
 }

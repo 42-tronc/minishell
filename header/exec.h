@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:26:14 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 16:41:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 16:42:23 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ t_env	*fill_env(char **envp);
 char	*ft_getenv(t_env *ll_env, char *var);
 int		ft_addenv(t_env *ll_env, char *var, char *value);
 int		ft_setenv(t_env *ll_env, char *var, char *replace);
+
+void	print_error(int error_type);
 
 #endif
