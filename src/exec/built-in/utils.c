@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 16:40:18 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 16:44:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_env	*fill_env(char **envp)
 	return (ll_env);
 }
 
-char	*ft_get_env(t_env *ll_env, char *var)
+char	*ft_getenv(t_env *ll_env, char *var)
 {
 	t_env	*temp;
 
@@ -110,7 +110,7 @@ char	*ft_get_env(t_env *ll_env, char *var)
 	return (NULL);
 }
 
-int	ft_add_env(t_env *ll_env, char *var, char *value)
+int	ft_addenv(t_env *ll_env, char *var, char *value)
 {
 	if (!var)
 		return (1);
@@ -120,7 +120,7 @@ int	ft_add_env(t_env *ll_env, char *var, char *value)
 	return (0);
 }
 
-int	ft_set_env(t_env *ll_env, char *var, char *value)
+int	ft_setenv(t_env *ll_env, char *var, char *value)
 {
 	t_env	*temp;
 
