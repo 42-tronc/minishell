@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/20 13:59:12 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/24 18:20:47 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,7 +98,7 @@ re: fclean
 	@$(MAKE) all
 
 debug: makefolder rsc $(LIBFT_NAME) $(OBJ)
-	${CC} $(FSANITIZE) ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME)
+	${CC} $(FSANITIZE) ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 
 run :
 	make re
