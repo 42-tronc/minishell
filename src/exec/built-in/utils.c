@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 12:13:59 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 12:56:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ t_env	*fill_env(char **envp)
 			if (envp[i][j] == '=')
 			{
 				// printf("%c here \n", envp[i][j]);
-				printf("\n`%s`\n", envp[i]);
+				// printf("\n`%s`\n", envp[i]);
 				envp[i][j] = '\0';
 				current = ft_env_new(ft_strdup(envp[i]), ft_strdup(envp[i] + j + 1));
-				printf("`%s`", current->var);
-				printf("`%s`\n", current->value);
+				// printf("`%s`", current->var);
+				// printf("`%s`\n", current->value);
 
 				if (!current)
 					return (NULL);
@@ -119,10 +119,13 @@ int	ft_setenv(t_env *ll_env, char *var, char *replace)
 	{
 		if (ft_strcmp(temp->var, var) == 0)
 		{
+			// printf("OLD: `%s`=`%s`\n", temp->var, temp->value);
 			free(temp->value);
+
 			temp->value = ft_strdup(replace);
 			if (!temp->value)
 				return (-1);
+			// printf("NEW: `%s`=`%s`\n", temp->var, temp->value);
 			return (1);
 		}
 		temp = temp->next;
