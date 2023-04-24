@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:26:14 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 17:10:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 18:29:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <unistd.h>
 
 # define RED	"\e[31;1m"
+# define ORANGE "\e[38;5;208;1m"
+# define YELLOW	"\e[33;1m"
 # define RESET	"\e[0m"
 
 typedef struct s_env
@@ -51,7 +53,7 @@ int		ft_pwd(void);
 t_env	*fill_env(char **envp);
 char	*ft_getenv(t_env *env, char *var);
 int		ft_addenv(t_env *env, char *var, char *value);
-int		ft_setenv(t_env *env, char *var, char *value)
+int		ft_setenv(t_env *env, char *var, char *value);
 
 void	print_error(int error_type);
 
