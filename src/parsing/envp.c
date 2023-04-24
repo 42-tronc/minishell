@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/20 10:56:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 12:23:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_list	*list_env(char **envp)
 /// @param envp t_list envp to get the linked list of envp.
 /// @param str Variable name with the '=' included /!\.
 /// @return char * from the variable passed.
-char	*ft_getenv(t_list *list_env, char *str)
+/* char	*ft_getenv(t_list *list_env, char *str)
 {
 	t_list	*temp;
 
@@ -74,13 +74,13 @@ char	*ft_getenv(t_list *list_env, char *str)
 		temp = temp->next;
 	}
 	return (NULL);
-}
+} */
 
 /// @brief Change or add back a variable in our linked list of envp.
 /// @param list_envp Linked list of envp
 /// @param var Name of the variable with '=' at the end (IMPORTANT TO ADD =)
 /// @param value The value to be replace or added to the linked list
-int	ft_setenv(t_list *list_envp, char *var, char *value)
+/* int	ft_setenv(t_list *list_envp, char *var, char *value)
 {
 	t_list	*temp;
 	char	*var_prefixed;
@@ -108,7 +108,7 @@ int	ft_setenv(t_list *list_envp, char *var, char *value)
 	ft_lstadd_back(&list_envp, ft_lstnew(ft_strjoin(var_prefixed, value)));
 	free(var_prefixed);
 	return (0);
-}
+} */
 
 /*
 /// @brief Change or add back a variable in our linked list of envp.
