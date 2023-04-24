@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 12:03:39 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 12:04:17 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,43 +95,3 @@ t_env	*fill_env(char **envp)
 	}
 	return (ll_env);
 }
-
-/* t_env	*fill_env(char **envp)
-{
-	int		i;
-	int		j;
-	t_env	*start;
-	t_env	*temp;
-	t_env	*ll_env;
-
-	i = 0;
-	j = 0;
-	// ll_env= ft_calloc(sizeof(t_env), 1);
-	// if (!ll_env)
-	// 	return (NULL);
-	ll_env = NULL;
-	while (envp[i])
-	{
-		j = 0;
-		printf("\n%s\n", envp[i]);
-		while (envp[i][j])
-		{
-			if (envp[i][j] == '=')
-			{
-				// printf("%c here \n", envp[i][j]);
-				envp[i][j] = '\0';
-				ll_env->var = ft_strdup(envp[i]);
-				printf("var\t`%s`\n", ll_env->var);
-
-				envp[i] += j + 1;
-				ll_env->value = ft_strdup(envp[i]);
-				printf("value\t`%s`\n", ll_env->value);
-				// ll_env->next =
-				break;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (ll_env);
-} */
