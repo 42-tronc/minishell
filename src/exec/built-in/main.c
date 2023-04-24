@@ -12,12 +12,12 @@ int main(int ac, char *av[], char **envp)
 	env = fill_env(envp);
 	if (strcmp(av[1], "echo") == 0)
 	{
-		printf("echo()\n");
+		printf("echo()\n\n");
 		ft_echo(ac, ++av);
 	}
 	else if (strcmp(av[1], "cd") == 0)
 	{
-		printf("cd()\n");
+		printf("cd()\n\n");
 		if (ac > 2)
 			ft_cd(env, av[2]);
 		else
@@ -25,32 +25,32 @@ int main(int ac, char *av[], char **envp)
 		printf("\n ");
 		ft_pwd();
 	}
-	/*
 	else if (strcmp(av[1], "env") == 0)
 	{
-		printf("env()\n");
+		printf("env()\n\n");
 		ft_env(env);
 	}
+	/*
 	else if (strcmp(av[1], "exit") == 0)
 	{
-		printf("exit_func()\n");
+		printf("exit_func()\n\n");
 	}
 	else if (strcmp(av[1], "export") == 0)
 	{
-		printf("export()\n");
+		printf("export()\n\n");
 	}
 	else if (strcmp(av[1], "pwd") == 0)
 	{
-		printf("pwd()\n");
+		printf("pwd()\n\n");
 	}
 	else if (strcmp(av[1], "unset") == 0)
 	{
-		printf("unset()\n");
+		printf("unset()\n\n");
 	}
 	*/
 	else if (strcmp(av[1], "fill") == 0)
 	{
-		printf("fill_env()\n");
+		printf("fill_env()\n\n");
 		fill_env(envp);
 	}
 	else
@@ -61,8 +61,3 @@ int main(int ac, char *av[], char **envp)
 
 	return 0;
 }
-
-void	ft_echo(int ac, char **av);
-void	ft_env(t_list *env);
-void	ft_export(t_list *env);
-int		ft_pwd(void);
