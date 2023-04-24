@@ -6,21 +6,20 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/08 17:08:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 13:01:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_list *env)
+void	ft_env(t_env *env)
 {
-	t_list	*current;
+	t_env	*current;
 
 	current = env;
 	while (current)
 	{
-		printf("%s\n", (char *)current->content);
-		// printf("data: %s, next: %p\n", (char *)current->content, current->next);
+		printf("`%s`=`%s`\n", current->var, current->value);
 		current = current->next;
 	}
 }
