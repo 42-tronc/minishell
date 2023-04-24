@@ -8,11 +8,8 @@ int main(int ac, char *av[], char **envp)
 		return 0;
 	}
 
-	t_list	*env;
-	env = list_env(envp);
-
-	// t_env	*env;
-	// env = fill_env(envp);
+	t_env	*env;
+	env = fill_env(envp);
 	if (strcmp(av[1], "echo") == 0)
 	{
 		printf("echo()\n");
@@ -22,10 +19,13 @@ int main(int ac, char *av[], char **envp)
 	{
 		printf("cd()\n");
 		if (ac > 2)
-			ft_cd(av[2], env);
+			ft_cd(env, av[2]);
 		else
-			ft_cd(NULL, env);
+			ft_cd(env, NULL);
+		printf("\n ");
+		ft_pwd();
 	}
+	/*
 	else if (strcmp(av[1], "env") == 0)
 	{
 		printf("env()\n");
@@ -47,6 +47,7 @@ int main(int ac, char *av[], char **envp)
 	{
 		printf("unset()\n");
 	}
+	*/
 	else if (strcmp(av[1], "fill") == 0)
 	{
 		printf("fill_env()\n");
