@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 12:04:17 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 12:13:59 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /*
 NEED
 
-	strtok
-	Fill env to linked list
-	Get value from var in linked list
-	Set value from var in linked list
+~	strtok
+X	Fill env to linked list
+X	Get value from var in linked list
+X	Set value from var in linked list
  */
 
 // char *ft_strtok(char *str, char *delim);
@@ -94,4 +94,38 @@ t_env	*fill_env(char **envp)
 		// i++;
 	}
 	return (ll_env);
+}
+
+char	*ft_getenv(t_env *ll_env, char *var)
+{
+	t_env	*temp;
+
+	temp = ll_env;
+	while (temp->next)
+	{
+		if (ft_strcmp(temp->var, var) == 0)
+			return (temp->value);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
+int	ft_setenv(t_env *ll_env, char *var, char *replace)
+{
+	t_env	*temp;
+
+	temp = ll_env;
+	while (temp)
+	{
+		if (ft_strcmp(temp->var, var) == 0)
+		{
+			free(temp->value);
+			temp->value = ft_strdup(replace);
+			if (!temp->value)
+				return (-1);
+			return (1);
+		}
+		temp = temp->next;
+	}
+	return (0);
 }
