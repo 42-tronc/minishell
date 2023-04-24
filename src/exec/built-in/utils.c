@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 16:44:35 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 17:11:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ t_env	*fill_env(char **envp)
 	return (ll_env);
 }
 
-char	*ft_getenv(t_env *ll_env, char *var)
+char	*ft_getenv(t_env *env, char *var)
 {
 	t_env	*temp;
 
-	temp = ll_env;
+	temp = env;
 	while (temp->next)
 	{
 		if (ft_strcmp(temp->var, var) == 0)
@@ -110,21 +110,21 @@ char	*ft_getenv(t_env *ll_env, char *var)
 	return (NULL);
 }
 
-int	ft_addenv(t_env *ll_env, char *var, char *value)
+int	ft_addenv(t_env *env, char *var, char *value)
 {
 	if (!var)
 		return (1);
 	if (!value)
 		value = "";
-	ft_env_add_back(&ll_env, ft_env_new(var, value));
+	ft_env_add_back(&env, ft_env_new(var, value));
 	return (0);
 }
 
-int	ft_setenv(t_env *ll_env, char *var, char *value)
+int	ft_setenv(t_env *env, char *var, char *value)
 {
 	t_env	*temp;
 
-	temp = ll_env;
+	temp = env;
 	if (!var)
 		return (1);
 	if (!value)
@@ -146,8 +146,10 @@ int	ft_setenv(t_env *ll_env, char *var, char *value)
 		temp = temp->next;
 	}
 	// maybe add ft_addenv
+	ft_addenv(env, var, value);
+	return (0);
 
-	return (1);
+	// return (1);
 }
 
 void	print_error(int code)
