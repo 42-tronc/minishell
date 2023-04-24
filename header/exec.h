@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:26:14 by croy              #+#    #+#             */
-/*   Updated: 2023/04/20 13:56:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 12:15:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_env(t_list *env);
 void	ft_export(t_list *env);
 int		ft_pwd(void);
 
-void	fill_env(char **envp);
+t_env	*fill_env(char **envp);
+char	*ft_getenv(t_env *ll_env, char *var);
+int		ft_setenv(t_env *ll_env, char *var, char *replace);
 
 #endif
