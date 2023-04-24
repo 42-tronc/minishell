@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/19 10:21:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 13:30:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ export LOL==poopi
 
  */
 
-void ft_sort_env(t_list *env)
+/* void ft_sort_env(t_env *env)
 {
-	t_list	*current;
-	t_list	*next;
+	t_env	*current;
+	t_env	*next;
 	char	*tmp;
 
 	if (!env)
@@ -44,17 +44,47 @@ void ft_sort_env(t_list *env)
 		next = current->next;
 		while (next)
 		{
-			if (strcmp(current->content, next->content) > 0)
+			if (strcmp(current->var, next->var) > 0)
 			{
-				tmp = current->content;
-				current->content = next->content;
-				next->content = tmp;
+				tmp = current->var;
+				current->var = next->var;
+				next->var = tmp;
+			}
+			next = next->next;
+		}
+		current = current->next;
+	}
+} */
+
+void	ft_sort_env(t_env *env)
+{
+	t_env	*current;
+	t_env	*next;
+	t_env	*tmp;
+
+	if (!env)
+		return ;
+	current = env;
+	while (current->next)
+	{
+		next = current->next;
+		while (next)
+		{
+			if (strcmp(current->var, next->var) > 0)
+			{
+				tmp = current->next;
+				current->next = next->next;
+				next->next = tmp;
+				tmp = current;
+				current = next;
+				next = tmp;
 			}
 			next = next->next;
 		}
 		current = current->next;
 	}
 }
+
 
 /* void	ft_setexport(t_list	*export, char *str)
 {
@@ -73,7 +103,7 @@ void ft_sort_env(t_list *env)
 
 } */
 
-void	ft_export(t_list *env)
+void	ft_export(t_env *env, char *var, char *value)
 {
 	// OPERATIONS GO HERE BEFORE SORTING
 	// si export plusieurs mots
@@ -83,7 +113,7 @@ void	ft_export(t_list *env)
 	ft_sort_env(env);
 	while (env)
 	{
-		printf("declare -x %s\n", (char *)env->content);
+		printf("declare -x %s=\"%s\"\n", env->var, env->value);
 		// printf("declare -x %s=\"%s\"\n", (char *)env->var, var->value);
 		env = env->next;
 	}

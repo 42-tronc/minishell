@@ -30,15 +30,16 @@ int main(int ac, char *av[], char **envp)
 		printf("env()\n\n");
 		ft_env(env);
 	}
-	/*
 	else if (strcmp(av[1], "exit") == 0)
 	{
-		printf("exit_func()\n\n");
+		printf("exit()\n\n");
 	}
 	else if (strcmp(av[1], "export") == 0)
 	{
 		printf("export()\n\n");
+		ft_export(env);
 	}
+	/*
 	else if (strcmp(av[1], "pwd") == 0)
 	{
 		printf("pwd()\n\n");
