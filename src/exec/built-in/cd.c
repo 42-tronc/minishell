@@ -63,41 +63,6 @@ void	ft_cd(t_env *env, char *path)
 	}
 }
 
-/* void	ft_cd(t_env *env, char *path)
-{
-	// char	*old_pwd;
-
-	// HOME Directory
-	if (!path || ft_strcmp(path, "~") == 0)
-		path = ft_getenv(env, "HOME");
-	// LAST Directory
-	else if (ft_strcmp(path, "-") == 0)
-	{
-		if (ft_getenv(env, "OLDPWD"))
-		{
-			printf("found oldpwd '%s'\n", ft_getenv(env, "OLDPWD"));
-			path = ft_getenv(env, "OLDPWD");
-			// path = getenv("OLDPWD");
-		}
-		else
-		{
-			printf(RED"cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(env, "OLDPWD"));
-			return;
-		}
-	}
-	// CHANGE Directory
-
-	// getcwd(old_pwd, BUFSIZ);
-	if (chdir(path) == -1)
-		perror("cd");
-	else
-	{
-		// PWD=getcwd(cwd, BUFSIZ)
-		printf("NEW ");
-		ft_pwd();
-	}
-} */
-
 /* int	main(int ac, char **av, char **envp)
 {
 	t_list	*env;
