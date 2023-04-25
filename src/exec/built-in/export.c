@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/25 13:50:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 13:56:12 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,15 @@ void args_to_export(t_env *env, t_list *args)
 	while (args)
 	{
 		content = args->content;
-		printf("DOING %s\n", content);
+		// printf("DOING %s\n", content);
 		equal_sign = ft_strchr(content, '=');
 
 		// no value
 		if (!equal_sign)
 		{
-			printf("will set `%s` to nothing\n", content);
+			// printf("will set `%s` to nothing\n", content);
 			ft_setenv(env, content, "");
-			printf("no equal\n");
+			// printf("no equal\n");
 		}
 
 		// var with value
@@ -106,14 +106,14 @@ void	ft_export(t_env *env, t_list *args)
 {
 	(void) args;
 
-	// ft_setenv(env, "GTK_MODULES", "lol");
-	// ft_setenv(env, "NOT_GTK_MODULES", "prev");
-	// ft_setenv(env, "NOT_GTK_MODULES", "");
-	// ft_setenv(env, "yep", "");
+	ft_setenv(env, "GTK_MODULES", "lol");
+	ft_setenv(env, "__NOT_GTK_MODULES", "prev");
+	ft_setenv(env, "__NOT_GTK_MODULES", "");
+	ft_setenv(env, "__yep", "");
 
 	args_to_export(env, args);
 
-	printf("\n\n\n\n\tEXPORT HERE\n\n");
+	// printf("\n\n\n\n\tEXPORT HERE\n\n");
 	ft_sort_env(env);
 	while (env)
 	{
