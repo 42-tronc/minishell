@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/04/20 13:58:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 15:36:11 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ TODO
 unset a var and remove it from the export list
  */
 
-void	ft_unset()
+void	ft_unset(t_env *env, t_list *args)
 {
 
 }
