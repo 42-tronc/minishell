@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/24 18:20:47 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/25 15:11:26 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,22 +18,50 @@ MAKEFLAGS += --warn-undefined-variables # warn about Make variables that don’t
 
 
 # ------------ FORMATTING -------------
+FG_BLACK 			:= \033[30m
 FG_RED 				:= \033[31m
 FG_GREEN 			:= \033[32m
+FG_YELLOW 			:= \033[33m
+FG_BLUE 			:= \033[34m
+FG_MAGENTA 			:= \033[35m
+FG_CYAN 			:= \033[36m
 FG_LIGHT_GRAY 		:= \033[37m
 FG_DEFAULT 			:= \033[39m
+FG_DARK_GRAY 		:= \033[90m
 FG_LIGHT_RED 		:= \033[91m
 FG_LIGHT_GREEN 		:= \033[92m
+FG_LIGHT_YELLOW 	:= \033[93m
+FG_LIGHT_BLUE 		:= \033[94m
+FG_LIGHT_MAGENTA 	:= \033[95m
+FG_LIGHT_CYAN 		:= \033[96m
 FG_WHITE 			:= \033[97m
+FG_ORANGE 			:= \033[38:5:208m
 
+BG_BLACK 			:= \033[40m
 BG_RED 				:= \033[41m
 BG_GREEN 			:= \033[42m
+BG_YELLOW 			:= \033[43m
+BG_BLUE 			:= \033[44m
+BG_MAGENTA 			:= \033[45m
+BG_CYAN 			:= \033[46m
+BG_LIGHT_GRAY 		:= \033[47m
+BG_DEFAULT 			:= \033[49m
+BG_DARK_GRAY 		:= \033[100m
+BG_LIGHT_RED 		:= \033[101m
 BG_LIGHT_GREEN 		:= \033[102m
+BG_LIGHT_YELLOW 	:= \033[103m
+BG_LIGHT_BLUE 		:= \033[104m
+BG_LIGHT_MAGENTA 	:= \033[105m
+BG_LIGHT_CYAN 		:= \033[106m
 BG_WHITE 			:= \033[107m
 
 BOLD		:= \033[1m
+DIM			:= \033[2m
 ITALIC		:= \033[3m
 UNDERLINE	:= \033[4m
+REVERT		:= \033[7m
+HIDDEN		:= \033[8m
+STRIKED		:= \033[9m
 RESET		:= \033[0m
 
 
@@ -44,6 +72,7 @@ RM := rm -rf
 
 LIBFT_DIR := libft/
 LIBFT_NAME := $(LIBFT_DIR)libft.a
+USER := $(shell whoami)
 
 
 # --------- PROJECT VARIABLES ---------
@@ -57,16 +86,21 @@ SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
-SRC_BUILTIN := main.c utils.c echo.c pwd.c cd.c env.c export.c
+SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c parsing.c envp.c tokens_lst.c
+
+ifeq ($(USER), maplepy)
+	SRC_BUILTIN += main.c
+endif
 
 
 # -------------- RECIPES --------------
 all: makefolder rsc $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
+	@echo -e "\n$(BOLD)Hello $(FG_ORANGE)$(USER)$(RESET)"
 	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
 
