@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/25 11:21:01 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 13:55:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	ft_addenv(t_env *env, char *var, char *value)
 		value = "";
 	ft_env_add_back(&env, ft_env_new(var, value));
 
-	printf("ADD:\t`%s`=`%s`\n\n", var, value);
+	// printf("ADD:\t`%s`=`%s`\n\n", var, value);
 	return (0);
 }
 
@@ -135,12 +135,12 @@ int	ft_setenv(t_env *env, char *var, char *value)
 	{
 		if (ft_strcmp(current->var, var) == 0)
 		{
-			printf("CHANGE:\t`%s`=`%s`\n", current->var, current->value);
+			// printf("CHANGE:\t`%s`=`%s`\n", current->var, current->value);
 			current->value = ft_strdup(value);
 			if (!current->value)
 				return (print_error(0), -1);
 				// return (-10);
-			printf("TO:\t`%s`=`%s`\n\n", current->var, current->value);
+			// printf("TO:\t`%s`=`%s`\n\n", current->var, current->value);
 			return (0);
 		}
 		current = current->next;
