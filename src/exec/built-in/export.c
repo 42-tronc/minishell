@@ -29,11 +29,19 @@ export LOL==poopi
 
 */
 
+void	swap_var(char **current, char **next)
+{
+	char	*tmp;
+
+	tmp = *current;
+	*current = *next;
+	*next = tmp;
+}
+
 void ft_sort_env(t_env *env)
 {
 	t_env	*current;
 	t_env	*next;
-	char	*tmp;
 
 	if (!env)
 		return;
@@ -45,9 +53,8 @@ void ft_sort_env(t_env *env)
 		{
 			if (strcmp(current->var, next->var) > 0)
 			{
-				tmp = current->var;
-				current->var = next->var;
-				next->var = tmp;
+				swap_var(&current->var, &next->var);
+				swap_var(&current->value, &next->value);
 			}
 			next = next->next;
 		}
