@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/25 11:20:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 13:50:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ export LOL="ww"	_ww="sadge"
 	'_ww="sadge"'
 export LOL==poopi
 	LOL="=poopi"
-
 */
 
 void	swap_var(char **current, char **next)
@@ -62,6 +61,12 @@ void ft_sort_env(t_env *env)
 	}
 }
 
+/**
+ * @brief takes the args and export those in the t_env
+ *
+ * @param env t_env of export
+ * @param args t_list of the args with args.content being each token
+ */
 void args_to_export(t_env *env, t_list *args)
 {
 	char *var;
@@ -92,8 +97,6 @@ void args_to_export(t_env *env, t_list *args)
 			value = ft_strdup(equal_sign + 1);
 			// printf("value\t= %s\n", value);
 			ft_setenv(env, var, value);
-			// free(var);
-			// free(value);
 		}
 		args = args->next;
 	}
@@ -111,21 +114,13 @@ void	ft_export(t_env *env, t_list *args)
 	args_to_export(env, args);
 
 	printf("\n\n\n\n\tEXPORT HERE\n\n");
-	// ft_sort_env(env);
+	ft_sort_env(env);
 	while (env)
 	{
 		printf("declare -x %s=\"%s\"\n", env->var, env->value);
 		env = env->next;
 	}
 }
-
-
-
-
-
-	// OPERATIONS GO HERE BEFORE SORTING
-	// si export plusieurs mots
-
 
 	// int i = 0;
 	// char *content;
