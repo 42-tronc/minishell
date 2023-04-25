@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/25 13:55:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 16:44:27 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,58 @@ int	ft_setenv(t_env *env, char *var, char *value)
 	// maybe add ft_addenv
 	ft_addenv(env, var, value);
 	return (0);
+}
+
+/*
+NEED TO
+
+3 cas differents:
+- debut
+	null les vars
+	free
+	reset le head de la liste a la 2eme liste
+- milieu
+	set le next du previous sur `current->next`
+	null les vars
+	free
+- fin
+	set le next du previous sur `NULL`
+	null les vars
+	free
+
+*/
+
+int	prev_env(t_env *env)
+{
+	t_env	*current;
+	t_env	*previous;
+
+	current = env;
+	while (current->next)
+	{
+	}
+	return (NULL);
+}
+
+char	*ft_delenv(t_env *env, char *var)
+{
+	t_env	*current;
+	t_env	*previous;
+
+	current = env;
+	while (current->next)
+	{
+		previous = current;
+		if (ft_strcmp(current->var, var) == 0)
+		{
+			// if (!has_previous)
+			// if (!has_next)
+
+		}
+			// return (current->value);
+		current = current->next;
+	}
+	return (NULL);
 }
 
 void	print_error(int code)
