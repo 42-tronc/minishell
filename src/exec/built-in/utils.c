@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/24 18:36:13 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/25 11:21:01 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,6 @@ int	ft_setenv(t_env *env, char *var, char *value)
 		if (ft_strcmp(current->var, var) == 0)
 		{
 			printf("CHANGE:\t`%s`=`%s`\n", current->var, current->value);
-			printf(ORANGE"\tB4 FREE: value\n"RESET);
-			free(current->value);
-			printf(ORANGE"\tPASSED FREE: value\n"RESET);
-
 			current->value = ft_strdup(value);
 			if (!current->value)
 				return (print_error(0), -1);
