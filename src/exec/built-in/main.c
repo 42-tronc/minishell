@@ -64,11 +64,6 @@ int main(int ac, char *av[], char **envp)
 		ft_unset(&env, args);
 		ft_env(env);
 	}
-	else if (strcmp(av[1], "fill") == 0)
-	{
-		printf("fill_env()\n\n");
-		fill_env(envp);
-	}
 	else
 	{
 		printf("Invalid function: `%s`\n", av[1]);
