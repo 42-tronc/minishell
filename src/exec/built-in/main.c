@@ -24,6 +24,7 @@ int main(int ac, char *av[], char **envp)
 	}
 
 	env = fill_env(envp);
+	args = ft_av_to_list(ac, av);
 	if (strcmp(av[1], "echo") == 0)
 	{
 		printf("echo()\n\n");
@@ -51,10 +52,8 @@ int main(int ac, char *av[], char **envp)
 	else if (strcmp(av[1], "export") == 0)
 	{
 		printf("export()\n\n");
-		args = ft_av_to_list(ac, av);
 		ft_export(env, args);
 	}
-	/*
 	else if (strcmp(av[1], "pwd") == 0)
 	{
 		printf("pwd()\n\n");
@@ -62,8 +61,9 @@ int main(int ac, char *av[], char **envp)
 	else if (strcmp(av[1], "unset") == 0)
 	{
 		printf("unset()\n\n");
+		ft_unset(&env, args);
+		ft_env(env);
 	}
-	*/
 	else if (strcmp(av[1], "fill") == 0)
 	{
 		printf("fill_env()\n\n");
