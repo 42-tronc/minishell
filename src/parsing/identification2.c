@@ -22,10 +22,12 @@ int	is_separator(t_token *temp)
 
 int	first_token(t_token *temp)
 {
-	if (temp->token[0] == '<')
+	if (temp->token[0] == '<' && temp->token[1] == '\0')
 		temp->token_id = CHEVRON_L;
-	else if (temp->token[0] == '>')
+	else if (temp->token[0] == '>' && temp->token[1] == '\0')
 		temp->token_id = CHEVRON_R;
+	else if (temp->token[0] == '<' && temp->token[1] == '<')
+		temp->token_id = HERE_DOC;
 	else if (temp->token[0] == '|')
 		temp->token_id = PIPE;
 	else

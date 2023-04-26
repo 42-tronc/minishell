@@ -16,9 +16,13 @@ int	get_separator(t_token *temp)
 {
 	if (temp->token[0] == '|')
 		temp->token_id = PIPE;
-	if (temp->token [0] == '<')
+	else if (temp->token[0] == '>' && temp->token[1] == '>')
+		temp->token_id = HERE_DOC_END;
+	else if (temp->token[0] == '<' && temp->token[1] == '<')
+		temp->token_id = HERE_DOC;
+	else if (temp->token [0] == '<' && temp->token[1] == '\0')
 		temp->token_id = CHEVRON_L;
-	if (temp->token[0] == '>')
+	else if (temp->token[0] == '>' && temp->token[1] == '\0')
 		temp->token_id = CHEVRON_R;
 	return (1);
 }
@@ -43,6 +47,12 @@ void	which_id_to_give(t_token *temp)
 		temp->token_id = ARG;
 	else if (!ft_strcmp(temp->prev->token_id, ARG))
 		temp->token_id = ARG;
+	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC))
+		temp->token_id = LIMITER;
+	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC_END))
+		temp->token_id = OUTFILE;
+	else if (!ft_strcmp(temp->prev->token_id, LIMITER))
+		temp->token_id = CMD;
 	else if (!ft_strcmp(temp->prev->token_id, PIPE))
 		after_pipe_token(temp);
 }

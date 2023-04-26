@@ -24,6 +24,9 @@
 # define CMD "command"
 # define ARG "argument"
 # define PIPE "|"
+# define LIMITER "limiter"
+# define HERE_DOC "here_doc"
+# define HERE_DOC_END "here_doc_end"
 
 typedef struct s_token		t_token;
 typedef struct s_parsing	t_parsing;
