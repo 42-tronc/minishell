@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/25 15:11:26 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/26 08:28:08 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,7 @@ SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
-SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c
+SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c parsing.c envp.c tokens_lst.c
