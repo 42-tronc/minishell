@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:51:50 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/27 10:12:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:49:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "minishell.h"
 
 int	get_separator(t_token *temp)
 {
