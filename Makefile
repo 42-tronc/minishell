@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/04/27 10:16:51 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/04/27 15:20:28 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,9 +81,12 @@ HEADER := header/minishell.h
 
 SRC_FOLDER := src/
 OBJ_DIR := obj/
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SCR_PARSING))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_UTILS) $(SCR_PARSING))
 # SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
+
+DIR_UTILS := $(SRC_FOLDER)utils/
+SRC_UTILS := minishell.c
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c
@@ -91,9 +94,9 @@ SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c
 
-ifeq ($(USER), maplepy)
-	SRC_BUILTIN += main.c
-endif
+# ifeq ($(USER), maplepy)
+# 	SRC_BUILTIN += main.c
+# endif
 
 
 # -------------- RECIPES --------------
@@ -103,6 +106,9 @@ $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo -e "\n$(BOLD)Hello $(FG_ORANGE)$(USER)$(RESET)"
 	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
+
+$(OBJ_DIR)%.o : $(DIR_UTILS)%.c $(HEADER)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
 	$(CC) $(CFLAGS) -o $@ -c $<
