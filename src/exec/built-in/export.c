@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/27 09:37:13 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:13:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
 
 /*
 EXPORT
@@ -50,7 +50,7 @@ void ft_sort_env(t_env *env)
 		next = current->next;
 		while (next)
 		{
-			if (strcmp(current->var, next->var) > 0)
+			if (ft_strcmp(current->var, next->var) > 0)
 			{
 				swap_var(&current->var, &next->var);
 				swap_var(&current->value, &next->value);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 13:36:59 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/21 13:37:01 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/04/27 10:12:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 /// @brief Check if the char is a space, a pipe or a < / >.
 /// @param c Char to check

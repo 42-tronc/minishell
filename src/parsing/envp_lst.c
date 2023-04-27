@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   envp_lst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 14:08:10 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/21 14:08:12 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/04/27 10:12:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 void	ft_envadd_back(t_env **env, t_env *new)
 {

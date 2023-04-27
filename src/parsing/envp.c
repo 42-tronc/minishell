@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/27 09:42:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:18:05 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 /// @brief Free a given list.
 /// @param lst The list to be free'd.
@@ -30,7 +30,7 @@ void	free_list(t_env *lst)
 	}
 }
 
-char	*ft_strndup(char *str, int stop)
+/* char	*ft_strndup(char *str, int stop)
 {
 	char	*res;
 	int		i;
@@ -43,12 +43,12 @@ char	*ft_strndup(char *str, int stop)
 		res[i] = str[i];
 	res[i] = '\0';
 	return (res);
-}
+} */
 
 /// @brief Create a linked list out of the envp.
 /// @param envp envp variable out of the main.
 /// @return pointer to first element of the linked list.
-t_env	*list_env(char **envp)
+/* t_env	*list_env(char **envp)
 {
 	int		i;
 	int		j;
@@ -67,13 +67,13 @@ t_env	*list_env(char **envp)
 		i++;
 	}
 	return (list_envp);
-}
+} */
 
 /// @brief Get the value of a var passed in str inside envp.
 /// @param envp t_env envp to get the linked list of envp.
 /// @param str Variable name with the '=' included /!\.
 /// @return char * from the variable passed.
-char	*ft_getenv(t_env *list_env, char *str)
+/* char	*ft_getenv(t_env *list_env, char *str)
 {
 	t_env	*temp;
 
@@ -121,7 +121,6 @@ char	*ft_getenv(t_env *list_env, char *str)
 // 	return (0);
 // }
 
-/*
 /// @brief Change or add back a variable in our linked list of envp.
 /// @param list_envp Linked list of envp
 /// @param var Name of the variable with '=' at the end (IMPORTANT TO ADD =)
