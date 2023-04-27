@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/27 09:39:57 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:09:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
 
 void	ft_env(t_env *env)
 {

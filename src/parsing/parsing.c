@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/08 16:50:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:12:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 void	even_quote(char *str)
 {

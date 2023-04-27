@@ -6,13 +6,14 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/27 09:40:55 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:13:04 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "minishell.h"
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
