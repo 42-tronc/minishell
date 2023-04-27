@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/19 10:21:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 09:37:13 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,21 @@ export LOL="ww"	_ww="sadge"
 	'_ww="sadge"'
 export LOL==poopi
 	LOL="=poopi"
+*/
 
+void	swap_var(char **current, char **next)
+{
+	char	*tmp;
 
- */
+	tmp = *current;
+	*current = *next;
+	*next = tmp;
+}
 
 void ft_sort_env(t_env *env)
 {
 	t_env	*current;
 	t_env	*next;
-	char	*tmp;
 
 	if (!env)
 		return;
@@ -44,11 +50,10 @@ void ft_sort_env(t_env *env)
 		next = current->next;
 		while (next)
 		{
-			if (strcmp(current->name, next->name) > 0)
+			if (strcmp(current->var, next->var) > 0)
 			{
-				tmp = current->name;
-				current->name = next->name;
-				next->name = tmp;
+				swap_var(&current->var, &next->var);
+				swap_var(&current->value, &next->value);
 			}
 			next = next->next;
 		}
@@ -56,54 +61,108 @@ void ft_sort_env(t_env *env)
 	}
 }
 
-/* void	ft_setexport(t_env	*export, char *str)
+/**
+ * @brief takes the args and export those in the t_env
+ *
+ * @param env t_env of export
+ * @param args t_list of the args with args.content being each token
+ */
+void args_to_export(t_env *env, t_list *args)
 {
-	// check if `=` or not
-	int	i;
+	char *var;
+	char *value;
+	char *content;
+	char *equal_sign;
 
-	i = 0;
-	while (str[i])
+	while (args)
 	{
-		if (str[i] == '=')
+		content = args->content;
+		// printf("DOING %s\n", content);
+		equal_sign = ft_strchr(content, '=');
+
+		// no value
+		if (!equal_sign)
 		{
-			ft_setenv(export, )
+			// printf("will set `%s` to nothing\n", content);
+			ft_setenv(env, content, "");
+			// printf("no equal\n");
 		}
-		i++;
+
+		// var with value
+		else
+		{
+			// printf("`%s`\n", content);
+			var = ft_strndup(content, equal_sign - content);
+			// printf("var\t= %s\n", var);
+			value = ft_strdup(equal_sign + 1);
+			// printf("value\t= %s\n", value);
+			ft_setenv(env, var, value);
+		}
+		args = args->next;
 	}
+}
 
-} */
+/*
+If `export loli`
+	`loli`
+if `export lol=`
+	`lol=""`
+*/
 
-void	ft_export(t_env *env)
+void	ft_export(t_env *env, t_list *args)
 {
-	// OPERATIONS GO HERE BEFORE SORTING
-	// si export plusieurs mots
+	(void) args;
 
+	// ft_setenv(env, "GTK_MODULES", "lol");
+	// ft_setenv(env, "__NOT_GTK_MODULES", "prev");
+	// ft_setenv(env, "__NOT_GTK_MODULES", "");
+	// ft_setenv(env, "__yep", "");
 
-	printf("\n\n\n\n\tEXPORT HERE\n\n");
+	args_to_export(env, args);
+
+	// printf("\n\n\n\n\tEXPORT HERE\n\n");
 	ft_sort_env(env);
 	while (env)
 	{
-		printf("declare -x %s\n", (char *)env->value);
-		// printf("declare -x %s=\"%s\"\n", (char *)env->var, var->value);
+		printf("declare -x %s=\"%s\"\n", env->var, env->value);
 		env = env->next;
 	}
 }
 
-/* int	main(int ac, char **av, char **envp)
-{
-	(void) ac;
-	(void) av;
-	t_env	*env;
-	// t_env	*export;
+	// int i = 0;
+	// char *content;
+	// char *var;
+	// char *value;
 
-	env = list_env(envp);
-	// export = list_env(envp);
-	ft_setenv(env, "MY_VAR", "world");
-	// printf("\n\n\n\tOG\n\n");
-	// ft_env(env);
-	// ft_export(export);
-	// printf("\n\n\n\tOG AGAIN\n\n");
-	// ft_env(env);
+	// while (args)
+	// {
+	// 	printf("ARGS: %s\n", (char *)args->content);
+	// 	args = args->next;
+	// }
+	/*
+		content = args->content;
 
-	return (0);
-}*/
+		while (content[i])
+		{
+			// printf("i=%d\n", i);
+			if (content[i] == '=')
+			{
+				content[i] = '\0';
+				var = ft_strdup(content);
+				// printf("var=`%s`\n", var);
+				content += i + 1;
+				value = ft_strdup(content);
+				// printf("value=`%s`\n", value);
+				// printf("breaking\n");
+				break;
+
+				// ft_setenv(env, var, ft_strdup(content));
+				// printf("%c here \n", content[i]);
+			}
+			i++;
+		}
+		// printf("we out bitch\n");
+		printf("`%s` = ", var);
+		printf("`%s`\n", value);
+		ft_setenv(env, var, value);
+	} */

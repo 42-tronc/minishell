@@ -27,38 +27,39 @@ NEED
  * `~` or `NULL` will go to the home directory
  * @param path absolute or relative path to go to.
  */
-void	ft_cd(char *path, t_env *env)
+void	ft_cd(t_env *env, char *path)
 {
-	// char	*old_pwd;
+	char	previous[BUFSIZ];
 
+	getcwd(previous, BUFSIZ);
 	// HOME Directory
 	if (!path || ft_strcmp(path, "~") == 0)
 		path = ft_getenv(env, "HOME");
+
 	// LAST Directory
 	else if (ft_strcmp(path, "-") == 0)
 	{
 		if (ft_getenv(env, "OLDPWD"))
 		{
-			printf("found oldpwd '%s'\n", ft_getenv(env, "OLDPWD"));
 			path = ft_getenv(env, "OLDPWD");
+			printf("%s\n", path);
 			// path = getenv("OLDPWD");
 		}
 		else
 		{
-			printf(RED"cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(env, "OLDPWD"));
+			// printf(RED"cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(env, "OLDPWD"));
+			printf("cd: OLDPWD not set\n");
 			return;
 		}
 	}
-	// CHANGE Directory
 
-	// getcwd(old_pwd, BUFSIZ);
+	// CHANGE Directory
 	if (chdir(path) == -1)
 		perror("cd");
 	else
 	{
-		// PWD=getcwd(cwd, BUFSIZ)
-		printf("NEW ");
-		ft_pwd();
+		ft_setenv(env, "OLDPWD", previous);
+		printf("New OLDPWD=`%s`\n", ft_getenv(env, "OLDPWD"));
 	}
 }
 

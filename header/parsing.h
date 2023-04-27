@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/08 17:45:07 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 09:40:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ struct s_parsing {
 	int		dquote;
 	int		all_id;
 	t_env	*env;
-	
+
 };
 
 struct s_env {

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/20 10:56:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 09:42:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,16 @@ char	*ft_getenv(t_env *list_env, char *str)
 		temp = temp->next;
 	}
 	return (NULL);
-}
+} */
 
-// /// @brief Change or add back a variable in our linked list of envp.
-// /// @param list_envp Linked list of envp
-// /// @param var Name of the variable with '=' at the end (IMPORTANT TO ADD =)
-// /// @param value The value to be replace or added to the linked list
-// int	ft_setenv(t_env *list_envp, char *var, char *value)
-// {
-// 	t_env	*temp;
-// 	char	*var_prefixed;
+/// @brief Change or add back a variable in our linked list of envp.
+/// @param list_envp Linked list of envp
+/// @param var Name of the variable with '=' at the end (IMPORTANT TO ADD =)
+/// @param value The value to be replace or added to the linked list
+/* int	ft_setenv(t_list *list_envp, char *var, char *value)
+{
+	t_list	*temp;
+	char	*var_prefixed;
 
 // 	temp = list_envp;
 // 	// Add `=` to var

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/19 13:45:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/24 15:40:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,3 @@ void	ft_echo(int ac, char **av)
 	// printf("");
 	return;
 }
-
-/* int	main(int ac, char **av)
-{
-	ft_echo(ac, av);
-	return (0);
-} */
