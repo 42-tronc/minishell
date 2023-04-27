@@ -17,18 +17,18 @@ void	ft_tokenadd_back(t_token **lst, t_token *new)
 	t_token	*temp;
 
 	if (lst == NULL)
-	{
 		return ;
-	}
 	temp = *lst;
 	if (!temp)
 	{
+		new->prev = NULL;
 		*lst = new;
 		return ;
 	}
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new;
+	new->prev = temp;
 }
 
 // Missing error managment and leaks are occuring in case of error.
@@ -39,12 +39,9 @@ t_token	*ft_tokennew(void *content)
 	dst = malloc(sizeof(t_token));
 	if (!dst)
 		return (NULL);
-	if (dst)
-	{
-		dst->token = (char *)content;
-		dst->token_id = NULL;
-		dst->next = NULL;
-	}
+	dst->token = (char *)content;
+	dst->token_id = NULL;
+	dst->next = NULL;
 	return (dst);
 }
 

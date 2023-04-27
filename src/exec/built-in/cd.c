@@ -27,7 +27,7 @@ NEED
  * `~` or `NULL` will go to the home directory
  * @param path absolute or relative path to go to.
  */
-void	ft_cd(char *path, t_list *env)
+void	ft_cd(char *path, t_env *env)
 {
 	// char	*old_pwd;
 
@@ -64,7 +64,7 @@ void	ft_cd(char *path, t_list *env)
 
 /* int	main(int ac, char **av, char **envp)
 {
-	t_list	*env;
+	t_env	*env;
 
 	printf("OG ");
 	ft_pwd();

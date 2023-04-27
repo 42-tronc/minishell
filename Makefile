@@ -60,7 +60,7 @@ DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := main.c echo.c pwd.c cd.c env.c export.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c tokens2.c parsing.c envp.c tokens_lst.c dollar.c dollar2.c
+SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c testing.c identification.c identification2.c
 
 
 # -------------- RECIPES --------------

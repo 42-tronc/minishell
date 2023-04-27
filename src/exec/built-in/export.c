@@ -30,10 +30,10 @@ export LOL==poopi
 
  */
 
-void ft_sort_env(t_list *env)
+void ft_sort_env(t_env *env)
 {
-	t_list	*current;
-	t_list	*next;
+	t_env	*current;
+	t_env	*next;
 	char	*tmp;
 
 	if (!env)
@@ -44,11 +44,11 @@ void ft_sort_env(t_list *env)
 		next = current->next;
 		while (next)
 		{
-			if (strcmp(current->content, next->content) > 0)
+			if (strcmp(current->name, next->name) > 0)
 			{
-				tmp = current->content;
-				current->content = next->content;
-				next->content = tmp;
+				tmp = current->name;
+				current->name = next->name;
+				next->name = tmp;
 			}
 			next = next->next;
 		}
@@ -56,7 +56,7 @@ void ft_sort_env(t_list *env)
 	}
 }
 
-/* void	ft_setexport(t_list	*export, char *str)
+/* void	ft_setexport(t_env	*export, char *str)
 {
 	// check if `=` or not
 	int	i;
@@ -73,7 +73,7 @@ void ft_sort_env(t_list *env)
 
 } */
 
-void	ft_export(t_list *env)
+void	ft_export(t_env *env)
 {
 	// OPERATIONS GO HERE BEFORE SORTING
 	// si export plusieurs mots
@@ -83,7 +83,7 @@ void	ft_export(t_list *env)
 	ft_sort_env(env);
 	while (env)
 	{
-		printf("declare -x %s\n", (char *)env->content);
+		printf("declare -x %s\n", (char *)env->value);
 		// printf("declare -x %s=\"%s\"\n", (char *)env->var, var->value);
 		env = env->next;
 	}
@@ -93,8 +93,8 @@ void	ft_export(t_list *env)
 {
 	(void) ac;
 	(void) av;
-	t_list	*env;
-	// t_list	*export;
+	t_env	*env;
+	// t_env	*export;
 
 	env = list_env(envp);
 	// export = list_env(envp);
@@ -106,4 +106,4 @@ void	ft_export(t_list *env)
 	// ft_env(env);
 
 	return (0);
-}
+}*/

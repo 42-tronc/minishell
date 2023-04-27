@@ -12,32 +12,6 @@
 
 #include "minishell.h"
 
-void	print_tokens_linked_list(t_token *head)
-{
-	t_token	*temp;
-	int		i;
-
-	temp = head;
-	i = 0;
-	while (temp != NULL)
-	{
-		printf("token[%d]___%s___\n", i++, temp->token);
-		temp = temp->next;
-	}
-}
-
-void	print_list(t_list *head)
-{
-	t_list	*temp;
-
-	temp = head;
-	while (temp != NULL)
-	{
-		printf("%s\n", (char *)temp->content);
-		temp = temp->next;
-	}
-}
-
 void	even_quote(char *str)
 {
 	int	i;
@@ -104,7 +78,9 @@ void	cutting_line(t_token **tokens, t_parsing *p, char *str)
 		else if (ft_char(str[p->i]))
 			get_next_word(tokens, p, str, -1);
 		else
+		{
 			get_symbols(tokens, p, str);
+		}
 	}
 }
 
@@ -123,19 +99,3 @@ t_token	*getting_line(t_parsing *p)
 	cutting_line(&tokens, p, str);
 	return (free(str), tokens);
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_token		*tokens;
-// 	t_parsing	p;
-
-// 	(void)argc;
-// 	(void)argv;
-// 	tokens = getting_line(&p);
-// 	p.env = list_env(envp);
-// 	navigate_tokens(&tokens, &p);
-// 	print_tokens_linked_list(tokens);
-// 	free_token(tokens);
-// 	free_list(p.env);
-// 	return (0);
-// }

@@ -20,10 +20,10 @@
 # define RESET	"\e[0m"
 
 // char	*ft_pwd(void);
-void	ft_cd(char *path, t_list *env);
+void	ft_cd(char *path, t_env *env);
 void	ft_echo(int ac, char **av);
-void	ft_env(t_list *env);
-void	ft_export(t_list *env);
+void	ft_env(t_env *env);
+void	ft_export(t_env *env);
 int		ft_pwd(void);
 
 
