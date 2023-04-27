@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/04/26 10:40:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/26 15:10:25 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ NEED TO
 	free
 
 */
+
+void	free_env(t_env *node)
+{
+	free(node->var);
+	free(node->value);
+	free(node);
+}
 
 void	ft_unset(t_env **env, t_list *args)
 {
@@ -56,9 +63,10 @@ void	ft_unset(t_env **env, t_list *args)
 				tmp = current;
 				current = current->next;
 
-				free(tmp->var);
-				free(tmp->value);
-				free(tmp);
+				free_env(tmp);
+				// free(tmp->var);
+				// free(tmp->value);
+				// free(tmp);
 				break;
 			}
 			prev = current;
