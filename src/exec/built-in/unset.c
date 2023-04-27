@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/04/26 15:10:25 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 09:38:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ void	ft_unset(t_env **env, t_list *args)
 	(void) ac;
 	(void) av;
 
-	t_list	*env;
-	env = list_env(envp);
-	ft_setenv(env, "MY_VAR", "world");
-	ft_env(env);
-	printf("\n\n\n\nSORTED HERE\n\n");
-	ft_sort_env(env);
-	ft_env(env);
+// 	t_env	*env;
+// 	env = list_env(envp);
+// 	ft_setenv(env, "MY_VAR", "world");
+// 	ft_env(env);
+// 	printf("\n\n\n\nSORTED HERE\n\n");
+// 	ft_sort_env(env);
+// 	ft_env(env);
 
 	return (0);
 } */

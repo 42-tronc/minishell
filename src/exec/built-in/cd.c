@@ -65,7 +65,7 @@ void	ft_cd(t_env *env, char *path)
 
 /* int	main(int ac, char **av, char **envp)
 {
-	t_list	*env;
+	t_env	*env;
 
 	printf("OG ");
 	ft_pwd();

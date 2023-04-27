@@ -59,8 +59,7 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 		return ;
 	while (str && str[p->i])
 	{
-		p->quote = (p->quote + (!p->dquote && str[p->i] == '\'')) % 2;
-		p->dquote = (p->dquote + (!p->quote && str[p->i] == '\"')) % 2;
+		p_quote(p, str[p->i]);
 		if (p->quote == 0 && p->dquote == 0 && str[p->i] == ' ')
 			break ;
 		else if (p->quote == 0 && p->dquote == 0 && !ft_char(str[p->i]))
@@ -71,29 +70,13 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 			word[++i] = '\'';
 		else if ((p->dquote == 1 || p->quote == 1) && !ft_char(str[p->i]))
 			word[++i] = str[p->i];
+		else if ((p->dquote == 1 || p->quote == 1) && str[p->i] == ' ')
+			word[++i] = str[p->i];
 		else if (ft_char(str[p->i]) && ft_char2(str[p->i]))
 			word[++i] = str[p->i];
 		p->i++;
 	}
 	ft_tokenadd_back(tokens, ft_tokennew(word));
-}
-
-/// @brief Check if the char is a space, a pipe or a < / >.
-/// @param c Char to check
-/// @return 0 if it is one of the char searched for,
-/// 1 if it is any other char.
-int	ft_char(int c)
-{
-	if (c == '|' || c == '<' || c == '>')
-		return (0);
-	return (1);
-}
-
-int	ft_char2(int c)
-{
-	if (c == '\'' || c == ' ' || c == '\"')
-		return (0);
-	return (1);
 }
 
 /// @brief Malloc enough memory for our symbole (|, <, <<, >, >>)
