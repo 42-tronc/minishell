@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/26 15:10:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 09:24:43 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,13 @@ void args_to_export(t_env *env, t_list *args)
 		args = args->next;
 	}
 }
+
+/*
+If `export loli`
+	`loli`
+if `export lol=`
+	`lol=""`
+*/
 
 void	ft_export(t_env *env, t_list *args)
 {
