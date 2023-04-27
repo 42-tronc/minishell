@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:13:53 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/27 10:15:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:27:22 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 typedef struct s_token		t_token;
 typedef struct s_parsing	t_parsing;
-typedef struct s_env		t_env;
+// typedef struct s_env		t_env;
 
 struct s_token {
 	char	*token;
@@ -49,11 +49,12 @@ struct s_parsing {
 
 };
 
-struct s_env {
-	char	*name;
-	char	*value;
-	t_env *next;
-};
+// struct s_env {
+// 	char	*var;
+// 	char	*value;
+// 	t_env *next;
+// };
+
 // envp.c functions
 // t_env	*list_env(char **envp);
 char	*ft_getenv(t_env *envp, char *str);
