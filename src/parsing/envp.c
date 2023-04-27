@@ -6,11 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/27 10:18:05 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:49:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "minishell.h"
 
 /// @brief Free a given list.
 /// @param lst The list to be free'd.
@@ -24,7 +24,7 @@ void	free_list(t_env *lst)
 	{
 		temp1 = current;
 		current = current->next;
-		free(temp1->name);
+		free(temp1->var);
 		free(temp1->value);
 		free(temp1);
 	}
@@ -71,7 +71,7 @@ void	free_list(t_env *lst)
 
 /// @brief Get the value of a var passed in str inside envp.
 /// @param envp t_env envp to get the linked list of envp.
-/// @param str Variable name with the '=' included /!\.
+/// @param str Variable var with the '=' included /!\.
 /// @return char * from the variable passed.
 /* char	*ft_getenv(t_env *list_env, char *str)
 {
@@ -80,7 +80,7 @@ void	free_list(t_env *lst)
 	temp = list_env;
 	while (temp->next != NULL)
 	{
-		if (ft_strncmp(temp->name, str, ft_strlen(temp->name)) == 0)
+		if (ft_strncmp(temp->var, str, ft_strlen(temp->var)) == 0)
 			return (ft_strdup(temp->value));
 		temp = temp->next;
 	}

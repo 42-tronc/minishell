@@ -1,4 +1,4 @@
-#include "exec.h"
+#include "minishell.h"
 
 t_list	*ft_av_to_list(int ac, char **av)
 {
