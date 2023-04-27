@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/25 13:56:12 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/26 15:10:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	ft_export(t_env *env, t_list *args)
 {
 	(void) args;
 
-	ft_setenv(env, "GTK_MODULES", "lol");
-	ft_setenv(env, "__NOT_GTK_MODULES", "prev");
-	ft_setenv(env, "__NOT_GTK_MODULES", "");
-	ft_setenv(env, "__yep", "");
+	// ft_setenv(env, "GTK_MODULES", "lol");
+	// ft_setenv(env, "__NOT_GTK_MODULES", "prev");
+	// ft_setenv(env, "__NOT_GTK_MODULES", "");
+	// ft_setenv(env, "__yep", "");
 
 	args_to_export(env, args);
 
