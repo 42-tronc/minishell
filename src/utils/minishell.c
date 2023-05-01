@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/01 10:41:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/01 11:09:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
-	// while (input)
-	if (ft_strcmp(input->token_id, "command") == 0)
+	while (input)
 	{
-		if (ft_strcmp(input->token, "echo") == 0)
-			printf("echo in the building\n");
-			// ft_echo()
-		else if (ft_strcmp(input->token, "env") == 0)
-			ft_env(data->env);
-		else
-			printf("%s is not a command\n", input->token);
-	// printf("input = `%s`\n", input->token);
+		if (ft_strcmp(input->token_id, "command") == 0)
+		{
+			if (ft_strcmp(input->token, "echo") == 0)
+				printf("echo in the building\n");
+				// ft_echo()
+			else if (ft_strcmp(input->token, "env") == 0)
+				ft_env(data->env);
+			else if (ft_strcmp(input->token, "fork") == 0)
+				ft_fork();
+			else
+				printf("%s is not a command\n", input->token);
+		}
 		input = input->next;
 	}
-	// ft_env(data->env);
 }
 
 int	main(int argc, char **argv, char **envp)
