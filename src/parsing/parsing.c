@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/05/01 11:04:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 16:54:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_token	*getting_line(t_parsing *p)
 
 	tokens = NULL;
 	str = readline("minishell> ");
+	add_history(str);
 	p->i = 0;
 	p->quote = 0;
 	p->dquote = 0;
