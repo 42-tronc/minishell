@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/01 11:09:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 16:46:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_token		t_token;
 
 // EXEC
 # include <limits.h>
@@ -50,7 +52,9 @@ void	ft_env(t_env *env);
 void	ft_export(t_env *env, t_list *args);
 // void	ft_export(t_env *env);
 
-void	ft_echo(int ac, char **av);
+// void	ft_echo(int ac, char **av);
+void	ft_echo(t_token *input);
+
 
 // char	*ft_pwd(void);
 int		ft_pwd(void);
@@ -85,7 +89,6 @@ void ft_fork();
 # define HERE_DOC "here_doc"
 # define HERE_DOC_END "here_doc_end"
 
-typedef struct s_token		t_token;
 typedef struct s_parsing	t_parsing;
 
 struct s_token {
