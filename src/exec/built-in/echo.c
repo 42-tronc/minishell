@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 16:52:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,29 @@ int	need_newline(char *str)
  * @param ac nb of args passed
  * @param av array of args to print
  */
-void	ft_echo(int ac, char **av)
+void	ft_echo(t_token *input)
 {
-	int	i;
 	int	newline;
 
-	i = 1;
+	printf(YELLOW"ft_echo()\n"RESET);
 	newline = 1;
-	// if `-n` then print without \n and skip the `-n`
-	if (av[i] && !need_newline(av[i]))
+	input = input->next;
+	if (input->token && !need_newline(input->token))
 	{
 		newline = 0;
-		i++;
+		input = input->next;
 	}
-	// printf("\ti=%d ", i);
-	while (av[i] && !need_newline(av[i]))
-		i++;
-	while (av[i])
+	while (input->token && !need_newline(input->token))
+		input = input->next;
+
+	while (input)
 	{
-		printf("%s", av[i]);
-		if (ac - 1 > i)
+		printf("%s", input->token);
+		if (input->next)
 			printf(" ");
-		i++;
+		input = input->next;
 	}
 	if (newline)
 		printf("\n");
-	// printf("");
 	return;
 }
