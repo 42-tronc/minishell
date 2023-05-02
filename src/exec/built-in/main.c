@@ -64,6 +64,11 @@ int main(int ac, char *av[], char **envp)
 		ft_unset(&env, args);
 		ft_env(env);
 	}
+	else if (ft_strcmp(av[1], "fork") == 0)
+	{
+		printf("fork()\n\n");
+		ft_fork();
+	}
 	else
 	{
 		printf("Invalid function: `%s`\n", av[1]);
