@@ -62,20 +62,3 @@ void	ft_cd(t_env *env, char *path)
 		printf("New OLDPWD=`%s`\n", ft_getenv(env, "OLDPWD"));
 	}
 }
-
-/* int	main(int ac, char **av, char **envp)
-{
-	t_env	*env;
-
-	printf("OG ");
-	ft_pwd();
-	env = list_env(envp);
-	if (ac >= 2)
-	{
-		// printf("\nparam= '%s'\n", av[1]);
-		ft_cd(av[1], env);
-	}
-	else
-		ft_cd(NULL, env);
-	return (0);
-} */
