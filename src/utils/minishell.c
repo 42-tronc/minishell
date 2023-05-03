@@ -60,8 +60,15 @@ void	exec_dispatch(t_data *data, t_token *input)
 				ft_pwd();
 			else if (ft_strcmp(input->token, "unset") == 0)
 				ft_unset(&data->env, input);
-			else if (ft_strcmp(input->token, "fork") == 0)
-				ft_fork();
+			else if (ft_strcmp(input->token, "test") == 0)
+			{
+				// ft_setenv(data->env, "SUDO_EDITOR", "not vim");
+				ft_setenv(data->env, "LOLI", "Pretty sadge");
+				// ft_setenv(data->env, "LAWL", "Very pepehands");
+				ft_env(data->env);
+				// ft_env(data->env);
+				printf("\n\n\nHEYO\nLOLI=%s\n", ft_getenv(data->env, "LOLI"));
+			}
 			else
 				printf("%s is not a command\n", input->token);
 		}
