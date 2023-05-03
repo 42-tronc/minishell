@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 14:59:21 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 15:07:06 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				ft_pwd();
 			else if (ft_strcmp(input->token, "unset") == 0)
-				ft_unset(data->env, input);
+				ft_unset(&data->env, input);
 			else if (ft_strcmp(input->token, "fork") == 0)
 				ft_fork();
 			else
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = getting_line(&p);
 		expand_tokens(&tokens, data);
 		id_tokens(&tokens);
-		print_tokens_linked_list(tokens);
+		// print_tokens_linked_list(tokens);
 
 		exec_dispatch(data, tokens);
 
