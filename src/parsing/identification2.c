@@ -25,11 +25,13 @@ int	first_token(t_token *temp)
 	if (temp->token[0] == '<' && temp->token[1] == '\0')
 		temp->token_id = CHEVRON_L;
 	else if (temp->token[0] == '>' && temp->token[1] == '\0')
-		temp->token_id = CHEVRON_R;
+		return (1);
 	else if (temp->token[0] == '<' && temp->token[1] == '<')
 		temp->token_id = HERE_DOC;
 	else if (temp->token[0] == '|')
-		temp->token_id = PIPE;
+		return (1);
+	else if (temp->token[0] == '>' && temp->token[1] == '>')
+		return (1);
 	else
 		temp->token_id = CMD;
 	return (1);

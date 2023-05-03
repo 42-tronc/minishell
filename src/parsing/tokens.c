@@ -84,26 +84,32 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 /// @param tokens Linked list of tokens.
 /// @param p Data structure for the parsing.
 /// @param str Input from the function readline.
-void	get_symbols(t_token **tokens, t_parsing *p, char *str)
+/// @param size Set to 0, I am being NORMED :DDDDDDDDD.
+void	get_symbols(t_token **tokens, t_parsing *p, char *str, int size)
 {
 	char	*symbol;
-	int		i;
+	int		j;
 
-	i = -1;
-	while (str && str[++i])
-		if (ft_char(str[p->i]))
-			break ;
-	symbol = malloc(sizeof(char) * i);
-	if (!symbol)
-		exit (1);
-	i = -1;
-	while (str && str[p->i])
+	j = p->i;
+	while (str && str[j] && is_symbol(str[j]))
 	{
-		if (ft_char(str[p->i]))
-			break ;
-		symbol[++i] = str[p->i];
-		p->i++;
+		j++;
+		size++;
+		if (str[j] != str[j - 1])
+			break;
 	}
-	symbol[++i] = '\0';
+	symbol = malloc(sizeof(char) * (size + 1));
+	if (!symbol)
+		return ;
+	j = 0;
+	while (str && str[p->i] && is_symbol(str[p->i]))
+	{
+		symbol[j] = str[p->i];
+		j++;
+		p->i++;
+		if (str[p->i] != str[p->i - 1])
+			break;
+	}
+	symbol[j] = '\0';
 	ft_tokenadd_back(tokens, ft_tokennew(symbol));
 }

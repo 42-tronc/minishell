@@ -23,6 +23,13 @@ int	ft_char(int c)
 	return (1);
 }
 
+int	is_symbol(int c)
+{
+	if (c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
+}
+
 int	ft_char2(int c)
 {
 	if (c == '\'' || c == ' ' || c == '\"')
