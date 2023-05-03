@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:51:50 by aascedu           #+#    #+#             */
-/*   Updated: 2023/05/03 14:20:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 14:21:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	get_separator(t_token *temp)
 {
 	if (temp->token[0] == '|')
-	{
 		temp->token_id = PIPE;
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
 		temp->token_id = HERE_DOC_END;
