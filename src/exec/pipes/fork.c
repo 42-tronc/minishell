@@ -39,4 +39,6 @@ void ft_fork()
 		else if (WIFSIGNALED(status))
 			printf("Child process terminated by signal %d\n", WTERMSIG(status));
 	}
+	waitpid
+
 }

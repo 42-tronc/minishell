@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = getting_line(&p);
 		p.env = fill_env(envp);
 		expand_tokens(&tokens, &p);
-		id_tokens(&tokens, &p);
+		id_tokens(&tokens);
 		print_tokens_linked_list(tokens);
 
 		// exec_dispatch(tokens);
