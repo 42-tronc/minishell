@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/04/27 10:48:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/01 11:09:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "libft.h"
+// # include "exec.h"
+// # include "parsing.h"
 # include <stdio.h>
 
 typedef struct s_env
@@ -63,7 +65,7 @@ int		ft_setenv(t_env *env, char *var, char *value);
 
 void	print_error(int error_type);
 
-
+void ft_fork();
 
 
 

@@ -1,71 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testing.c                                          :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 08:19:57 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/27 14:43:46 by croy             ###   ########lyon.fr   */
+/*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
+/*   Updated: 2023/05/01 11:09:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_tokens_linked_list(t_token *head)
+void	exec_dispatch(t_data *data, t_token *input)
 {
-	t_token	*temp;
-	// t_token	*last;
-	int		i;
-
-	temp = head;
-	// last = NULL;
-	i = 0;
-	while (temp != NULL)
+	while (input)
 	{
-		printf("Type : %s && token[%d]:'%s'\n",temp->token_id, i++, temp->token);
-		// if (temp->next == NULL)
-		// 	last = temp;
-		temp = temp->next;
-	}
-	// while (last)
-	// {
-	// 	printf("token prev:%s\n", last->token_id);
-	// 	last = last->prev;
-	// }
-}
-
-void	print_env(t_env *head)
-{
-	t_env	*temp;
-
-	temp = head;
-	while (temp != NULL)
-	{
-		printf("%s et ", (char *)temp->var);
-		printf("%s\n", (char *)temp->value);
-		temp = temp->next;
+		if (ft_strcmp(input->token_id, "command") == 0)
+		{
+			if (ft_strcmp(input->token, "echo") == 0)
+				printf("echo in the building\n");
+				// ft_echo()
+			else if (ft_strcmp(input->token, "env") == 0)
+				ft_env(data->env);
+			else if (ft_strcmp(input->token, "fork") == 0)
+				ft_fork();
+			else
+				printf("%s is not a command\n", input->token);
+		}
+		input = input->next;
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data 		*data;
 	t_token		*tokens;
 	t_parsing	p;
 
 	(void)argc;
 	(void)argv;
+	data = ft_calloc(1, sizeof(t_data));
+	data->env = fill_env(envp);
 	while (1)
 	{
 		tokens = getting_line(&p);
 		p.env = fill_env(envp);
 		expand_tokens(&tokens, &p);
 		id_tokens(&tokens);
-		print_tokens_linked_list(tokens);
+		// print_tokens_linked_list(tokens);
 
-		// exec_dispatch(tokens);
+		exec_dispatch(data, tokens);
 
-		// print_env(p.env);
 		free_token(tokens);
 		free_list(p.env);
 	}
