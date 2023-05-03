@@ -95,7 +95,7 @@ DIR_EXEC := $(SRC_FOLDER)exec/pipes/
 SRC_EXEC := fork.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c
+SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c testing.c
 
 # ifeq ($(USER), maplepy)
 # 	SRC_BUILTIN += main.c
