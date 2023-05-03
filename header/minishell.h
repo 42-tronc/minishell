@@ -18,12 +18,14 @@
 // # include "parsing.h"
 # include <stdio.h>
 
-typedef struct s_env
+typedef struct s_env	t_env;
+
+struct s_env
 {
-	char			*var;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
+	char	*var;
+	char	*value;
+	t_env	*next;
+};
 
 // EXEC
 # include <limits.h>
@@ -91,7 +93,6 @@ typedef struct s_parsing	t_parsing;
 struct s_token {
 	char	*token;
 	char	*token_id;
-	int		pipe_block;
 	t_token	*prev;
 	t_token	*next;
 };
@@ -101,6 +102,7 @@ struct s_parsing {
 	int		quote;
 	int		dquote;
 	int		all_id;
+	int		pipe_block;
 	t_env	*env;
 };
 
@@ -149,13 +151,12 @@ int		processed_line(char *str);
 int		next_char(char c);
 
 // identification.c functions
-void	id_tokens(t_token **tokens);
-int		command_arg_file(t_token *temp);
-int		first_token(t_token *temp);
+void	id_tokens(t_token **tokens, t_parsing *p);
+int		command_arg_file(t_token *temp, t_parsing *p);
 
 // identification2.c functions
-int		is_separator(t_token *temp);
 int		first_token(t_token *temp);
+int		is_separator(t_token *temp);
 
 void	print_tokens_linked_list(t_token *head);
 

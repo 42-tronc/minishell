@@ -78,9 +78,7 @@ void	cutting_line(t_token **tokens, t_parsing *p, char *str)
 		else if (ft_char(str[p->i]))
 			get_next_word(tokens, p, str, -1);
 		else
-		{
 			get_symbols(tokens, p, str);
-		}
 	}
 }
 
@@ -91,6 +89,8 @@ t_token	*getting_line(t_parsing *p)
 
 	tokens = NULL;
 	str = readline("minishell> ");
+	if (str[0] != '\0')
+		add_history(str);
 	p->i = 0;
 	p->quote = 0;
 	p->dquote = 0;
