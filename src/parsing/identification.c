@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-int	get_separator(t_token *temp)
+int	get_separator(t_token *temp, t_parsing *p)
 {
 	if (temp->token[0] == '|')
 	{
 		temp->token_id = PIPE;
-		temp->pipe_block = temp->prev->pipe_block + 1;
+		p->pipe_block = p->pipe_block + 1;
 	}
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
 		temp->token_id = APPEND;
@@ -30,15 +30,7 @@ int	get_separator(t_token *temp)
 	return (1);
 }
 
-void	after_pipe_token(t_token *temp)
-{
-	if (temp->token[0] == '<')
-		temp->token_id = CHEVRON_L;
-	else
-		temp->token_id = CMD;
-}
-
-void	which_id_to_give(t_token *temp)
+void	which_id_to_give(t_token *temp, t_parsing *p)
 {
 	if (!ft_strcmp(temp->prev->token_id, CHEVRON_L))
 		temp->token_id = INFILE;
@@ -57,17 +49,17 @@ void	which_id_to_give(t_token *temp)
 	else if (!ft_strcmp(temp->prev->token_id, LIMITER))
 		temp->token_id = CMD;
 	else if (!ft_strcmp(temp->prev->token_id, PIPE))
-		after_pipe_token(temp);
+		get_separator(temp, p);
 }
 
-int	command_arg_file(t_token *temp)
+int	command_arg_file(t_token *temp, t_parsing *p)
 {
 	int	stop;
 
 	stop = 0;
 	while (temp)
 	{
-		which_id_to_give(temp);
+		which_id_to_give(temp, p);
 		stop++;
 		if (temp->next && is_separator(temp->next))
 			break ;
@@ -76,23 +68,24 @@ int	command_arg_file(t_token *temp)
 	return (stop);
 }
 
-void	id_tokens(t_token **tokens)
+void	id_tokens(t_token **tokens, t_parsing *p)
 {
 	t_token	*temp;
 	int		stop;
 	int		i;
 
 	temp = *tokens;
-	temp->pipe_block = 0;
+	p->pipe_block = 0;
+	printf("test\n");
 	while (temp != NULL)
 	{
 		i = 0;
 		if (temp->prev == NULL)
 			stop = first_token(temp);
 		else if (!is_separator(temp))
-			stop = command_arg_file(temp);
+			stop = command_arg_file(temp, p);
 		else
-			stop = get_separator(temp);
+			stop = get_separator(temp, p);
 		while (i++ < stop)
 			temp = temp->next;
 	}
