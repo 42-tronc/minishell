@@ -14,10 +14,12 @@
 
 int	get_separator(t_token *temp, t_parsing *p)
 {
+	(void)p;
 	if (temp->token[0] == '|')
 	{
 		temp->token_id = PIPE;
-		p->pipe_block = p->pipe_block + 1;
+		temp->pipe_block = temp->prev->pipe_block + 1;
+		return (1);
 	}
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
 		temp->token_id = APPEND;
@@ -27,11 +29,14 @@ int	get_separator(t_token *temp, t_parsing *p)
 		temp->token_id = CHEVRON_L;
 	else if (temp->token[0] == '>' && temp->token[1] == '\0')
 		temp->token_id = CHEVRON_R;
+	temp->pipe_block = temp->prev->pipe_block;
 	return (1);
 }
 
 void	which_id_to_give(t_token *temp, t_parsing *p)
 {
+	if (!temp->token_id)
+		return ;
 	if (!ft_strcmp(temp->prev->token_id, CHEVRON_L))
 		temp->token_id = INFILE;
 	if (!ft_strcmp(temp->prev->token_id, CHEVRON_R))
@@ -50,6 +55,8 @@ void	which_id_to_give(t_token *temp, t_parsing *p)
 		temp->token_id = CMD;
 	else if (!ft_strcmp(temp->prev->token_id, PIPE))
 		get_separator(temp, p);
+	if (ft_strcmp(temp->token_id, PIPE))
+		temp->pipe_block = temp->prev->pipe_block;
 }
 
 int	command_arg_file(t_token *temp, t_parsing *p)
@@ -75,8 +82,7 @@ void	id_tokens(t_token **tokens, t_parsing *p)
 	int		i;
 
 	temp = *tokens;
-	p->pipe_block = 0;
-	printf("test\n");
+	temp->pipe_block = 0;
 	while (temp != NULL)
 	{
 		i = 0;

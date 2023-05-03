@@ -93,6 +93,7 @@ typedef struct s_parsing	t_parsing;
 struct s_token {
 	char	*token;
 	char	*token_id;
+	int		pipe_block;
 	t_token	*prev;
 	t_token	*next;
 };
@@ -102,7 +103,6 @@ struct s_parsing {
 	int		quote;
 	int		dquote;
 	int		all_id;
-	int		pipe_block;
 	t_env	*env;
 };
 
@@ -130,13 +130,14 @@ void	free_token(t_token *tokens);
 
 // tokens.c functions
 void	get_next_word(t_token **tokens, t_parsing *data, char *str, int i);
-void	get_symbols(t_token **tokens, t_parsing *p, char *str);
+void	get_symbols(t_token **tokens, t_parsing *p, char *str, int size);
 int		get_word_size(t_parsing *data, char *str, int begin);
 
 // tokens2.c functions
 int		ft_char(int c);
 int		ft_char2(int c);
 void	p_quote(t_parsing *p, char c);
+int		is_symbol(int c);
 
 // dollar.c functions
 void	expand_tokens(t_token **tokens, t_parsing *p);
@@ -158,7 +159,7 @@ int		command_arg_file(t_token *temp, t_parsing *p);
 int		first_token(t_token *temp);
 int		is_separator(t_token *temp);
 
-void	print_tokens_linked_list(t_token *head);
+void	print_tokens_linked_list(t_token *head, t_parsing *p);
 
 
 

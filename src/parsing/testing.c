@@ -12,18 +12,19 @@
 
 #include "minishell.h"
 
-void	print_tokens_linked_list(t_token *head)
+void	print_tokens_linked_list(t_token *head, t_parsing *p)
 {
 	t_token	*temp;
 	// t_token	*last;
 	int		i;
 
+	(void)p;
 	temp = head;
 	// last = NULL;
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("Type : %s && token[%d]:'%s'\n",temp->token_id, i++, temp->token);
+		printf("Type : %s && token[%d]:'%s' in pipe block:%d\n",temp->token_id, i++, temp->token, temp->pipe_block);
 		// if (temp->next == NULL)
 		// 	last = temp;
 		temp = temp->next;
@@ -55,13 +56,13 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	p.env = fill_env(envp);
 	while (1)
 	{
 		tokens = getting_line(&p);
-		p.env = fill_env(envp);
 		expand_tokens(&tokens, &p);
 		id_tokens(&tokens, &p);
-		print_tokens_linked_list(tokens);
+		print_tokens_linked_list(tokens, &p);
 
 		// exec_dispatch(tokens);
 

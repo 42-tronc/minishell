@@ -78,7 +78,7 @@ void	cutting_line(t_token **tokens, t_parsing *p, char *str)
 		else if (ft_char(str[p->i]))
 			get_next_word(tokens, p, str, -1);
 		else
-			get_symbols(tokens, p, str);
+			get_symbols(tokens, p, str, 0);
 	}
 }
 
