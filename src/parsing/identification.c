@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:51:50 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 13:15:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	get_separator(t_token *temp)
 {
-	(void)p;
 	if (temp->token[0] == '|')
+	{
 		temp->token_id = PIPE;
 		temp->pipe_block = temp->prev->pipe_block + 1;
 		return (1);
@@ -61,7 +61,7 @@ void	which_id_to_give(t_token *temp)
 	else if (!ft_strcmp(temp->prev->token_id, LIMITER))
 		temp->token_id = CMD;
 	else if (!ft_strcmp(temp->prev->token_id, PIPE))
-		get_separator(temp, p);
+		get_separator(temp);
 	if (ft_strcmp(temp->token_id, PIPE))
 		temp->pipe_block = temp->prev->pipe_block;
 }
