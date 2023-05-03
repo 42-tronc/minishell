@@ -87,14 +87,13 @@ void ft_fork();
 # define PIPE "|"
 # define LIMITER "limiter"
 # define HERE_DOC "here_doc"
-# define APPEND "append"
+# define HERE_DOC_END "here_doc_end"
 
 typedef struct s_parsing	t_parsing;
 
 struct s_token {
 	char	*token;
 	char	*token_id;
-	int		pipe_block;
 	t_token	*prev;
 	t_token	*next;
 };
@@ -105,6 +104,7 @@ struct s_parsing {
 	int		dquote;
 	int		all_id;
 	t_env	*env;
+
 };
 
 // envp.c functions
