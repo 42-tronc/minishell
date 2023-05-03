@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:19:57 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/27 14:43:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 13:28:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		tokens = getting_line(&p);
 		expand_tokens(&tokens, &p);
-		id_tokens(&tokens, &p);
+		id_tokens(&tokens);
 		print_tokens_linked_list(tokens, &p);
 
 		// exec_dispatch(tokens);
