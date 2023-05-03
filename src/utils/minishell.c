@@ -49,7 +49,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 			if (ft_strcmp(input->token, "cd") == 0)
 				ft_cd(data->env, input->next->token);
 			else if (ft_strcmp(input->token, "echo") == 0)
-				ft_echo(input);
+				ft_echo(input->next);
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data->env);
 			// else if (ft_strcmp(input->token, "exit") == 0)
