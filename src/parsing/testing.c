@@ -61,14 +61,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		tokens = getting_line(&p);
 		expand_tokens(&tokens, &p);
-		id_tokens(&tokens, &p);
+		id_tokens(&tokens);
 		print_tokens_linked_list(tokens, &p);
-
-		// exec_dispatch(tokens);
-
-		// print_env(p.env);
 		free_token(tokens);
-		free_list(p.env);
 	}
+	free_list(p.env);
 	return (0);
 }
