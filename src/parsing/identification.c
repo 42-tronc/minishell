@@ -12,17 +12,16 @@
 
 #include "minishell.h"
 
-int	get_separator(t_token *temp, t_parsing *p)
+int	get_separator(t_token *temp)
 {
 	(void)p;
 	if (temp->token[0] == '|')
-	{
 		temp->token_id = PIPE;
 		temp->pipe_block = temp->prev->pipe_block + 1;
 		return (1);
 	}
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
-		temp->token_id = APPEND;
+		temp->token_id = HERE_DOC_END;
 	else if (temp->token[0] == '<' && temp->token[1] == '<')
 		temp->token_id = HERE_DOC;
 	else if (temp->token [0] == '<' && temp->token[1] == '\0')
@@ -33,7 +32,15 @@ int	get_separator(t_token *temp, t_parsing *p)
 	return (1);
 }
 
-void	which_id_to_give(t_token *temp, t_parsing *p)
+void	after_pipe_token(t_token *temp)
+{
+	if (temp->token[0] == '<')
+		temp->token_id = CHEVRON_L;
+	else
+		temp->token_id = CMD;
+}
+
+void	which_id_to_give(t_token *temp)
 {
 	if (!temp->token_id)
 		return ;
@@ -49,7 +56,7 @@ void	which_id_to_give(t_token *temp, t_parsing *p)
 		temp->token_id = ARG;
 	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC))
 		temp->token_id = LIMITER;
-	else if (!ft_strcmp(temp->prev->token_id, APPEND))
+	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC_END))
 		temp->token_id = OUTFILE;
 	else if (!ft_strcmp(temp->prev->token_id, LIMITER))
 		temp->token_id = CMD;
@@ -59,14 +66,14 @@ void	which_id_to_give(t_token *temp, t_parsing *p)
 		temp->pipe_block = temp->prev->pipe_block;
 }
 
-int	command_arg_file(t_token *temp, t_parsing *p)
+int	command_arg_file(t_token *temp)
 {
 	int	stop;
 
 	stop = 0;
 	while (temp)
 	{
-		which_id_to_give(temp, p);
+		which_id_to_give(temp);
 		stop++;
 		if (temp->next && is_separator(temp->next))
 			break ;
@@ -75,7 +82,7 @@ int	command_arg_file(t_token *temp, t_parsing *p)
 	return (stop);
 }
 
-void	id_tokens(t_token **tokens, t_parsing *p)
+void	id_tokens(t_token **tokens)
 {
 	t_token	*temp;
 	int		stop;
@@ -89,9 +96,9 @@ void	id_tokens(t_token **tokens, t_parsing *p)
 		if (temp->prev == NULL)
 			stop = first_token(temp);
 		else if (!is_separator(temp))
-			stop = command_arg_file(temp, p);
+			stop = command_arg_file(temp);
 		else
-			stop = get_separator(temp, p);
+			stop = get_separator(temp);
 		while (i++ < stop)
 			temp = temp->next;
 	}

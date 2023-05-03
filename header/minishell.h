@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/01 11:09:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 16:46:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 // # include "parsing.h"
 # include <stdio.h>
 
-typedef struct s_env	t_env;
-
-struct s_env
+typedef struct s_env
 {
-	char	*var;
-	char	*value;
-	t_env	*next;
-};
+	char			*var;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_token		t_token;
 
 // EXEC
 # include <limits.h>
@@ -52,7 +52,9 @@ void	ft_env(t_env *env);
 void	ft_export(t_env *env, t_list *args);
 // void	ft_export(t_env *env);
 
-void	ft_echo(int ac, char **av);
+// void	ft_echo(int ac, char **av);
+void	ft_echo(t_token *input);
+
 
 // char	*ft_pwd(void);
 int		ft_pwd(void);
@@ -85,9 +87,8 @@ void ft_fork();
 # define PIPE "|"
 # define LIMITER "limiter"
 # define HERE_DOC "here_doc"
-# define APPEND "append"
+# define HERE_DOC_END "here_doc_end"
 
-typedef struct s_token		t_token;
 typedef struct s_parsing	t_parsing;
 
 struct s_token {
@@ -104,6 +105,7 @@ struct s_parsing {
 	int		dquote;
 	int		all_id;
 	t_env	*env;
+
 };
 
 // envp.c functions
@@ -152,12 +154,13 @@ int		processed_line(char *str);
 int		next_char(char c);
 
 // identification.c functions
-void	id_tokens(t_token **tokens, t_parsing *p);
-int		command_arg_file(t_token *temp, t_parsing *p);
+void	id_tokens(t_token **tokens);
+int		command_arg_file(t_token *temp);
+int		first_token(t_token *temp);
 
 // identification2.c functions
-int		first_token(t_token *temp);
 int		is_separator(t_token *temp);
+int		first_token(t_token *temp);
 
 void	print_tokens_linked_list(t_token *head, t_parsing *p);
 

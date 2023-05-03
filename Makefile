@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/05/01 11:11:39 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/05/02 10:44:02 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,12 +81,12 @@ HEADER := header/minishell.h
 
 SRC_FOLDER := src/
 OBJ_DIR := obj/
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_EXEC) $(SCR_PARSING))
-# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_EXEC) $(SRC_UTILS) $(SCR_PARSING))
+# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_EXEC) $(SCR_PARSING))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_EXEC) $(SRC_UTILS) $(SCR_PARSING))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_UTILS := $(SRC_FOLDER)utils/
-# SRC_UTILS := minishell.c
+SRC_UTILS := minishell.c
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c
@@ -95,13 +95,13 @@ DIR_EXEC := $(SRC_FOLDER)exec/pipes/
 SRC_EXEC := fork.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c testing.c
+SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c
 
-ifeq ($(USER), maplepy)
-	SRC_BUILTIN += main.c
-else
-	SRC += $(addprefix $(SRC_FOLDER), $(SRC_UTILS))
-endif
+# ifeq ($(USER), maplepy)
+# 	SRC_BUILTIN += main.c
+# else
+# 	SRC += $(addprefix $(SRC_FOLDER), $(SRC_UTILS))
+# endif
 
 
 # -------------- RECIPES --------------
