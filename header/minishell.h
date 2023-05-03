@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/02 16:46:18 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 13:12:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_env
 {
 	char			*var;
 	char			*value;
+	int				in_env;
 	struct s_env	*next;
 }					t_env;
 
