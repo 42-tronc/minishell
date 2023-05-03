@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/05/02 17:35:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 11:56:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ void	ft_echo(t_token *input)
 	printf(YELLOW"ft_echo()\n"RESET);
 	newline = 1;
 	input = input->next;
-	if (input->token && !need_newline(input->token))
+	if (input && input->token && !need_newline(input->token))
 	{
 		newline = 0;
 		input = input->next;
 	}
-	while (input->token && !need_newline(input->token))
+	while (input && input->token && !need_newline(input->token))
 		input = input->next;
 
 	while (input)
@@ -96,7 +96,4 @@ void	ft_echo(t_token *input)
 	}
 	if (newline)
 		printf("\n");
-	return;
 }
-
-/* loli */
