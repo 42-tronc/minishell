@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 13:12:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 14:57:14 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	ft_echo(t_token *input);
 // char	*ft_pwd(void);
 int		ft_pwd(void);
 
-void	ft_unset(t_env **env, t_list *args);
+void	ft_unset(t_env **env, t_token *args);
+// void	ft_unset(t_env **env, t_list *args);
 
 // Utils for env
 t_env	*fill_env(char **envp);
