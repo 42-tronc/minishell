@@ -40,6 +40,7 @@ typedef struct s_data
 {
 	t_env	*env;
 	t_env	*export;
+	int		i;
 }			t_data;
 
 // void	ft_cd(char *path, t_list *env);
@@ -88,6 +89,7 @@ void ft_fork();
 # define LIMITER "limiter"
 # define HERE_DOC "here_doc"
 # define HERE_DOC_END "here_doc_end"
+# define MY_NULL "null"
 
 typedef struct s_parsing	t_parsing;
 
@@ -142,9 +144,9 @@ void	p_quote(t_parsing *p, char c);
 int		is_symbol(int c);
 
 // dollar.c functions
-void	expand_tokens(t_token **tokens, t_parsing *p);
-void	replace_var(t_token *temp, t_parsing *p);
-char	*get_before_dollar(char *str, t_parsing *p);
+void	expand_tokens(t_token **tokens, t_data *data);
+void	replace_var(t_token *temp, t_data *p);
+char	*get_before_dollar(char *str, t_data *p);
 char	*get_var_name(char *str);
 
 // dollar2.c functions
@@ -155,14 +157,14 @@ int		next_char(char c);
 
 // identification.c functions
 void	id_tokens(t_token **tokens);
-int		command_arg_file(t_token *temp);
+void	command_arg_file(t_token *temp);
 int		first_token(t_token *temp);
 
 // identification2.c functions
 int		is_separator(t_token *temp);
 int		first_token(t_token *temp);
 
-void	print_tokens_linked_list(t_token *head, t_parsing *p);
+void	print_tokens_linked_list(t_token *head);
 
 
 

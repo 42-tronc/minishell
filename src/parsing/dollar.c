@@ -41,7 +41,7 @@ char	*get_var_name(char *str)
 	return (res);
 }
 
-char	*get_before_dollar(char *str, t_parsing *p)
+char	*get_before_dollar(char *str, t_data *p)
 {
 	int		i;
 	int		size;
@@ -68,7 +68,7 @@ char	*get_before_dollar(char *str, t_parsing *p)
 	return (res);
 }
 
-void	replace_var(t_token *temp, t_parsing *p)
+void	replace_var(t_token *temp, t_data *p)
 {
 	char	*before;
 	char	*var_value;
@@ -92,7 +92,7 @@ void	replace_var(t_token *temp, t_parsing *p)
 	free(new_token);
 }
 
-void	expand_tokens(t_token **tokens, t_parsing *p)
+void	expand_tokens(t_token **tokens, t_data *p)
 {
 	t_token	*temp;
 
