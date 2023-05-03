@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/02 17:12:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 13:32:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,16 @@ void	exec_dispatch(t_data *data, t_token *input)
 {
 	while (input)
 	{
-		if (ft_strcmp(input->token_id, "command") == 0)
+		// if (!input->token_id)
+		// {
+		// printf("Token id = %s\n", input->token_id);
+		// 	break;
+		// }
+		if (ft_strcmp(input->token_id, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
 				ft_cd(data->env, input->next->token);
-			if (ft_strcmp(input->token, "echo") == 0)
+			else if (ft_strcmp(input->token, "echo") == 0)
 				ft_echo(input);
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data->env);
