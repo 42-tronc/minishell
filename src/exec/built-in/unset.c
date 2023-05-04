@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 14:53:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_env(t_env *node)
 	free(node);
 }
 
-void	ft_unset(t_env **env, t_list *args)
+void	ft_unset(t_env **env, t_token *args)
 {
 	t_env	*current;
 	t_env	*tmp;
@@ -51,9 +51,9 @@ void	ft_unset(t_env **env, t_list *args)
 		while (current)
 		{
 			// found node to delete
-			if (ft_strcmp(args->content, current->var) == 0)
+			if (ft_strcmp(args->token, current->var) == 0)
 			{
-				printf("found %s\n", (char *)args->content);
+				printf("found %s\n", args->token);
 				// is the first node
 				if (!prev)
 					*env = current->next;

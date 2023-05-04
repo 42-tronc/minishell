@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/04/27 16:48:21 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 16:36:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*ft_getenv(t_env *env, char *var)
 	t_env	*temp;
 
 	temp = env;
-	while (temp->next)
+	while (temp)
 	{
 		if (ft_strcmp(temp->var, var) == 0)
 			return (temp->value);

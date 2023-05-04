@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 11:56:33 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 16:39:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_echo(t_token *input)
 
 	printf(YELLOW"ft_echo()\n"RESET);
 	newline = 1;
-	input = input->next;
+	// input = input->next;
 	if (input && input->token && !need_newline(input->token))
 	{
 		newline = 0;

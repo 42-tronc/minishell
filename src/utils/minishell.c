@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/02 17:12:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:28:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,47 @@ void	exec_dispatch(t_data *data, t_token *input)
 {
 	while (input)
 	{
-		if (ft_strcmp(input->token_id, "command") == 0)
+		if (ft_strcmp(input->token_id, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
-				ft_cd(data->env, input->next->token);
-			if (ft_strcmp(input->token, "echo") == 0)
-				ft_echo(input);
+				ft_cd(data, input->next);
+				// ft_cd(data->env, input->next);
+				// ft_cd(data->env, input->next->token);
+			else if (ft_strcmp(input->token, "echo") == 0)
+				ft_echo(input->next);
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data->env);
-			else if (ft_strcmp(input->token, "fork") == 0)
-				ft_fork();
+			// else if (ft_strcmp(input->token, "exit") == 0)
+			// 	ft_exit;
+			// else if (ft_strcmp(input->token, "export") == 0)
+			// 	ft_export(data->env, input);
+			else if (ft_strcmp(input->token, "pwd") == 0)
+				ft_pwd();
+			else if (ft_strcmp(input->token, "unset") == 0)
+				ft_unset(&data->env, input);
+
+			// TESTS
+			else if (ft_strcmp(input->token, "xc") == 0)
+			{
+				ft_getpaths(data);
+				int i = 0;
+				while (data->paths[i])
+				{
+					printf("path[%d]=`%s`\n", i, data->paths[i]);
+					i++;
+				}
+			}
+			else if (ft_strcmp(input->token, "test") == 0)
+			{
+				// ft_setenv(data->env, "SUDO_EDITOR", "not vim");
+				ft_setenv(data->env, "LOLI", "Pretty sadge");
+				// ft_setenv(data->env, "LAWL", "Very pepehands");
+				ft_env(data->env);
+				// ft_env(data->env);
+				printf("\n\n\nHEYO\nLOLI=%s\n", ft_getenv(data->env, "LOLI"));
+			}
+
+			// BACK 2 NORMAL
 			else
 				printf("%s is not a command\n", input->token);
 		}
@@ -82,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 		data->tokens = getting_line(data);
 		expand_tokens(&data->tokens, data);
 		id_tokens(&data->tokens);
-		print_tokens_linked_list(data->tokens);
+		// print_tokens_linked_list(tokens);
 
 		exec_dispatch(data, data->tokens);
 

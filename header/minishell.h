@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/02 16:46:18 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:27:47 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,18 @@
 // # include "parsing.h"
 # include "libft.h"
 # include <stdio.h>
-// include EXEC
+
+typedef struct s_env
+{
+	char			*var;
+	char			*value;
+	int				in_env;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_token		t_token;
+
+// EXEC
 # include <limits.h>
 # include <unistd.h>
 // include PARSING
@@ -29,6 +40,7 @@
 # define ORANGE "\e[38;5;208;1m"
 # define YELLOW	"\e[33;1m"
 # define RESET	"\e[0m"
+
 
 # define CHEVRON_L "<"
 # define CHEVRON_R ">"
@@ -49,6 +61,7 @@ typedef struct s_token		t_token;
 
 struct s_data {
 	t_env		*env;
+	char	**paths;
 	t_env		*export;
 	int			i;
 	t_parsing	*p;
@@ -81,7 +94,9 @@ char	**get_array_cmd(t_token *temp);
 
 //EXEC
 // void	ft_cd(char *path, t_list *env);
-void	ft_cd(t_env *env, char *path);
+// void	ft_cd(t_env *env, char *path);
+// void	ft_cd(t_env *env, t_token *input);
+void	ft_cd(t_data *data, t_token *input);
 
 // void	ft_env(t_list *env);
 void	ft_env(t_env *env);
@@ -97,7 +112,8 @@ void	ft_echo(t_token *input);
 // char	*ft_pwd(void);
 int		ft_pwd(void);
 
-void	ft_unset(t_env **env, t_list *args);
+void	ft_unset(t_env **env, t_token *args);
+// void	ft_unset(t_env **env, t_list *args);
 
 // Utils for env
 t_env	*fill_env(char **envp);
@@ -108,6 +124,7 @@ int		ft_setenv(t_env *env, char *var, char *value);
 void	print_error(int error_type);
 
 void ft_fork();
+void ft_getpaths(t_data *data);
 
 // PARSING
 // envp.c functions
