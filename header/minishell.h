@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/04 16:39:31 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 17:04:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 // # include "parsing.h"
 # include "libft.h"
 # include <stdio.h>
+
+typedef enum {
+	SUCCESS,
+	FAILURE,
+	MALLOC_ERROR,
+	PIPE_ERROR
+}	exit_code;
 
 typedef struct s_env
 {
@@ -61,7 +68,7 @@ typedef struct s_token		t_token;
 
 struct s_data {
 	t_env		*env;
-	char	**paths;
+	char		**paths;
 	t_env		*export;
 	int			i;
 	t_parsing	*p;
