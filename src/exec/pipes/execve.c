@@ -17,7 +17,7 @@ void	ft_getpaths(t_data *data)
 	char *paths;
 
 	paths = ft_getenv(data->env, "PATH");
-	data->paths = ft_split(paths, ':');
+	data->paths = split_paths(paths, ':');
 	// printf("`%s`\n", paths);
 	// int i = 0;
 	// while (data->paths[i])

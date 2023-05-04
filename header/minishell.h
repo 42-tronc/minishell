@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/04 15:35:15 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 16:39:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,11 @@ int		ft_setenv(t_env *env, char *var, char *value);
 void	print_error(int error_type);
 
 void ft_fork();
-void ft_getpaths(t_data *data);
 
+
+void ft_getpaths(t_data *data);
+char	**split_paths(char const *s, char c);
+void	is_validpath(t_data *data);
 
 
 
