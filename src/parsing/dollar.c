@@ -86,9 +86,8 @@ void	replace_var(t_token *temp, t_data *p)
 	free(temp->token);
 	temp->token = ft_strdup(new_token);
 	free(var_name);
-	free(var_value);
-	free(before_and_value);
 	free(before);
+	free(before_and_value);
 	free(new_token);
 }
 

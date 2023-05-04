@@ -82,19 +82,23 @@ void	cutting_line(t_token **tokens, t_parsing *p, char *str)
 	}
 }
 
-t_token	*getting_line(t_parsing *p)
+t_token	*getting_line(t_data *data)
 {
 	t_token	*tokens;
 	char	*str;
 
+	data->p = ft_calloc(1, sizeof(t_parsing));
+	if (!data->p)
+		return (NULL);
 	tokens = NULL;
 	str = readline("minishell> ");
-	add_history(str);
-	p->i = 0;
-	p->quote = 0;
-	p->dquote = 0;
+	if (str[0] != '\0')
+		add_history(str);
+	data->p->i = 0;
+	data->p->quote = 0;
+	data->p->dquote = 0;
 	even_quote(str);
-	right_symbols(p, str);
-	cutting_line(&tokens, p, str);
+	right_symbols(data->p, str);
+	cutting_line(&tokens, data->p, str);
 	return (free(str), tokens);
 }
