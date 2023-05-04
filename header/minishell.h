@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/04 15:34:10 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:35:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ void	print_error(int error_type);
 
 void ft_fork();
 void ft_getpaths(t_data *data);
+
+
+
+
+
 
 // PARSING
 // envp.c functions
