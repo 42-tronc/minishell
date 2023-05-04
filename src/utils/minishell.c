@@ -87,28 +87,39 @@ void	exec_dispatch(t_data *data, t_token *input)
 	}
 }
 
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_data 		*data;
-	t_token		*tokens;
-	t_parsing	p;
+	t_data 	*data;
 
 	(void)argc;
 	(void)argv;
 	data = ft_calloc(1, sizeof(t_data));
 	data->env = fill_env(envp);
-	p.env = fill_env(envp);
 	while (1)
 	{
-		tokens = getting_line(&p);
-		expand_tokens(&tokens, data);
-		id_tokens(&tokens);
+		data->tokens = getting_line(data);
+		expand_tokens(&data->tokens, data);
+		id_tokens(&data->tokens);
 		// print_tokens_linked_list(tokens);
 
-		exec_dispatch(data, tokens);
+		exec_dispatch(data, data->tokens);
 
-		free_token(tokens);
+		free_token(data->tokens);
+		free(data->p);
 	}
-	free_list(p.env);
+	free_list(data->env);
 	return (0);
 }

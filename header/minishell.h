@@ -13,9 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
 // # include "exec.h"
 // # include "parsing.h"
+# include "libft.h"
 # include <stdio.h>
 
 typedef struct s_env
@@ -31,20 +31,68 @@ typedef struct s_token		t_token;
 // EXEC
 # include <limits.h>
 # include <unistd.h>
+// include PARSING
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define RED	"\e[31;1m"
 # define ORANGE "\e[38;5;208;1m"
 # define YELLOW	"\e[33;1m"
 # define RESET	"\e[0m"
 
-typedef struct s_data
-{
-	t_env	*env;
-	char	**paths;
-	t_env	*export;
-	int		i;
-}			t_data;
 
+# define CHEVRON_L "<"
+# define CHEVRON_R ">"
+# define INFILE "infile"
+# define OUTFILE "outfile"
+# define CMD "command"
+# define ARG "argument"
+# define PIPE "|"
+# define LIMITER "limiter"
+# define HERE_DOC "here_doc"
+# define HERE_DOC_END "here_doc_end"
+# define MY_NULL "null"
+
+typedef struct s_data		t_data;
+typedef struct s_parsing	t_parsing;
+typedef struct s_env		t_env;
+typedef struct s_token		t_token;
+
+struct s_data {
+	t_env		*env;
+	char	**paths;
+	t_env		*export;
+	int			i;
+	t_parsing	*p;
+	t_token		*tokens;
+};
+
+struct s_parsing {
+	int		i;
+	int		quote;
+	int		dquote;
+	int		all_id;
+};
+
+struct s_env {
+	char	*var;
+	char	*value;
+	t_env	*next;
+};
+
+struct s_token {
+	char	*token;
+	char	*token_id;
+	int		pipe_block;
+	t_token	*prev;
+	t_token	*next;
+};
+
+//UTILS
+char	**get_array_cmd(t_token *temp);
+
+//EXEC
 // void	ft_cd(char *path, t_list *env);
 // void	ft_cd(t_env *env, char *path);
 // void	ft_cd(t_env *env, t_token *input);
@@ -78,44 +126,7 @@ void	print_error(int error_type);
 void ft_fork();
 void ft_getpaths(t_data *data);
 
-
-
 // PARSING
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# define CHEVRON_L "<"
-# define CHEVRON_R ">"
-# define INFILE "infile"
-# define OUTFILE "outfile"
-# define CMD "command"
-# define ARG "argument"
-# define PIPE "|"
-# define LIMITER "limiter"
-# define HERE_DOC "here_doc"
-# define HERE_DOC_END "here_doc_end"
-# define MY_NULL "null"
-
-typedef struct s_parsing	t_parsing;
-
-struct s_token {
-	char	*token;
-	char	*token_id;
-	int		pipe_block;
-	t_token	*prev;
-	t_token	*next;
-};
-
-struct s_parsing {
-	int		i;
-	int		quote;
-	int		dquote;
-	int		all_id;
-	t_env	*env;
-
-};
-
 // envp.c functions
 // t_env	*list_env(char **envp);
 char	*ft_getenv(t_env *envp, char *str);
@@ -128,7 +139,7 @@ void	ft_envadd_back(t_env **env, t_env *new);
 t_env	*ft_envnew(char *name, char *value);
 
 // parsing.c functions
-t_token	*getting_line(t_parsing *data);
+t_token	*getting_line(t_data *data);
 void	right_symbols(t_parsing *p, char *str);
 void	even_quote(char *str);
 void	cutting_line(t_token **tokens, t_parsing *data, char *str);
@@ -171,7 +182,5 @@ int		is_separator(t_token *temp);
 int		first_token(t_token *temp);
 
 void	print_tokens_linked_list(t_token *head);
-
-
 
 #endif

@@ -86,7 +86,7 @@ SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_EXEC) $(SRC_UTILS) $(SCR_P
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_UTILS := $(SRC_FOLDER)utils/
-SRC_UTILS := minishell.c
+SRC_UTILS := minishell.c exec_char.c
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c
