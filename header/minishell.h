@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/04 17:04:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 17:24:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,9 @@ void ft_fork();
 
 void ft_getpaths(t_data *data);
 char	**split_paths(char const *s, char c);
-void	is_validpath(t_data *data);
+// void	get_validpath(t_data *data);
+exit_code	get_validpath(t_data *data);
+
 
 
 
