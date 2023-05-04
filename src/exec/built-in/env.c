@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 12:50:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_env(t_env *env)
 	current = env;
 	while (current)
 	{
-		printf("`%s`=`%s`\n", current->var, current->value);
+		printf("%s=%s\n", current->var, current->value);
 		current = current->next;
 	}
 }
