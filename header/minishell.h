@@ -27,6 +27,9 @@ typedef struct s_env
 
 typedef struct s_token		t_token;
 
+//UTILS
+char	**get_array_cmd(t_token *temp);
+
 // EXEC
 # include <limits.h>
 # include <unistd.h>
