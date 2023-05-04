@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 14:57:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 16:12:48 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ typedef struct s_data
 }			t_data;
 
 // void	ft_cd(char *path, t_list *env);
-void	ft_cd(t_env *env, char *path);
+// void	ft_cd(t_env *env, char *path);
+// void	ft_cd(t_env *env, t_token *input);
+void	ft_cd(t_data *data, t_token *input);
 
 // void	ft_env(t_list *env);
 void	ft_env(t_env *env);
