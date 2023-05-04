@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 16:12:48 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:27:47 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_token		t_token;
 typedef struct s_data
 {
 	t_env	*env;
+	char	**paths;
 	t_env	*export;
 	int		i;
 }			t_data;
@@ -75,6 +76,7 @@ int		ft_setenv(t_env *env, char *var, char *value);
 void	print_error(int error_type);
 
 void ft_fork();
+void ft_getpaths(t_data *data);
 
 
 

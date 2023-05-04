@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 16:39:34 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 15:28:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ void	exec_dispatch(t_data *data, t_token *input)
 {
 	while (input)
 	{
-		// if (!input->token_id)
-		// {
-		// printf("Token id = %s\n", input->token_id);
-		// 	break;
-		// }
 		if (ft_strcmp(input->token_id, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
@@ -62,6 +57,18 @@ void	exec_dispatch(t_data *data, t_token *input)
 				ft_pwd();
 			else if (ft_strcmp(input->token, "unset") == 0)
 				ft_unset(&data->env, input);
+
+			// TESTS
+			else if (ft_strcmp(input->token, "xc") == 0)
+			{
+				ft_getpaths(data);
+				int i = 0;
+				while (data->paths[i])
+				{
+					printf("path[%d]=`%s`\n", i, data->paths[i]);
+					i++;
+				}
+			}
 			else if (ft_strcmp(input->token, "test") == 0)
 			{
 				// ft_setenv(data->env, "SUDO_EDITOR", "not vim");
@@ -71,6 +78,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 				// ft_env(data->env);
 				printf("\n\n\nHEYO\nLOLI=%s\n", ft_getenv(data->env, "LOLI"));
 			}
+
+			// BACK 2 NORMAL
 			else
 				printf("%s is not a command\n", input->token);
 		}
