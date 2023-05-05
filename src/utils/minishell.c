@@ -42,7 +42,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 		if (ft_strcmp(input->token_id, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
-				ft_cd(data, input->next);
+				printf("cd");
+				// ft_cd(data, input->next);
 				// ft_cd(data->env, input->next);
 				// ft_cd(data->env, input->next->token);
 			else if (ft_strcmp(input->token, "echo") == 0)
@@ -111,14 +112,15 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		data->tokens = getting_line(data);
+		if (data->tokens)
+		{
 		expand_tokens(&data->tokens, data);
 		id_tokens(&data->tokens);
 		// print_tokens_linked_list(tokens);
-
 		exec_dispatch(data, data->tokens);
-
 		free_token(data->tokens);
 		free(data->p);
+		}
 	}
 	free_list(data->env);
 	return (0);
