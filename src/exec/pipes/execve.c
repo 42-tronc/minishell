@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/04 17:24:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 10:19:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ exit_code	get_validpath(t_data *data)
 	ft_getpaths(data);
 
 	// command_path = ft_strjoin(data->paths[i], "ls");
-	while (error_access)
+	while (data->paths[i] && error_access)
 	{
-		error_access = 0;
 		command_path = ft_strjoin(data->paths[i], "loli");
 		if (!command_path)
 			return (MALLOC_ERROR);
@@ -50,6 +49,7 @@ exit_code	get_validpath(t_data *data)
 		if (!error_access)
 		{
 			printf(ORANGE"youpi\n"RESET);
+			// return (command_path);
 			break;
 		}
 		free(command_path);
