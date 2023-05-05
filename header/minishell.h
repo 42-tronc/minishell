@@ -18,15 +18,6 @@
 # include "libft.h"
 # include <stdio.h>
 
-typedef struct s_env
-{
-	char			*var;
-	char			*value;
-	int				in_env;
-	struct s_env	*next;
-}					t_env;
-
-typedef struct s_token		t_token;
 
 // EXEC
 # include <limits.h>
@@ -61,7 +52,7 @@ typedef struct s_token		t_token;
 
 struct s_data {
 	t_env		*env;
-	char	**paths;
+	char		**paths;
 	t_env		*export;
 	int			i;
 	t_parsing	*p;
@@ -75,9 +66,11 @@ struct s_parsing {
 	int		all_id;
 };
 
-struct s_env {
+struct s_env
+{
 	char	*var;
 	char	*value;
+	int		in_env;
 	t_env	*next;
 };
 
