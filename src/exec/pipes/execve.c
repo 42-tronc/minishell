@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/05 10:19:58 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 16:14:51 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_getpaths(t_data *data)
 	// }
 }
 
-exit_code	get_validpath(t_data *data)
+char	*get_validpath(t_data *data, t_token *input)
 {
 	int		i;
 	int		error_access;
@@ -35,38 +35,28 @@ exit_code	get_validpath(t_data *data)
 
 	i = 0;
 	error_access = 1;
+	if (!input)
+		return (NULL);
 	// Update paths in case it changed
 	ft_getpaths(data);
 
-	// command_path = ft_strjoin(data->paths[i], "ls");
 	while (data->paths[i] && error_access)
 	{
-		command_path = ft_strjoin(data->paths[i], "loli");
+		// error_access = 0;
+		command_path = ft_strjoin(data->paths[i], input->token);
 		if (!command_path)
-			return (MALLOC_ERROR);
-		printf("checking %s\n", command_path);
+			return (NULL);
+		// printf("checking %s\n", command_path);
 		error_access = access(command_path, X_OK);
-		if (!error_access)
+		if (error_access == 0)
 		{
-			printf(ORANGE"youpi\n"RESET);
-			// return (command_path);
-			break;
+			printf(ORANGE"execve avec `%s`\n"RESET, command_path);
+			return (command_path);
 		}
 		free(command_path);
 		i++;
 	}
 
-	printf("execve avec `%s`\n", command_path);
-	return (SUCCESS);
-
-	// printf("acces_code = %d\n", error_access);
-	// command_path = ft_strjoin(data->paths[i], command);
-	// while (access(command_path, X_OK) == -1)
-	// {
-	// 	free(command_path);
-	// 	command_path = ft_strjoin(data->paths[i], command);
-	// 	i++;
-	// }
-	// execve(command_path)
-
+	printf("pas trouve\n");
+	return (NULL);
 }
