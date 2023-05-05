@@ -111,14 +111,15 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		data->tokens = getting_line(data);
-		expand_tokens(&data->tokens, data);
-		id_tokens(&data->tokens);
-		// print_tokens_linked_list(tokens);
-
-		exec_dispatch(data, data->tokens);
-
-		free_token(data->tokens);
-		free(data->p);
+		if (data->tokens)
+		{
+			expand_tokens(&data->tokens, data);
+			id_tokens(&data->tokens);
+			// print_tokens_linked_list(tokens);
+			exec_dispatch(data, data->tokens);
+			free_token(data->tokens);
+			free(data->p);
+		}
 	}
 	free_list(data->env);
 	return (0);
