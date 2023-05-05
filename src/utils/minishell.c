@@ -42,8 +42,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 		if (ft_strcmp(input->token_id, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
-				printf("cd");
-				// ft_cd(data, input->next);
+				ft_cd(data, input->next);
 				// ft_cd(data->env, input->next);
 				// ft_cd(data->env, input->next->token);
 			else if (ft_strcmp(input->token, "echo") == 0)
