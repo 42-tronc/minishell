@@ -93,12 +93,15 @@ t_token	*getting_line(t_data *data)
 	tokens = NULL;
 	str = readline("minishell> ");
 	if (str[0] != '\0')
+	{
 		add_history(str);
-	data->p->i = 0;
-	data->p->quote = 0;
-	data->p->dquote = 0;
-	even_quote(str);
-	right_symbols(data->p, str);
-	cutting_line(&tokens, data->p, str);
-	return (free(str), tokens);
+		data->p->i = 0;
+		data->p->quote = 0;
+		data->p->dquote = 0;
+		even_quote(str);
+		right_symbols(data->p, str);
+		cutting_line(&tokens, data->p, str);
+		free(str);
+	}
+	return (tokens);
 }
