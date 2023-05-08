@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/05 16:13:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/08 10:30:04 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	print_tokens_linked_list(t_token *head)
 	// 	last = last->prev;
 	// }
 }
+
+/*
+Will need to check back every command to see if they work properly with weird cases
+*/
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
@@ -83,7 +87,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 
 			// BACK 2 NORMAL
 			else
-				printf("%s is not a command\n", input->token);
+				printf("minishell: %s: command not found\n", input->token);
 		}
 		input = input->next;
 	}
