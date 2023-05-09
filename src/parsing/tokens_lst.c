@@ -31,7 +31,6 @@ void	ft_tokenadd_back(t_token **lst, t_token *new)
 	new->prev = temp;
 }
 
-// Missing error managment and leaks are occuring in case of error.
 t_token	*ft_tokennew(void *content)
 {
 	t_token	*dst;
@@ -42,6 +41,7 @@ t_token	*ft_tokennew(void *content)
 	dst->token = (char *)content;
 	dst->token_id = NULL;
 	dst->next = NULL;
+	dst->pipe_block = 0;
 	return (dst);
 }
 

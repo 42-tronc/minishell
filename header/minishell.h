@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/05 13:11:53 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 10:51:52 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ char	*get_validpath(t_data *data, t_token *input);
 char	*ft_getenv(t_env *envp, char *str);
 int		ft_setenv(t_env *list_envp, char *var, char *value);
 void	free_list(t_env *lst);
-// char	*ft_strndup(char *str, int stop);
 
 // envp_lst.c functions
 void	ft_envadd_back(t_env **env, t_env *new);
@@ -194,6 +193,8 @@ int		first_token(t_token *temp);
 // identification2.c functions
 int		is_separator(t_token *temp);
 int		first_token(t_token *temp);
+
+void	give_pipe_nbr(t_token *head);
 
 void	print_tokens_linked_list(t_token *head);
 
