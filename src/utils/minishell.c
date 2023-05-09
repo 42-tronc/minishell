@@ -108,6 +108,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(1, sizeof(t_data));
 	data->env = fill_env(envp);
+
 	while (1)
 	{
 		data->tokens = getting_line(data);
@@ -115,7 +116,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			expand_tokens(&data->tokens, data);
 			id_tokens(&data->tokens);
-			// print_tokens_linked_list(tokens);
+			give_pipe_nbr(data->tokens);
+			print_tokens_linked_list(data->tokens);
 			exec_dispatch(data, data->tokens);
 			free_token(data->tokens);
 			free(data->p);
