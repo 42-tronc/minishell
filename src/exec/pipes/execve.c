@@ -6,13 +6,13 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/08 10:28:11 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 10:37:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* 
+/*
 TODO
 
 pass each command and its arg to execve
@@ -65,4 +65,15 @@ char	*get_validpath(t_data *data, t_token *input)
 
 	printf("pas trouve\n");
 	return (NULL);
+}
+
+/*
+Pipe -> fork
+ */
+
+void	exec_command(t_data *data)
+{
+	int	fd[2];
+
+
 }
