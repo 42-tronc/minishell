@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	get_separator(t_token *temp)
+void	get_separator(t_token *temp)
 {
 	if (temp->token[0] == '|')
 		temp->token_id = PIPE;
@@ -26,19 +26,11 @@ int	get_separator(t_token *temp)
 		temp->token_id = CHEVRON_R;
 	else
 		temp->token_id = CMD;
-	temp->pipe_block = temp->prev->pipe_block;
-	return (1);
 }
 
 void	which_id_to_give(t_token *temp)
 {
-	if (!ft_strcmp(temp->prev->token_id, PIPE))
-	{
-		temp->pipe_block = temp->prev->pipe_block + 1;
-		get_separator(temp);
-	}
-	else
-		temp->pipe_block = temp->prev->pipe_block;
+	temp->pipe_block = temp->prev->pipe_block;
 	if (!ft_strcmp(temp->prev->token_id, CHEVRON_L))
 		temp->token_id = INFILE;
 	else if (!ft_strcmp(temp->prev->token_id, CHEVRON_R))
@@ -55,6 +47,8 @@ void	which_id_to_give(t_token *temp)
 		temp->token_id = OUTFILE;
 	else if (!ft_strcmp(temp->prev->token_id, LIMITER))
 		temp->token_id = CMD;
+	else if (!ft_strcmp(temp->prev->token_id, PIPE))
+		get_separator(temp);
 }
 
 void	command_arg_file(t_token *temp)
@@ -74,7 +68,6 @@ void	id_tokens(t_token **tokens)
 	t_token	*temp;
 
 	temp = *tokens;
-	temp->pipe_block = 0;
 	if (temp->prev == NULL)
 	{
 		first_token(temp);
