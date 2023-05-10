@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/08 10:30:04 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 16:13:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ void	exec_dispatch(t_data *data, t_token *input)
 				// 	i++;
 				// }
 			}
+			else if (ft_strcmp(input->token, "tf") == 0)
+			{
+				test_files(data, input->next);
+			}
 			else if (ft_strcmp(input->token, "test") == 0)
 			{
 				// ft_setenv(data->env, "SUDO_EDITOR", "not vim");
@@ -123,7 +127,7 @@ int	main(int argc, char **argv, char **envp)
 			expand_tokens(&data->tokens, data);
 			id_tokens(&data->tokens);
 			give_pipe_nbr(data->tokens);
-			print_tokens_linked_list(data->tokens);
+			// print_tokens_linked_list(data->tokens);
 			exec_dispatch(data, data->tokens);
 			free_token(data->tokens);
 			free(data->p);
