@@ -6,17 +6,19 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/09 10:37:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 13:40:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	exec_command(t_data *data, char *command_path);
+
 /*
 TODO
 
 pass each command and its arg to execve
- */
+*/
 
 void	ft_getpaths(t_data *data)
 {
@@ -57,6 +59,7 @@ char	*get_validpath(t_data *data, t_token *input)
 		if (error_access == 0)
 		{
 			printf(ORANGE"execve avec `%s`\n"RESET, command_path);
+			exec_command(data, command_path);
 			return (command_path);
 		}
 		free(command_path);
@@ -71,9 +74,21 @@ char	*get_validpath(t_data *data, t_token *input)
 Pipe -> fork
  */
 
-void	exec_command(t_data *data)
+void	exec_command(t_data *data, char *command_path)
 {
+	printf(GREEN "IN %sexec_command\n"RESET, UNDERLINE);
+	(void) data;
+	(void) command_path;
+	// int	id;
 	int	fd[2];
 
-
+	if (pipe(fd) == -1)
+	{
+		perror("pipe");
+		return;
+	}
+	// dup2(fd du fichier, stdin);
+	// id = fork();
+	// printf("id = %d\n", id);
+	return;
 }
