@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/09 10:51:52 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 16:14:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 // # include "exec.h"
 // # include "parsing.h"
 # include "libft.h"
+# include <fcntl.h>
 # include <stdio.h>
 
 typedef enum {
-	SUCCESS,
-	FAILURE,
-	MALLOC_ERROR,
-	PIPE_ERROR
+	PIPE_ERROR = -3,
+	MALLOC_ERROR = -2,
+	FAILURE = -1,
+	SUCCESS = 0,
 }	exit_code;
 
 typedef struct s_env
@@ -46,6 +47,8 @@ typedef struct s_token		t_token;
 # define RED	"\e[31;1m"
 # define ORANGE "\e[38;5;208;1m"
 # define YELLOW	"\e[33;1m"
+# define GREEN	"\e[32m"
+# define UNDERLINE	"\e[4m"
 # define RESET	"\e[0m"
 
 
@@ -134,6 +137,9 @@ char	**split_paths(char const *s, char c);
 // char	*get_validpath(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
 
+
+// void	test_files(t_data *data, char *path);
+void	test_files(t_data *data, t_token *input);
 
 
 
