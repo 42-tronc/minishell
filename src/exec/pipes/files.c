@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/10 08:47:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 08:55:09 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	check_append(char *path)
 	return (fd);
 }
 
-// char	*get_heredoc(void)
+char	*get_heredoc(void)
+{
+	line =
+}
 
 int test_heredoc(void)
 {
