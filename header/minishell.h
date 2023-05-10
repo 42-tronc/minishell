@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/09 16:14:29 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 15:17:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	*get_validpath(t_data *data, t_token *input);
 
 // void	test_files(t_data *data, char *path);
 void	test_files(t_data *data, t_token *input);
-
+char	*ft_strjoin_heredoc(char *s1, char *s2);
 
 
 
