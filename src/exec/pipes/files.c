@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/10 08:55:09 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/10 15:23:12 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,31 @@ int	check_append(char *path)
 	return (fd);
 }
 
-char	*get_heredoc(void)
+// char	*get_heredoc(void)
+void	get_heredoc(char *separator)
 {
-	line =
+	char	*line;
+	char	*document;
+
+	// (void) document;
+	document = NULL;
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+		{
+			printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", separator);
+			break;
+		}
+		if (ft_strcmp(line, separator) == 0)
+		{
+			printf("found the EOF\n");
+			break;
+		}
+		document = ft_strjoin_heredoc(document, line);
+	}
+	printf("document=\n%s", document);
+	printf("k bye\n");
 }
 
 int test_heredoc(void)
@@ -92,12 +114,15 @@ int test_heredoc(void)
 void	test_files(t_data *data, t_token *input)
 {
 	(void) data;
-	printf("test_heredoc = %d\n", test_heredoc());
-	if (!input)
-	{
-		printf("give me a path\n");
-		return;
-	}
+	(void) input;
+	// printf("test_heredoc = %d\n", test_heredoc());
+	// printf("get_heredoc = %s\n", get_heredoc());
+	get_heredoc("EOF");
+	// if (!input)
+	// {
+	// 	printf("give me a path\n");
+	// 	return;
+	// }
 	// char *path = input->token;
 	// printf("testing `%s`\n", path);
 
