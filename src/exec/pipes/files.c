@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/10 15:23:12 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 12:13:52 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_infile(char *path)
 	fd = open(path, O_RDONLY);
 	// if (fd == -1)
 	// {
-	// 	perror("open");
+		// perror("open");
 	// 	return (FAILURE);
 	// }
 	return (fd);
@@ -52,13 +52,34 @@ int	check_append(char *path)
 	return (fd);
 }
 
-// char	*get_heredoc(void)
+/* TO CHECK
+[maplepy@winter minishell]$ << test << bjr cat
+> bjr
+> bjr
+> bjr
+> bjr
+> test
+> test
+> test
+> bjr
+test
+test
+
+[maplepy@winter minishell]$ << test << lol cat
+te
+> lol
+> lol
+> lol
+> cat
+> test
+> lol
+*/
+
 void	get_heredoc(char *separator)
 {
 	char	*line;
 	char	*document;
 
-	// (void) document;
 	document = NULL;
 	while (1)
 	{
@@ -71,44 +92,12 @@ void	get_heredoc(char *separator)
 		if (ft_strcmp(line, separator) == 0)
 		{
 			printf("found the EOF\n");
+			// free(line); // ?? is it needed?
 			break;
 		}
 		document = ft_strjoin_heredoc(document, line);
 	}
 	printf("document=\n%s", document);
-	printf("k bye\n");
-}
-
-int test_heredoc(void)
-{
-	char	*line;
-	char	input[MAX_INPUT_SIZE] = {0};
-	int		input_len;
-
-	input_len = 0;
-	while ((line = readline("> ")))
-	{
-		// Concatenate the input line onto the end of the input string
-		int line_len = strlen(line);
-		if (input_len + line_len + 1 > MAX_INPUT_SIZE)
-		{
-			printf("Input too long!\n");
-			free(line);
-			break;
-		}
-		strcat(input, line);
-		strcat(input, "\n");
-		input_len += line_len + 1;
-		add_history(line);
-		free(line);
-		if (line_len == 0) {
-			break;
-		}
-	}
-
-	printf("You entered:\n%s", input);
-
-	return 0;
 }
 
 void	test_files(t_data *data, t_token *input)
@@ -118,11 +107,11 @@ void	test_files(t_data *data, t_token *input)
 	// printf("test_heredoc = %d\n", test_heredoc());
 	// printf("get_heredoc = %s\n", get_heredoc());
 	get_heredoc("EOF");
-	// if (!input)
-	// {
-	// 	printf("give me a path\n");
-	// 	return;
-	// }
+	if (!input)
+	{
+		printf("give me a path\n");
+		return;
+	}
 	// char *path = input->token;
 	// printf("testing `%s`\n", path);
 
