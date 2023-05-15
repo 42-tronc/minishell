@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/05/02 16:54:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 18:17:39 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_token	*getting_line(t_data *data)
 	if (!data->p)
 		return (NULL);
 	tokens = NULL;
-	str = readline("minishell> ");
+	str = readline(BOLD WHITE"minishell> "RESET);
 	if (str[0] != '\0')
 	{
 		add_history(str);
