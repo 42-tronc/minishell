@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 14:44:53 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 19:05:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,44 +68,116 @@ char	*get_validpath(t_data *data, t_token *input)
 	return (NULL);
 }
 
+static size_t	_count_cmd_args(t_token *input)
+{
+	size_t	size;
+
+	size = 0;
+	if (ft_strcmp(input->token_id, CMD) == 0)
+		size++;
+	input = input->next;
+	while (input)
+	{
+		if (ft_strcmp(input->token_id, ARG) != 0)
+			break;
+		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\n", input->token, NO_BOLD, BOLD, input->token_id);
+		size++;
+		input = input->next;
+	}
+	printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
+	return (size);
+}
+
+char	**get_cmd_args(t_token *input, char *command_path)
+{
+	// printf(BOLD BLUE"\n get_cmd_args\n"RESET); // debug
+	size_t	i;
+	size_t	size;
+	char	**array;
+
+	if (!input)
+	{
+		printf(BOLD RED"No arg\n"RESET);
+		return (NULL);
+	}
+	size = _count_cmd_args(input);
+	array = ft_calloc(size + 1, sizeof(char*));
+	if (!array)
+		return (NULL);
+	printf(GREEN"\t󰍛 FT_CALLOC\n"RESET); // debug
+
+	i = 1;
+	input = input->next;
+	array[0] = command_path;
+	while (input && i < size)
+	{
+		// if (ft_strcmp(temp->token_id, CMD) == 0 || ft_strcmp(temp->token_id, ARG) == 0) {
+		array[i] = ft_strdup(input->token);
+		i++;
+		// }
+		input = input->next;
+	}
+	return (array);
+}
+
 void	exec_command(t_data *data, t_token *input)
 {
-	// printf(GREEN "IN %sexec_command\n"RESET, UNDERLINE);
+	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
 	(void) data;
 	int		fd[2];
 	int		pid = 0;
 	char	*command_path;
+	char	**command_args;
 
+	/* if (!input)
+	{
+		printf(BOLD RED"No input\n"RESET);
+		return;
+	} */
 	command_path = get_validpath(data, input);
-	printf(BLUE"command_path=`%s%s%s`\n"RESET, BOLD, command_path, NO_BOLD);
-	// FOR TESTING
-	char *command_args[] = {command_path, NULL};
-	// char *command_args[] = {"/bin/ls", "-l", NULL};
-	// END TESTING
+	printf(BOLD YELLOW"`%s`\n"RESET, command_path); // debug
 
+	command_args = get_cmd_args(input, command_path);
+	// printf(BOLD GREEN" get_cmd_args%s\n", RESET); // debug
+
+	// --- START DEBUG
+	// Print the array elements for verification
+	// for (int i = 0; command_args[i]; i++)
+	// 	printf("arg[%d]\t`%s`\n", i, command_args[i]);
+	// --- END DEBUG
+
+	// exec part
 	if (pipe(fd) == -1)
 	{
-        perror("pipe");
-        exit(EXIT_FAILURE);
-    }
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+	printf(GREEN"\t󰟥 PIPE\n"RESET);
+
 	pid = fork();
-    if (pid == -1)
+	if (pid == -1)
 	{
-        perror("fork");
-        exit(EXIT_FAILURE);
-    }
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
 
 	if (pid == 0)
 	{
 		// child process
+		printf(GREEN"\t FORK%s\n", MAGENTA);
+		close(fd[0]);
+		close(fd[1]);
 		execve(command_path, command_args, NULL);
 		perror(BOLD RED" execve"RESET);
-		// printf(BOLD RED"problem with execve, should free\n"RESET);
+
 	}
 	else
 	{
+		close(fd[0]);
+		close(fd[1]);
 		wait(NULL);
-		printf(BOLD GREEN"Saul good man\n"RESET);
+		// printf(BOLD GREEN"Saul good man\n"RESET);
 	}
+	// printf(BOLD GREEN" exec_command\n\n"RESET);
 	return;
 }
