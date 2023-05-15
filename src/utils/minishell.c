@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 12:35:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 14:24:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void	exec_dispatch(t_data *data, t_token *input)
 			else if (ft_strcmp(input->token, "xc") == 0)
 			{
 				// ft_getpaths(data);
-				printf("Path: `%s`\n", get_validpath(data, input->next));
+				// printf("Path: `%s`\n", get_validpath(data, input->next));
+				exec_command(data, input->next);
+
 
 				// int i = 0;
 				// while (data->paths[i])
