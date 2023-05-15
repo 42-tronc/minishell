@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 15:33:43 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 15:41:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 
 			// BACK 2 NORMAL
 			else
-				printf("minishell: %s: command not found\n", input->token);
+				exec_command(data, input);
+				// printf("minishell: %s: command not found\n", input->token);
 		}
 		input = input->next;
 	}
