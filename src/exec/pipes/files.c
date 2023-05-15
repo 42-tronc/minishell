@@ -6,12 +6,12 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/11 14:47:58 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 13:12:25 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#define MAX_INPUT_SIZE 1000
+// #define MAX_INPUT_SIZE 1000
 
 int	check_infile(char *path)
 {
@@ -105,15 +105,57 @@ void	test_files(t_data *data, t_token *input)
 {
 	(void) data;
 	(void) input;
-	// printf("test_heredoc = %d\n", test_heredoc());
-	// printf("get_heredoc = %s\n", get_heredoc());
-	get_heredoc("EOF");
+
+	int	fd[2];
+	int	pid = 0;
+
+	if (pipe(fd) == -1)
+	{
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+	pid = fork();
+    if (pid == -1)
+	{
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+	if (pid == 0)
+	{
+		// char	msg[8];
+		close(fd[0]);
+		write(fd[1], "madame", 7); // could check if return -1 so error
+		close(fd[1]);
+		// read(fd[0], &msg, sizeof(msg));
+		// printf("Child\t`%s`\n", msg);
+		// close(fd[0]);
+		// printf("I am the child (%d)\n", pid);
+	}
+	else
+	{
+		char	msg[8];
+		close(fd[1]);
+		read(fd[0], &msg, sizeof(msg)); // could check if return -1 so error
+		close(fd[0]);
+		printf("Parent\t`%s`\n", msg);
+		wait(NULL);
+		// printf("I am the parent (%d)\n", pid);
+	}
+	// close(fd[0]);
+	return;
+
+	/* get_heredoc("EOF");
 	get_heredoc("test");
 	if (!input)
 	{
 		printf("give me a path\n");
 		return;
-	}
+	} */
+
+	// printf("test_heredoc = %d\n", test_heredoc());
+	// printf("get_heredoc = %s\n", get_heredoc());
+
 	// char *path = input->token;
 	// printf("testing `%s`\n", path);
 
