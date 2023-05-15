@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 15:41:31 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 18:13:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_tokens_linked_list(t_token *head)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("Type : %s && token[%d]:'%s' in pipe block:%d\n",temp->type, i++, temp->token, temp->pipe_block);
+		printf("Type : %s && token[%d]:'%s' in pipe block:%d\n",temp->token_id, i++, temp->token, temp->pipe_block);
 		// if (temp->next == NULL)
 		// 	last = temp;
 		temp = temp->next;
@@ -43,7 +43,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 {
 	while (input)
 	{
-		if (input->type && ft_strcmp(input->type, CMD) == 0)
+		if (input->token_id && ft_strcmp(input->token_id, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
 				ft_cd(data, input->next);

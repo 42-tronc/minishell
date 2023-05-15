@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:15:27 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 15:33:43 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 16:44:13 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 typedef struct s_token {
 	char	*token;
-	char	*type;
+	char	*token_id;
 	t_token	*prev;
 	t_token	*next;
 }			t_token;

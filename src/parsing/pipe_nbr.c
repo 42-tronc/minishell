@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_nbr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:20:06 by aascedu           #+#    #+#             */
-/*   Updated: 2023/05/15 15:33:43 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 10:20:08 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	give_pipe_nbr(t_token *head)
 	{
 		if (!temp->prev)
 			temp->pipe_block = 0;
-		else if (ft_strcmp(temp->type, PIPE))
+		else if (ft_strcmp(temp->token_id, PIPE))
 			temp->pipe_block = temp->prev->pipe_block;
 		else
 			temp->pipe_block = temp->prev->pipe_block + 1;

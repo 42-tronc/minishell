@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:51:50 by aascedu           #+#    #+#             */
-/*   Updated: 2023/05/15 15:33:43 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 14:21:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,39 @@
 void	get_separator(t_token *temp)
 {
 	if (temp->token[0] == '|')
-		temp->type = PIPE;
+		temp->token_id = PIPE;
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
-		temp->type = HERE_DOC_END;
+		temp->token_id = HERE_DOC_END;
 	else if (temp->token[0] == '<' && temp->token[1] == '<')
-		temp->type = HERE_DOC;
+		temp->token_id = HERE_DOC;
 	else if (temp->token [0] == '<' && temp->token[1] == '\0')
-		temp->type = CHEVRON_L;
+		temp->token_id = CHEVRON_L;
 	else if (temp->token[0] == '>' && temp->token[1] == '\0')
-		temp->type = CHEVRON_R;
+		temp->token_id = CHEVRON_R;
 	else
-		temp->type = CMD;
+		temp->token_id = CMD;
 }
 
 void	which_id_to_give(t_token *temp)
 {
 	temp->pipe_block = temp->prev->pipe_block;
-	if (!ft_strcmp(temp->prev->type, CHEVRON_L))
-		temp->type = INFILE;
-	else if (!ft_strcmp(temp->prev->type, CHEVRON_R))
-		temp->type = OUTFILE;
-	else if (!ft_strcmp(temp->prev->type, INFILE))
-		temp->type = CMD;
-	else if (!ft_strcmp(temp->prev->type, CMD))
-		temp->type = ARG;
-	else if (!ft_strcmp(temp->prev->type, ARG))
-		temp->type = ARG;
-	else if (!ft_strcmp(temp->prev->type, HERE_DOC))
-		temp->type = LIMITER;
-	else if (!ft_strcmp(temp->prev->type, HERE_DOC_END))
-		temp->type = OUTFILE;
-	else if (!ft_strcmp(temp->prev->type, LIMITER))
-		temp->type = CMD;
-	else if (!ft_strcmp(temp->prev->type, PIPE))
+	if (!ft_strcmp(temp->prev->token_id, CHEVRON_L))
+		temp->token_id = INFILE;
+	else if (!ft_strcmp(temp->prev->token_id, CHEVRON_R))
+		temp->token_id = OUTFILE;
+	else if (!ft_strcmp(temp->prev->token_id, INFILE))
+		temp->token_id = CMD;
+	else if (!ft_strcmp(temp->prev->token_id, CMD))
+		temp->token_id = ARG;
+	else if (!ft_strcmp(temp->prev->token_id, ARG))
+		temp->token_id = ARG;
+	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC))
+		temp->token_id = LIMITER;
+	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC_END))
+		temp->token_id = OUTFILE;
+	else if (!ft_strcmp(temp->prev->token_id, LIMITER))
+		temp->token_id = CMD;
+	else if (!ft_strcmp(temp->prev->token_id, PIPE))
 		get_separator(temp);
 }
 
