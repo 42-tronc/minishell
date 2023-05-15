@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/11 12:13:52 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/11 14:47:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	get_heredoc(char *separator)
 	char	*document;
 
 	document = NULL;
+	printf("in the `%s` heredoc\n", separator);
 	while (1)
 	{
 		line = readline("> ");
@@ -97,7 +98,7 @@ void	get_heredoc(char *separator)
 		}
 		document = ft_strjoin_heredoc(document, line);
 	}
-	printf("document=\n%s", document);
+	printf("document=\n%s%s"RESET, RED, document);
 }
 
 void	test_files(t_data *data, t_token *input)
@@ -107,6 +108,7 @@ void	test_files(t_data *data, t_token *input)
 	// printf("test_heredoc = %d\n", test_heredoc());
 	// printf("get_heredoc = %s\n", get_heredoc());
 	get_heredoc("EOF");
+	get_heredoc("test");
 	if (!input)
 	{
 		printf("give me a path\n");
