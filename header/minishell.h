@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/10 15:17:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/15 14:43:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,28 @@ typedef struct s_token		t_token;
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define RED	"\e[31;1m"
-# define ORANGE "\e[38;5;208;1m"
-# define YELLOW	"\e[33;1m"
-# define GREEN	"\e[32m"
-# define UNDERLINE	"\e[4m"
-# define RESET	"\e[0m"
+// # define RED	"\e[31;1m"
+// # define YELLOW	"\e[33;1m"
+// # define GREEN	"\e[32;1m"
+// # define UNDERLINE	"\e[4m"
+// # define RESET	"\e[0m"
+
+# define BLACK		"\e[30m"
+# define RED		"\e[31m"
+# define GREEN		"\e[32m"
+# define YELLOW		"\e[33m"
+# define BLUE		"\e[34m"
+# define MAGENTA	"\e[35m"
+# define CYAN		"\e[36m"
+# define WHITE		"\e[37m"
+# define RESET		"\e[0m"
+
+# define BOLD		"\e[1m"
+# define NO_BOLD	"\e[22m"
+# define UNDERL		"\e[4m"
+# define NO_UNDERL	"\e[24m"
+# define REVERSED	"\e[7m"
+# define ORANGE 	"\e[38;5;208;1m"
 
 
 # define CHEVRON_L "<"
