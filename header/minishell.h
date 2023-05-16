@@ -78,7 +78,7 @@ typedef struct s_token		t_token;
 # define PIPE "|"
 # define LIMITER "limiter"
 # define HERE_DOC "here_doc"
-# define HERE_DOC_END "here_doc_end"
+# define APPEND "append"
 # define MY_NULL "null"
 
 typedef struct s_data		t_data;
