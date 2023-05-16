@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/16 11:26:59 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/16 15:35:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,18 +156,35 @@ void	exec_command(t_data *data, t_token *input)
 	{
 		// child process
 		printf(GREEN"\t FORK%s\n", MAGENTA);
+		// dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		execve(command_path, command_args, NULL);
-		perror(BOLD RED" execve"RESET);
+		// if (command_path)
+			execve(command_path, command_args, NULL);
+
+		// perror(BOLD RED" execve"RESET);
+		// printf("something's wrong i can feel it\n");
+		printf(BOLD RED"%s: %scommand not found\n", input->token, NO_BOLD);
+
 
 	}
 	else
 	{
 		close(fd[0]);
 		close(fd[1]);
-		wait(NULL);
-		// printf(BOLD GREEN"Saul good man\n"RESET);
+
+		// this might be shit
+		int	wstatus;
+		wait(&wstatus);
+		if (WIFEXITED(wstatus))
+		{
+			int statuscode = WEXITSTATUS(wstatus);
+			if (statuscode == 0)
+				printf(BOLD GREEN"Saul goodman\n"RESET);
+			else
+				printf("failure with %d\n", statuscode);
+		}
+		// probably is
 	}
 	// printf(BOLD GREEN" exec_command\n\n"RESET);
 	return;
