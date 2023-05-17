@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/17 13:09:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 15:52:23 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ void	print_tokens_linked_list(t_token *head)
 
 /*
 Will need to check back every command to see if they work properly with weird cases
+
+check each block
+
+	check for infiles
+		put every infile in a linked list
+	check for outfiles
+		put every outfile in a linked list
+	check for commands
 */
 
 void	exec_dispatch(t_data *data, t_token *input)
