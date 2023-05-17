@@ -12,9 +12,30 @@
 
 #include "minishell.h"
 
+int	is_first_cmd(t_token *head)
+{
+	int		pipe_block;
+	t_token	*temp;
+
+	if (head->prev != NULL)
+		temp = head->prev;
+	else
+		return (1);
+	pipe_block = temp->pipe_block;
+	while (temp && pipe_block == temp->pipe_block)
+	{
+		if (!ft_strcmp(temp->token_id, CMD))
+			return (0);
+		temp = temp->prev;
+	}
+	return (1);
+}
+
 void	choose_token_id(t_token *temp)
 {
-	if (!ft_strcmp(temp->prev->token_id, CHEVRON_L))
+	if (!temp->prev)
+		temp->token_id = CMD;
+	else if (!ft_strcmp(temp->prev->token_id, CHEVRON_L))
 		temp->token_id = INFILE;
 	else if (!ft_strcmp(temp->prev->token_id, CHEVRON_R))
 		temp->token_id = OUTFILE;
@@ -22,10 +43,9 @@ void	choose_token_id(t_token *temp)
 		temp->token_id = LIMITER;
 	else if (!ft_strcmp(temp->prev->token_id, APPEND))
 		temp->token_id = OUTFILE;
-	else if (!ft_strcmp(temp->prev->token_id, PIPE) \
-	|| !ft_strcmp(temp->prev->token_id, INFILE))
+	else if (is_first_cmd(temp))
 		temp->token_id = CMD;
-	else if (!ft_strcmp(temp->prev->token_id, CMD))
+	else
 		temp->token_id = ARG;
 }
 
