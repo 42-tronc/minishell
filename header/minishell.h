@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 14:44:01 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 13:07:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ struct s_data {
 	t_env		*env;
 	char		**paths;
 	t_env		*export;
+	int			pipe_count;
 	int			i;
 	t_parsing	*p;
 	t_token		*tokens;
@@ -160,7 +161,7 @@ void	test_files(t_data *data, t_token *input);
 char	*ft_strjoin_heredoc(char *s1, char *s2);
 void	exec_command(t_data *data, t_token *input);
 
-
+void	count_pipes(t_data *data);
 
 
 // PARSING
@@ -216,8 +217,6 @@ int		first_token(t_token *temp);
 // identification2.c functions
 int		is_separator(t_token *temp);
 int		first_token(t_token *temp);
-
-void	give_pipe_nbr(t_token *head);
 
 void	print_tokens_linked_list(t_token *head);
 
