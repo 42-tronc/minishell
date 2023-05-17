@@ -73,6 +73,7 @@ typedef struct s_token		t_token;
 # define CHEVRON_R ">"
 # define INFILE "infile"
 # define OUTFILE "outfile"
+# define FILE_APPEND "file_append"
 # define CMD "command"
 # define ARG "argument"
 # define PIPE "|"
@@ -206,7 +207,7 @@ char	*get_var_name(char *str);
 // dollar2.c functions
 char	*ft_strjoin_dollar(char const *s1, char const *s2);
 int		str_cpy_dollar(char *dst, char *src, int index);
-int		processed_line(char *str);
+int		processed_line(char *str, t_parsing *p);
 int		next_char(char c);
 
 // identification.c functions
