@@ -91,7 +91,7 @@ t_token	*getting_line(t_data *data)
 	if (!data->p)
 		return (NULL);
 	tokens = NULL;
-	str = readline(BOLD WHITE"minishell> "RESET);
+	str = readline(BOLD WHITE"\nminishell> "RESET);
 	if (str[0] != '\0')
 	{
 		add_history(str);
