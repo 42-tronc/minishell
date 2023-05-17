@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 18:13:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 13:09:24 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,9 @@ int	main(int argc, char **argv, char **envp)
 			expand_tokens(&data->tokens, data);
 			id_tokens(&data->tokens);
 			count_pipes(data);
-			printf("pipe = %d\n", data->pipe_count);
-			print_tokens_linked_list(data->tokens);
-			// exec_dispatch(data, data->tokens);
+			// printf("pipe = %d\n", data->pipe_count);
+			// print_tokens_linked_list(data->tokens);
+			exec_dispatch(data, data->tokens);
 			free_token(data->tokens);
 			free(data->p);
 		}
