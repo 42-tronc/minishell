@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 12:25:57 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 12:39:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 // 	free(array);
 // }
 
+// will need to get the return value to somewhere
 int	init_data(t_data *data)
 {
 	int		i;
@@ -192,6 +193,7 @@ int	main(int argc, char **argv, char **envp)
 			// print_tokens_linked_list(data->tokens);
 
 			init_data(data);
+
 			exec_dispatch(data, data->tokens);
 
 			// for (int i = 0; data->cmd_block[i]; i++)
