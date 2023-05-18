@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 08:50:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 12:21:24 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
-	t_cmd_block	*block;
+	// t_cmd_block	*block;
 
 	// check_infiles
 	// check_outfiles
@@ -147,6 +147,34 @@ void	exec_dispatch(t_data *data, t_token *input)
 // 	free(array);
 // }
 
+int	init_data(t_data *data)
+{
+	int		i;
+	t_token	*temp;
+
+	temp = data->tokens;
+	data->pipe_count = 1;
+	while (temp)
+	{
+		if (!ft_strcmp(temp->token_id, PIPE))
+			data->pipe_count++;
+		temp = temp->next;
+	}
+	// data->cmd_block = NULL;
+	data->cmd_block = ft_calloc(data->pipe_count + 1, sizeof(t_cmd_block*));
+	if (!data->cmd_block)
+		return (MALLOC_ERROR);
+	i = 0;
+	while (i < data->pipe_count)
+	{
+		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
+		data->cmd_block[i]->in_fd = -2;
+		data->cmd_block[i]->out_fd = -2;
+		i++;
+	}
+	return (SUCCESS);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data 	*data;
@@ -164,9 +192,13 @@ int	main(int argc, char **argv, char **envp)
 			expand_tokens(&data->tokens, data);
 			id_tokens(&data->tokens);
 			count_pipes(data);
-			// printf("pipe = %d\n", data->pipe_count);
 			// print_tokens_linked_list(data->tokens);
+
+			init_data(data);
 			exec_dispatch(data, data->tokens);
+
+			// for (int i = 0; data->cmd_block[i]; i++)
+				// printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
 			free_token(data->tokens);
 			free(data->p);
 		}
