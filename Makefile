@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/05/10 15:17:21 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/05/18 07:39:28 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c
 
 DIR_EXEC := $(SRC_FOLDER)exec/pipes/
-SRC_EXEC := fork.c execve.c files.c strjoin_heredoc.c
+SRC_EXEC := fork.c execve.c files.c strjoin_heredoc.c dispatch.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c pipe_nbr.c
