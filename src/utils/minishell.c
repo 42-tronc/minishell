@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/17 15:52:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 08:27:08 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,19 @@ check each block
 	check for commands
 */
 
+void	check_infile(t_data *data, t_token *input)
+{
+	while (input)
+	{
+		input = input.next;
+	}
+}
+
 void	exec_dispatch(t_data *data, t_token *input)
 {
+	// check_infiles
+	// check_outfiles
+	// check_command
 	while (input)
 	{
 		if (input->token_id && ft_strcmp(input->token_id, CMD) == 0)
@@ -108,18 +119,18 @@ void	exec_dispatch(t_data *data, t_token *input)
 	}
 }
 
-void	free_array(char **array)
-{
-	int	i;
+// void	free_array(char **array)
+// {
+// 	int	i;
 
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
+// 	i = 0;
+// 	while (array[i])
+// 	{
+// 		free(array[i]);
+// 		i++;
+// 	}
+// 	free(array);
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
