@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/17 13:07:55 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 08:36:23 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct s_env
 	int				in_env;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_cmd_block
+{
+	int		in_fd;
+	int		out_fd;
+	char	*heredoc;
+}			t_cmd_block;
 
 typedef struct s_token		t_token;
 
@@ -88,8 +95,8 @@ typedef struct s_token		t_token;
 
 struct s_data {
 	t_env		*env;
+	t_env		*export; // to remove at one point
 	char		**paths;
-	t_env		*export;
 	int			pipe_count;
 	int			i;
 	t_parsing	*p;
