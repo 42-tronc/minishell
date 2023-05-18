@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 08:27:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 08:50:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,31 @@ check each block
 	check for commands
 */
 
-void	check_infile(t_data *data, t_token *input)
+void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
 {
+	(void) data;
+	block->in_fd = -2;
 	while (input)
 	{
-		input = input.next;
+		if (ft_strcmp(input->token, PIPE) == 0)
+			break;
+		if (ft_strcmp(input->token, INFILE) == 0)
+		{
+			block->in_fd = open(input->token, O_RDONLY);
+			if (block->in_fd == -1)
+			{
+				perror("open");
+				return;
+			}
+		}
+		input = input->next;
 	}
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
+	t_cmd_block	*block;
+
 	// check_infiles
 	// check_outfiles
 	// check_command
