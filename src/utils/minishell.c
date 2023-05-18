@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 12:21:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 12:25:57 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
-	// t_cmd_block	*block;
-
 	// check_infiles
 	// check_outfiles
 	// check_command
@@ -191,14 +189,13 @@ int	main(int argc, char **argv, char **envp)
 		{
 			expand_tokens(&data->tokens, data);
 			id_tokens(&data->tokens);
-			count_pipes(data);
 			// print_tokens_linked_list(data->tokens);
 
 			init_data(data);
 			exec_dispatch(data, data->tokens);
 
 			// for (int i = 0; data->cmd_block[i]; i++)
-				// printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
+			// 	printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
 			free_token(data->tokens);
 			free(data->p);
 		}

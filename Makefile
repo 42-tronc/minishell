@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/05/18 07:39:28 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/05/18 12:24:52 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ DIR_EXEC := $(SRC_FOLDER)exec/pipes/
 SRC_EXEC := fork.c execve.c files.c strjoin_heredoc.c dispatch.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c pipe_nbr.c
+SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c identification2.c
 
 # ifeq ($(USER), maplepy)
 # 	SRC_BUILTIN += main.c
