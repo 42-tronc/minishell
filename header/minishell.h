@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 08:36:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 11:19:17 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_token		t_token;
 struct s_data {
 	t_env		*env;
 	t_env		*export; // to remove at one point
+	t_cmd_block	**cmd_block;
 	char		**paths;
 	int			pipe_count;
 	int			i;

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/17 14:40:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 10:47:25 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static size_t	_count_cmd_args(t_token *input)
 			break;
 		else if (ft_strcmp(input->token_id, ARG) == 0)
 			size++;
-		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\n", input->token, NO_BOLD, BOLD, input->token_id);
+		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\tin block %s%d%s\n", input->token, NO_BOLD, BOLD, input->token_id, BOLD, input->pipe_block, NO_BOLD);
 		input = input->next;
 	}
 	printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
