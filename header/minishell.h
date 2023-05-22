@@ -109,18 +109,12 @@ struct s_parsing {
 	int		quote;
 	int		dquote;
 	int		all_id;
-	char	*before;
-	char	*var_value;
-	char	*before_and_value;
-	char	*new_token;
-	char	*var_name;
 };
 
 struct s_token {
 	char	*token;
 	char	*token_id;
 	int		pipe_block;
-	int		expand;
 	t_token	*prev;
 	t_token	*next;
 };
@@ -195,7 +189,7 @@ void	cutting_line(t_token **tokens, t_parsing *data, char *str);
 
 // tokens_lst.c functions
 void	ft_tokenadd_back(t_token **lst, t_token *new);
-t_token	*ft_tokennew(void *content, t_parsing *p, char c);
+t_token	*ft_tokennew(void *content);
 void	free_token(t_token *tokens);
 
 // tokens.c functions
