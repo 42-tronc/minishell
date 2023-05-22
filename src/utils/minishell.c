@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 12:39:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 11:37:27 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ check each block
 void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
 {
 	(void) data;
-	block->in_fd = -2;
 	while (input)
 	{
 		if (ft_strcmp(input->token, PIPE) == 0)
@@ -66,6 +65,7 @@ void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
 		}
 		input = input->next;
 	}
+	printf(GREEN"seems like the infile is ok\n");
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
