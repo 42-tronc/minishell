@@ -27,10 +27,8 @@ NEED
  * `~` or `NULL` will go to the home directory
  * @param path absolute or relative path to go to.
  */
-// void	ft_cd(t_env *env, t_token *input)
 void	ft_cd(t_data *data, t_token *input)
 {
-	// (void) env;
 	char	*path;
 	char	previous[BUFSIZ];
 
@@ -42,12 +40,10 @@ void	ft_cd(t_data *data, t_token *input)
 
 	// Get the current dir to make it the OLDPWD
 	getcwd(previous, BUFSIZ);
+	printf("previous\t`%s`\n", previous);
+	printf("oldpwd\t`%s`\n", getenv(data->env, "OLDPWD"));
 
 	// HOME Directory
-	// if (!input->token || ft_strcmp(input->token, "~") == 0)
-	ft_setenv(data->env, "OLDPWD", "/home/maplepy/git/cc/minishell/src/exec/built-in");
-	// printf("OLDPWD=`%s`\n", ft_getenv(data->env, "OLDPWD"));
-	ft_env(data->env);
 	if (!input || ft_strcmp(input->token, "~") == 0)
 		path = ft_getenv(data->env, "HOME");
 
@@ -57,8 +53,7 @@ void	ft_cd(t_data *data, t_token *input)
 		if (ft_getenv(data->env, "OLDPWD"))
 		{
 			path = ft_getenv(data->env, "OLDPWD");
-			printf("found OLDPWD\n");
-			printf("%s\n", path);
+			printf("found OLDPWD\t`%s`\n", path);
 			// path = getenv("OLDPWD");
 		}
 		else
@@ -70,15 +65,15 @@ void	ft_cd(t_data *data, t_token *input)
 	}
 
 	// CHANGE Directory
+	printf("path\t\t`%s`\n", path);
 	if (chdir(path) == -1)
 		perror("cd");
 	else
 	{
-		printf("OLDPWD supposed to be `%s`\n", previous);
-		// ft_setenv(env, "OLDPWD", previous);
-		// printf("New OLDPWD=`%s`\n", ft_getenv(env, "OLDPWD"));
+		ft_setenv(data->env, "OLDPWD", previous);
+		printf("New OLDPWD\t`%s`\n", ft_getenv(data->env, "OLDPWD"));
 	}
-	printf("Moved to %s\n", path);
+	// printf("Moved to %s\n", path);
 }
 
 // void	ft_cd(t_env *env, char *path)
