@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/22 11:37:27 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 14:33:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ check each block
 	check for commands
 */
 
+// void	is_infile(t_data *data, int block)
+// do a while (pipe_block = block)
 void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
 {
 	(void) data;
@@ -73,6 +75,9 @@ void	exec_dispatch(t_data *data, t_token *input)
 	// check_infiles
 	// check_outfiles
 	// check_command
+
+
+
 	while (input)
 	{
 		if (input->token_id && ft_strcmp(input->token_id, CMD) == 0)
