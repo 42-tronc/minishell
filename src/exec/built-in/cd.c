@@ -40,8 +40,8 @@ void	ft_cd(t_data *data, t_token *input)
 
 	// Get the current dir to make it the OLDPWD
 	getcwd(previous, BUFSIZ);
-	printf("previous\t`%s`\n", previous);
-	printf("oldpwd\t`%s`\n", getenv(data->env, "OLDPWD"));
+	// printf("previous\t`%s`\n", previous);
+	// printf("oldpwd\t\t`%s`\n", ft_getenv(data->env, "OLDPWD"));
 
 	// HOME Directory
 	if (!input || ft_strcmp(input->token, "~") == 0)
@@ -53,7 +53,7 @@ void	ft_cd(t_data *data, t_token *input)
 		if (ft_getenv(data->env, "OLDPWD"))
 		{
 			path = ft_getenv(data->env, "OLDPWD");
-			printf("found OLDPWD\t`%s`\n", path);
+			// printf("found OLDPWD\t`%s`\n", path);
 			// path = getenv("OLDPWD");
 		}
 		else
@@ -63,9 +63,11 @@ void	ft_cd(t_data *data, t_token *input)
 			return;
 		}
 	}
+	else
+		path = input->token;
 
 	// CHANGE Directory
-	printf("path\t\t`%s`\n", path);
+	// printf("path\t\t`%s`\n", path);
 	if (chdir(path) == -1)
 		perror("cd");
 	else
@@ -73,41 +75,6 @@ void	ft_cd(t_data *data, t_token *input)
 		ft_setenv(data->env, "OLDPWD", previous);
 		printf("New OLDPWD\t`%s`\n", ft_getenv(data->env, "OLDPWD"));
 	}
+	ft_pwd();
 	// printf("Moved to %s\n", path);
 }
-
-// void	ft_cd(t_env *env, char *path)
-// {
-// 	char	previous[BUFSIZ];
-
-// 	getcwd(previous, BUFSIZ);
-// 	// HOME Directory
-// 	if (!path || ft_strcmp(path, "~") == 0)
-// 		path = ft_getenv(env, "HOME");
-
-// 	// LAST Directory
-// 	else if (ft_strcmp(path, "-") == 0)
-// 	{
-// 		if (ft_getenv(env, "OLDPWD"))
-// 		{
-// 			path = ft_getenv(env, "OLDPWD");
-// 			printf("%s\n", path);
-// 			// path = getenv("OLDPWD");
-// 		}
-// 		else
-// 		{
-// 			// printf(RED"cd: OLDPWD not set: '%s'\n"RESET, ft_getenv(env, "OLDPWD"));
-// 			printf("cd: OLDPWD not set\n");
-// 			return;
-// 		}
-// 	}
-
-// 	// CHANGE Directory
-// 	if (chdir(path) == -1)
-// 		perror("cd");
-// 	else
-// 	{
-// 		ft_setenv(env, "OLDPWD", previous);
-// 		printf("New OLDPWD=`%s`\n", ft_getenv(env, "OLDPWD"));
-// 	}
-// }
