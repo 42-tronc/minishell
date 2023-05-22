@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/17 13:09:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 11:37:27 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,42 @@ void	print_tokens_linked_list(t_token *head)
 
 /*
 Will need to check back every command to see if they work properly with weird cases
+
+check each block
+
+	check for infiles
+		put every infile in a linked list
+	check for outfiles
+		put every outfile in a linked list
+	check for commands
 */
+
+void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
+{
+	(void) data;
+	while (input)
+	{
+		if (ft_strcmp(input->token, PIPE) == 0)
+			break;
+		if (ft_strcmp(input->token, INFILE) == 0)
+		{
+			block->in_fd = open(input->token, O_RDONLY);
+			if (block->in_fd == -1)
+			{
+				perror("open");
+				return;
+			}
+		}
+		input = input->next;
+	}
+	printf(GREEN"seems like the infile is ok\n");
+}
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
+	// check_infiles
+	// check_outfiles
+	// check_command
 	while (input)
 	{
 		if (input->token_id && ft_strcmp(input->token_id, CMD) == 0)
@@ -100,17 +132,46 @@ void	exec_dispatch(t_data *data, t_token *input)
 	}
 }
 
-void	free_array(char **array)
-{
-	int	i;
+// void	free_array(char **array)
+// {
+// 	int	i;
 
-	i = 0;
-	while (array[i])
+// 	i = 0;
+// 	while (array[i])
+// 	{
+// 		free(array[i]);
+// 		i++;
+// 	}
+// 	free(array);
+// }
+
+// will need to get the return value to somewhere
+int	init_data(t_data *data)
+{
+	int		i;
+	t_token	*temp;
+
+	temp = data->tokens;
+	data->pipe_count = 1;
+	while (temp)
 	{
-		free(array[i]);
+		if (!ft_strcmp(temp->token_id, PIPE))
+			data->pipe_count++;
+		temp = temp->next;
+	}
+	// data->cmd_block = NULL;
+	data->cmd_block = ft_calloc(data->pipe_count + 1, sizeof(t_cmd_block*));
+	if (!data->cmd_block)
+		return (MALLOC_ERROR);
+	i = 0;
+	while (i < data->pipe_count)
+	{
+		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
+		data->cmd_block[i]->in_fd = -2;
+		data->cmd_block[i]->out_fd = -2;
 		i++;
 	}
-	free(array);
+	return (SUCCESS);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -129,10 +190,14 @@ int	main(int argc, char **argv, char **envp)
 		{
 			expand_tokens(&data->tokens, data);
 			id_tokens(&data->tokens);
-			count_pipes(data);
-			// printf("pipe = %d\n", data->pipe_count);
 			// print_tokens_linked_list(data->tokens);
+
+			init_data(data);
+
 			exec_dispatch(data, data->tokens);
+
+			// for (int i = 0; data->cmd_block[i]; i++)
+			// 	printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
 			free_token(data->tokens);
 			free(data->p);
 		}

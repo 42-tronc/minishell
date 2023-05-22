@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/15 13:12:25 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/17 15:08:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,6 @@ int	check_append(char *path)
 	}
 	return (fd);
 }
-
-/* TO CHECK
-[maplepy@winter minishell]$ << test << bjr cat
-> bjr
-> bjr
-> bjr
-> bjr
-> test
-> test
-> test
-> bjr
-test
-test
-
-[maplepy@winter minishell]$ << test << lol cat
-te
-> lol
-> lol
-> lol
-> cat
-> test
-> lol
-*/
 
 void	get_heredoc(char *separator)
 {
@@ -163,9 +140,3 @@ void	test_files(t_data *data, t_token *input)
 	// printf("outfile = %d\n", check_outfile(path));
 	// printf("append = %d\n", check_append(path));
 }
-
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <readline/readline.h>
-// #include <readline/history.h>

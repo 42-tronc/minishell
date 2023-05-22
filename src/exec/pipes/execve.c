@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/16 15:35:56 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 10:47:25 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ static size_t	_count_cmd_args(t_token *input)
 	input = input->next;
 	while (input)
 	{
-		if (ft_strcmp(input->token_id, ARG) != 0)
+		if (ft_strcmp(input->token_id, PIPE) == 0)
 			break;
-		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\n", input->token, NO_BOLD, BOLD, input->token_id);
-		size++;
+		else if (ft_strcmp(input->token_id, ARG) == 0)
+			size++;
+		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\tin block %s%d%s\n", input->token, NO_BOLD, BOLD, input->token_id, BOLD, input->pipe_block, NO_BOLD);
 		input = input->next;
 	}
 	printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
@@ -100,12 +101,15 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	i = 1;
 	input = input->next;
 	array[0] = command_path;
+	// printf("size=%ld\n", size);
 	while (input && i < size)
 	{
-		// if (ft_strcmp(temp->token_id, CMD) == 0 || ft_strcmp(temp->token_id, ARG) == 0) {
-		array[i] = ft_strdup(input->token);
-		i++;
-		// }
+		if (ft_strcmp(input->token_id, ARG) == 0)
+		{
+			array[i] = ft_strdup(input->token);
+			// printf("array[%ld]=%s\n", i, array[i]);
+			i++;
+		}
 		input = input->next;
 	}
 	return (array);
