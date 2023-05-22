@@ -24,7 +24,7 @@ int	next_char(char c)
 		return (1);
 }
 
-int	processed_line(char *str)
+int	processed_line(char *str, t_parsing *p)
 {
 	int	i;
 	int	keep;
@@ -33,10 +33,8 @@ int	processed_line(char *str)
 	keep = 0;
 	while (str && str[++i])
 	{
-		if (i == 0 && str[i] == '$')
-			keep = 1;
-		if (i > 0 && str[i - 1] == '$' && (next_char(str[i]) \
-		|| ft_isdigit(str[i])))
+		p_quote(p, str[i]);
+		if (str[i] == '$' && !p->quote)
 			keep = 1;
 	}
 	return (keep);

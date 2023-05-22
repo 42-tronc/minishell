@@ -31,14 +31,18 @@ void	ft_tokenadd_back(t_token **lst, t_token *new)
 	new->prev = temp;
 }
 
-t_token	*ft_tokennew(void *content)
+t_token	*ft_tokennew(void *content, t_parsing *p, char c)
 {
 	t_token	*dst;
 
 	dst = malloc(sizeof(t_token));
 	if (!dst)
 		return (NULL);
+	p_quote(p, c);
 	dst->token = (char *)content;
+	dst->expand = 1;
+	if (p->quote || (dst->token[0] == '$' && dst->token[1] == '$'))
+		dst->expand = 0;
 	dst->token_id = NULL;
 	dst->next = NULL;
 	dst->pipe_block = 0;
