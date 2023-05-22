@@ -42,7 +42,7 @@ void	choose_token_id(t_token *temp)
 	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC))
 		temp->token_id = LIMITER;
 	else if (!ft_strcmp(temp->prev->token_id, APPEND))
-		temp->token_id = FILE_APPEND;
+		temp->token_id = OUTFILE;
 	else if (is_first_cmd(temp))
 		temp->token_id = CMD;
 	else
