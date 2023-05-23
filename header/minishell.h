@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/17 13:07:55 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 12:25:06 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct s_env
 	int				in_env;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_cmd_block
+{
+	int		in_fd;
+	int		out_fd;
+	char	*heredoc;
+}			t_cmd_block;
 
 typedef struct s_token		t_token;
 
@@ -73,7 +80,6 @@ typedef struct s_token		t_token;
 # define CHEVRON_R ">"
 # define INFILE "infile"
 # define OUTFILE "outfile"
-# define FILE_APPEND "file_append"
 # define CMD "command"
 # define ARG "argument"
 # define PIPE "|"
@@ -89,8 +95,9 @@ typedef struct s_token		t_token;
 
 struct s_data {
 	t_env		*env;
+	t_env		*export; // to remove at one point
+	t_cmd_block	**cmd_block;
 	char		**paths;
-	t_env		*export;
 	int			pipe_count;
 	int			i;
 	t_parsing	*p;
@@ -162,8 +169,6 @@ char	*get_validpath(t_data *data, t_token *input);
 void	test_files(t_data *data, t_token *input);
 char	*ft_strjoin_heredoc(char *s1, char *s2);
 void	exec_command(t_data *data, t_token *input);
-
-void	count_pipes(t_data *data);
 
 
 // PARSING
