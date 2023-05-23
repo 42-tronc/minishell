@@ -6,25 +6,25 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/17 15:08:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/23 11:34:52 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 // #define MAX_INPUT_SIZE 1000
 
-int	check_infile(char *path)
-{
-	int	fd;
+// int	check_infile(char *path)
+// {
+// 	int	fd;
 
-	fd = open(path, O_RDONLY);
-	// if (fd == -1)
-	// {
-		// perror("open");
-	// 	return (FAILURE);
-	// }
-	return (fd);
-}
+// 	fd = open(path, O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		perror("open");
+// 		return (FAILURE);
+// 	}
+// 	return (fd);
+// }
 
 int	check_outfile(char *path)
 {
