@@ -82,7 +82,7 @@ void	replace_var(t_token *temp, t_data *p)
 	else
 	{
 		p->p->var_name = ft_strdup("hello");
-		p->p->var_value = ft_strdup("20934829");
+		p->p->var_value = ft_strdup("20");
 	}
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
@@ -95,17 +95,17 @@ void	replace_var(t_token *temp, t_data *p)
 	free(p->p->new_token);
 }
 
-void	expand_tokens(t_token **tokens, t_data *p)
+void	expand_tokens(t_token **tokens, t_data *data)
 {
 	t_token	*temp;
 
 	temp = *tokens;
 	while (temp)
 	{
-		while (processed_line(temp->token, p->p) && temp->expand)
+		while (processed_line(temp->token, data->p))
 		{
-			p->i = 0;
-			replace_var(temp, p);
+			data->i = 0;
+			replace_var(temp, data);
 		}
 		temp = temp->next;
 	}

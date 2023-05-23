@@ -172,7 +172,9 @@ void	exec_command(t_data *data, t_token *input);
 
 
 // PARSING
-// envp.c functions
+// prepare.c functions
+void	prepare_token(t_data *data);
+
 // t_env	*list_env(char **envp);
 char	*ft_getenv(t_env *envp, char *str);
 int		ft_setenv(t_env *list_envp, char *var, char *value);
