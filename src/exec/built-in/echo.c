@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 16:39:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/23 15:35:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,13 @@ TODO
  * @brief checks if a newline is needed by looking for any '-n' or '-nnnn...'
  *
  * @param str string to check
- * @return int 1 if needed, 0 if not
+ * @return int 1 if needed so no `-n` found, else 0
  */
 int	need_newline(char *str)
 {
 	int	i;
 
 	i = 1;
-	// if (!str)
-	// 	return (1);
-	// printf("NEED NEWLINE CHECKING\n\t`%s`\n", str);
 	if (str && str[0] == '-')
 	{
 		if (str && str[1] == 'n')
@@ -76,21 +73,21 @@ void	ft_echo(t_token *input)
 {
 	int	newline;
 
-	printf(YELLOW"ft_echo()\n"RESET);
 	newline = 1;
-	// input = input->next;
+	// if there is a `-n`, set the newline to 0
 	if (input && input->token && !need_newline(input->token))
 	{
 		newline = 0;
 		input = input->next;
 	}
+	// if there is a `-n`, skip every -n
 	while (input && input->token && !need_newline(input->token))
 		input = input->next;
-
-	while (input)
+	// only print arguments
+	while (input && ft_strcmp(input->token_id, ARG) == 0)
 	{
 		printf("%s", input->token);
-		if (input->next)
+		if (input->next && ft_strcmp(input->next->token_id, ARG) == 0)
 			printf(" ");
 		input = input->next;
 	}
