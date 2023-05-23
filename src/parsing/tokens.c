@@ -76,7 +76,7 @@ void	get_next_word(t_token **tokens, t_parsing *p, char *str, int i)
 			word[++i] = str[p->i];
 		p->i++;
 	}
-	ft_tokenadd_back(tokens, ft_tokennew(word));
+	ft_tokenadd_back(tokens, ft_tokennew(word, p, str[p->i - 1]));
 }
 
 /// @brief Malloc enough memory for our symbole (|, <, <<, >, >>)
@@ -96,7 +96,7 @@ void	get_symbols(t_token **tokens, t_parsing *p, char *str, int size)
 		j++;
 		size++;
 		if (str[j] != str[j - 1])
-			break;
+			break ;
 	}
 	symbol = malloc(sizeof(char) * (size + 1));
 	if (!symbol)
@@ -108,8 +108,8 @@ void	get_symbols(t_token **tokens, t_parsing *p, char *str, int size)
 		j++;
 		p->i++;
 		if (str[p->i] != str[p->i - 1])
-			break;
+			break ;
 	}
 	symbol[j] = '\0';
-	ft_tokenadd_back(tokens, ft_tokennew(symbol));
+	ft_tokenadd_back(tokens, ft_tokennew(symbol, p, 0));
 }

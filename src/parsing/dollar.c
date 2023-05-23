@@ -50,7 +50,8 @@ char	*get_before_dollar(char *str, t_data *p)
 	size = 0;
 	while (str && str[size])
 	{
-		if (str[size] == '$')
+		p_quote(p->p, str[size]);
+		if (str[size] == '$' && p->p->quote == 0)
 			break ;
 		size++;
 	}
@@ -70,25 +71,28 @@ char	*get_before_dollar(char *str, t_data *p)
 
 void	replace_var(t_token *temp, t_data *p)
 {
-	char	*before;
-	char	*var_value;
-	char	*before_and_value;
-	char	*new_token;
-	char	*var_name;
-
-	before = get_before_dollar(temp->token, p);
+	if (!temp->expand)
+		return ;
+	p->p->before = get_before_dollar(temp->token, p);
 	p->i++;
-	var_name = get_var_name(temp->token + p->i);
-	var_value = ft_getenv(p->env, var_name);
-	before_and_value = ft_strjoin_dollar(before, var_value);
-	new_token = ft_strjoin_dollar(before_and_value, temp->token \
-	+ ft_strlen(before) + ft_strlen(var_name) + 1);
+	if (temp->token[p->i] != '?')
+		p->p->var_name = get_var_name(temp->token + p->i);
+	if (temp->token[p->i] != '?')
+		p->p->var_value = ft_getenv(p->env, p->p->var_name);
+	else
+	{
+		p->p->var_name = ft_strdup("hello");
+		p->p->var_value = ft_strdup("20934829");
+	}
+	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
+	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
+	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
 	free(temp->token);
-	temp->token = ft_strdup(new_token);
-	free(var_name);
-	free(before);
-	free(before_and_value);
-	free(new_token);
+	temp->token = ft_strdup(p->p->new_token);
+	free(p->p->var_name);
+	free(p->p->before);
+	free(p->p->before_and_value);
+	free(p->p->new_token);
 }
 
 void	expand_tokens(t_token **tokens, t_data *p)
@@ -98,7 +102,7 @@ void	expand_tokens(t_token **tokens, t_data *p)
 	temp = *tokens;
 	while (temp)
 	{
-		while (processed_line(temp->token))
+		while (processed_line(temp->token, p->p) && temp->expand)
 		{
 			p->i = 0;
 			replace_var(temp, p);
