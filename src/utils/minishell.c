@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/22 14:33:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/23 11:36:03 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,36 @@ check each block
 	check for commands
 */
 
-// void	is_infile(t_data *data, int block)
+int	check_infile(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		return (FAILURE);
+	}
+	return (fd);
+}
+
 // do a while (pipe_block = block)
-void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
+// void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
+void	is_infile(t_data *data, t_token *input, int block)
 {
 	(void) data;
-	while (input)
+	printf("in block %d\n", input->pipe_block);
+	printf("checking %d\n", block);
+	while (input && input->pipe_block == block)
 	{
+		printf("in the while\n");
 		if (ft_strcmp(input->token, PIPE) == 0)
 			break;
 		if (ft_strcmp(input->token, INFILE) == 0)
 		{
-			block->in_fd = open(input->token, O_RDONLY);
-			if (block->in_fd == -1)
+			printf("INFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
+			data->cmd_block[block]->in_fd = open(input->token, O_RDONLY);
+			if (data->cmd_block[block]->in_fd == -1)
 			{
 				perror("open");
 				return;
@@ -76,7 +93,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 	// check_outfiles
 	// check_command
 
-
+	is_infile(data, input, 0);
 
 	while (input)
 	{
