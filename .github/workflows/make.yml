@@ -1,25 +1,24 @@
 name: Makefile CI
 
 on:
-	push:
-		branches:
-			- master
-	pull_request:
-		branches:
-			- master
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-	build:
-		runs-on: ubuntu-latest
+  build:
+    name: Makefile CI
+    runs-on: ubuntu-latest
 
-		steps:
-			# Checkout the repository to the GitHub Actions runner
-			- name: Checkout code
-				uses: actions/checkout@v3
-				with:
-					submodules: 'recursive'
-					token: ${{ secrets.CI_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.ORG_GH_TOKEN }}  # Add this line to pass the token to the checkout action
 
-			# Build the project
-			- name: Build project
-				run: make
+      - name: Build project
+        run: make

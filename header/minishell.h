@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 12:25:06 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ struct s_parsing {
 
 struct s_token {
 	char	*token;
-	char	*token_id;
+	char	*type;
 	int		pipe_block;
 	t_token	*prev;
 	t_token	*next;

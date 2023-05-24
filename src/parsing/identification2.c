@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:50:07 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	is_separator(t_token *temp)
 int	first_token(t_token *temp)
 {
 	if (temp->token[0] == '<' && temp->token[1] == '\0')
-		temp->token_id = CHEVRON_L;
+		temp->type = CHEVRON_L;
 	else if (temp->token[0] == '<' && temp->token[1] == '<')
-		temp->token_id = HERE_DOC;
+		temp->type = HERE_DOC;
 	else if (temp->token[0] == '>' && temp->token[1] == '\0')
-		temp->token_id = MY_NULL;
+		temp->type = MY_NULL;
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
-		temp->token_id = MY_NULL;
+		temp->type = MY_NULL;
 	else if (temp->token[0] == '|')
-		temp->token_id = MY_NULL;
+		temp->type = MY_NULL;
 	else
-		temp->token_id = CMD;
+		temp->type = CMD;
 	return (1);
 }
