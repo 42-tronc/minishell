@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 14:08:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 19:36:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	print_tokens_linked_list(t_token *head)
 
 int	check_infile(t_data *data, t_token *input, int block)
 {
-	(void) data;
 	while (input && input->pipe_block == block)
 	{
 		// printf("Checking block %s%d\n"RESET, BOLD, block);
@@ -63,7 +62,7 @@ int	check_infile(t_data *data, t_token *input, int block)
 void	exec_dispatch(t_data *data, t_token *input)
 {
 	// check_heredoc
-	check_infile(data, input, 0);
+	// check_infile(data, input, 0);
 	// check_outfiles
 	// check_command
 
