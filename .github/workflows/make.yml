@@ -1,37 +1,37 @@
 name: Makefile CI
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-  workflow_dispatch:  # Enable manual triggering
+	push:
+		branches:
+			- master
+	pull_request:
+		branches:
+			- master
+	workflow_dispatch:  # Enable manual triggering
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+	build:
+		runs-on: ubuntu-latest
 
-    steps:
-      # Checkout the repository to the GitHub Actions runner
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: 'recursive'
+		steps:
+			# Checkout the repository to the GitHub Actions runner
+			- name: Checkout code
+				uses: actions/checkout@v3
+				with:
+					submodules: 'recursive'
 					token: ${{ secrets.CI_TOKEN }}
 
-      # Update libft submodule with CI_TOKEN
-      # - name: Update libft submodule
-      #   run: |
-      #     git submodule update --init --checkout libft
-      #     cd libft
-      #     git config http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n ${{ secrets.CI_TOKEN }} | base64)"
-      #     git fetch origin
-      #     git checkout ${{ secrets.CI_TOKEN }}
-      #     cd ..
-      #     # Additional commands or steps if needed
+			# Update libft submodule with CI_TOKEN
+			# - name: Update libft submodule
+			#   run: |
+			#     git submodule update --init --checkout libft
+			#     cd libft
+			#     git config http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n ${{ secrets.CI_TOKEN }} | base64)"
+			#     git fetch origin
+			#     git checkout ${{ secrets.CI_TOKEN }}
+			#     cd ..
+			#     # Additional commands or steps if needed
 
-      # Build the project
-      - name: Build project
-        run: make
+			# Build the project
+			- name: Build project
+				run: make
