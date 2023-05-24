@@ -121,7 +121,6 @@ struct s_token {
 	char	*token;
 	char	*token_id;
 	int		pipe_block;
-	int		expand;
 	t_token	*prev;
 	t_token	*next;
 };

@@ -39,7 +39,6 @@ t_token	*ft_tokennew(void *content)
 	if (!dst)
 		return (NULL);
 	dst->token = (char *)content;
-	dst->expand = 1;
 	dst->token_id = NULL;
 	dst->next = NULL;
 	dst->pipe_block = 0;

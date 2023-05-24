@@ -27,17 +27,24 @@ int	next_char(char c)
 int	processed_line(char *str, t_parsing *p)
 {
 	int	i;
-	int	keep;
+	int	found_dollar;
+	int	found_alpha;
 
-	i = -1;
-	keep = 0;
-	while (str && str[++i])
+	i = 0;
+	found_dollar = 0;
+	found_alpha = 0;
+	while (str && str[i])
 	{
 		p_quote(p, str[i]);
-		if (str[i] == '$' && !p->quote)
-			keep = 1;
+		if (!p->quote && str[i] == '$')
+			found_dollar = 1;
+		else if (found_dollar && ft_isalpha(str[i]))
+			found_alpha = 1;
+		else
+			found_dollar = 0;
+		i++;
 	}
-	return (keep);
+	return (found_alpha);
 }
 
 int	str_cpy_dollar(char *dst, char *src, int index)

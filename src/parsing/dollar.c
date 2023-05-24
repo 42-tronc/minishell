@@ -51,7 +51,7 @@ char	*get_before_dollar(char *str, t_data *p)
 	while (str && str[size])
 	{
 		p_quote(p->p, str[size]);
-		if (str[size] == '$' && p->p->quote == 0)
+		if (str[size] == '$' && str[size + 1] != '$' && !p->p->quote)
 			break ;
 		size++;
 	}
@@ -71,19 +71,25 @@ char	*get_before_dollar(char *str, t_data *p)
 
 void	replace_var(t_token *temp, t_data *p)
 {
-	if (!temp->expand)
-		return ;
 	p->p->before = get_before_dollar(temp->token, p);
+	printf("before:%s et p->i=%d\n", p->p->before, p->i);
 	p->i++;
-	if (temp->token[p->i] != '?')
-		p->p->var_name = get_var_name(temp->token + p->i);
-	if (temp->token[p->i] != '?')
-		p->p->var_value = ft_getenv(p->env, p->p->var_name);
+	if (temp->token[p->i] == '?')
+	{
+		p->p->var_name = ft_strdup("22");
+		p->p->var_value = ft_strdup("2");
+	}
+	if (temp->token[p->i] == '$')
+	{
+		p->p->var_name = ft_strdup("2");
+		p->p->var_value = ft_strdup("$ddd");
+	}
 	else
 	{
-		p->p->var_name = ft_strdup("hello");
-		p->p->var_value = ft_strdup("20");
+		p->p->var_name = get_var_name(temp->token + p->i);
+		p->p->var_value = ft_getenv(p->env, p->p->var_name);
 	}
+	printf("TESTEUR\n");
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
 	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
@@ -102,10 +108,11 @@ void	expand_tokens(t_token **tokens, t_data *data)
 	temp = *tokens;
 	while (temp)
 	{
+		data->p->i = 0;
 		while (processed_line(temp->token, data->p))
 		{
-			data->i = 0;
 			replace_var(temp, data);
+			data->i = 0;
 		}
 		temp = temp->next;
 	}
