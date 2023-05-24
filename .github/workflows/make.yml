@@ -7,7 +7,6 @@ on:
 	pull_request:
 		branches:
 			- master
-	workflow_dispatch:  # Enable manual triggering
 
 jobs:
 	build:
@@ -20,17 +19,6 @@ jobs:
 				with:
 					submodules: 'recursive'
 					token: ${{ secrets.CI_TOKEN }}
-
-			# Update libft submodule with CI_TOKEN
-			# - name: Update libft submodule
-			#   run: |
-			#     git submodule update --init --checkout libft
-			#     cd libft
-			#     git config http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n ${{ secrets.CI_TOKEN }} | base64)"
-			#     git fetch origin
-			#     git checkout ${{ secrets.CI_TOKEN }}
-			#     cd ..
-			#     # Additional commands or steps if needed
 
 			# Build the project
 			- name: Build project
