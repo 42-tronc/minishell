@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 12:06:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 12:08:10 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	ft_echo(t_token *input)
 	int	first;
 	int	newline;
 
+	first = 1;
 	newline = 1;
 	// if there is a `-n`, set the newline to 0
 	if (input && input->token && !need_newline(input->token))
@@ -96,6 +97,7 @@ void	ft_echo(t_token *input)
 			printf(" ");
 		input = input->next;
 	}
+	// printf("`");
 	if (newline)
 		printf("\n");
 }
