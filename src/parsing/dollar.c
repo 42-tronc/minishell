@@ -72,7 +72,6 @@ char	*get_before_dollar(char *str, t_data *p)
 void	replace_var(t_token *temp, t_data *p)
 {
 	p->p->before = get_before_dollar(temp->token, p);
-	printf("before:%s et p->i=%d\n", p->p->before, p->i);
 	p->i++;
 	if (temp->token[p->i] == '?')
 	{
@@ -89,7 +88,6 @@ void	replace_var(t_token *temp, t_data *p)
 		p->p->var_name = get_var_name(temp->token + p->i);
 		p->p->var_value = ft_getenv(p->env, p->p->var_name);
 	}
-	printf("TESTEUR\n");
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
 	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);

@@ -39,9 +39,6 @@ t_token	*ft_tokennew(void *content)
 	if (!dst)
 		return (NULL);
 	dst->token = (char *)content;
-	dst->expand = 1;
-	if (p->quote || (dst->token[0] == '$' && dst->token[1] == '$'))
-		dst->expand = 0;
 	dst->type = NULL;
 	dst->next = NULL;
 	dst->pipe_block = 0;
