@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/05/23 15:35:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ void	ft_echo(t_token *input)
 	while (input && input->token && !need_newline(input->token))
 		input = input->next;
 	// only print arguments
-	while (input && ft_strcmp(input->token_id, ARG) == 0)
+	while (input && ft_strcmp(input->type, ARG) == 0)
 	{
 		printf("%s", input->token);
-		if (input->next && ft_strcmp(input->next->token_id, ARG) == 0)
+		if (input->next && ft_strcmp(input->next->type, ARG) == 0)
 			printf(" ");
 		input = input->next;
 	}

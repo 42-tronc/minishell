@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:51:50 by aascedu           #+#    #+#             */
-/*   Updated: 2023/05/03 14:21:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_first_cmd(t_token *head)
 	pipe_block = temp->pipe_block;
 	while (temp && pipe_block == temp->pipe_block)
 	{
-		if (!ft_strcmp(temp->token_id, CMD))
+		if (!ft_strcmp(temp->type, CMD))
 			return (0);
 		temp = temp->prev;
 	}
@@ -34,19 +34,19 @@ int	is_first_cmd(t_token *head)
 void	choose_token_id(t_token *temp)
 {
 	if (!temp->prev)
-		temp->token_id = CMD;
-	else if (!ft_strcmp(temp->prev->token_id, CHEVRON_L))
-		temp->token_id = INFILE;
-	else if (!ft_strcmp(temp->prev->token_id, CHEVRON_R))
-		temp->token_id = OUTFILE;
-	else if (!ft_strcmp(temp->prev->token_id, HERE_DOC))
-		temp->token_id = LIMITER;
-	else if (!ft_strcmp(temp->prev->token_id, APPEND))
-		temp->token_id = OUTFILE;
+		temp->type = CMD;
+	else if (!ft_strcmp(temp->prev->type, CHEVRON_L))
+		temp->type = INFILE;
+	else if (!ft_strcmp(temp->prev->type, CHEVRON_R))
+		temp->type = OUTFILE;
+	else if (!ft_strcmp(temp->prev->type, HERE_DOC))
+		temp->type = LIMITER;
+	else if (!ft_strcmp(temp->prev->type, APPEND))
+		temp->type = OUTFILE;
 	else if (is_first_cmd(temp))
-		temp->token_id = CMD;
+		temp->type = CMD;
 	else
-		temp->token_id = ARG;
+		temp->type = ARG;
 }
 
 void	id_tokens(t_token **tokens)
@@ -58,21 +58,21 @@ void	id_tokens(t_token **tokens)
 	while (temp)
 	{
 		if (!ft_strcmp(temp->token, "<"))
-			temp->token_id = CHEVRON_L;
+			temp->type = CHEVRON_L;
 		else if (!ft_strcmp(temp->token, "<<"))
-			temp->token_id = HERE_DOC;
+			temp->type = HERE_DOC;
 		else if (!ft_strcmp(temp->token, ">"))
-			temp->token_id = CHEVRON_R;
+			temp->type = CHEVRON_R;
 		else if (!ft_strcmp(temp->token, ">>"))
-			temp->token_id = APPEND;
+			temp->type = APPEND;
 		else if (!ft_strcmp(temp->token, "|"))
 		{
-			temp->token_id = PIPE;
+			temp->type = PIPE;
 			temp->pipe_block = temp->prev->pipe_block + 1;
 		}
 		else
 			choose_token_id(temp);
-		if (ft_strcmp(temp->token_id, PIPE) && temp->prev)
+		if (ft_strcmp(temp->type, PIPE) && temp->prev)
 			temp->pipe_block = temp->prev->pipe_block;
 		temp = temp->next;
 	}

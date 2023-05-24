@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 08:19:57 by aascedu           #+#    #+#             */
-/*   Updated: 2023/05/03 13:28:35 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	print_tokens_linked_list(t_token *head, t_parsing *p)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("Type : %s && token[%d]:'%s' in pipe block:%d\n",temp->token_id, i++, temp->token, temp->pipe_block);
+		printf("Type : %s && token[%d]:'%s' in pipe block:%d\n",temp->type, i++, temp->token, temp->pipe_block);
 		// if (temp->next == NULL)
 		// 	last = temp;
 		temp = temp->next;
 	}
 	// while (last)
 	// {
-	// 	printf("token prev:%s\n", last->token_id);
+	// 	printf("token prev:%s\n", last->type);
 	// 	last = last->prev;
 	// }
 }
