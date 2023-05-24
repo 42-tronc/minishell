@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 12:08:10 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ int	need_newline(char *str)
  */
 void	ft_echo(t_token *input)
 {
+	int	first;
 	int	newline;
 
+	first = 1;
 	newline = 1;
 	// if there is a `-n`, set the newline to 0
 	if (input && input->token && !need_newline(input->token))
@@ -84,13 +86,18 @@ void	ft_echo(t_token *input)
 	while (input && input->token && !need_newline(input->token))
 		input = input->next;
 	// only print arguments
-	while (input && ft_strcmp(input->type, ARG) == 0)
+	while (input && ft_strcmp(input->type, PIPE) != 0)
 	{
-		printf("%s", input->token);
-		if (input->next && ft_strcmp(input->next->type, ARG) == 0)
+		if (ft_strcmp(input->type, ARG) == 0)
+		{
+			printf("%s", input->token);
+			first = 0;
+		}
+		if (input->next && ft_strcmp(input->next->type, ARG) == 0 && !first)
 			printf(" ");
 		input = input->next;
 	}
+	// printf("`");
 	if (newline)
 		printf("\n");
 }

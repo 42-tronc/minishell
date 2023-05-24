@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 12:51:17 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,67 +35,37 @@ void	print_tokens_linked_list(t_token *head)
 	// }
 }
 
-/*
-Will need to check back every command to see if they work properly with weird cases
-
-check each block
-
-	check for infiles
-		put every infile in a linked list
-	check for outfiles
-		put every outfile in a linked list
-	check for commands
-*/
-
-int	check_infile(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		return (FAILURE);
-	}
-	return (fd);
-}
-
-// do a while (pipe_block = block)
-// void	is_infile(t_data *data, t_token *input, t_cmd_block *block)
-void	is_infile(t_data *data, t_token *input, int block)
+int	check_infile(t_data *data, t_token *input, int block)
 {
 	(void) data;
-	// printf("in block %d\n", input->pipe_block);
-	// printf("checking %d\n", block);
 	while (input && input->pipe_block == block)
 	{
-		printf("Checking block %s%d\n"RESET, BOLD, block);
-		if (ft_strcmp(input->type, PIPE) == 0)
-			break;
+		// printf("Checking block %s%d\n"RESET, BOLD, block);
 		if (ft_strcmp(input->type, INFILE) == 0)
 		{
 			printf("INFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
 			data->cmd_block[block]->in_fd = open(input->token, O_RDONLY);
 			if (data->cmd_block[block]->in_fd == -1)
 			{
-				perror("open");
-				return;
+				perror(BOLD RED"open"RESET);
+				return (-1);
 			}
+			else
+				printf(GREEN"OK: %s%s\n"RESET, BOLD, input->token);
 		}
-		else
-			printf(RED"%s is a %s\n"RESET, input->token, input->type);
+		// else
+		// 	printf(RED"%s is a %s\n"RESET, input->token, input->type);
 		input = input->next;
 	}
-	printf(GREEN"seems like the infile is ok\n");
+	return (0);
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
-	// check_infiles
+	// check_heredoc
+	check_infile(data, input, 0);
 	// check_outfiles
 	// check_command
-
-	is_infile(data, input, 0);
 
 	while (input)
 	{
@@ -216,7 +186,8 @@ int	main(int argc, char **argv, char **envp)
 			id_tokens(&data->tokens);
 			// print_tokens_linked_list(data->tokens);
 
-			init_data(data);
+			if (init_data(data))
+				exit(FAILURE);
 
 			exec_dispatch(data, data->tokens);
 
