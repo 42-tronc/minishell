@@ -216,7 +216,8 @@ int	main(int argc, char **argv, char **envp)
 			id_tokens(&data->tokens);
 			// print_tokens_linked_list(data->tokens);
 
-			init_data(data);
+			if (!init_data(data))
+				exit(FAILURE);
 
 			exec_dispatch(data, data->tokens);
 
