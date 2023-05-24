@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:37:28 by aascedu           #+#    #+#             */
-/*   Updated: 2023/05/03 14:37:29 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static int	count_args(t_token *temp)
 	int	args;
 
 	args = 0;
-	while (temp && (!ft_strcmp(temp->token_id, CMD) \
-	|| !ft_strcmp(temp->token_id, ARG)))
+	while (temp && (!ft_strcmp(temp->type, CMD) \
+	|| !ft_strcmp(temp->type, ARG)))
 	{
 		args++;
 		temp = temp->next;
@@ -31,14 +31,14 @@ char	**get_array_cmd(t_token *temp)
 	char	**array;
 	int		i;
 
-	if (ft_strcmp(temp->token_id, CMD))
+	if (ft_strcmp(temp->type, CMD))
 		return (NULL);
 	array = malloc(sizeof(char *) * (count_args(temp) + 1));
 	if (!array)
 		return (NULL);
 	i = 0;
-	while (temp && (!ft_strcmp(temp->token_id, CMD) \
-	|| !ft_strcmp(temp->token_id, ARG)))
+	while (temp && (!ft_strcmp(temp->type, CMD) \
+	|| !ft_strcmp(temp->type, ARG)))
 	{
 		array[i] = ft_strdup(temp->token);
 		temp = temp->next;

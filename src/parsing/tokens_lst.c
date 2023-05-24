@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:16:55 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_token	*ft_tokennew(void *content, t_parsing *p, char c)
 	dst->expand = 1;
 	if (p->quote || (dst->token[0] == '$' && dst->token[1] == '$'))
 		dst->expand = 0;
-	dst->token_id = NULL;
+	dst->type = NULL;
 	dst->next = NULL;
 	dst->pipe_block = 0;
 	return (dst);
