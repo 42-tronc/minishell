@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/23 11:36:03 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:52:52 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ int	check_infile(char *path)
 void	is_infile(t_data *data, t_token *input, int block)
 {
 	(void) data;
-	printf("in block %d\n", input->pipe_block);
-	printf("checking %d\n", block);
+	// printf("in block %d\n", input->pipe_block);
+	// printf("checking %d\n", block);
 	while (input && input->pipe_block == block)
 	{
-		printf("in the while\n");
-		if (ft_strcmp(input->token, PIPE) == 0)
+		printf("Checking block %s%d\n"RESET, BOLD, block);
+		if (ft_strcmp(input->token_id, PIPE) == 0)
 			break;
-		if (ft_strcmp(input->token, INFILE) == 0)
+		if (ft_strcmp(input->token_id, INFILE) == 0)
 		{
 			printf("INFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
 			data->cmd_block[block]->in_fd = open(input->token, O_RDONLY);
@@ -82,6 +82,8 @@ void	is_infile(t_data *data, t_token *input, int block)
 				return;
 			}
 		}
+		else
+			printf(RED"%s is a %s\n"RESET, input->token, input->token_id);
 		input = input->next;
 	}
 	printf(GREEN"seems like the infile is ok\n");
