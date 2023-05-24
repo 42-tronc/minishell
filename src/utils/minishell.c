@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 19:36:58 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 19:38:09 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,6 @@ void	print_tokens_linked_list(t_token *head)
 	// 	printf("token prev:%s\n", last->token_id);
 	// 	last = last->prev;
 	// }
-}
-
-int	check_infile(t_data *data, t_token *input, int block)
-{
-	while (input && input->pipe_block == block)
-	{
-		// printf("Checking block %s%d\n"RESET, BOLD, block);
-		if (ft_strcmp(input->type, INFILE) == 0)
-		{
-			printf("INFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
-			data->cmd_block[block]->in_fd = open(input->token, O_RDONLY);
-			if (data->cmd_block[block]->in_fd == -1)
-			{
-				perror(BOLD RED"open"RESET);
-				return (-1);
-			}
-			else
-				printf(GREEN"OK: %s%s\n"RESET, BOLD, input->token);
-		}
-		// else
-		// 	printf(RED"%s is a %s\n"RESET, input->token, input->type);
-		input = input->next;
-	}
-	return (0);
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
