@@ -158,6 +158,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data->tokens)
 		{
 			expand_tokens(&data->tokens, data);
+			expand_tilde(&data->tokens, data);
 			id_tokens(&data->tokens);
 			// print_tokens_linked_list(data->tokens);
 
