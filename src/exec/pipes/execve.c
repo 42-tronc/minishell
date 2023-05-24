@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/18 10:47:25 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 10:50:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static size_t	_count_cmd_args(t_token *input)
 		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\tin block %s%d%s\n", input->token, NO_BOLD, BOLD, input->token_id, BOLD, input->pipe_block, NO_BOLD);
 		input = input->next;
 	}
-	printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
+	// printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
 	return (size);
 }
 
@@ -96,7 +96,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	array = ft_calloc(size + 1, sizeof(char*));
 	if (!array)
 		return (NULL);
-	printf(GREEN"\t󰍛 FT_CALLOC\n"RESET); // debug
+	// printf(GREEN"\t󰍛 FT_CALLOC\n"RESET); // debug
 
 	i = 1;
 	input = input->next;
@@ -147,7 +147,7 @@ void	exec_command(t_data *data, t_token *input)
 		perror("pipe");
 		exit(EXIT_FAILURE);
 	}
-	printf(GREEN"\t󰟥 PIPE\n"RESET);
+	// printf(GREEN"\t󰟥 PIPE\n"RESET);
 
 	pid = fork();
 	if (pid == -1)
@@ -159,7 +159,7 @@ void	exec_command(t_data *data, t_token *input)
 	if (pid == 0)
 	{
 		// child process
-		printf(GREEN"\t FORK%s\n", MAGENTA);
+		// printf(GREEN"\t FORK%s\n", MAGENTA);
 		// dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
