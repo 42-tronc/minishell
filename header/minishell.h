@@ -106,6 +106,7 @@ struct s_data {
 
 struct s_parsing {
 	int		i;
+	int		start;
 	int		quote;
 	int		dquote;
 	int		all_id;
@@ -120,7 +121,6 @@ struct s_token {
 	char	*token;
 	char	*type;
 	int		pipe_block;
-	int		expand;
 	t_token	*prev;
 	t_token	*next;
 };
@@ -129,19 +129,14 @@ struct s_token {
 char	**get_array_cmd(t_token *temp);
 
 //EXEC
-// void	ft_cd(char *path, t_list *env);
-// void	ft_cd(t_env *env, char *path);
-// void	ft_cd(t_env *env, t_token *input);
+
 void	ft_cd(t_data *data, t_token *input);
 
-// void	ft_env(t_list *env);
 void	ft_env(t_env *env);
 
-// void	ft_export(t_list *env);
 void	ft_export(t_env *env, t_list *args);
 // void	ft_export(t_env *env);
 
-// void	ft_echo(int ac, char **av);
 void	ft_echo(t_token *input);
 
 
@@ -149,7 +144,6 @@ void	ft_echo(t_token *input);
 int		ft_pwd(void);
 
 void	ft_unset(t_env **env, t_token *args);
-// void	ft_unset(t_env **env, t_list *args);
 
 // Utils for env
 t_env	*fill_env(char **envp);
@@ -162,7 +156,7 @@ void	print_error(int error_type);
 void ft_fork();
 
 
-void ft_getpaths(t_data *data);
+void	ft_getpaths(t_data *data);
 char	**split_paths(char const *s, char c);
 // void	get_validpath(t_data *data);
 // exit_code	get_validpath(t_data *data);
@@ -177,7 +171,9 @@ void	exec_command(t_data *data, t_token *input);
 
 
 // PARSING
-// envp.c functions
+// prepare.c functions
+void	prepare_token(t_data *data);
+
 // t_env	*list_env(char **envp);
 char	*ft_getenv(t_env *envp, char *str);
 int		ft_setenv(t_env *list_envp, char *var, char *value);
@@ -189,13 +185,13 @@ t_env	*ft_envnew(char *name, char *value);
 
 // parsing.c functions
 t_token	*getting_line(t_data *data);
-void	right_symbols(t_parsing *p, char *str);
-void	even_quote(char *str);
-void	cutting_line(t_token **tokens, t_parsing *data, char *str);
+int		right_symbols(t_parsing *p, char *str);
+int		even_quote(t_parsing *p, char *str);
+void	cutting_line(t_token **temp, t_parsing *p, char *str);
 
 // tokens_lst.c functions
 void	ft_tokenadd_back(t_token **lst, t_token *new);
-t_token	*ft_tokennew(void *content, t_parsing *p, char c);
+t_token	*ft_tokennew(void *content);
 void	free_token(t_token *tokens);
 
 // tokens.c functions

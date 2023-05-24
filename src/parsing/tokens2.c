@@ -12,17 +12,6 @@
 
 #include "minishell.h"
 
-/// @brief Check if the char is a space, a pipe or a < / >.
-/// @param c Char to check
-/// @return 0 if it is one of the char searched for,
-/// 1 if it is any other char.
-int	ft_char(int c)
-{
-	if (c == '|' || c == '<' || c == '>')
-		return (0);
-	return (1);
-}
-
 int	is_symbol(int c)
 {
 	if (c == '|' || c == '<' || c == '>')
