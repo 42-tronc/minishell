@@ -6,53 +6,50 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/23 11:34:52 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 16:47:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #define MAX_INPUT_SIZE 1000
 
-// int	check_infile(char *path)
-// {
-// 	int	fd;
-
-// 	fd = open(path, O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		perror("open");
-// 		return (FAILURE);
-// 	}
-// 	return (fd);
-// }
-
-int	check_outfile(char *path)
+int	check_outfile(t_data *data, t_token *input, int block)
 {
-	int	fd;
+	int	flags;
 
-	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC);
-	if (fd == -1)
+	// set default flags as trunc
+	flags = (O_WRONLY | O_CREAT | O_TRUNC);
+	while (input && input->pipe_block == block)
 	{
-		perror("open");
-		return (FAILURE);
+		if (ft_strcmp(input->type, OUTFILE) == 0 || ft_strcmp(input->type, APPEND) == 0)
+		{
+			printf("%s is a %s\n"RESET, input->token, input->type);
+			printf("OUTFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
+
+			// change flags for append if needed
+			if(ft_strcmp(input->type, APPEND) == 0)
+				flags = (O_WRONLY | O_CREAT | O_APPEND);
+
+			// close previous file if it was opened
+			if (data->cmd_block[block]->out_fd >= 0)
+				close(data->cmd_block[block]->out_fd);
+			// else
+			// 	printf("not opened\n");
+
+			data->cmd_block[block]->out_fd = open(input->token, flags);
+			if (data->cmd_block[block]->out_fd == -1)
+			{
+				perror(BOLD RED "open" RESET);
+				return (-1);
+			}
+			else
+				printf(GREEN "OK: %s%s\n\n" RESET, BOLD, input->token);
+		}
+		input = input->next;
 	}
-	return (fd);
+	return (0);
 }
 
-int	check_append(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_WRONLY | O_CREAT | O_APPEND);
-	if (fd == -1)
-	{
-		perror("open");
-		return (FAILURE);
-	}
-	return (fd);
-}
-
-void	get_heredoc(char *separator)
+/* void	get_heredoc(char *separator)
 {
 	char	*line;
 	char	*document;
@@ -76,7 +73,7 @@ void	get_heredoc(char *separator)
 		document = ft_strjoin_heredoc(document, line);
 	}
 	printf("document=\n%s%s"RESET, RED, document);
-}
+} */
 
 void	test_files(t_data *data, t_token *input)
 {
