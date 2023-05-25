@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/25 13:54:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 14:07:23 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,119 +126,163 @@ struct s_token {
 	t_token	*next;
 };
 
-//UTILS
-char	**get_array_cmd(t_token *temp);
-
-//EXEC
+//	===== @functions =====
+/*
+** < cd.c > */
 
 void	ft_cd(t_data *data, t_token *input);
+/*
+** < echo.c > */
+
+int		need_newline(char *str);
+void	ft_echo(t_token *input);
+/*
+** < env.c > */
 
 void	ft_env(t_env *env);
+/*
+** < exit.c > */
 
+int		ft_exit(int code);;
+/*
+** < export.c > */
+
+void	swap_var(char **current, char **next);
+void	ft_sort_env(t_env *env);
+void	args_to_export(t_env *env, t_list *args);
 void	ft_export(t_env *env, t_list *args);
-// void	ft_export(t_env *env);
+/*
+** < main.c > */
 
-void	ft_echo(t_token *input);
+t_list	*ft_av_to_list(int ac, char **av);
+/*
+** < pwd.c > */
 
-
-// char	*ft_pwd(void);
 int		ft_pwd(void);
+/*
+** < unset.c > */
 
+void	free_env(t_env *node);
 void	ft_unset(t_env **env, t_token *args);
+/*
+** < utils.c > */
 
-// Utils for env
+t_env	*ft_env_new(char *var, char *value);
+void	ft_env_add_back(t_env **lst, t_env *new);
 t_env	*fill_env(char **envp);
 char	*ft_getenv(t_env *env, char *var);
 int		ft_addenv(t_env *env, char *var, char *value);
 int		ft_setenv(t_env *env, char *var, char *value);
-
-void	print_error(int error_type);
-
-void ft_fork();
-
+void	print_error(int code);
+/*
+** < execve.c > */
 
 void	ft_getpaths(t_data *data);
-char	**split_paths(char const *s, char c);
-// void	get_validpath(t_data *data);
-// exit_code	get_validpath(t_data *data);
-// char	*get_validpath(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
-
-
-// void	test_files(t_data *data, char *path);
-char	*ft_strjoin_heredoc(char *s1, char *s2);
+char	**get_cmd_args(t_token *input, char *command_path);
 void	exec_command(t_data *data, t_token *input);
+/*
+** < files.c > */
 
 void	check_heredoc(t_data *data, t_token *input, int block);
 int		check_infile(t_data *data, t_token *input, int block);
 int		check_outfile(t_data *data, t_token *input, int block);
+/*
+** < fork.c > */
 
+void	ft_fork();
+/*
+** < strjoin_heredoc.c > */
 
+char	*ft_strjoin_heredoc(char *s1, char *s2);
+/*
+** < dollar.c > */
 
+char	*get_var_name(char *str);
+char	*get_before_dollar(char *str, t_data *p);
+void	free_expand(t_parsing *p);
+void	replace_var(t_token *temp, t_data *p);
+void	expand_tokens(t_token **tokens, t_data *data);
+/*
+** < dollar2.c > */
 
+int		next_char(char c);
+int		processed_line(char *str, t_parsing *p);
+int		str_cpy_dollar(char *dst, char *src, int index);
+char	*ft_strjoin_dollar(char const *s1, char const *s2);
+/*
+** < envp.c > */
 
-// PARSING
-// prepare.c functions
-void	prepare_token(t_data *data);
-
-// t_env	*list_env(char **envp);
-char	*ft_getenv(t_env *envp, char *str);
-int		ft_setenv(t_env *list_envp, char *var, char *value);
 void	free_list(t_env *lst);
+/*
+** < envp_lst.c > */
 
-// envp_lst.c functions
 void	ft_envadd_back(t_env **env, t_env *new);
-t_env	*ft_envnew(char *name, char *value);
+t_env	*ft_envnew(char *var, char *value);
+/*
+** < identification.c > */
 
-// parsing.c functions
-t_token	*getting_line(t_data *data);
-int		right_symbols(t_parsing *p, char *str);
+int		is_first_cmd(t_token *head);
+void	choose_token_id(t_token *temp);
+void	id_tokens(t_token **tokens);
+/*
+** < identification2.c > */
+
+int		is_separator(t_token *temp);
+int		first_token(t_token *temp);
+/*
+** < parsing.c > */
+
 int		even_quote(t_parsing *p, char *str);
-void	cutting_line(t_token **temp, t_parsing *p, char *str);
+int		triple_symbol(char *str, int i);
+int		right_symbols(t_parsing *p, char *str);
+t_token	*getting_line(t_data *data);
+/*
+** < prepare.c > */
 
-// tokens_lst.c functions
+void	prepare_token(t_data *data);
+/*
+** < rm_quotes.c > */
+
+int		get_size(t_parsing *p, char *str);
+void	copy_without_quotes(char *dst, char *src, t_parsing *p);
+void	remove_quotes(t_token **tokens, t_data *data);
+/*
+** < tilde.c > */
+
+int		is_tilde(t_parsing *p, char *str);
+void	replace_tilde(t_token *temp, t_data *data);
+void	expand_tilde(t_token **tokens, t_data *data);
+/*
+** < tokens.c > */
+
+int		get_end_token(t_parsing *p, char *str);
+char	*copy_str_from_to(int from, int to, char *str);
+void	cutting_line(t_token **temp, t_parsing *p, char *str);
+/*
+** < tokens2.c > */
+
+int		is_symbol(int c);
+int		ft_char2(int c);
+void	p_quote(t_parsing *p, char c);
+/*
+** < tokens_lst.c > */
+
 void	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
 void	free_token(t_token *tokens);
+/*
+** < exec_char.c > */
 
-// tokens.c functions
-void	get_next_word(t_token **tokens, t_parsing *data, char *str, int i);
-void	get_symbols(t_token **tokens, t_parsing *p, char *str, int size);
-int		get_word_size(t_parsing *data, char *str, int begin);
-
-// tokens2.c functions
-int		ft_char(int c);
-int		ft_char2(int c);
-void	p_quote(t_parsing *p, char c);
-int		is_symbol(int c);
-
-// dollar.c functions
-void	expand_tokens(t_token **tokens, t_data *data);
-void	replace_var(t_token *temp, t_data *p);
-char	*get_before_dollar(char *str, t_data *p);
-char	*get_var_name(char *str);
-
-// dollar2.c functions
-char	*ft_strjoin_dollar(char const *s1, char const *s2);
-int		str_cpy_dollar(char *dst, char *src, int index);
-int		processed_line(char *str, t_parsing *p);
-int		next_char(char c);
-
-// identification.c functions
-void	id_tokens(t_token **tokens);
-void	command_arg_file(t_token *temp);
-int		first_token(t_token *temp);
-
-// identification2.c functions
-int		is_separator(t_token *temp);
-int		first_token(t_token *temp);
-
-// tilde.c functions
-void	expand_tilde(t_token **tokens, t_data *data);
-
-// rm_quotes.c functions
-void	remove_quotes(t_token **tokens, t_data *data);
+char	**get_array_cmd(t_token *temp);
+/*
+** < minishell.c > */
 
 void	print_tokens_linked_list(t_token *head);
+void	exec_dispatch(t_data *data, t_token *input);
+int		init_data(t_data *data);
+/*
+** < split_paths.c > */
 
+char	**split_paths(char const *s, char c);
 #endif
