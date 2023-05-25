@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/25 12:26:15 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 12:51:39 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,72 +50,48 @@ int	check_last_input(t_token *input, int block)
 	return (is_last);
 }
 
-int	check_heredoc(t_data *data, t_token *input, int block)
+void	open_heredoc(t_data *data, t_token *input, int block)
 {
+	char	*line;
 	int		is_last;
-	char	*line;
-	char	*document;
 
-	is_last = 0;
-	document = NULL;
-	while (input && input->pipe_block == block)
-	{
-		if (ft_strcmp(input->type, LIMITER) == 0)
-		{
-			is_last = check_last_input(input, block);
-			while (1)
-			{
-				line = readline("> ");
-				if (!line)
-				{
-					printf("lillaskallet: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
-					break;
-				}
-				if (ft_strcmp(line, input->token) == 0)
-				{
-					printf("found the EOF\n"); // DELETE
-					// free(line); // ?? is it needed?
-					break;
-				}
-				if (is_last)
-					data->cmd_block[block]->heredoc = ft_strjoin_heredoc(data->cmd_block[block]->heredoc, line);
-			}
-			if (!data->cmd_block[block]->heredoc) // DELETE
-				printf(RED"this is not saved\n"RESET); // DELETE
-			else // DELETE
-				printf("document=\n%s`%s`\n"RESET, GREEN, data->cmd_block[block]->heredoc); // DELETE
-		}
-		// else // DELETE
-		// 	printf(RED"%s is a %s\n"RESET, input->token, input->type); // DELETE
-		input = input->next;
-	}
-	return (0);
-}
-
-void	get_heredoc(char *separator)
-{
-	char	*line;
-	char	*document;
-
-	document = NULL;
-	printf("in the `%s` heredoc\n", separator);
+	is_last = check_last_input(input, block);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
 		{
-			printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", separator);
+			printf("lillaskallet: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
 			break;
 		}
-		if (ft_strcmp(line, separator) == 0)
+		if (ft_strcmp(line, input->token) == 0)
 		{
-			printf("found the EOF\n");
-			// free(line); // ?? is it needed?
+			printf("found the EOF\n"); // DELETE
 			break;
 		}
-		document = ft_strjoin_heredoc(document, line);
+		if (is_last)
+			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(data->cmd_block[block]->heredoc, line);
 	}
-	printf("document=\n%s%s"RESET, RED, document);
+
+	// DEBUG MSG
+	if (!data->cmd_block[block]->heredoc) // DELETE
+		printf(RED"this was not saved\n"RESET); // DELETE
+	else // DELETE
+		printf("document=\n%s`%s`\n"RESET, GREEN, data->cmd_block[block]->heredoc); // DELETE
+	// DEBUG END
+}
+
+int	check_heredoc(t_data *data, t_token *input, int block)
+{
+	while (input && input->pipe_block == block)
+	{
+		if (ft_strcmp(input->type, LIMITER) == 0)
+			open_heredoc(data, input, block);
+		// else // DELETE
+		// 	printf(RED"%s is a %s\n"RESET, input->token, input->type); // DELETE
+		input = input->next;
+	}
+	return (0);
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
