@@ -6,12 +6,19 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/25 13:05:15 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 13:30:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief checks if the infile/heredoc is the last of the command block
+ *
+ * @param input token starting where infile/heredoc is
+ * @param block which command block to check
+ * @return int 1 if it is the last input, 0 if not
+ */
 int	is_last_input(t_token *input, int block)
 {
 	int	is_last;
@@ -27,6 +34,13 @@ int	is_last_input(t_token *input, int block)
 	return (is_last);
 }
 
+/**
+ * @brief opens the heredoc and records the output if needed or dry run it
+ *
+ * @param data struct with every other struct in it
+ * @param input token starting where heredoc is
+ * @param block which command block to check
+ */
 void	open_heredoc(t_data *data, t_token *input, int block)
 {
 	char	*line;
@@ -41,12 +55,12 @@ void	open_heredoc(t_data *data, t_token *input, int block)
 			printf("lillaskallet: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
 			break;
 		}
-		if (ft_strcmp(line, input->token) == 0)
+		else if (ft_strcmp(line, input->token) == 0)
 		{
 			printf("found the EOF\n"); // DELETE
 			break;
 		}
-		if (is_last)
+		else if (is_last)
 			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(data->cmd_block[block]->heredoc, line);
 	}
 
@@ -58,7 +72,14 @@ void	open_heredoc(t_data *data, t_token *input, int block)
 	// DEBUG END
 }
 
-int	check_heredoc(t_data *data, t_token *input, int block)
+/**
+ * @brief checks and open the heredoc if one is detected
+ *
+ * @param data struct with every other struct in it
+ * @param input token from the very start
+ * @param block which command block to check
+ */
+void	check_heredoc(t_data *data, t_token *input, int block)
 {
 	while (input && input->pipe_block == block)
 	{
@@ -68,7 +89,7 @@ int	check_heredoc(t_data *data, t_token *input, int block)
 		// 	printf(RED"%s is a %s\n"RESET, input->token, input->type); // DELETE
 		input = input->next;
 	}
-	return (0);
+	return;
 }
 
 int	check_infile(t_data *data, t_token *input, int block)
