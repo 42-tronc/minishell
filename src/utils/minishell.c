@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/25 09:30:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 12:10:21 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,42 +35,75 @@ void	print_tokens_linked_list(t_token *head)
 	// }
 }
 
+// need to check if the last is input or heredoc and only get one
+
+// start from the token and go til the pipe
+int	check_last_input(t_token *input, int block)
+{
+	int	is_last;
+
+	is_last = 1;
+	printf("starting with %s\n", input->token);
+	while (input && input->pipe_block == block)
+	{
+		if (ft_strcmp(input->type, INFILE) == 0 || ft_strcmp(input->type, HERE_DOC) == 0)
+			return (0);
+		input = input->next;
+	}
+	return (is_last);
+}
+
+
+
 int	check_heredoc(t_data *data, t_token *input, int block)
 {
+	int		is_last;
 	char	*line;
 	char	*document;
 
-	(void) data;
-	(void) line;
-	(void) document;
+	(void) data; // DELETE
+	(void) line; // DELETE
+	(void) document; // DELETE
+	is_last = 0;
 	document = NULL;
 	while (input && input->pipe_block == block)
 	{
 		// printf("Checking block %s%d\n"RESET, BOLD, block);
 		if (ft_strcmp(input->type, LIMITER) == 0)
 		{
+			// if (document)
+			// 	free(document); // c broken
+
+			is_last = check_last_input(input, block);
 			while (1)
 			{
 				line = readline("> ");
 				if (!line)
 				{
-					printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
+					printf("lillaskallet: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
 					break;
 				}
 				if (ft_strcmp(line, input->token) == 0)
 				{
-					printf("found the EOF\n");
+					printf("found the EOF\n"); // DELETE
 					// free(line); // ?? is it needed?
 					break;
 				}
-				document = ft_strjoin_heredoc(document, line);
+				if (is_last)
+					data->cmd_block[block]->heredoc = ft_strjoin_heredoc(data->cmd_block[block]->heredoc, line);
+					// document = ft_strjoin_heredoc(document, line);
+				// printf("%s is the last in\n", input->token);
+
 				// data->cmd_block[block]->heredoc = ft_strjoin_heredoc(document, line);
 			}
-			printf("document=\n%s%s"RESET, RED, document);
-			// printf("data.heredoc=\n%s%s"RESET, RED, data->cmd_block[block]->heredoc);
+			if (!data->cmd_block[block]->heredoc) // DELETE
+				printf(RED"this is not saved\n"RESET); // DELETE
+			else // DELETE
+				printf("document=\n%s`%s`\n"RESET, GREEN, data->cmd_block[block]->heredoc); // DELETE
+			// printf("data.heredoc=\n%s%s"RESET, RED, data->cmd_block[block]->heredoc); // DELETE
 		}
-		else
-			printf(RED"%s is a %s\n"RESET, input->token, input->type);
+		// else // DELETE
+		// 	printf(RED"%s is a %s\n"RESET, input->token, input->type); // DELETE
 		input = input->next;
 	}
 	return (0);
