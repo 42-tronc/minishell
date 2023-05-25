@@ -80,6 +80,7 @@ typedef struct s_token		t_token;
 # define CHEVRON_R ">"
 # define INFILE "infile"
 # define OUTFILE "outfile"
+# define ADD "out_add"
 # define CMD "command"
 # define ARG "argument"
 # define PIPE "|"

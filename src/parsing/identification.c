@@ -42,7 +42,7 @@ void	choose_token_id(t_token *temp)
 	else if (!ft_strcmp(temp->prev->type, HERE_DOC))
 		temp->type = LIMITER;
 	else if (!ft_strcmp(temp->prev->type, APPEND))
-		temp->type = OUTFILE;
+		temp->type = ADD;
 	else if (is_first_cmd(temp))
 		temp->type = CMD;
 	else
