@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/25 08:38:10 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 09:21:47 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,6 @@ int	check_outfile(t_data *data, t_token *input, int block)
 		input = input->next;
 	}
 	return (0);
-}
-
-void	get_heredoc(char *separator)
-{
-	char	*line;
-	char	*document;
-
-	document = NULL;
-	printf("in the `%s` heredoc\n", separator);
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", separator);
-			break;
-		}
-		if (ft_strcmp(line, separator) == 0)
-		{
-			printf("found the EOF\n");
-			// free(line); // ?? is it needed?
-			break;
-		}
-		document = ft_strjoin_heredoc(document, line);
-	}
-	printf("document=\n%s%s"RESET, RED, document);
 }
 
 void	test_files(t_data *data, t_token *input)
