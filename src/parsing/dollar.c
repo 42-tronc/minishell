@@ -69,6 +69,14 @@ char	*get_before_dollar(char *str, t_data *p)
 	return (res);
 }
 
+void	free_expand(t_parsing *p)
+{
+	free(p->var_name);
+	free(p->before);
+	free(p->before_and_value);
+	free(p->new_token);
+}
+
 void	replace_var(t_token *temp, t_data *p)
 {
 	p->p->before = get_before_dollar(temp->token, p);
@@ -93,10 +101,7 @@ void	replace_var(t_token *temp, t_data *p)
 	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
-	free(p->p->var_name);
-	free(p->p->before);
-	free(p->p->before_and_value);
-	free(p->p->new_token);
+	free_expand(p->p);
 }
 
 void	expand_tokens(t_token **tokens, t_data *data)

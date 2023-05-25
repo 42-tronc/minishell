@@ -31,22 +31,12 @@ void	copy_without_quotes(char *dst, char *src, t_parsing *p)
 	while (src && src[i_src])
 	{
 		p_quote(p, src[i_src]);
-		printf("\':%d, \":%d et ", p->quote, p->dquote);
 		if (src[i_src] != '\'' && src[i_src] != '\"')
-		{
 			dst[++i_dst] = src[i_src];
-		}
 		else if (src[i_src] == '\'' && p->dquote)
-		{
-			printf("duvweioubv\n");
 			dst[++i_dst] = src[i_src];
-		}
 		else if (src[i_src] == '\"' && p->quote)
-		{
-			printf("HJERE\n");
 			dst[++i_dst] = src[i_src];
-		}
-		printf("%c   %c\n", src[i_src], dst[i_dst]);
 		i_src++;
 	}
 	dst[++i_dst] = '\0';
