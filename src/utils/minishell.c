@@ -157,10 +157,7 @@ int	main(int argc, char **argv, char **envp)
 		data->tokens = getting_line(data);
 		if (data->tokens)
 		{
-			expand_tokens(&data->tokens, data);
-			expand_tilde(&data->tokens, data);
-			id_tokens(&data->tokens);
-			// print_tokens_linked_list(data->tokens);
+			prepare_token(data);
 
 			if (init_data(data))
 				exit(FAILURE);

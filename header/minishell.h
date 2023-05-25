@@ -230,6 +230,9 @@ int		first_token(t_token *temp);
 // tilde.c functions
 void	expand_tilde(t_token **tokens, t_data *data);
 
+// rm_quotes.c functions
+void	remove_quotes(t_token **tokens, t_data *data);
+
 void	print_tokens_linked_list(t_token *head);
 
 #endif
