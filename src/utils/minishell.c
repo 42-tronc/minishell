@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/25 12:51:39 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 13:04:12 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,75 +35,13 @@ void	print_tokens_linked_list(t_token *head)
 	// }
 }
 
-int	check_last_input(t_token *input, int block)
-{
-	int	is_last;
-
-	is_last = 1;
-	printf("starting with %s\n", input->token);
-	while (input && input->pipe_block == block)
-	{
-		if (ft_strcmp(input->type, INFILE) == 0 || ft_strcmp(input->type, HERE_DOC) == 0)
-			return (0);
-		input = input->next;
-	}
-	return (is_last);
-}
-
-void	open_heredoc(t_data *data, t_token *input, int block)
-{
-	char	*line;
-	int		is_last;
-
-	is_last = check_last_input(input, block);
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			printf("lillaskallet: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
-			break;
-		}
-		if (ft_strcmp(line, input->token) == 0)
-		{
-			printf("found the EOF\n"); // DELETE
-			break;
-		}
-		if (is_last)
-			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(data->cmd_block[block]->heredoc, line);
-	}
-
-	// DEBUG MSG
-	if (!data->cmd_block[block]->heredoc) // DELETE
-		printf(RED"this was not saved\n"RESET); // DELETE
-	else // DELETE
-		printf("document=\n%s`%s`\n"RESET, GREEN, data->cmd_block[block]->heredoc); // DELETE
-	// DEBUG END
-}
-
-int	check_heredoc(t_data *data, t_token *input, int block)
-{
-	while (input && input->pipe_block == block)
-	{
-		if (ft_strcmp(input->type, LIMITER) == 0)
-			open_heredoc(data, input, block);
-		// else // DELETE
-		// 	printf(RED"%s is a %s\n"RESET, input->token, input->type); // DELETE
-		input = input->next;
-	}
-	return (0);
-}
-
 void	exec_dispatch(t_data *data, t_token *input)
 {
-	// check_heredoc
-	// check_infile(data, input, 0);
-	// check_outfiles
-	// check_command
 	check_heredoc(data, input, 0);
-
-	// if (ft_strcmp(input->type, HERE_DOC) == 0)
-	// 	get_heredoc(input->next->token);
+	check_infile(data, input, 0);
+	// check_outfiles
+// need to block the command if any of these fail
+	// check_command
 
 	while (input)
 	{
