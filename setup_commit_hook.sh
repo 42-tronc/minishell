@@ -35,6 +35,9 @@ add_prefix() {
   # Remove the prefix from the commit message
   updated_commit_msg+=\${commit_msg#\${prefix} }
 
+  # Remove double spaces and add a space after the colon
+  updated_commit_msg=\$(echo \"\$updated_commit_msg\" | sed -E 's/  +/ /g' | sed 's/:/: /')
+
   if [[ \$commit_msg != \"\$updated_commit_msg\"* ]]; then
     echo \"\$updated_commit_msg\" > \"\$commit_msg_file\"
   fi
