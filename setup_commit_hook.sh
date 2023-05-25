@@ -20,7 +20,7 @@ commit_msg=\$(cat \"\$commit_msg_file\")
 prefix_index=-1
 for i in \${!prefixes[@]}; do
   prefix=\"\${prefixes[\$i]}\"
-  if [[ \$commit_msg == \"\$prefix\"* ]]; then
+  if [[ \$commit_msg == \"\$prefix \"* ]]; then
     prefix_index=\"\$i\"
     break
   fi
@@ -30,8 +30,13 @@ done
 add_prefix() {
   local prefix=\"\$1\"
   local emoji=\"\$2\"
-  if [[ ! \$commit_msg =~ ^\"\$emoji \$prefix\" ]]; then
-    echo \"\$emoji \$prefix: \$commit_msg\" > \"\$commit_msg_file\"
+  local updated_commit_msg=\"\$emoji \$prefix:\"
+
+  # Remove the prefix from the commit message
+  updated_commit_msg+=\${commit_msg#\${prefix} }
+
+  if [[ \$commit_msg != \"\$updated_commit_msg\"* ]]; then
+    echo \"\$updated_commit_msg\" > \"\$commit_msg_file\"
   fi
 }
 
