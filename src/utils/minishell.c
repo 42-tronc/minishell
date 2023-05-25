@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 19:38:09 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 09:30:14 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,83 @@ void	print_tokens_linked_list(t_token *head)
 	// }
 }
 
+int	check_heredoc(t_data *data, t_token *input, int block)
+{
+	char	*line;
+	char	*document;
+
+	(void) data;
+	(void) line;
+	(void) document;
+	document = NULL;
+	while (input && input->pipe_block == block)
+	{
+		// printf("Checking block %s%d\n"RESET, BOLD, block);
+		if (ft_strcmp(input->type, LIMITER) == 0)
+		{
+			while (1)
+			{
+				line = readline("> ");
+				if (!line)
+				{
+					printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
+					break;
+				}
+				if (ft_strcmp(line, input->token) == 0)
+				{
+					printf("found the EOF\n");
+					// free(line); // ?? is it needed?
+					break;
+				}
+				document = ft_strjoin_heredoc(document, line);
+				// data->cmd_block[block]->heredoc = ft_strjoin_heredoc(document, line);
+			}
+			printf("document=\n%s%s"RESET, RED, document);
+			// printf("data.heredoc=\n%s%s"RESET, RED, data->cmd_block[block]->heredoc);
+		}
+		else
+			printf(RED"%s is a %s\n"RESET, input->token, input->type);
+		input = input->next;
+	}
+	return (0);
+}
+
+void	get_heredoc(char *separator)
+{
+	char	*line;
+	char	*document;
+
+	document = NULL;
+	printf("in the `%s` heredoc\n", separator);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+		{
+			printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", separator);
+			break;
+		}
+		if (ft_strcmp(line, separator) == 0)
+		{
+			printf("found the EOF\n");
+			// free(line); // ?? is it needed?
+			break;
+		}
+		document = ft_strjoin_heredoc(document, line);
+	}
+	printf("document=\n%s%s"RESET, RED, document);
+}
+
 void	exec_dispatch(t_data *data, t_token *input)
 {
 	// check_heredoc
 	// check_infile(data, input, 0);
 	// check_outfiles
 	// check_command
+	check_heredoc(data, input, 0);
+
+	// if (ft_strcmp(input->type, HERE_DOC) == 0)
+	// 	get_heredoc(input->next->token);
 
 	while (input)
 	{

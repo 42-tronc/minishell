@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 19:38:30 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 08:38:10 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	check_outfile(t_data *data, t_token *input, int block)
 	return (0);
 }
 
-/* void	get_heredoc(char *separator)
+void	get_heredoc(char *separator)
 {
 	char	*line;
 	char	*document;
@@ -97,7 +97,7 @@ int	check_outfile(t_data *data, t_token *input, int block)
 		document = ft_strjoin_heredoc(document, line);
 	}
 	printf("document=\n%s%s"RESET, RED, document);
-} */
+}
 
 void	test_files(t_data *data, t_token *input)
 {
