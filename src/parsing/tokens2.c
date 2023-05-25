@@ -31,6 +31,8 @@ int	ft_char2(int c)
 /// @param c Char to check.
 void	p_quote(t_parsing *p, char c)
 {
-	p->quote = (p->quote + (!p->dquote && c == '\'')) % 2;
-	p->dquote = (p->dquote + (!p->quote && c == '\"')) % 2;
+	if (!p->dquote)
+		p->quote = (p->quote + (!p->dquote && c == '\'')) % 2;
+	if (!p->quote)
+		p->dquote = (p->dquote + (!p->quote && c == '\"')) % 2;
 }
