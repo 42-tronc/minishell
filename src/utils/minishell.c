@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 11:09:03 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 12:21:34 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	check_command(t_data *data, t_token *input, int block)
 	}
 }
 
+
 // need to stop if one check fails
 // need to check if there is a pipe block after
-
 void	exec_dispatch(t_data *data, t_token *input)
 {
 	int	block;
@@ -100,6 +100,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 		check_infile(data, input, block);
 		check_outfile(data, input, block);
 		check_command(data, input, block); // will be changed
+		// check if pipe after or not
+		// if ()
 		block++;
 		while (block > input->pipe_block && input->next)
 			input = input->next;
