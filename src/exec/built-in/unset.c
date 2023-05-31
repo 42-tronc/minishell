@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/05/03 14:53:55 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 08:19:12 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ NEED TO
 
 */
 
-void	free_env(t_env *node)
+static void	free_env(t_env *node)
 {
 	free(node->var);
 	free(node->value);

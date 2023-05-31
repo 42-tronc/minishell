@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/25 14:07:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 10:48:39 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ struct s_data {
 	t_env		*export; // to remove at one point
 	t_cmd_block	**cmd_block;
 	char		**paths;
-	int			pipe_count;
+	int			cmd_block_count;
 	int			i;
 	t_parsing	*p;
 	t_token		*tokens;
@@ -134,7 +134,6 @@ void	ft_cd(t_data *data, t_token *input);
 /*
 ** < echo.c > */
 
-int		need_newline(char *str);
 void	ft_echo(t_token *input);
 /*
 ** < env.c > */
@@ -147,14 +146,7 @@ int		ft_exit(int code);;
 /*
 ** < export.c > */
 
-void	swap_var(char **current, char **next);
-void	ft_sort_env(t_env *env);
-void	args_to_export(t_env *env, t_list *args);
 void	ft_export(t_env *env, t_list *args);
-/*
-** < main.c > */
-
-t_list	*ft_av_to_list(int ac, char **av);
 /*
 ** < pwd.c > */
 
@@ -162,7 +154,6 @@ int		ft_pwd(void);
 /*
 ** < unset.c > */
 
-void	free_env(t_env *node);
 void	ft_unset(t_env **env, t_token *args);
 /*
 ** < utils.c > */
@@ -171,7 +162,6 @@ t_env	*ft_env_new(char *var, char *value);
 void	ft_env_add_back(t_env **lst, t_env *new);
 t_env	*fill_env(char **envp);
 char	*ft_getenv(t_env *env, char *var);
-int		ft_addenv(t_env *env, char *var, char *value);
 int		ft_setenv(t_env *env, char *var, char *value);
 void	print_error(int code);
 /*
