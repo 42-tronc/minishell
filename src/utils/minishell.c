@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 12:21:34 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 13:03:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int	main(int argc, char **argv, char **envp)
 				exit(FAILURE);
 
 			exec_dispatch(data, data->tokens);
+			// print_tokens_linked_list(data->tokens);
 
 			// for (int i = 0; data->cmd_block[i]; i++)
 			// 	printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
