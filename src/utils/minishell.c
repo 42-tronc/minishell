@@ -6,13 +6,12 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 12:21:34 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 12:25:25 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// debug functions
 void	print_tokens_linked_list(t_token *head)
 {
 	t_token	*temp;
@@ -36,13 +35,16 @@ void	print_tokens_linked_list(t_token *head)
 	// }
 }
 
-// might need to change the export and set to only print if there is a value, if not it is a export
-void	check_command(t_data *data, t_token *input, int block)
+void	exec_dispatch(t_data *data, t_token *input)
 {
-	// printf("checking command in block %d\n", block);
-	while (input && input->pipe_block == block)
+	check_heredoc(data, input, 0);
+	check_infile(data, input, 0);
+	check_outfile(data, input, 0);
+// need to block the command if any of these fail
+	// check_command
+
+	while (input)
 	{
-		// printf("checking %s being a %s\n", input->token, input->type);
 		if (input->type && ft_strcmp(input->type, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
@@ -53,18 +55,30 @@ void	check_command(t_data *data, t_token *input, int block)
 				ft_echo(input->next);
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data->env);
-			else if (ft_strcmp(input->token, "exit") == 0)
-				printf("ft_exit not done yet\n");
-				// ft_exit;
-			else if (ft_strcmp(input->token, "export") == 0)
-				printf("this needs a quick fix\n");
-				// ft_export(data->env, input);
+			// else if (ft_strcmp(input->token, "exit") == 0)
+			// 	ft_exit;
+			// else if (ft_strcmp(input->token, "export") == 0)
+			// 	ft_export(data->env, input);
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				ft_pwd();
 			else if (ft_strcmp(input->token, "unset") == 0)
 				ft_unset(&data->env, input);
 
 			// TESTS
+			else if (ft_strcmp(input->token, "xc") == 0)
+			{
+				// ft_getpaths(data);
+				// printf("Path: `%s`\n", get_validpath(data, input->next));
+				exec_command(data, input->next);
+
+
+				// int i = 0;
+				// while (data->paths[i])
+				// {
+				// 	printf("path[%d]=`%s`\n", i, data->paths[i]);
+				// 	i++;
+				// }
+			}
 			else if (ft_strcmp(input->token, "test") == 0)
 			{
 				// ft_setenv(data->env, "SUDO_EDITOR", "not vim");
@@ -128,19 +142,19 @@ int	init_data(t_data *data)
 	t_token	*temp;
 
 	temp = data->tokens;
-	data->cmd_block_count = 1;
+	data->pipe_count = 1;
 	while (temp)
 	{
 		if (!ft_strcmp(temp->type, PIPE))
-			data->cmd_block_count++;
+			data->pipe_count++;
 		temp = temp->next;
 	}
 	// data->cmd_block = NULL;
-	data->cmd_block = ft_calloc(data->cmd_block_count + 1, sizeof(t_cmd_block*));
+	data->cmd_block = ft_calloc(data->pipe_count + 1, sizeof(t_cmd_block*));
 	if (!data->cmd_block)
 		return (MALLOC_ERROR);
 	i = 0;
-	while (i < data->cmd_block_count)
+	while (i < data->pipe_count)
 	{
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
 		data->cmd_block[i]->in_fd = -2;

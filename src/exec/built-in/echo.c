@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 08:15:04 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/24 12:08:10 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ TODO
  * @param str string to check
  * @return int 1 if needed so no `-n` found, else 0
  */
-static int	need_newline(char *str)
+int	need_newline(char *str)
 {
 	int	i;
 

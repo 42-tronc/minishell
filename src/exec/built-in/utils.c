@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 08:17:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/03 16:36:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*ft_getenv(t_env *env, char *var)
 	return (NULL);
 }
 
-static int	ft_addenv(t_env *env, char *var, char *value)
+int	ft_addenv(t_env *env, char *var, char *value)
 {
 	if (!var)
 		return (1);

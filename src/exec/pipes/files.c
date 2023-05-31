@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 08:08:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 13:30:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param block which command block to check
  * @return int 1 if it is the last input, 0 if not
  */
-static int	is_last_input(t_token *input, int block)
+int	is_last_input(t_token *input, int block)
 {
 	int	is_last;
 
@@ -41,7 +41,7 @@ static int	is_last_input(t_token *input, int block)
  * @param input token starting where heredoc is
  * @param block which command block to check
  */
-static void	open_heredoc(t_data *data, t_token *input, int block)
+void	open_heredoc(t_data *data, t_token *input, int block)
 {
 	char	*line;
 	int		is_last;

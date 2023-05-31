@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 08:16:06 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/04/27 10:49:44 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ export LOL==poopi
 	LOL="=poopi"
 */
 
-static void	swap_var(char **current, char **next)
+void	swap_var(char **current, char **next)
 {
 	char	*tmp;
 
@@ -37,13 +37,13 @@ static void	swap_var(char **current, char **next)
 	*next = tmp;
 }
 
-static void	ft_sort_env(t_env *env)
+void ft_sort_env(t_env *env)
 {
 	t_env	*current;
 	t_env	*next;
 
 	if (!env)
-		return ;
+		return;
 	current = env;
 	while (current->next)
 	{
@@ -67,12 +67,12 @@ static void	ft_sort_env(t_env *env)
  * @param env t_env of export
  * @param args t_list of the args with args.content being each token
  */
-static void	args_to_export(t_env *env, t_list *args)
+void args_to_export(t_env *env, t_list *args)
 {
-	char	*var;
-	char	*value;
-	char	*content;
-	char	*equal_sign;
+	char *var;
+	char *value;
+	char *content;
+	char *equal_sign;
 
 	while (args)
 	{

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static t_list	*ft_av_to_list(int ac, char **av)
+t_list	*ft_av_to_list(int ac, char **av)
 {
 	int		i;
 	t_list	*arg_list;
