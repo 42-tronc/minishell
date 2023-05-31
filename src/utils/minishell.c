@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 10:43:59 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 11:09:03 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void	print_tokens_linked_list(t_token *head)
 // might need to change the export and set to only print if there is a value, if not it is a export
 void	check_command(t_data *data, t_token *input, int block)
 {
+	// printf("checking command in block %d\n", block);
 	while (input && input->pipe_block == block)
 	{
+		// printf("checking %s being a %s\n", input->token, input->type);
 		if (input->type && ft_strcmp(input->type, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
@@ -87,10 +89,21 @@ void	check_command(t_data *data, t_token *input, int block)
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
-	check_heredoc(data, input, 0);
-	check_infile(data, input, 0);
-	check_outfile(data, input, 0);
-	check_command(data, input, 0);
+	int	block;
+
+	block = 0;
+	// printf("cmd block count = %d\n", data->cmd_block_count);
+	while (input && block < data->cmd_block_count)
+	{
+		// printf(RED "block=%d\ncurrent block %d\n" RESET, block, input->pipe_block);
+		check_heredoc(data, input, block);
+		check_infile(data, input, block);
+		check_outfile(data, input, block);
+		check_command(data, input, block); // will be changed
+		block++;
+		while (block > input->pipe_block && input->next)
+			input = input->next;
+	}
 }
 
 // void	free_array(char **array)
@@ -113,19 +126,19 @@ int	init_data(t_data *data)
 	t_token	*temp;
 
 	temp = data->tokens;
-	data->pipe_count = 1;
+	data->cmd_block_count = 1;
 	while (temp)
 	{
 		if (!ft_strcmp(temp->type, PIPE))
-			data->pipe_count++;
+			data->cmd_block_count++;
 		temp = temp->next;
 	}
 	// data->cmd_block = NULL;
-	data->cmd_block = ft_calloc(data->pipe_count + 1, sizeof(t_cmd_block*));
+	data->cmd_block = ft_calloc(data->cmd_block_count + 1, sizeof(t_cmd_block*));
 	if (!data->cmd_block)
 		return (MALLOC_ERROR);
 	i = 0;
-	while (i < data->pipe_count)
+	while (i < data->cmd_block_count)
 	{
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
 		data->cmd_block[i]->in_fd = -2;
