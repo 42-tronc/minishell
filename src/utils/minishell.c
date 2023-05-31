@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 19:38:09 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/25 13:54:25 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	print_tokens_linked_list(t_token *head)
 
 void	exec_dispatch(t_data *data, t_token *input)
 {
-	// check_heredoc
-	// check_infile(data, input, 0);
-	// check_outfiles
+	check_heredoc(data, input, 0);
+	check_infile(data, input, 0);
+	check_outfile(data, input, 0);
+// need to block the command if any of these fail
 	// check_command
 
 	while (input)
@@ -77,10 +78,6 @@ void	exec_dispatch(t_data *data, t_token *input)
 				// 	printf("path[%d]=`%s`\n", i, data->paths[i]);
 				// 	i++;
 				// }
-			}
-			else if (ft_strcmp(input->token, "tf") == 0)
-			{
-				test_files(data, input->next);
 			}
 			else if (ft_strcmp(input->token, "test") == 0)
 			{
@@ -157,10 +154,7 @@ int	main(int argc, char **argv, char **envp)
 		data->tokens = getting_line(data);
 		if (data->tokens)
 		{
-			expand_tokens(&data->tokens, data);
-			expand_tilde(&data->tokens, data);
-			id_tokens(&data->tokens);
-			// print_tokens_linked_list(data->tokens);
+			prepare_token(data);
 
 			if (init_data(data))
 				exit(FAILURE);

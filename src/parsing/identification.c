@@ -12,6 +12,31 @@
 
 #include "minishell.h"
 
+int	is_separator(t_token *temp)
+{
+	if (temp->token[0] == '|' || temp->token[0] == '<' \
+	|| temp->token[0] == '>')
+		return (1);
+	return (0);
+}
+
+int	first_token(t_token *temp)
+{
+	if (temp->token[0] == '<' && temp->token[1] == '\0')
+		temp->type = CHEVRON_L;
+	else if (temp->token[0] == '<' && temp->token[1] == '<')
+		temp->type = HERE_DOC;
+	else if (temp->token[0] == '>' && temp->token[1] == '\0')
+		temp->type = MY_NULL;
+	else if (temp->token[0] == '>' && temp->token[1] == '>')
+		temp->type = MY_NULL;
+	else if (temp->token[0] == '|')
+		temp->type = MY_NULL;
+	else
+		temp->type = CMD;
+	return (1);
+}
+
 int	is_first_cmd(t_token *head)
 {
 	int		pipe_block;
