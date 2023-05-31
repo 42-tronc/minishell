@@ -55,10 +55,8 @@ void	free_token(t_token *tokens)
 	{
 		temp1 = current;
 		current = current->next;
-		// if (temp1->token)
-		// 	free(temp1->token);
-		// if (temp1->type)
-		// 	free(temp1->type);
+		if (temp1->token)
+			free(temp1->token);
 		free(temp1);
 	}
 }
