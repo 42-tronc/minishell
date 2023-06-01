@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 14:14:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 09:39:57 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_getpaths(t_data *data)
 {
-	char *paths;
+	char	*paths;
 
 	paths = ft_getenv(data->env, "PATH");
 	data->paths = split_paths(paths, ':');
@@ -39,7 +39,6 @@ char	*get_validpath(t_data *data, t_token *input)
 		return (NULL);
 	// Update paths in case it changed
 	ft_getpaths(data);
-
 	while (data->paths[i] && error_access)
 	{
 		// error_access = 0;
@@ -70,10 +69,12 @@ static size_t	_count_cmd_args(t_token *input)
 	while (input)
 	{
 		if (ft_strcmp(input->type, PIPE) == 0)
-			break;
+			break ;
 		else if (ft_strcmp(input->type, ARG) == 0)
 			size++;
-		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\tin block %s%d%s\n", input->token, NO_BOLD, BOLD, input->type, BOLD, input->pipe_block, NO_BOLD);
+		printf(BOLD YELLOW "`%s`\t%shas type: %s%s\tin block %s%d%s\n",
+			input->token, NO_BOLD, BOLD, input->type, BOLD, input->pipe_block,
+			NO_BOLD);
 		input = input->next;
 	}
 	// printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
@@ -82,22 +83,21 @@ static size_t	_count_cmd_args(t_token *input)
 
 char	**get_cmd_args(t_token *input, char *command_path)
 {
-	// printf(BOLD BLUE"\n get_cmd_args\n"RESET); // debug
 	size_t	i;
 	size_t	size;
 	char	**array;
 
+	// printf(BOLD BLUE"\n get_cmd_args\n"RESET); // debug
 	if (!input)
 	{
-		printf(BOLD RED"No arg\n"RESET);
+		printf(BOLD RED "No arg\n" RESET);
 		return (NULL);
 	}
 	size = _count_cmd_args(input);
-	array = ft_calloc(size + 1, sizeof(char*));
+	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
 	// printf(GREEN"\t󰍛 FT_CALLOC\n"RESET); // debug
-
 	i = 1;
 	input = input->next;
 	array[0] = command_path;
@@ -115,21 +115,19 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
-// void	exec_command(t_data *data, t_token *input)
-
-void exec_command(t_data *data, t_token *input)
+void	exec_command(t_data *data, t_token *input)
 {
 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
-	(void)data;
-	int fd[2];
-	int pid = 0;
-	char *command_path;
-	char **command_args;
+	(void) data;
+	int		fd[2];
+	int		pid = 0;
+	char	*command_path;
+	char	**command_args;
 
 	/* if (!input)
 	{
 		printf(BOLD RED"No input\n"RESET);
-		return;
+		return ;
 	} */
 	command_path = get_validpath(data, input);
 	printf(BOLD YELLOW"`%s`\n"RESET, command_path); // debug
@@ -145,8 +143,7 @@ void exec_command(t_data *data, t_token *input)
 
 	// exec part
 	// pas si c le dernier
-	int pipe_fd[2];
-	if (pipe(pipe_fd) == -1)
+	if (pipe(fd) == -1)
 	{
 		perror("pipe");
 		exit(EXIT_FAILURE);
@@ -164,22 +161,24 @@ void exec_command(t_data *data, t_token *input)
 	{
 		// child process
 		// printf(GREEN"\t FORK%s\n", MAGENTA);
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
+		// dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
 		// if (command_path)
-		execve(command_path, command_args, NULL);
+			execve(command_path, command_args, NULL);
 
 		// perror(BOLD RED" execve"RESET);
 		// printf("something's wrong i can feel it\n");
 		printf(BOLD RED"%s: %scommand not found\n", input->token, NO_BOLD);
+
 	}
 	else
 	{
-		close(pipe_fd[1]);
+		close(fd[0]);
+		close(fd[1]);
 
 		// this might be shit
-		int wstatus;
+		int	wstatus;
 		wait(&wstatus);
 		printf("wstatus %d\n", wstatus);
 		if (WIFEXITED(wstatus))
@@ -191,93 +190,7 @@ void exec_command(t_data *data, t_token *input)
 				printf("failure with %d\n", statuscode);
 		}
 		// probably is
-		// exec the second command
-		dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
-		execve(command_path, command_args, NULL);
 	}
 	// printf(BOLD GREEN" exec_command\n\n"RESET);
-	return;
+	return ;
 }
-
-
-// void	exec_command(t_data *data, t_token *input)
-// {
-// 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
-// 	(void) data;
-// 	int		fd[2];
-// 	int		pid = 0;
-// 	char	*command_path;
-// 	char	**command_args;
-
-// 	/* if (!input)
-// 	{
-// 		printf(BOLD RED"No input\n"RESET);
-// 		return;
-// 	} */
-// 	command_path = get_validpath(data, input);
-// 	printf(BOLD YELLOW"`%s`\n"RESET, command_path); // debug
-
-// 	command_args = get_cmd_args(input, command_path);
-// 	// printf(BOLD GREEN" get_cmd_args%s\n", RESET); // debug
-
-// 	// --- START DEBUG
-// 	// Print the array elements for verification
-// 	// for (int i = 0; command_args[i]; i++)
-// 	// 	printf("arg[%d]\t`%s`\n", i, command_args[i]);
-// 	// --- END DEBUG
-
-// 	// exec part
-// 	// pas si c le dernier
-// 	if (pipe(fd) == -1)
-// 	{
-// 		perror("pipe");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	// printf(GREEN"\t󰟥 PIPE\n"RESET);
-
-// 	pid = fork();
-// 	if (pid == -1)
-// 	{
-// 		perror("fork");
-// 		exit(EXIT_FAILURE);
-// 	}
-
-// 	if (pid == 0)
-// 	{
-// 		// child process
-// 		// printf(GREEN"\t FORK%s\n", MAGENTA);
-// 		// dup2(fd[1], STDOUT_FILENO);
-// 		close(fd[0]);
-// 		close(fd[1]);
-// 		// if (command_path)
-// 			execve(command_path, command_args, NULL);
-
-// 		// perror(BOLD RED" execve"RESET);
-// 		// printf("something's wrong i can feel it\n");
-// 		printf(BOLD RED"%s: %scommand not found\n", input->token, NO_BOLD);
-
-
-// 	}
-// 	else
-// 	{
-// 		close(fd[0]);
-// 		close(fd[1]);
-
-// 		// this might be shit
-// 		int	wstatus;
-// 		wait(&wstatus);
-// 		printf("wstatus %d\n", wstatus);
-// 		if (WIFEXITED(wstatus))
-// 		{
-// 			int statuscode = WEXITSTATUS(wstatus);
-// 			if (statuscode == 0)
-// 				printf(BOLD GREEN"Saul goodman\n"RESET);
-// 			else
-// 				printf("failure with %d\n", statuscode);
-// 		}
-// 		// probably is
-// 	}
-// 	// printf(BOLD GREEN" exec_command\n\n"RESET);
-// 	return;
-// }
