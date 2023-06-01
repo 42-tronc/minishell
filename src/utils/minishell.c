@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 13:03:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 09:53:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data->env);
 			else if (ft_strcmp(input->token, "exit") == 0)
-				printf("ft_exit not done yet\n");
-				// ft_exit;
+				// printf("ft_exit not done yet\n");
+				ft_exit(input->next);
 			else if (ft_strcmp(input->token, "export") == 0)
 				printf("this needs a quick fix\n");
 				// ft_export(data->env, input);
