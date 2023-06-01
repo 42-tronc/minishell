@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 10:48:39 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 13:36:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_cmd_block
 	int		in_fd;
 	int		out_fd;
 	char	*heredoc;
+	int		*pipin;
+	int		*pipout;
 }			t_cmd_block;
 
 typedef struct s_token		t_token;
