@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/01 11:44:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 12:43:03 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,59 +19,89 @@ need to divide something by something to get real exit code
  */
 #include "minishell.h"
 
-static int	is_int(long long number)
+// static free_everything()
+// will need a function to free any var before exiting
+
+static int	is_overflow(long long result, int digit)
 {
-	return (number >= LONG_MIN && number <= 9223372036854775807);
+	if (result > LLONG_MAX / 10 || (result == LLONG_MAX / 10
+			&& digit > LLONG_MAX % 10))
+		return (1);
+	else if (result < LLONG_MIN / 10 || (result == LLONG_MIN / 10
+			&& digit < LLONG_MIN % 10))
+		return (1);
+	return (0);
 }
 
-static int	is_valid_number(char *str)
+long long	ft_atoll(const char *str)
 {
-	int	i;
+	int			i;
+	int			sign;
+	int			digit;
+	long long	result;
 
 	i = 0;
-	// skip leading whitespace
+	sign = 1;
+	result = 0;
+	// Skip leading whitespace and check for sign
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
-	// check for sign
 	if (str[i] == '+' || str[i] == '-')
-		i++;
-	// check for digits
-	while (str[i] >= '0' && str[i] <= '9')
 	{
+		if (str[i] == '-')
+			sign = -1;
 		i++;
 	}
-	// skip trailing whitespace
+	// Convert digits
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		digit = str[i] - '0';
+		if (is_overflow(result, digit * sign))
+		{
+			printf("Overflow occurred during conversion.\n");
+			exit(2);
+		}
+		result = result * 10 + digit * sign;
+		// printf("result = %lld\n", result);
+		i++;
+	}
+	// Skip trailing whitespace (like `exit 5  `)
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
-	// check if the string is terminated
-	printf("is valid number %d\n", !str[i]);
-	return (str[i] == '\0');
+	// Check if the string is done (if not that's a pb)
+	if (str[i] != '\0')
+	{
+		printf("Invalid number format.\n");
+		exit(2);
+	}
+	return (result);
 }
 
 void	ft_exit(t_token *input)
 {
-	long long	exit_code;
+	int		i;
+	char	*token;
+	int		exit_code;
 
 	if (!input)
 		exit(0);
-	// checkString(input->token, 0, 0, 1);
-	if (is_valid_number(input->token))
+	// Check if the input string is a valid number
+	i = 0;
+	token = input->token;
+	while (token[i])
 	{
-		exit_code = atoll(input->token);
-		printf("error code %lld\n", exit_code);
-		if (!is_int(exit_code))
+		if ((token[i] < '0' || token[i] > '9') && !(i == 0 && (token[i] == '+'
+					|| token[i] == '-')))
 		{
 			printf("exit: numeric argument required\n");
 			exit(2);
 		}
-		while (exit_code < 0)
-			exit_code = exit_code + 256;
-		exit_code = exit_code % 256;
-		exit(exit_code);
+		i++;
 	}
-	else
-	{
-		printf("exit: numeric argument required\n");
-		exit(2);
-	}
+	exit_code = ft_atoll(token);
+	printf("error code %d\n", exit_code);
+	while (exit_code < 0)
+		exit_code = exit_code + 256;
+	// exit_code = exit_code ;
+	exit(exit_code % 256 );
 }
