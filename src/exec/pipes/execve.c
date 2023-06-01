@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/05/31 14:14:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,16 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
-void	exec_command(t_data *data, t_token *input)
+// void	exec_command(t_data *data, t_token *input)
+
+void exec_command(t_data *data, t_token *input)
 {
 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
-	(void) data;
-	int		fd[2];
-	int		pid = 0;
-	char	*command_path;
-	char	**command_args;
+	(void)data;
+	int fd[2];
+	int pid = 0;
+	char *command_path;
+	char **command_args;
 
 	/* if (!input)
 	{
@@ -142,7 +144,9 @@ void	exec_command(t_data *data, t_token *input)
 	// --- END DEBUG
 
 	// exec part
-	if (pipe(fd) == -1)
+	// pas si c le dernier
+	int pipe_fd[2];
+	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
 		exit(EXIT_FAILURE);
@@ -160,26 +164,24 @@ void	exec_command(t_data *data, t_token *input)
 	{
 		// child process
 		// printf(GREEN"\t FORK%s\n", MAGENTA);
-		// dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
 		// if (command_path)
-			execve(command_path, command_args, NULL);
+		execve(command_path, command_args, NULL);
 
 		// perror(BOLD RED" execve"RESET);
 		// printf("something's wrong i can feel it\n");
 		printf(BOLD RED"%s: %scommand not found\n", input->token, NO_BOLD);
-
-
 	}
 	else
 	{
-		close(fd[0]);
-		close(fd[1]);
+		close(pipe_fd[1]);
 
 		// this might be shit
-		int	wstatus;
+		int wstatus;
 		wait(&wstatus);
+		printf("wstatus %d\n", wstatus);
 		if (WIFEXITED(wstatus))
 		{
 			int statuscode = WEXITSTATUS(wstatus);
@@ -189,7 +191,93 @@ void	exec_command(t_data *data, t_token *input)
 				printf("failure with %d\n", statuscode);
 		}
 		// probably is
+		// exec the second command
+		dup2(pipe_fd[0], STDIN_FILENO);
+		close(pipe_fd[0]);
+		execve(command_path, command_args, NULL);
 	}
 	// printf(BOLD GREEN" exec_command\n\n"RESET);
 	return;
 }
+
+
+// void	exec_command(t_data *data, t_token *input)
+// {
+// 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
+// 	(void) data;
+// 	int		fd[2];
+// 	int		pid = 0;
+// 	char	*command_path;
+// 	char	**command_args;
+
+// 	/* if (!input)
+// 	{
+// 		printf(BOLD RED"No input\n"RESET);
+// 		return;
+// 	} */
+// 	command_path = get_validpath(data, input);
+// 	printf(BOLD YELLOW"`%s`\n"RESET, command_path); // debug
+
+// 	command_args = get_cmd_args(input, command_path);
+// 	// printf(BOLD GREEN" get_cmd_args%s\n", RESET); // debug
+
+// 	// --- START DEBUG
+// 	// Print the array elements for verification
+// 	// for (int i = 0; command_args[i]; i++)
+// 	// 	printf("arg[%d]\t`%s`\n", i, command_args[i]);
+// 	// --- END DEBUG
+
+// 	// exec part
+// 	// pas si c le dernier
+// 	if (pipe(fd) == -1)
+// 	{
+// 		perror("pipe");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	// printf(GREEN"\t󰟥 PIPE\n"RESET);
+
+// 	pid = fork();
+// 	if (pid == -1)
+// 	{
+// 		perror("fork");
+// 		exit(EXIT_FAILURE);
+// 	}
+
+// 	if (pid == 0)
+// 	{
+// 		// child process
+// 		// printf(GREEN"\t FORK%s\n", MAGENTA);
+// 		// dup2(fd[1], STDOUT_FILENO);
+// 		close(fd[0]);
+// 		close(fd[1]);
+// 		// if (command_path)
+// 			execve(command_path, command_args, NULL);
+
+// 		// perror(BOLD RED" execve"RESET);
+// 		// printf("something's wrong i can feel it\n");
+// 		printf(BOLD RED"%s: %scommand not found\n", input->token, NO_BOLD);
+
+
+// 	}
+// 	else
+// 	{
+// 		close(fd[0]);
+// 		close(fd[1]);
+
+// 		// this might be shit
+// 		int	wstatus;
+// 		wait(&wstatus);
+// 		printf("wstatus %d\n", wstatus);
+// 		if (WIFEXITED(wstatus))
+// 		{
+// 			int statuscode = WEXITSTATUS(wstatus);
+// 			if (statuscode == 0)
+// 				printf(BOLD GREEN"Saul goodman\n"RESET);
+// 			else
+// 				printf("failure with %d\n", statuscode);
+// 		}
+// 		// probably is
+// 	}
+// 	// printf(BOLD GREEN" exec_command\n\n"RESET);
+// 	return;
+// }
