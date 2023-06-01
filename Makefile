@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/05/18 12:24:52 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/06/01 09:56:44 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ DIR_UTILS := $(SRC_FOLDER)utils/
 SRC_UTILS := minishell.c exec_char.c split_paths.c
 
 DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
-SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c
+SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c exit.c
 
 DIR_EXEC := $(SRC_FOLDER)exec/pipes/
 SRC_EXEC := fork.c execve.c files.c strjoin_heredoc.c dispatch.c

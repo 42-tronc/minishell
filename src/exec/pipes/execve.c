@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/05/24 10:54:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/01 09:39:57 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_getpaths(t_data *data)
 {
-	char *paths;
+	char	*paths;
 
 	paths = ft_getenv(data->env, "PATH");
 	data->paths = split_paths(paths, ':');
@@ -39,7 +39,6 @@ char	*get_validpath(t_data *data, t_token *input)
 		return (NULL);
 	// Update paths in case it changed
 	ft_getpaths(data);
-
 	while (data->paths[i] && error_access)
 	{
 		// error_access = 0;
@@ -70,10 +69,12 @@ static size_t	_count_cmd_args(t_token *input)
 	while (input)
 	{
 		if (ft_strcmp(input->type, PIPE) == 0)
-			break;
+			break ;
 		else if (ft_strcmp(input->type, ARG) == 0)
 			size++;
-		printf(BOLD YELLOW"`%s`\t%shas type: %s%s\tin block %s%d%s\n", input->token, NO_BOLD, BOLD, input->type, BOLD, input->pipe_block, NO_BOLD);
+		printf(BOLD YELLOW "`%s`\t%shas type: %s%s\tin block %s%d%s\n",
+			input->token, NO_BOLD, BOLD, input->type, BOLD, input->pipe_block,
+			NO_BOLD);
 		input = input->next;
 	}
 	// printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
@@ -82,22 +83,21 @@ static size_t	_count_cmd_args(t_token *input)
 
 char	**get_cmd_args(t_token *input, char *command_path)
 {
-	// printf(BOLD BLUE"\n get_cmd_args\n"RESET); // debug
 	size_t	i;
 	size_t	size;
 	char	**array;
 
+	// printf(BOLD BLUE"\n get_cmd_args\n"RESET); // debug
 	if (!input)
 	{
-		printf(BOLD RED"No arg\n"RESET);
+		printf(BOLD RED "No arg\n" RESET);
 		return (NULL);
 	}
 	size = _count_cmd_args(input);
-	array = ft_calloc(size + 1, sizeof(char*));
+	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
 	// printf(GREEN"\t󰍛 FT_CALLOC\n"RESET); // debug
-
 	i = 1;
 	input = input->next;
 	array[0] = command_path;
@@ -127,7 +127,7 @@ void	exec_command(t_data *data, t_token *input)
 	/* if (!input)
 	{
 		printf(BOLD RED"No input\n"RESET);
-		return;
+		return ;
 	} */
 	command_path = get_validpath(data, input);
 	printf(BOLD YELLOW"`%s`\n"RESET, command_path); // debug
@@ -142,6 +142,7 @@ void	exec_command(t_data *data, t_token *input)
 	// --- END DEBUG
 
 	// exec part
+	// pas si c le dernier
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
@@ -170,7 +171,6 @@ void	exec_command(t_data *data, t_token *input)
 		// printf("something's wrong i can feel it\n");
 		printf(BOLD RED"%s: %scommand not found\n", input->token, NO_BOLD);
 
-
 	}
 	else
 	{
@@ -180,6 +180,7 @@ void	exec_command(t_data *data, t_token *input)
 		// this might be shit
 		int	wstatus;
 		wait(&wstatus);
+		printf("wstatus %d\n", wstatus);
 		if (WIFEXITED(wstatus))
 		{
 			int statuscode = WEXITSTATUS(wstatus);
@@ -191,5 +192,5 @@ void	exec_command(t_data *data, t_token *input)
 		// probably is
 	}
 	// printf(BOLD GREEN" exec_command\n\n"RESET);
-	return;
+	return ;
 }
