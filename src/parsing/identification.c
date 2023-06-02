@@ -27,9 +27,9 @@ int	first_token(t_token *temp)
 	else if (temp->token[0] == '<' && temp->token[1] == '<')
 		temp->type = HERE_DOC;
 	else if (temp->token[0] == '>' && temp->token[1] == '\0')
-		temp->type = MY_NULL;
+		temp->type = OUTFILE;
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
-		temp->type = MY_NULL;
+		temp->type = ADD;
 	else if (temp->token[0] == '|')
 		temp->type = MY_NULL;
 	else
@@ -60,6 +60,8 @@ void	choose_token_id(t_token *temp)
 {
 	if (!temp->prev)
 		temp->type = CMD;
+	else if (!ft_strcmp(temp->prev->type, MY_NULL))
+		return ;
 	else if (!ft_strcmp(temp->prev->type, CHEVRON_L))
 		temp->type = INFILE;
 	else if (!ft_strcmp(temp->prev->type, CHEVRON_R))
@@ -93,7 +95,8 @@ void	id_tokens(t_token **tokens)
 		else if (!ft_strcmp(temp->token, "|"))
 		{
 			temp->type = PIPE;
-			temp->pipe_block = temp->prev->pipe_block + 1;
+			if (temp->prev)
+				temp->pipe_block = temp->prev->pipe_block + 1;
 		}
 		else
 			choose_token_id(temp);

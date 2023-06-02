@@ -105,29 +105,31 @@ SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dolla
 
 
 # -------------- RECIPES --------------
-all: makefolder rsc $(NAME)
+all: makefolder $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo -e "\n$(BOLD)Hello $(FG_ORANGE)$(USER)$(RESET)"
 	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
 
-$(OBJ_DIR)%.o : $(DIR_UTILS)%.c $(HEADER)
+$(OBJ_DIR)%.o : $(DIR_UTILS)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER)
+$(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(OBJ_DIR)%.o : $(DIR_EXEC)%.c $(HEADER)
+$(OBJ_DIR)%.o : $(DIR_EXEC)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(OBJ_DIR)%.o : $(DIR_PARSING)%.c $(HEADER)
+$(OBJ_DIR)%.o : $(DIR_PARSING)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIBFT_NAME) : rsc
 
 rsc:
 	@$(MAKE) -sC $(LIBFT_DIR)
 
-makefolder :
+$(OBJ_DIR) :
 	@mkdir -p $(OBJ_DIR)
 
 clean:

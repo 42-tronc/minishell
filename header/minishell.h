@@ -19,13 +19,23 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/wait.h>
+# include <limits.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-typedef enum {
+typedef struct s_data		t_data;
+typedef struct s_parsing	t_parsing;
+typedef struct s_env		t_env;
+typedef struct s_token		t_token;
+
+typedef enum e_exit_code {
 	PIPE_ERROR = -3,
 	MALLOC_ERROR = -2,
 	FAILURE = -1,
 	SUCCESS = 0,
-}	exit_code;
+}	t_exit_code;
 
 typedef struct s_env
 {
@@ -43,58 +53,6 @@ typedef struct s_cmd_block
 	int		*pipin;
 	int		*pipout;
 }			t_cmd_block;
-
-typedef struct s_token		t_token;
-
-// EXEC
-# include <limits.h>
-# include <unistd.h>
-// include PARSING
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-// # define RED	"\e[31;1m"
-// # define YELLOW	"\e[33;1m"
-// # define GREEN	"\e[32;1m"
-// # define UNDERLINE	"\e[4m"
-// # define RESET	"\e[0m"
-
-# define BLACK		"\e[30m"
-# define RED		"\e[31m"
-# define GREEN		"\e[32m"
-# define YELLOW		"\e[33m"
-# define BLUE		"\e[34m"
-# define MAGENTA	"\e[35m"
-# define CYAN		"\e[36m"
-# define WHITE		"\e[37m"
-# define RESET		"\e[0m"
-
-# define BOLD		"\e[1m"
-# define NO_BOLD	"\e[22m"
-# define UNDERL		"\e[4m"
-# define NO_UNDERL	"\e[24m"
-# define REVERSED	"\e[7m"
-# define ORANGE 	"\e[38;5;208;1m"
-
-
-# define CHEVRON_L "<"
-# define CHEVRON_R ">"
-# define INFILE "infile"
-# define OUTFILE "outfile"
-# define ADD "out_add"
-# define CMD "command"
-# define ARG "argument"
-# define PIPE "|"
-# define LIMITER "limiter"
-# define HERE_DOC "here_doc"
-# define APPEND "append"
-# define MY_NULL "null"
-
-typedef struct s_data		t_data;
-typedef struct s_parsing	t_parsing;
-typedef struct s_env		t_env;
-typedef struct s_token		t_token;
 
 struct s_data {
 	t_env		*env;
@@ -127,6 +85,43 @@ struct s_token {
 	t_token	*prev;
 	t_token	*next;
 };
+
+// define for token_id.
+# define CHEVRON_L "<"
+# define CHEVRON_R ">"
+# define INFILE "infile"
+# define OUTFILE "outfile"
+# define ADD "out_add"
+# define CMD "command"
+# define ARG "argument"
+# define PIPE "|"
+# define LIMITER "limiter"
+# define HERE_DOC "here_doc"
+# define APPEND "append"
+# define MY_NULL "null"
+
+// # define RED	"\e[31;1m"
+// # define YELLOW	"\e[33;1m"
+// # define GREEN	"\e[32;1m"
+// # define UNDERLINE	"\e[4m"
+// # define RESET	"\e[0m"
+
+# define BLACK		"\e[30m"
+# define RED		"\e[31m"
+# define GREEN		"\e[32m"
+# define YELLOW		"\e[33m"
+# define BLUE		"\e[34m"
+# define MAGENTA	"\e[35m"
+# define CYAN		"\e[36m"
+# define WHITE		"\e[37m"
+# define RESET		"\e[0m"
+
+# define BOLD		"\e[1m"
+# define NO_BOLD	"\e[22m"
+# define UNDERL		"\e[4m"
+# define NO_UNDERL	"\e[24m"
+# define REVERSED	"\e[7m"
+# define ORANGE 	"\e[38;5;208;1m"
 
 //	===== @functions =====
 /*
@@ -182,7 +177,7 @@ int		check_outfile(t_data *data, t_token *input, int block);
 /*
 ** < fork.c > */
 
-void	ft_fork();
+void	ft_fork(void);
 /*
 ** < strjoin_heredoc.c > */
 
@@ -275,4 +270,5 @@ int		init_data(t_data *data);
 ** < split_paths.c > */
 
 char	**split_paths(char const *s, char c);
+
 #endif
