@@ -57,6 +57,8 @@ char	*get_before_dollar(char *str, t_data *p)
 			break ;
 		size++;
 	}
+	if (!size)
+		return (NULL);
 	res = malloc(sizeof(char) * (size + 1));
 	if (!res)
 		return (NULL);
@@ -86,6 +88,7 @@ void	free_expand(t_parsing *p)
 void	replace_var(t_token *temp, t_data *p)
 {
 	p->p->before = get_before_dollar(temp->token, p);
+	printf("%c\n", temp->token[p->i]);
 	p->i++;
 	p->p->var_name = get_var_name(temp->token + p->i);
 	p->p->var_value = ft_getenv(p->env, p->p->var_name);
