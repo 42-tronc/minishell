@@ -105,7 +105,7 @@ SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dolla
 
 
 # -------------- RECIPES --------------
-all: makefolder $(NAME)
+all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo -e "\n$(BOLD)Hello $(FG_ORANGE)$(USER)$(RESET)"
