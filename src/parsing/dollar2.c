@@ -37,8 +37,8 @@ int	processed_line(char *str, t_parsing *p)
 	{
 		p_quote(p, str[i]);
 		if (!p->quote && str[i] == '$')
-			found_dollar = 1;
-		else if (found_dollar && ft_isalpha(str[i]))
+			found_dollar++;
+		else if (found_dollar % 2 != 0 && (ft_isalpha(str[i]) || str[i] == '?'))
 			found_alpha = 1;
 		else
 			found_dollar = 0;
