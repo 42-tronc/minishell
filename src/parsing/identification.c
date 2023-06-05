@@ -76,10 +76,8 @@ void	choose_token_id(t_token *temp)
 		temp->type = ARG;
 }
 
-void	id_tokens(t_token **tokens)
+void	id_tokens(t_token **tokens, t_token *temp)
 {
-	t_token	*temp;
-
 	temp = *tokens;
 	temp->pipe_block = 0;
 	while (temp)

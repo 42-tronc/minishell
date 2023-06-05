@@ -186,7 +186,7 @@ char	*ft_strjoin_heredoc(char *s1, char *s2);
 ** < dollar.c > */
 
 char	*get_var_name(char *str);
-char	*get_before_dollar(char *str, t_data *p);
+char	*get_before_dollar(char *str, t_data *p, int i, int size);
 void	free_expand(t_parsing *p);
 void	replace_var(t_token *temp, t_data *p);
 void	expand_tokens(t_token **tokens, t_data *data);
@@ -213,7 +213,7 @@ int		is_separator(t_token *temp);
 int		first_token(t_token *temp);
 int		is_first_cmd(t_token *head);
 void	choose_token_id(t_token *temp);
-void	id_tokens(t_token **tokens);
+void	id_tokens(t_token **tokens, t_token *temp);
 /*
 ** < parsing.c > */
 

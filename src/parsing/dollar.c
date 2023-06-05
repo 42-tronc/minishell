@@ -23,11 +23,11 @@ char	*get_var_name(char *str)
 	{
 		if (ft_isdigit(str[i]))
 			i++;
-		if (ft_isdigit(str[i]))
-			break ;
-		if (!next_char(str[i]))
+		if (ft_isdigit(str[i]) || !next_char(str[i]))
 			break ;
 	}
+	if (!i)
+		return (NULL);
 	res = malloc(sizeof(char) * (i + 1));
 	if (!res)
 		return (NULL);
@@ -41,31 +41,27 @@ char	*get_var_name(char *str)
 	return (res);
 }
 
-char	*get_before_dollar(char *str, t_data *p)
+char	*get_before_dollar(char *str, t_data *p, int i, int size)
 {
-	int		i;
-	int		size;
 	char	*res;
 
-	size = 0;
-	while (str && str[size])
+	while (str && str[++size])
 	{
 		p_quote(p->p, str[size]);
-		if (str[size - 1] != '$' && str[size] == '$' && str[size + 1] != '$' && !p->p->quote)
+		if (str[size - 1] != '$' && str[size] == '$' \
+		&& str[size + 1] != '$' && !p->p->quote)
 			break ;
-		else if (str[size - 2] == '$' && str[size - 1] == '$' && str[size] == '$' && str[size + 1] != '$' && !p->p->quote)
+		else if (str[size - 2] == '$' && str[size - 1] == '$' \
+		&& str[size] == '$' && str[size + 1] != '$' && !p->p->quote)
 			break ;
-		size++;
 	}
+	if (!size)
+		return (NULL);
 	res = malloc(sizeof(char) * (size + 1));
 	if (!res)
 		return (NULL);
-	i = 0;
-	while (i < size)
-	{
+	while (++i < size)
 		res[i] = str[i];
-		i++;
-	}
 	res[i] = '\0';
 	p->i += ft_strlen(res);
 	return (res);
@@ -73,6 +69,8 @@ char	*get_before_dollar(char *str, t_data *p)
 
 void	free_expand(t_parsing *p)
 {
+	if (p->var_value && p->var_name[0] == '1')
+		free(p->var_value);
 	if (p->var_name)
 		free(p->var_name);
 	if (p->before)
@@ -85,17 +83,24 @@ void	free_expand(t_parsing *p)
 
 void	replace_var(t_token *temp, t_data *p)
 {
-	p->p->before = get_before_dollar(temp->token, p);
+	p->p->before = get_before_dollar(temp->token, p, -1, -1);
 	p->i++;
-	p->p->var_name = get_var_name(temp->token + p->i);
-	p->p->var_value = ft_getenv(p->env, p->p->var_name);
+	if (temp->token[p->i] == '?')
+	{
+		p->p->var_name = ft_strdup("1");
+		p->p->var_value = ft_strdup("[retValue]");
+	}
+	else
+	{
+		p->p->var_name = get_var_name(temp->token + p->i);
+		if (p->p->var_name)
+			p->p->var_value = ft_getenv(p->env, p->p->var_name);
+	}
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
 	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
-	printf("before:%s\nvar_value:%s\nbefore_and_value:%s\nvar_name:%s\nnew_token:%s\n", \
-	p->p->before, p->p->var_value, p->p->before_and_value, p->p->var_name, p->p->new_token);
 	free_expand(p->p);
 }
 
