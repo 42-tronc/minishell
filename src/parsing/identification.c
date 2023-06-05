@@ -29,7 +29,7 @@ int	first_token(t_token *temp)
 	else if (temp->token[0] == '>' && temp->token[1] == '\0')
 		temp->type = OUTFILE;
 	else if (temp->token[0] == '>' && temp->token[1] == '>')
-		temp->type = ADD;
+		temp->type = CHEVRON_RR;
 	else if (temp->token[0] == '|')
 		temp->type = MY_NULL;
 	else
@@ -68,8 +68,8 @@ void	choose_token_id(t_token *temp)
 		temp->type = OUTFILE;
 	else if (!ft_strcmp(temp->prev->type, HERE_DOC))
 		temp->type = LIMITER;
-	else if (!ft_strcmp(temp->prev->type, APPEND))
-		temp->type = ADD;
+	else if (!ft_strcmp(temp->prev->type, CHEVRON_RR))
+		temp->type = APPEND;
 	else if (is_first_cmd(temp))
 		temp->type = CMD;
 	else
@@ -89,7 +89,7 @@ void	id_tokens(t_token **tokens, t_token *temp)
 		else if (!ft_strcmp(temp->token, ">"))
 			temp->type = CHEVRON_R;
 		else if (!ft_strcmp(temp->token, ">>"))
-			temp->type = APPEND;
+			temp->type = CHEVRON_RR;
 		else if (!ft_strcmp(temp->token, "|"))
 		{
 			temp->type = PIPE;
