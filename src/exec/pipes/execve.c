@@ -130,7 +130,13 @@ void	exec_command(t_data *data, t_token *input)
 		return ;
 	} */
 	command_path = get_validpath(data, input);
-	printf(BOLD YELLOW"`%s`\n"RESET, command_path); // debug
+	if (!command_path)
+	{
+		printf(RED BOLD"%s: %scommand not found (blocked the rest of the exec)\n", input->token, NO_BOLD);
+		// will need to close fd here if opened
+		return;
+	}
+	printf(YELLOW"Path: %s`%s`\n"RESET, BOLD, command_path); // debug
 
 	command_args = get_cmd_args(input, command_path);
 	// printf(BOLD GREEN" get_cmd_args%s\n", RESET); // debug
