@@ -164,6 +164,13 @@ void	exec_command(t_data *data, t_token *input)
 		// dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
+
+		// replace hardcoded 0 with pipe_id
+		if (data->cmd_block[0]->out_fd > 0)
+		{
+			dup2(data->cmd_block[0]->out_fd, STDOUT_FILENO);
+			close(data->cmd_block[0]->out_fd);
+		}
 		// if (command_path)
 			execve(command_path, command_args, NULL);
 
