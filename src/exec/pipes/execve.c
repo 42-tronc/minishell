@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/01 09:39:57 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 18:55:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	ft_getpaths(t_data *data)
 
 	paths = ft_getenv(data->env, "PATH");
 	data->paths = split_paths(paths, ':');
-	// printf("`%s`\n", paths);
-	// int i = 0;
-	// while (data->paths[i])
-	// {
-	// 	printf("path[%d]=`%s`\n", i, data->paths[i]);
-	// 	i++;
-	// }
 }
 
+/**
+ * @brief Gets the path of the command passed as input
+ *
+ * @param data data structure with every var
+ * @param input token with the command
+ * @return char* path of the command or NULL if not found
+ */
 char	*get_validpath(t_data *data, t_token *input)
 {
 	int		i;
@@ -47,17 +47,20 @@ char	*get_validpath(t_data *data, t_token *input)
 			return (NULL);
 		// printf("checking %s\n", command_path);
 		error_access = access(command_path, X_OK);
-		if (error_access == 0)
-		{
-			// printf(ORANGE"execve avec `%s`\n"RESET, command_path);
+		if (!error_access)
 			return (command_path);
-		}
 		free(command_path);
 		i++;
 	}
 	return (NULL);
 }
 
+/**
+ * @brief Counts the number of arguments + cmd to malloc
+ *
+ * @param input
+ * @return size_t cmd + args count
+ */
 static size_t	_count_cmd_args(t_token *input)
 {
 	size_t	size;
@@ -72,9 +75,8 @@ static size_t	_count_cmd_args(t_token *input)
 			break ;
 		else if (ft_strcmp(input->type, ARG) == 0)
 			size++;
-		printf(BOLD YELLOW "`%s`\t%shas type: %s%s\tin block %s%d%s\n",
-			input->token, NO_BOLD, BOLD, input->type, BOLD, input->pipe_block,
-			NO_BOLD);
+		// printf(BOLD YELLOW "`%s`\t%shas type: %s%s\tin block %s%d%s\n",
+			// input->token, NO_BOLD, BOLD, input->type, BOLD, input->pipe_block, NO_BOLD);
 		input = input->next;
 	}
 	// printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
@@ -120,6 +122,7 @@ void	exec_command(t_data *data, t_token *input)
 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
 	(void) data;
 	int		fd[2];
+	// will need fd[pipe_count][2];
 	int		pid = 0;
 	char	*command_path;
 	char	**command_args;
@@ -130,7 +133,13 @@ void	exec_command(t_data *data, t_token *input)
 		return ;
 	} */
 	command_path = get_validpath(data, input);
-	printf(BOLD YELLOW"`%s`\n"RESET, command_path); // debug
+	if (!command_path)
+	{
+		printf(RED BOLD"%s: %scommand not found (blocked the rest of the exec)\n", input->token, NO_BOLD);
+		// will need to close fd here if opened
+		return;
+	}
+	printf(YELLOW"Path: %s`%s`\n"RESET, BOLD, command_path); // debug
 
 	command_args = get_cmd_args(input, command_path);
 	// printf(BOLD GREEN" get_cmd_args%s\n", RESET); // debug
@@ -150,6 +159,18 @@ void	exec_command(t_data *data, t_token *input)
 	}
 	// printf(GREEN"\t󰟥 PIPE\n"RESET);
 
+	// will need a loop
+	/*
+	while (i < pipecount)
+	{
+		if (pipe(fd[i]) < 0)
+		{
+			close previous pipe if i > 0
+			and return error
+		}
+	}
+	 */
+
 	pid = fork();
 	if (pid == -1)
 	{
@@ -164,6 +185,13 @@ void	exec_command(t_data *data, t_token *input)
 		// dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
+
+		// replace hardcoded 0 with pipe_id
+		if (data->cmd_block[0]->out_fd > 0)
+		{
+			dup2(data->cmd_block[0]->out_fd, STDOUT_FILENO);
+			close(data->cmd_block[0]->out_fd);
+		}
 		// if (command_path)
 			execve(command_path, command_args, NULL);
 
@@ -180,12 +208,12 @@ void	exec_command(t_data *data, t_token *input)
 		// this might be shit
 		int	wstatus;
 		wait(&wstatus);
-		printf("wstatus %d\n", wstatus);
+		// printf("wstatus %d\n", wstatus);
 		if (WIFEXITED(wstatus))
 		{
 			int statuscode = WEXITSTATUS(wstatus);
 			if (statuscode == 0)
-				printf(BOLD GREEN"Saul goodman\n"RESET);
+				printf(BOLD GREEN"%s: %ssuccess\n"RESET, input->token, NO_BOLD);
 			else
 				printf("failure with %d\n", statuscode);
 		}
