@@ -6,13 +6,18 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/06 13:11:22 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 13:15:39 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_getpaths(t_data *data)
+/**
+ * @brief Gets every $PATH in an array data.paths
+ *
+ * @param data t_dxata struct with every vart_dxata struct with every var
+ */
+static void	_ft_getpaths(t_data *data)
 {
 	char	*paths;
 
@@ -23,11 +28,11 @@ void	ft_getpaths(t_data *data)
 /**
  * @brief Gets the path of the command passed as input
  *
- * @param data data structure with every var
+ * @param data t_dxata struct with every varstructure with every var
  * @param input token with the command
  * @return char* path of the command or NULL if not found
  */
-char	*get_validpath(t_data *data, t_token *input)
+static char	*_get_validpath(t_data *data, t_token *input)
 {
 	int		i;
 	int		error_access;
@@ -39,11 +44,9 @@ char	*get_validpath(t_data *data, t_token *input)
 		return (NULL);
 	if (ft_strchr(input->token, '/') && !access(input->token, X_OK))
 		return (input->token);
-	// Update paths in case it changed
 	ft_getpaths(data);
 	while (data->paths[i] && error_access)
 	{
-		// error_access = 0;
 		command_path = ft_strjoin(data->paths[i], input->token);
 		if (!command_path)
 			return (NULL);
@@ -172,6 +175,8 @@ void	exec_command(t_data *data, t_token *input)
 		}
 	}
 	 */
+	// dup2(fd[block_id][1], STDOUT_FILENO)
+	// dup2(fd[block_id][0], STDIN_FILENO)
 
 	pid = fork();
 	if (pid == -1)
