@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/06 13:11:22 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 14:58:04 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_getpaths(t_data *data)
 /**
  * @brief Gets the path of the command passed as input
  *
- * @param data data structure with every var
+ * @param data t_data struct with every var in it
  * @param input token with the command
  * @return char* path of the command or NULL if not found
  */
