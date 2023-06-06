@@ -224,13 +224,17 @@ t_token	*getting_line(t_data *data);
 /*
 ** < prepare.c > */
 
-void	prepare_token(t_data *data);
+int		prepare_token(t_data *data);
 /*
 ** < rm_quotes.c > */
 
 int		get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
 void	remove_quotes(t_token **tokens, t_data *data);
+
+// syntax_error.c functions
+int		syntax_error(t_data *data);
+
 /*
 ** < tilde.c > */
 

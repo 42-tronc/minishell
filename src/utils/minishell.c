@@ -162,10 +162,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		data->tokens = getting_line(data);
-		if (data->tokens)
+		if (data->tokens && !prepare_token(data))
 		{
-			prepare_token(data);
-
 			if (init_data(data))
 				exit(FAILURE);
 
