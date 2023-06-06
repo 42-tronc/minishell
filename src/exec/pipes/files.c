@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 08:08:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/05 15:09:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int	check_infile(t_data *data, t_token *input, int block)
 	return (0);
 }
 
+// if there is an out file dont send it to the pipe
 int	check_outfile(t_data *data, t_token *input, int block)
 {
 	int	flags;
@@ -132,8 +133,8 @@ int	check_outfile(t_data *data, t_token *input, int block)
 	{
 		if (ft_strcmp(input->type, OUTFILE) == 0 || ft_strcmp(input->type, APPEND) == 0)
 		{
-			printf("%s is a %s\n"RESET, input->token, input->type);
-			printf("OUTFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
+			// printf("%s is a %s\n"RESET, input->token, input->type);
+			// printf("OUTFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
 
 			// change flags for append if needed
 			if(ft_strcmp(input->type, APPEND) == 0)
@@ -145,14 +146,14 @@ int	check_outfile(t_data *data, t_token *input, int block)
 			// else
 			// 	printf("not opened\n");
 
-			data->cmd_block[block]->out_fd = open(input->token, flags);
+			data->cmd_block[block]->out_fd = open(input->token, flags, 0777);
 			if (data->cmd_block[block]->out_fd == -1)
 			{
 				perror(BOLD RED "open" RESET);
 				return (-1);
 			}
 			else
-				printf(GREEN "OK: %s%s\n\n" RESET, BOLD, input->token);
+				printf(GREEN "file: %s%s%s\tfd: %s%d\n\n" RESET, BOLD, input->token, NO_BOLD, BOLD, data->cmd_block[block]->out_fd);
 		}
 		input = input->next;
 	}
