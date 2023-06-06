@@ -98,7 +98,7 @@ struct s_token {
 # define LIMITER "limiter"
 # define HERE_DOC "here_doc"
 # define CHEVRON_RR ">>"
-# define MY_NULL "null"
+# define MY_NULL "my_null"
 
 // # define RED	"\e[31;1m"
 // # define YELLOW	"\e[33;1m"
@@ -209,8 +209,6 @@ t_env	*ft_envnew(char *var, char *value);
 /*
 ** < identification.c > */
 
-int		is_separator(t_token *temp);
-int		first_token(t_token *temp);
 int		is_first_cmd(t_token *head);
 void	choose_token_id(t_token *temp);
 void	id_tokens(t_token **tokens, t_token *temp);
