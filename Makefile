@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/06/01 09:56:44 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/06/07 09:38:37 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,12 +96,6 @@ SRC_EXEC := fork.c execve.c files.c strjoin_heredoc.c dispatch.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c prepare.c tilde.c rm_quotes.c syntax_error.c
-
-# ifeq ($(USER), maplepy)
-# 	SRC_BUILTIN += main.c
-# else
-# 	SRC += $(addprefix $(SRC_FOLDER), $(SRC_UTILS))
-# endif
 
 
 # -------------- RECIPES --------------
