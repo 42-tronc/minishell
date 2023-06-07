@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 13:36:18 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 14:29:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 typedef struct s_data		t_data;
 typedef struct s_parsing	t_parsing;
-typedef struct s_env		t_env;
+// typedef struct s_env		t_env;
 typedef struct s_token		t_token;
 
 typedef enum e_exit_code {
@@ -132,7 +132,7 @@ void		ft_cd(t_data *data, t_token *input);
 /*
 ** < echo.c > */
 
-void		ft_echo(t_token *input);
+void		ft_echo(t_data *data, t_token *input, int block);
 /*
 ** < env.c > */
 
@@ -145,7 +145,7 @@ void		ft_exit(t_token *input);
 /*
 ** < export.c > */
 
-void		ft_export(t_env *env, t_list *args);
+void		ft_export(t_data *data, t_token *input);
 /*
 ** < pwd.c > */
 
@@ -169,6 +169,7 @@ void		print_error(int code);
 int		ft_getpaths(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
 char	**get_cmd_args(t_token *input, char *command_path);
+int		check_output(t_data *data, int block);
 void	exec_command(t_data *data, t_token *input, int block);
 /*
 ** < files.c > */

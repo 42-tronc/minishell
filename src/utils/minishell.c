@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 13:29:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 14:48:51 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ void	check_command(t_data *data, t_token *input, int block)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
 				ft_cd(data, input->next);
-				// ft_cd(data->env, input->next);
-				// ft_cd(data->env, input->next->token);
 			else if (ft_strcmp(input->token, "echo") == 0)
-				ft_echo(input->next);
+				ft_echo(data, input->next, block);
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data->env);
 			else if (ft_strcmp(input->token, "exit") == 0)
@@ -58,8 +56,8 @@ void	check_command(t_data *data, t_token *input, int block)
 				ft_exit(input->next);
 			}
 			else if (ft_strcmp(input->token, "export") == 0)
-				printf("this needs a quick fix\n");
-				// ft_export(data->env, input);
+				// printf("this needs a quick fix\n");
+				ft_export(data, input);
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				ft_pwd();
 			else if (ft_strcmp(input->token, "unset") == 0)
