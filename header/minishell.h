@@ -16,6 +16,7 @@
 // # include "exec.h"
 // # include "parsing.h"
 # include "libft.h"
+# include <signal.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/wait.h>
