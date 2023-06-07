@@ -12,10 +12,16 @@
 
 #include "minishell.h"
 
-void	prepare_token(t_data *data)
+int	prepare_token(t_data *data)
 {
 	expand_tokens(&data->tokens, data);
 	expand_tilde(&data->tokens, data);
 	remove_quotes(&data->tokens, data);
 	id_tokens(&data->tokens, NULL);
+	if (syntax_error(data))
+	{
+		free(data->p);
+		return (1);
+	}
+	return (0);
 }

@@ -98,7 +98,7 @@ struct s_token {
 # define LIMITER "limiter"
 # define HERE_DOC "here_doc"
 # define CHEVRON_RR ">>"
-# define MY_NULL "null"
+# define MY_NULL "my_null"
 
 // # define RED	"\e[31;1m"
 // # define YELLOW	"\e[33;1m"
@@ -164,7 +164,7 @@ void	print_error(int code);
 /*
 ** < execve.c > */
 
-void	ft_getpaths(t_data *data);
+int		ft_getpaths(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
 char	**get_cmd_args(t_token *input, char *command_path);
 void	exec_command(t_data *data, t_token *input);
@@ -209,8 +209,6 @@ t_env	*ft_envnew(char *var, char *value);
 /*
 ** < identification.c > */
 
-int		is_separator(t_token *temp);
-int		first_token(t_token *temp);
 int		is_first_cmd(t_token *head);
 void	choose_token_id(t_token *temp);
 void	id_tokens(t_token **tokens, t_token *temp);
@@ -224,13 +222,17 @@ t_token	*getting_line(t_data *data);
 /*
 ** < prepare.c > */
 
-void	prepare_token(t_data *data);
+int		prepare_token(t_data *data);
 /*
 ** < rm_quotes.c > */
 
 int		get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
 void	remove_quotes(t_token **tokens, t_data *data);
+
+// syntax_error.c functions
+int		syntax_error(t_data *data);
+
 /*
 ** < tilde.c > */
 
