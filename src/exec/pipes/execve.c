@@ -12,12 +12,15 @@
 
 #include "minishell.h"
 
-void	ft_getpaths(t_data *data)
+int	ft_getpaths(t_data *data)
 {
 	char	*paths;
 
 	paths = ft_getenv(data->env, "PATH");
+	if (!paths)
+		return (1);
 	data->paths = split_paths(paths, ':');
+	return (0);
 }
 
 /**
@@ -38,7 +41,8 @@ char	*get_validpath(t_data *data, t_token *input)
 	if (!input)
 		return (NULL);
 	// Update paths in case it changed
-	ft_getpaths(data);
+	if (ft_getpaths(data))
+		return (NULL);
 	while (data->paths[i] && error_access)
 	{
 		// error_access = 0;

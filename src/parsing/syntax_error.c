@@ -54,8 +54,6 @@ int	syntax_error(t_data *data)
 	t_token	*temp;
 
 	temp = data->tokens;
-	if (check_last_token(temp))
-		return (1);
 	while (temp)
 	{
 		if (!temp->prev && !ft_strcmp(temp->type, PIPE))
@@ -75,5 +73,7 @@ int	syntax_error(t_data *data)
 		}
 		temp = temp->next;
 	}
+	if (check_last_token(data->tokens))
+		return (1);
 	return (0);
 }
