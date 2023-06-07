@@ -128,47 +128,48 @@ struct s_token {
 /*
 ** < cd.c > */
 
-void	ft_cd(t_data *data, t_token *input);
+void		ft_cd(t_data *data, t_token *input);
 /*
 ** < echo.c > */
 
-void	ft_echo(t_token *input);
+void		ft_echo(t_token *input);
 /*
 ** < env.c > */
 
-void	ft_env(t_env *env);
+void		ft_env(t_env *env);
 /*
 ** < exit.c > */
 
-void	ft_exit(t_token *input);
+long long	ft_atoll(const char *str);
+void		ft_exit(t_token *input);
 /*
 ** < export.c > */
 
-void	ft_export(t_env *env, t_list *args);
+void		ft_export(t_env *env, t_list *args);
 /*
 ** < pwd.c > */
 
-int		ft_pwd(void);
+int			ft_pwd(void);
 /*
 ** < unset.c > */
 
-void	ft_unset(t_env **env, t_token *args);
+void		ft_unset(t_env **env, t_token *args);
 /*
 ** < utils.c > */
 
-t_env	*ft_env_new(char *var, char *value);
-void	ft_env_add_back(t_env **lst, t_env *new);
-t_env	*fill_env(char **envp);
-char	*ft_getenv(t_env *env, char *var);
-int		ft_setenv(t_env *env, char *var, char *value);
-void	print_error(int code);
+t_env		*ft_env_new(char *var, char *value);
+void		ft_env_add_back(t_env **lst, t_env *new);
+t_env		*fill_env(char **envp);
+char		*ft_getenv(t_env *env, char *var);
+int			ft_setenv(t_env *env, char *var, char *value);
+void		print_error(int code);
 /*
 ** < execve.c > */
 
 int		ft_getpaths(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
 char	**get_cmd_args(t_token *input, char *command_path);
-void	exec_command(t_data *data, t_token *input);
+void	exec_command(t_data *data, t_token *input, int block);
 /*
 ** < files.c > */
 
@@ -178,7 +179,7 @@ int		check_outfile(t_data *data, t_token *input, int block);
 /*
 ** < fork.c > */
 
-void	ft_fork(void);
+void	ft_fork();
 /*
 ** < strjoin_heredoc.c > */
 
@@ -230,17 +231,18 @@ int		prepare_token(t_data *data);
 int		get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
 void	remove_quotes(t_token **tokens, t_data *data);
+/*
+** < signal.c > */
 
-// signal.c functions
-void	get_signal(void);
-void	redisplay_prompt(int sig);
 void	exit_program(t_data *data);
+void	redisplay_prompt(int sig);
+void	get_signal(void);
+/*
+** < syntax_error.c > */
 
-// syntax_error.c functions
 int		similar_type(t_token *temp);
 int		check_last_token(t_token *temp);
 int		syntax_error(t_data *data);
-
 /*
 ** < tilde.c > */
 
@@ -280,5 +282,4 @@ int		init_data(t_data *data);
 ** < split_paths.c > */
 
 char	**split_paths(char const *s, char c);
-
 #endif
