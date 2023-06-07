@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/01 09:53:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 11:55:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void	print_tokens_linked_list(t_token *head)
 {
 	t_token	*temp;
-	// t_token	*last;
 	int		i;
 
 	temp = head;
@@ -89,37 +88,26 @@ void	check_command(t_data *data, t_token *input, int block)
 // need to check if there is a pipe block after
 void	exec_dispatch(t_data *data, t_token *input)
 {
+	int	error;
 	int	block;
 
+	error = 0;
 	block = 0;
-	// printf("cmd block count = %d\n", data->cmd_block_count);
+	printf("cmd block count = %d\n", data->cmd_block_count);
 	while (input && block < data->cmd_block_count)
 	{
 		// printf(RED "block=%d\ncurrent block %d\n" RESET, block, input->pipe_block);
 		check_heredoc(data, input, block);
-		check_infile(data, input, block);
-		check_outfile(data, input, block);
-		check_command(data, input, block); // will be changed
-		// check if pipe after or not
-		// if ()
+		error = check_infile(data, input, block);
+		if (!error)
+			error = check_outfile(data, input, block);
+		if (!error)
+			check_command(data, input, block); // will be changed
 		block++;
 		while (block > input->pipe_block && input->next)
 			input = input->next;
 	}
 }
-
-// void	free_array(char **array)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (array[i])
-// 	{
-// 		free(array[i]);
-// 		i++;
-// 	}
-// 	free(array);
-// }
 
 // will need to get the return value to somewhere
 int	init_data(t_data *data)
