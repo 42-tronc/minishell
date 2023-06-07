@@ -232,6 +232,12 @@ int		get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
 void	remove_quotes(t_token **tokens, t_data *data);
 /*
+** < signal.c > */
+
+void	exit_program(t_data *data);
+void	redisplay_prompt(int sig);
+void	get_signal(void);
+/*
 ** < syntax_error.c > */
 
 int		similar_type(t_token *temp);
