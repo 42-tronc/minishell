@@ -233,9 +233,12 @@ void	remove_quotes(t_token **tokens, t_data *data);
 
 // signal.c functions
 void	get_signal(void);
+void	redisplay_prompt(int sig);
 void	exit_program(t_data *data);
 
 // syntax_error.c functions
+int		similar_type(t_token *temp);
+int		check_last_token(t_token *temp);
 int		syntax_error(t_data *data);
 
 /*
