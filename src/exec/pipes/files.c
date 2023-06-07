@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/05 15:09:56 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/06 14:58:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	is_last_input(t_token *input, int block)
 /**
  * @brief opens the heredoc and records the output if needed or dry run it
  *
- * @param data struct with every other struct in it
+ * @param data t_data struct with every var in it
  * @param input token starting where heredoc is
  * @param block which command block to check
  */
@@ -75,7 +75,7 @@ static void	open_heredoc(t_data *data, t_token *input, int block)
 /**
  * @brief checks and open the heredoc if one is detected
  *
- * @param data struct with every other struct in it
+ * @param data t_data struct with every var in it
  * @param input token from the very start
  * @param block which command block to check
  */
@@ -143,8 +143,8 @@ int	check_outfile(t_data *data, t_token *input, int block)
 			// close previous file if it was opened
 			if (data->cmd_block[block]->out_fd >= 0)
 				close(data->cmd_block[block]->out_fd);
-			// else
-			// 	printf("not opened\n");
+			else
+				printf("not opened\n");
 
 			data->cmd_block[block]->out_fd = open(input->token, flags, 0777);
 			if (data->cmd_block[block]->out_fd == -1)
