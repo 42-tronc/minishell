@@ -168,7 +168,7 @@ void		print_error(int code);
 int		ft_getpaths(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
 char	**get_cmd_args(t_token *input, char *command_path);
-void	exec_command(t_data *data, t_token *input);
+void	exec_command(t_data *data, t_token *input, int block);
 /*
 ** < files.c > */
 

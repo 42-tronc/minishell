@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/06 14:58:04 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 13:11:08 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
-void	exec_command(t_data *data, t_token *input)
+void	exec_command(t_data *data, t_token *input, int block)
 {
 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
 	(void) data;
@@ -193,10 +193,10 @@ void	exec_command(t_data *data, t_token *input)
 		close(fd[1]);
 
 		// replace hardcoded 0 with pipe_id
-		if (data->cmd_block[0]->out_fd > 0)
+		if (data->cmd_block[block]->out_fd > 0)
 		{
-			dup2(data->cmd_block[0]->out_fd, STDOUT_FILENO);
-			close(data->cmd_block[0]->out_fd);
+			dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO);
+			close(data->cmd_block[block]->out_fd);
 		}
 		// if (command_path)
 			execve(command_path, command_args, NULL);
