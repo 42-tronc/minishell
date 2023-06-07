@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/06 14:58:35 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 13:30:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ int	check_outfile(t_data *data, t_token *input, int block)
 			// close previous file if it was opened
 			if (data->cmd_block[block]->out_fd >= 0)
 				close(data->cmd_block[block]->out_fd);
-			else
-				printf("not opened\n");
+			// else
+			// 	printf("not opened\n");
 
 			data->cmd_block[block]->out_fd = open(input->token, flags, 0777);
 			if (data->cmd_block[block]->out_fd == -1)

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 13:09:02 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 13:29:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 
 	error = 0;
 	block = 0;
-	printf("cmd block count = %d\n", data->cmd_block_count);
+	// printf("cmd block count = %d\n", data->cmd_block_count);
 	while (input && block < data->cmd_block_count)
 	{
 		// printf(RED "block=%d\ncurrent block %d\n" RESET, block, input->pipe_block);

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 13:11:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 13:29:07 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,17 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
+static int	to_outfile(t_data *data, int block)
+{
+	if (data->cmd_block[block]->out_fd > 0)
+	{
+		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
+			return (FAILURE);
+		close(data->cmd_block[block]->out_fd);
+	}
+	return (0);
+}
+
 void	exec_command(t_data *data, t_token *input, int block)
 {
 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
@@ -192,12 +203,7 @@ void	exec_command(t_data *data, t_token *input, int block)
 		close(fd[0]);
 		close(fd[1]);
 
-		// replace hardcoded 0 with pipe_id
-		if (data->cmd_block[block]->out_fd > 0)
-		{
-			dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO);
-			close(data->cmd_block[block]->out_fd);
-		}
+		to_outfile(data, block);
 		// if (command_path)
 			execve(command_path, command_args, NULL);
 
