@@ -54,8 +54,10 @@ void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data->env);
 			else if (ft_strcmp(input->token, "exit") == 0)
-				// printf("ft_exit not done yet\n");
+			{
+				free(data->p);
 				ft_exit(input->next);
+			}
 			else if (ft_strcmp(input->token, "export") == 0)
 				printf("this needs a quick fix\n");
 				// ft_export(data->env, input);
@@ -154,11 +156,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data 	*data;
 
-	(void)argc;
 	(void)argv;
+	if (argc != 1)
+		return ((void)printf("Don't put args !\n"), 1);
 	data = ft_calloc(1, sizeof(t_data));
 	data->env = fill_env(envp);
-
+	get_signal();
 	while (1)
 	{
 		data->tokens = getting_line(data);
@@ -173,8 +176,8 @@ int	main(int argc, char **argv, char **envp)
 			// for (int i = 0; data->cmd_block[i]; i++)
 			// 	printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
 			free_token(data->tokens);
-			free(data->p);
 		}
+		free(data->p);
 	}
 	free_list(data->env);
 	return (0);

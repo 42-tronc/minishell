@@ -16,6 +16,7 @@
 // # include "exec.h"
 // # include "parsing.h"
 # include "libft.h"
+# include <signal.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/wait.h>
@@ -229,6 +230,10 @@ int		prepare_token(t_data *data);
 int		get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
 void	remove_quotes(t_token **tokens, t_data *data);
+
+// signal.c functions
+void	get_signal(void);
+void	exit_program(t_data *data);
 
 // syntax_error.c functions
 int		syntax_error(t_data *data);
