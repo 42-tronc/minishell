@@ -6,22 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 08:17:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 14:38:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-NEED
-
-~	strtok
-X	Fill env to linked list
-X	Get value from var in linked list
-X	Set value from var in linked list
- */
-
-// char *ft_strtok(char *str, char *delim);
 
 t_env	*ft_env_new(char *var, char *value)
 {
@@ -129,8 +118,8 @@ int	ft_setenv(t_env *env, char *var, char *value)
 	current = env;
 	if (!var)
 		return (1);
-	if (!value)
-		value = "";
+	// if (!value)
+	// 	value = "";
 	while (current)
 	{
 		if (ft_strcmp(current->var, var) == 0)
@@ -139,7 +128,6 @@ int	ft_setenv(t_env *env, char *var, char *value)
 			current->value = ft_strdup(value);
 			if (!current->value)
 				return (print_error(0), -1);
-				// return (-10);
 			// printf("TO:\t`%s`=`%s`\n\n", current->var, current->value);
 			return (0);
 		}
