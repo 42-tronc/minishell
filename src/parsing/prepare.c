@@ -14,10 +14,10 @@
 
 int	prepare_token(t_data *data)
 {
+	id_tokens(&data->tokens, NULL);
 	expand_tokens(&data->tokens, data);
 	expand_tilde(&data->tokens, data);
 	remove_quotes(&data->tokens, data);
-	id_tokens(&data->tokens, NULL);
 	if (syntax_error(data))
 	{
 		free(data->p);
