@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 15:50:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 09:20:42 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,19 @@ void	echo_print(t_token *input, int block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
-			printf("%s", input->token);
+			// printf("%s", input->token);
+			write(STDOUT_FILENO, input->token, ft_strlen(input->token));
 			first = 0;
 		}
 		if (input->next && ft_strcmp(input->next->type, ARG) == 0 && !first)
-			printf(" ");
+			// printf(" ");
+			write(STDOUT_FILENO, " ", 1);
 		input = input->next;
 	}
 	// printf("`");
 	if (newline)
-		printf("\n");
+		// printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 /**
@@ -136,18 +139,4 @@ void	ft_echo(t_data *data, t_token *input, int block)
 
 	// echo_print(input, block, newline);
 	create_subshell(echo_print, data, input, block);
-	// while (input && input->pipe_block == block)
-	// {
-	// 	if (ft_strcmp(input->type, ARG) == 0)
-	// 	{
-	// 		printf("%s", input->token);
-	// 		first = 0;
-	// 	}
-	// 	if (input->next && ft_strcmp(input->next->type, ARG) == 0 && !first)
-	// 		printf(" ");
-	// 	input = input->next;
-	// }
-	// // printf("`");
-	// if (newline)
-	// 	printf("\n");
 }
