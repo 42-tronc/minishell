@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 14:29:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 12:50:05 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ struct s_token {
 ** < cd.c > */
 
 void		ft_cd(t_data *data, t_token *input);
+void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
 /*
 ** < echo.c > */
 
@@ -137,7 +138,8 @@ void		ft_echo(t_data *data, t_token *input, int block);
 /*
 ** < env.c > */
 
-void		ft_env(t_env *env);
+void	ft_env(t_data *data, t_token *input, int block);
+// void		ft_env(t_env *env);
 /*
 ** < exit.c > */
 

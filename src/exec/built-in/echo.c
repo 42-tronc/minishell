@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/08 12:38:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 12:51:10 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 	}
 }
 
-void	echo_print(t_token *input, int block)
+void	echo_print(t_data *data, t_token *input, int block)
 {
+	(void) data;
 	int	first;
 	int	newline;
 

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 14:48:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/08 12:29:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "echo") == 0)
 				ft_echo(data, input->next, block);
 			else if (ft_strcmp(input->token, "env") == 0)
-				ft_env(data->env);
+				ft_env(data, input, block);
 			else if (ft_strcmp(input->token, "exit") == 0)
 			{
 				free(data->p);
+				free(data->cmd_block);
 				ft_exit(input->next);
 			}
 			else if (ft_strcmp(input->token, "export") == 0)
@@ -165,6 +166,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(data->p);
 	}
-	free_list(data->env);
+	if (data->env)
+		free_list(data->env);
 	return (0);
 }
