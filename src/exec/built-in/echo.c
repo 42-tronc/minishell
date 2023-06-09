@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/08 12:51:10 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 11:29:01 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,6 @@ static int	need_newline(char *str)
 		}
 	}
 	return (1);
-}
-
-void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return ;
-	}
-	else if (pid == 0)
-	{
-		check_output(data, block);
-		func(data, input, block);
-		_exit(0);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		printf("Subshell execution complete %d\n", status);
-	}
 }
 
 void	echo_print(t_data *data, t_token *input, int block)
