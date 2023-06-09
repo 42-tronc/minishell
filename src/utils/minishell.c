@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/08 12:29:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 10:34:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,8 @@ void	check_command(t_data *data, t_token *input, int block)
 				ft_pwd();
 			else if (ft_strcmp(input->token, "unset") == 0)
 				ft_unset(&data->env, input);
-
-			// TESTS
-			else if (ft_strcmp(input->token, "test") == 0)
-			{
-				// ft_setenv(data->env, "SUDO_EDITOR", "not vim");
-				ft_setenv(data->env, "LOLI", "Pretty sadge");
-				// ft_setenv(data->env, "LAWL", "Very pepehands");
-				ft_env(data->env);
-				// ft_env(data->env);
-				printf("\n\n\nHEYO\nLOLI=%s\n", ft_getenv(data->env, "LOLI"));
-			}
-
-			// BACK 2 NORMAL
 			else
 				exec_command(data, input, block);
-				// printf("minishell: %s: command not found\n", input->token);
 		}
 		input = input->next;
 	}
