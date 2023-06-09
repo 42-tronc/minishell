@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 18:38:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 20:07:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ long		long	ft_atoll(const char *str);
 void	ft_exit(t_token *input);
 
 // export.c
-void	export_var(t_data *data, t_token *input, int block);
+void	add_env_entry(t_env *env, t_token *input);
 void	ft_export(t_data *data, t_token *input, int block);
 
 // pwd.c
