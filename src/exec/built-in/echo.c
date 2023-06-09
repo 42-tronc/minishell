@@ -6,51 +6,71 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 11:29:01 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 12:49:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief checks if a newline is needed by looking for any '-n' or '-nnnn...'
+ * @brief checks if string is a -n+ of some sort
  *
  * @param str string to check
- * @return int 1 if needed so no `-n` found, else 0
+ * @return int 1 if it is, else 0
  */
-static int	need_newline(char *str)
+static int	is_dash_n(char *str)
 {
 	int	i;
 
 	i = 1;
 	if (str && str[0] == '-')
 	{
-		if (str && str[1] == 'n')
+		if (str[i] == 'n')
 		{
 			i++;
-			while (str[i] && str[i] == 'n')
+			while (str[i] == 'n')
 				i++;
 			if (!str[i])
-				return (0);
+				return (1);
 		}
 	}
-	return (1);
+	return (0);
+}
+
+/**
+ * @brief checks if there is a newline in the echo
+ *
+ * @remarks (*input) to deference the pointer because -> has higher precedence
+ * than * and if no parenthesis, it would deference the next pointer
+ * @param input t_token of the first arg
+ * @return int 1 if there is a newline, else 0
+ */
+int	check_newline(t_token **input)
+{
+	int	newline;
+
+	newline = 1;
+	while (*input && ft_strcmp((*input)->type, ARG) != 0)
+		*input = (*input)->next;
+	if (*input && (*input)->token && is_dash_n((*input)->token))
+	{
+		newline = 0;
+		*input = (*input)->next;
+	}
+	while (*input && ft_strcmp((*input)->type, ARG) == 0
+		&& is_dash_n((*input)->token))
+		*input = (*input)->next;
+	return (newline);
 }
 
 void	echo_print(t_data *data, t_token *input, int block)
 {
-	(void) data;
 	int	first;
 	int	newline;
 
-	newline = 1;
-	if (input && input->token && !need_newline(input->token))
-	{
-		newline = 0;
-		input = input->next;
-	}
-	while (input && input->token && !need_newline(input->token))
-		input = input->next;
+	(void)data;
+	(void)block;
+	newline = check_newline(&input);
 	first = 1;
 	while (input && input->pipe_block == block)
 	{
