@@ -6,12 +6,19 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 11:28:52 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 22:57:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief creates a new t_env and dupe the var and value
+ *
+ * @param var
+ * @param value
+ * @return t_env* a new t_env node
+ */
 t_env	*ft_env_new(char *var, char *value)
 {
 	t_env	*dst;
@@ -19,9 +26,12 @@ t_env	*ft_env_new(char *var, char *value)
 	dst = malloc(sizeof(t_env));
 	if (!dst)
 		return (NULL);
-	dst->var = var;
-	dst->value = value;
-	dst->next = NULL;
+	dst->var = ft_strdup(var);
+	if (value)
+		dst->value = ft_strdup(value);
+	else
+		dst->next = NULL;
+	// printf("Created %s = `%s`\n", dst->var, dst->value);
 	return (dst);
 }
 
@@ -65,10 +75,8 @@ t_env	*fill_env(char **envp)
 		{
 			if (envp[i][j] == '=')
 			{
-				// printf("%c here \n", envp[i][j]);
-				// printf("\n`%s`\n", envp[i]);
 				envp[i][j] = '\0';
-				current = ft_env_new(ft_strdup(envp[i]), ft_strdup(envp[i] + j + 1));
+				current = ft_env_new(envp[i], envp[i] + j + 1);
 				// printf("`%s`", current->var);
 				// printf("`%s`\n", current->value);
 
@@ -99,15 +107,17 @@ char	*ft_getenv(t_env *env, char *var)
 	return (NULL);
 }
 
-static int	ft_addenv(t_env *env, char *var, char *value)
+
+static int	ft_addenv(t_env **env, char *var, char *value)
 {
+	t_env	*new_entry;
+
 	if (!var)
 		return (1);
-	if (!value)
-		value = "";
-	ft_env_add_back(&env, ft_env_new(var, value));
-
-	// printf("ADD:\t`%s`=`%s`\n\n", var, value);
+	new_entry = ft_env_new(var, value);
+	if (!new_entry)
+		return (2);
+	ft_env_add_back(env, new_entry);
 	return (0);
 }
 
@@ -118,24 +128,22 @@ int	ft_setenv(t_env *env, char *var, char *value)
 	current = env;
 	if (!var)
 		return (1);
-	// if (!value)
-	// 	value = "";
 	while (current)
 	{
-		if (ft_strcmp(current->var, var) == 0)
+		if (strcmp(current->var, var) == 0)
 		{
-			// printf("CHANGE:\t`%s`=`%s`\n", current->var, current->value);
-			current->value = ft_strdup(value);
-			if (!current->value)
-				return (print_error(0), -1);
-			// printf("TO:\t`%s`=`%s`\n\n", current->var, current->value);
+			free(current->value);
+			if (value)
+				current->value = strdup(value);
+			else
+				current->value = NULL;
+			if (value && !current->value)
+				return (-1);
 			return (0);
 		}
 		current = current->next;
 	}
-	// maybe add ft_addenv
-	ft_addenv(env, var, value);
-	return (0);
+	return (ft_addenv(&env, var, value));
 }
 
 void	print_error(int code)
