@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 10:34:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 13:04:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	check_command(t_data *data, t_token *input, int block)
 			}
 			else if (ft_strcmp(input->token, "export") == 0)
 				// printf("this needs a quick fix\n");
-				ft_export(data, input);
+				ft_export(data, input->next, block);
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				ft_pwd();
 			else if (ft_strcmp(input->token, "unset") == 0)
