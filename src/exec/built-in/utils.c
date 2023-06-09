@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 14:38:56 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 11:28:52 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,4 +147,28 @@ void	print_error(int code)
 	// should prob print to fd 2
 	printf(RED"Error: %s\n"RESET, error[code]);
 	exit(EXIT_FAILURE);
+}
+
+void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return ;
+	}
+	else if (pid == 0)
+	{
+		check_output(data, block);
+		func(data, input, block);
+		_exit(0);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		printf("Subshell execution complete %d\n", status);
+	}
 }

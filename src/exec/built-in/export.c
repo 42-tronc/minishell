@@ -6,11 +6,12 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 14:42:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 15:38:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#pragma GCC diagnostic ignored "-Wunused-function"
 
 /*
 EXPORT
@@ -37,7 +38,7 @@ static void	swap_var(char **current, char **next)
 	*next = tmp;
 }
 
-static void	ft_sort_env(t_env *env)
+static void	export_sort(t_env *env)
 {
 	t_env	*current;
 	t_env	*next;
@@ -61,13 +62,25 @@ static void	ft_sort_env(t_env *env)
 	}
 }
 
-/**
- * @brief takes the args and export those in the t_env
- *
- * @param env t_env of export
- * @param args t_list of the args with args.content being each token
- */
-static void	args_to_export(t_data *data, t_token *input)
+static void	export_print(t_data *data, t_token *input, int block)
+{
+	(void) input;
+	(void) block;
+
+	if (!data->env)
+		return ;
+	export_sort(data->env);
+	while (data->env)
+	{
+		if (data->env->value)
+			printf("declare -x %s=\"%s\"\n", data->env->var, data->env->value);
+		else
+			printf("declare -x %s\n", data->env->var);
+		data->env = data->env->next;
+	}
+}
+
+/* static void	export_var(t_data *data, t_token *input)
 {
 	char	*var;
 	char	*value;
@@ -100,34 +113,90 @@ static void	args_to_export(t_data *data, t_token *input)
 		}
 		input = input->next;
 	}
+} */
+
+void	export_var(t_data *data, t_token *input, int block)
+{
+	(void) block;
+	(void) data;
+	char	*var;
+	char	*value;
+	char	*content;
+	char	*equal_sign;
+
+	while (input)
+	{
+		content = input->token;
+		// printf("DOING %s\n", content);
+		equal_sign = ft_strchr(content, '=');
+
+		// no value
+		if (!equal_sign)
+		{
+			printf("setting `%s` to NULL\n", content);
+			ft_setenv(data->env, content, NULL);
+			// printf("no equal\n");
+		}
+
+		// var with value
+		else
+		{
+			// printf("`%s`\n", content);
+			var = ft_strndup(content, equal_sign - content);
+			// printf("var\t= %s\n", var);
+			value = ft_strdup(equal_sign + 1);
+			// printf("value\t= %s\n", value);
+			ft_setenv(data->env, var, value);
+		}
+		input = input->next;
+	}
+
+/* 	equal_sign = 0;
+	var = NULL;
+	value = NULL;
+	while (input)
+	{
+		equal_sign = ft_strchr(input->token, '=');
+		if (ft_strcmp(input->type, ARG) == 0)
+		{
+			printf(BLUE"E: %s%s%s\n", BOLD, input->token, RESET); // REMOVE
+			var = ft_strndup(input->token, equal_sign - input->token);
+			if (equal_sign)
+			{
+				value = ft_strdup(equal_sign + 1);
+				printf("equal sign\n"); // REMOVE
+			}
+			else
+				printf("no equal sign\n");
+			ft_setenv(data->env, var, value);
+			printf("Found %s=`%s`\n", input->token, ft_getenv(data->env, var));
+			// print = 0;
+			// break;
+		}
+		input = input->next;
+	} */
 }
 
-/*
-If `export loli`
-	`loli`
-if `export lol=`
-	`lol=""`
-*/
 
-// void	ft_export(t_env *env, t_list *args)
-void	ft_export(t_data *data, t_token *input)
+void	ft_export(t_data *data, t_token *input, int block)
 {
-	// ft_setenv(env, "GTK_MODULES", "lol");
-	// ft_setenv(env, "__NOT_GTK_MODULES", "prev");
-	// ft_setenv(env, "__NOT_GTK_MODULES", "");
-	// ft_setenv(env, "__yep", "");
+	int	print;
+	(void) data;
+	(void) block;
 
-	args_to_export(data, input);
-	getenv(input->token);
+	print = 1;
+	while(input)
+	{
+		if (ft_strcmp(input->type, ARG) == 0)
+		{
+			print = 0;
+			break;
+		}
+		input = input->next;
+	}
+	if (print)
+		create_subshell(export_print, data, input, block);
+	else
+		export_var(data, input, block);
 
-	// printf("\n\n\n\n\tEXPORT HERE\n\n");
-	ft_sort_env(data->env);
-	// while (data->env)
-	// {
-	// 	if (data->env->value)
-	// 		printf("declare -x %s=\"%s\"\n", data->env->var, data->env->value);
-	// 	else
-	// 		printf("declare -x %s\n", data->env->var);
-	// 	data->env = data->env->next;
-	// }
 }

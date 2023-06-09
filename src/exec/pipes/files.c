@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/07 13:30:02 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/09 11:17:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int	check_outfile(t_data *data, t_token *input, int block)
 				return (-1);
 			}
 			else
-				printf(GREEN "file: %s%s%s\tfd: %s%d\n\n" RESET, BOLD, input->token, NO_BOLD, BOLD, data->cmd_block[block]->out_fd);
+				printf(GREEN "file: %s%s%s\tfd: %s%d%s\n\n", BOLD, input->token, NO_BOLD, BOLD, data->cmd_block[block]->out_fd, RESET);
 		}
 		input = input->next;
 	}
