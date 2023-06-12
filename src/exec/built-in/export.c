@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 09:29:32 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 11:13:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	add_env_entry(t_env *env, t_token *input, int block)
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
 			var = strdup(input->token);
-			printf("getenv %s = `%s`\n", var, getenv(var));
 			value = strchr(var, '=');
 			if (value)
 			{
@@ -84,6 +83,7 @@ void	add_env_entry(t_env *env, t_token *input, int block)
 			// else
 			printf("var = `%s` | value = `%s`\n", var, value);
 			ft_setenv(env, var, value);
+			printf("getenv %s = `%s`\n", var, ft_getenv(env, var));
 		}
 		input = input->next;
 	}
