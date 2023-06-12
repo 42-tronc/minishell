@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 11:13:15 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 17:15:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	add_env_entry(t_env *env, t_token *input, int block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
-			var = strdup(input->token);
-			value = strchr(var, '=');
+			var = ft_strdup(input->token);
+			value = ft_strchr(var, '=');
 			if (value)
 			{
 				*value = '\0';
