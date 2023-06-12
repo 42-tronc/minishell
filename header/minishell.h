@@ -165,6 +165,7 @@ int	ft_getpaths(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
 char	**get_cmd_args(t_token *input, char *command_path);
 int	check_output(t_data *data, int block);
+int	check_input(t_data *data, int block);
 void	exec_command(t_data *data, t_token *input, int block);
 
 // files.c
