@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 22:57:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 11:15:21 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,11 @@ int	ft_setenv(t_env *env, char *var, char *value)
 	{
 		if (strcmp(current->var, var) == 0)
 		{
+			if (!value)
+				return (0);
 			free(current->value);
-			if (value)
-				current->value = strdup(value);
-			else
-				current->value = NULL;
-			if (value && !current->value)
+			current->value = ft_strdup(value);
+			if (!current->value)
 				return (-1);
 			return (0);
 		}
