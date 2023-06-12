@@ -142,7 +142,7 @@ long		long	ft_atoll(const char *str);
 void	ft_exit(t_token *input);
 
 // export.c
-void	add_env_entry(t_env *env, t_token *input);
+void	add_env_entry(t_env *env, t_token *input, int block);
 void	ft_export(t_data *data, t_token *input, int block);
 
 // pwd.c
