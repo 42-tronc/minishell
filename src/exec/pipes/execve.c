@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 13:14:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/07 14:59:04 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,17 +134,6 @@ int	check_output(t_data *data, int block)
 	return (0);
 }
 
-int	check_input(t_data *data, int block)
-{
-	if (data->cmd_block[block]->in_fd > 0)
-	{
-		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
-			return (FAILURE);
-		close(data->cmd_block[block]->in_fd);
-	}
-	return (0);
-}
-
 void	exec_command(t_data *data, t_token *input, int block)
 {
 	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
@@ -214,7 +203,6 @@ void	exec_command(t_data *data, t_token *input, int block)
 		close(fd[0]);
 		close(fd[1]);
 
-		check_input(data, block);
 		check_output(data, block);
 		// if (command_path)
 			execve(command_path, command_args, NULL);
