@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:49:52 by croy              #+#    #+#             */
-/*   Updated: 2023/05/02 10:43:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 16:25:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void ft_fork()
+void	ft_fork(void)
 {
 	pid_t	pid;
 	int		status;
@@ -35,10 +35,10 @@ void ft_fork()
 		printf("Parent process\n");
 		wait(&status); // Wait for child to close
 		if (WIFEXITED(status))
-			printf("Child process terminated with status %d\n", WEXITSTATUS(status));
+			printf("Child process terminated with status %d\n",
+				WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
 			printf("Child process terminated by signal %d\n", WTERMSIG(status));
 	}
 	// waitpid
-
 }
