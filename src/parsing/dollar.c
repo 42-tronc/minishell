@@ -48,12 +48,10 @@ char	*get_before_dollar(char *str, t_data *p, int i, int size)
 	while (str && str[++size])
 	{
 		p_quote(p->p, str[size]);
-		if (size == 0 && str[size] == '$' && str[size + 1] != '$')
-			break ;
-		if (size >= 1 && str[size - 1] != '$' && str[size] == '$' \
+		if (str[size - 1] != '$' && str[size] == '$' \
 		&& str[size + 1] != '$' && !p->p->quote)
 			break ;
-		else if (size >= 2 && str[size - 2] == '$' && str[size - 1] == '$' \
+		else if (str[size - 2] == '$' && str[size - 1] == '$' \
 		&& str[size] == '$' && str[size + 1] != '$' && !p->p->quote)
 			break ;
 	}
@@ -83,7 +81,7 @@ void	free_expand(t_parsing *p)
 		free(p->new_token);
 }
 
-int	replace_var(t_token *temp, t_data *p)
+void	replace_var(t_token *temp, t_data *p)
 {
 	p->p->before = get_before_dollar(temp->token, p, -1, -1);
 	p->i++;
@@ -101,15 +99,12 @@ int	replace_var(t_token *temp, t_data *p)
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
 	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
-	if (!p->p->new_token)
-		return (free_expand(p->p), 1);
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
 	free_expand(p->p);
-	return (0);
 }
 
-int	expand_tokens(t_token **tokens, t_data *data)
+void	expand_tokens(t_token **tokens, t_data *data)
 {
 	t_token	*temp;
 
@@ -119,11 +114,9 @@ int	expand_tokens(t_token **tokens, t_data *data)
 		data->p->i = 0;
 		while (processed_line(temp->token, data->p))
 		{
-			if (replace_var(temp, data))
-				return (1);
+			replace_var(temp, data);
 			data->i = 0;
 		}
 		temp = temp->next;
 	}
-	return (0);
 }

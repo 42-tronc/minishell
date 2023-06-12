@@ -133,26 +133,26 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return ((void)printf("Don't put args !\n"), 1);
 	data = ft_calloc(1, sizeof(t_data));
-	if (!data)
-		return (1);
 	data->env = fill_env(envp);
-	if (!data->env)
-		return (1);
 	get_signal();
 	while (1)
 	{
-		if (getting_line(data))
-			return (free_list(data->env), free(data), 1);
+		data->tokens = getting_line(data);
 		if (data->tokens && !prepare_token(data))
 		{
 			if (init_data(data))
 				exit(FAILURE);
+
 			exec_dispatch(data, data->tokens);
+			// print_tokens_linked_list(data->tokens);
+
+			// for (int i = 0; data->cmd_block[i]; i++)
+			// 	printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
+			free_token(data->tokens);
 		}
 		free(data->p);
-		free_token(data->tokens);
 	}
-	// if (data->env)
-	// 	free_list(data->env);
+	if (data->env)
+		free_list(data->env);
 	return (0);
 }

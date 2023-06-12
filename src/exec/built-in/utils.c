@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 22:57:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 13:24:17 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,20 @@ t_env	*ft_env_new(char *var, char *value)
 	dst = malloc(sizeof(t_env));
 	if (!dst)
 		return (NULL);
-	dst->var = ft_strdup(var);
-	if (value)
+	dst->var = NULL;
+	dst->value = NULL;
+	if (var)
+		dst->var = ft_strdup(var);
+	if (dst->var && value)
 		dst->value = ft_strdup(value);
-	else
-		dst->next = NULL;
-	// printf("Created %s = `%s`\n", dst->var, dst->value);
+	if (!dst->var || !dst->value)
+	{
+		if (!dst->value)
+			free(dst->var);
+		free(dst);
+		return (NULL);
+	}
+	dst->next = NULL; // Set next to NULL for the new node
 	return (dst);
 }
 
@@ -132,12 +140,11 @@ int	ft_setenv(t_env *env, char *var, char *value)
 	{
 		if (strcmp(current->var, var) == 0)
 		{
+			if (!value)
+				return (0);
 			free(current->value);
-			if (value)
-				current->value = strdup(value);
-			else
-				current->value = NULL;
-			if (value && !current->value)
+			current->value = ft_strdup(value);
+			if (!current->value)
 				return (-1);
 			return (0);
 		}
@@ -170,6 +177,7 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 	}
 	else if (pid == 0)
 	{
+		check_input(data, block); // might not be needed
 		check_output(data, block);
 		func(data, input, block);
 		_exit(0);
