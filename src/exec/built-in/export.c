@@ -62,22 +62,32 @@ static void	export_print(t_data *data, t_token *input, int block)
 	}
 }
 
-void	add_env_entry(t_env *env, t_token *input)
+void	add_env_entry(t_env *env, t_token *input, int block)
 {
 	char	*var;
 	char	*value;
 
 	if (!input)
 		return ;
-	var = strdup(input->token);
-	value = strchr(var, '=');
-	if (value)
+	while (input && input->pipe_block == block)
 	{
-		*value = '\0';
-		value++;
+		if (ft_strcmp(input->type, ARG) == 0)
+		{
+			var = strdup(input->token);
+			value = strchr(var, '=');
+			if (value)
+			{
+				*value = '\0';
+				value++;
+			}
+			// else
+			printf("var = `%s` | value = `%s`\n", var, value);
+			ft_setenv(env, var, value);
+			printf("getenv %s = `%s`\n", var, ft_getenv(env, var));
+		}
+		input = input->next;
 	}
-	printf("var = `%s` | value = `%s`\n", var, value);
-	ft_setenv(env, var, value);
+
 }
 
 void	ft_export(t_data *data, t_token *input, int block)
@@ -99,5 +109,5 @@ void	ft_export(t_data *data, t_token *input, int block)
 	if (print)
 		create_subshell(export_print, data, input, block);
 	else
-		add_env_entry(data->env, input);
+		add_env_entry(data->env, input, block);
 }
