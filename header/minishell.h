@@ -142,7 +142,7 @@ long long	ft_atoll(const char *str);
 void		ft_exit(t_token *input);
 
 // export.c
-void		add_env_entry(t_env *env, t_token *input);
+void		add_env_entry(t_env *env, t_token *input, int block);
 void		ft_export(t_data *data, t_token *input, int block);
 
 // pwd.c
@@ -159,13 +159,14 @@ char		*ft_getenv(t_env *env, char *var);
 int			ft_setenv(t_env *env, char *var, char *value);
 void		print_error(int code);
 void		create_subshell(void (*func)(t_data*, t_token*, int), \
-t_data *data, t_token *input, int block);
+t_data 		*data, t_token *input, int block);
 
 // execve.c
 int			ft_getpaths(t_data *data);
 char		*get_validpath(t_data *data, t_token *input);
 char		**get_cmd_args(t_token *input, char *command_path);
 int			check_output(t_data *data, int block);
+int			check_input(t_data *data, int block);
 void		exec_command(t_data *data, t_token *input, int block);
 
 // files.c
