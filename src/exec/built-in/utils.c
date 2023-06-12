@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 13:24:17 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 17:23:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	ft_setenv(t_env *env, char *var, char *value)
 		return (1);
 	while (current)
 	{
-		if (strcmp(current->var, var) == 0)
+		if (ft_strcmp(current->var, var) == 0)
 		{
 			if (!value)
 				return (0);
