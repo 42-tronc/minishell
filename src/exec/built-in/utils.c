@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 11:15:21 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 12:57:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ t_env	*ft_env_new(char *var, char *value)
 	if (value)
 		dst->value = ft_strdup(value);
 	else
-		dst->next = NULL;
+		dst->value = NULL; // Set value to NULL if there is no value
+
+	dst->next = NULL; // Set next to NULL for the new node
 	// printf("Created %s = `%s`\n", dst->var, dst->value);
 	return (dst);
 }
