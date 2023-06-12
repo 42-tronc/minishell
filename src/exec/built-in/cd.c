@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 10:25:33 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/12 10:42:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ static char	*get_cd_path(t_data *data, t_token *input)
 {
 	char	*path;
 
-	// HOME Directory
 	if (!input || ft_strcmp(input->token, "~") == 0)
 		path = ft_getenv(data->env, "HOME");
-
-	// LAST Directory
 	else if (ft_strcmp(input->token, "-") == 0)
 	{
 		if (ft_getenv(data->env, "OLDPWD"))
@@ -52,16 +49,13 @@ void	ft_cd(t_data *data, t_token *input)
 	if (input && input->next)
 	{
 		printf("cd: too many arguments\n");
-		return;
+		return ;
 	}
-
-	// Get the current dir to make it the OLDPWD
 	getcwd(previous, BUFSIZ);
 	path = get_cd_path(data, input);
-	printf("path = `%s`\n", path);
-
+	printf("path = `%s`\n", path); // DEBUG
 	if (!path)
-		return;
+		return ;
 	if (chdir(path) == -1)
 		perror("cd");
 	else
@@ -69,7 +63,6 @@ void	ft_cd(t_data *data, t_token *input)
 		ft_setenv(data->env, "OLDPWD", previous);
 		printf("New OLDPWD\t%s\n", ft_getenv(data->env, "OLDPWD"));
 	}
-	printf("New path\t");
-	ft_pwd();
-	// printf("Moved to %s\n", path);
+	printf("New path\t"); // DEBUG
+	ft_pwd();             // DEBUG
 }
