@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/13 08:56:32 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 09:03:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 	if (pid == -1)
 	{
 		perror("fork");
-		return ;
+		return ; // will need to exit here
 	}
 	else if (pid == 0)
 	{
