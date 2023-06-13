@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 20:07:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 12:59:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ typedef struct s_cmd_block
 	int		in_fd;
 	int		out_fd;
 	char	*heredoc;
-	int		*pipin;
-	int		*pipout;
+	int		pipe_fd[2];
+	char	*cmd_path; // MIGHT NOT BE NEEDED
+	char	**cmd_args; // MIGHT NOT BE NEEDED
+	// int		*pipin;
+	// int		*pipout;
 }			t_cmd_block;
 
 struct s_data {
@@ -136,9 +139,10 @@ void	ft_echo(t_data *data, t_token *input, int block);
 // env.c
 void	print_env(t_data *data, t_token *input, int block);
 void	ft_env(t_data *data, t_token *input, int block);
+t_env	*fill_env(char **envp);
 
 // exit.c
-long		long	ft_atoll(const char *str);
+long	long	ft_atoll(const char *str);
 void	ft_exit(t_token *input);
 
 // export.c
@@ -154,7 +158,6 @@ void	ft_unset(t_env **env, t_token *args);
 // utils.c
 t_env	*ft_env_new(char *var, char *value);
 void	ft_env_add_back(t_env **lst, t_env *new);
-t_env	*fill_env(char **envp);
 char	*ft_getenv(t_env *env, char *var);
 int	ft_setenv(t_env *env, char *var, char *value);
 void	print_error(int code);
@@ -164,8 +167,9 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 int	ft_getpaths(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
 char	**get_cmd_args(t_token *input, char *command_path);
-int	check_output(t_data *data, int block);
-int	check_input(t_data *data, int block);
+int	check_output(t_data *data, int block, char *cmd_path);
+int	check_input(t_data *data, int block, char *cmd_path);
+int	create_pipe(t_data *data);
 void	exec_command(t_data *data, t_token *input, int block);
 
 // files.c
@@ -174,7 +178,7 @@ int	check_infile(t_data *data, t_token *input, int block);
 int	check_outfile(t_data *data, t_token *input, int block);
 
 // fork.c
-void	ft_fork();
+void	ft_fork(void);
 
 // strjoin_heredoc.c
 char	*ft_strjoin_heredoc(char *s1, char *s2);

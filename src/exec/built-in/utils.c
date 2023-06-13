@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/13 09:03:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 12:18:23 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 	}
 	else if (pid == 0)
 	{
-		check_input(data, block); // might not be needed
-		check_output(data, block);
+		// check_input(data, block); // might not be needed
+		// check_output(data, block);
 		func(data, input, block);
 		_exit(0);
 	}
