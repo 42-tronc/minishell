@@ -65,15 +65,14 @@ int	right_symbols(t_parsing *p, char *str)
 	return (1);
 }
 
-t_token	*getting_line(t_data *data)
+int	getting_line(t_data *data)
 {
-	t_token	*tokens;
 	char	*str;
 
 	data->p = ft_calloc(1, sizeof(t_parsing));
 	if (!data->p)
-		return (NULL);
-	tokens = NULL;
+		return (1);
+	data->tokens = NULL;
 	str = readline(BOLD WHITE"minishell> "RESET);
 	if (!str)
 		exit_program(data);
@@ -84,9 +83,10 @@ t_token	*getting_line(t_data *data)
 		data->p->quote = 0;
 		data->p->dquote = 0;
 		if (!even_quote(data->p, str) || !right_symbols(data->p, str))
-			return (free(data->p), free(str), NULL);
-		cutting_line(&tokens, data->p, str);
+			return (free(str), 1);
+		if (cutting_line(&data->tokens, data->p, str))
+			return (free(str), 1);
 		free(str);
 	}
-	return (tokens);
+	return (0);
 }

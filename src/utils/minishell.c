@@ -137,19 +137,15 @@ int	main(int argc, char **argv, char **envp)
 	get_signal();
 	while (1)
 	{
-		data->tokens = getting_line(data);
+		if (getting_line(data))
+			return (free(data->p), free_list(data->env), free(data), 1);
 		if (data->tokens && !prepare_token(data))
 		{
 			if (init_data(data))
 				exit(FAILURE);
-
 			exec_dispatch(data, data->tokens);
-			// print_tokens_linked_list(data->tokens);
-
-			// for (int i = 0; data->cmd_block[i]; i++)
-			// 	printf("i=%d\tin=%d\tout=%d\n", i, data->cmd_block[i]->in_fd, data->cmd_block[i]->out_fd);
-			free_token(data->tokens);
 		}
+		free_token(data->tokens);
 		free(data->p);
 	}
 	if (data->env)

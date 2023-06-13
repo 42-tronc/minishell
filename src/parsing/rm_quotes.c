@@ -54,7 +54,7 @@ void	copy_without_quotes(char *dst, char *src, t_parsing *p)
 	dst[++i_dst] = '\0';
 }
 
-void	remove_quotes(t_token **tokens, t_data *data)
+int	remove_quotes(t_token **tokens, t_data *data)
 {
 	t_token	*temp;
 	char	*new;
@@ -66,13 +66,16 @@ void	remove_quotes(t_token **tokens, t_data *data)
 		data->p->dquote = 0;
 		new = malloc(sizeof(char) * (get_size(data->p, temp->token) + 1));
 		if (!new)
-			return ;
+			return (1);
 		data->p->quote = 0;
 		data->p->dquote = 0;
 		copy_without_quotes(new, temp->token, data->p);
 		free(temp->token);
 		temp->token = ft_strdup(new);
+		if (!temp->token)
+			return (free(new), 1);
 		free(new);
 		temp = temp->next;
 	}
+	return (0);
 }
