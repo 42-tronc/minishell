@@ -12,23 +12,24 @@
 
 #include "minishell.h"
 
-void	ft_tokenadd_back(t_token **lst, t_token *new)
+int	ft_tokenadd_back(t_token **lst, t_token *new)
 {
 	t_token	*temp;
 
-	if (lst == NULL)
-		return ;
+	if (lst == NULL || new == NULL)
+		return (1);
 	temp = *lst;
 	if (!temp)
 	{
 		new->prev = NULL;
 		*lst = new;
-		return ;
+		return (0);
 	}
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new;
 	new->prev = temp;
+	return (0);
 }
 
 t_token	*ft_tokennew(void *content)

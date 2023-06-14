@@ -55,7 +55,7 @@ char	*copy_str_from_to(int from, int to, char *str)
 	return (copy);
 }
 
-void	cutting_line(t_token **temp, t_parsing *p, char *str)
+int	cutting_line(t_token **temp, t_parsing *p, char *str)
 {
 	char	*token;
 
@@ -66,9 +66,12 @@ void	cutting_line(t_token **temp, t_parsing *p, char *str)
 			p->start = p->i;
 			p->i = get_end_token(p, str);
 			token = copy_str_from_to(p->start, p->i, str);
-			ft_tokenadd_back(temp, ft_tokennew(ft_strdup(token)));
-			free(token);
+			if (!token)
+				return (1);
+			if (ft_tokenadd_back(temp, ft_tokennew(token)))
+				return (free(token), 1);
 		}
 		p->i++;
 	}
+	return (0);
 }

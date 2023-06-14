@@ -19,15 +19,18 @@ int	similar_type(t_token *temp)
 
 	symbol1 = 0;
 	symbol2 = 0;
+	if (!ft_strcmp(temp->type, PIPE) && !ft_strcmp(temp->prev->type, PIPE))
+		return (1);
 	if (!ft_strcmp(temp->type, CHEVRON_L) \
 	|| !ft_strcmp(temp->type, CHEVRON_R) \
 	|| !ft_strcmp(temp->type, CHEVRON_RR) \
+	|| !ft_strcmp(temp->type, HERE_DOC) \
 	|| !ft_strcmp(temp->type, PIPE))
 		symbol1 = 1;
 	if (!ft_strcmp(temp->prev->type, CHEVRON_L) \
 	|| !ft_strcmp(temp->prev->type, CHEVRON_R) \
 	|| !ft_strcmp(temp->prev->type, CHEVRON_RR) \
-	|| !ft_strcmp(temp->prev->type, PIPE))
+	|| !ft_strcmp(temp->prev->type, HERE_DOC))
 		symbol2 = 1;
 	if (symbol1 && symbol2)
 		return (1);
