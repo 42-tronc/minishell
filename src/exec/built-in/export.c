@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 11:40:52 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 11:57:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,14 @@ void	add_env_entry(t_env *env, t_token *input, int block)
 		}
 		input = input->next;
 	}
-
 }
 
-static void	export_print(t_data *data, t_token *input, int block)
+static int	export_print(t_data *data, t_token *input, int block)
 {
 	(void)input;
 	(void)block;
 	if (!data->env)
-		return ;
+		return (1);
 	export_sort(data->env);
 	while (data->env)
 	{
@@ -88,6 +87,7 @@ static void	export_print(t_data *data, t_token *input, int block)
 			printf(RED "declare -x %s%s\n", data->env->var, RESET);
 		data->env = data->env->next;
 	}
+	return (0);
 }
 
 void	ft_export(t_data *data, t_token *input, int block)
