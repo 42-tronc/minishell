@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 09:43:27 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 11:40:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_env	*ft_env_new(char *var, char *value)
 		dst->var = ft_strdup(var);
 	if (dst->var && value)
 		dst->value = ft_strdup(value);
-	if (!dst->var || !dst->value)
+	if (!dst->var || (value && !dst->value))
 	{
 		if (!dst->value)
 			free(dst->var);

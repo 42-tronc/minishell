@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 17:15:35 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 10:57:53 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,6 @@ static void	export_sort(t_env *env)
 	}
 }
 
-static void	export_print(t_data *data, t_token *input, int block)
-{
-	(void)input;
-	(void)block;
-	if (!data->env)
-		return ;
-	export_sort(data->env);
-	while (data->env)
-	{
-		if (data->env->value)
-			printf("declare -x %s=\"%s\"\n", data->env->var, data->env->value);
-		else
-			printf("declare -x %s\n", data->env->var);
-		data->env = data->env->next;
-	}
-}
-
 void	add_env_entry(t_env *env, t_token *input, int block)
 {
 	char	*var;
@@ -88,6 +71,23 @@ void	add_env_entry(t_env *env, t_token *input, int block)
 		input = input->next;
 	}
 
+}
+
+static void	export_print(t_data *data, t_token *input, int block)
+{
+	(void)input;
+	(void)block;
+	if (!data->env)
+		return ;
+	export_sort(data->env);
+	while (data->env)
+	{
+		if (data->env->value)
+			printf("declare -x %s=\"%s\"\n", data->env->var, data->env->value);
+		else
+			printf("declare -x %s\n", data->env->var);
+		data->env = data->env->next;
+	}
 }
 
 void	ft_export(t_data *data, t_token *input, int block)
