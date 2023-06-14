@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/13 12:18:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 09:43:27 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,10 @@ void	print_error(int code)
 void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
 {
 	pid_t	pid;
-	int		status;
+	// int		status;
 
 	pid = fork();
+	// data->pid[block] = pid;
 	if (pid == -1)
 	{
 		perror("fork");
@@ -141,9 +142,9 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 		func(data, input, block);
 		_exit(0);
 	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		printf("Subshell execution complete %d\n", status);
-	}
+	// else
+	// {
+	// 	waitpid(pid, &status, 0);
+	// 	printf("Subshell execution complete %d\n", status);
+	// }
 }

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/13 09:53:59 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 09:26:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 		while (block > input->pipe_block && input->next)
 			input = input->next;
 	}
+	while (data->cmd_block_count-- > 0)
+		wait(NULL);
 }
 
 // will need to get the return value to somewhere
@@ -147,6 +149,7 @@ int	main(int argc, char **argv, char **envp)
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 		}
+
 		free_token(data->tokens);
 		free(data->p);
 	}
