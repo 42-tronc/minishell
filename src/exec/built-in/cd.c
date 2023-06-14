@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 10:42:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 11:50:34 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	ft_cd(t_data *data, t_token *input)
 		ft_setenv(data->env, "OLDPWD", previous);
 		printf("New OLDPWD\t%s\n", ft_getenv(data->env, "OLDPWD"));
 	}
-	printf("New path\t"); // DEBUG
-	ft_pwd();             // DEBUG
+	// printf("New path\t"); // DEBUG
+	// ft_pwd();             // DEBUG
 }
