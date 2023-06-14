@@ -15,13 +15,13 @@
 int	prepare_token(t_data *data)
 {
 	id_tokens(&data->tokens, NULL);
-	if (expand_tokens(&data->tokens, data))
+	if (expand_tokens(data->tokens, data) == 1)
 		return (1);
-	if (expand_tilde(&data->tokens, data))
+	if (expand_tilde(&data->tokens, data) == 1)
 		return (1);
-	if (remove_quotes(&data->tokens, data))
+	if (remove_quotes(&data->tokens, data) == 1)
 		return (1);
-	if (syntax_error(data))
+	if (syntax_error(data) == 1)
 		return (1);
 	return (0);
 }
