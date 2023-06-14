@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 12:49:58 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 11:52:47 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_newline(t_token **input)
 	return (newline);
 }
 
-void	echo_print(t_data *data, t_token *input, int block)
+int	echo_print(t_data *data, t_token *input, int block)
 {
 	int	first;
 	int	newline;
@@ -87,6 +87,7 @@ void	echo_print(t_data *data, t_token *input, int block)
 	}
 	if (newline)
 		write(STDOUT_FILENO, "\n", 1);
+	return (0);
 }
 
 /**

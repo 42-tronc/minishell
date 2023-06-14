@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/13 12:18:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 14:48:03 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_env	*ft_env_new(char *var, char *value)
 		dst->var = ft_strdup(var);
 	if (dst->var && value)
 		dst->value = ft_strdup(value);
-	if (!dst->var || !dst->value)
+	if (!dst->var || (value && !dst->value))
 	{
 		if (!dst->value)
 			free(dst->var);
@@ -123,12 +123,13 @@ void	print_error(int code)
 	exit(EXIT_FAILURE);
 }
 
-void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
+void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
 {
 	pid_t	pid;
-	int		status;
+	// int		status;
 
 	pid = fork();
+	// data->pid[block] = pid;
 	if (pid == -1)
 	{
 		perror("fork");
@@ -136,14 +137,23 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 	}
 	else if (pid == 0)
 	{
-		// check_input(data, block); // might not be needed
-		// check_output(data, block);
-		func(data, input, block);
-		_exit(0);
+		check_input(data, block); // might not be needed
+		check_output(data, block);
+		if (func(data, input, block))
+			exit(1);
+		exit(0);
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
-		printf("Subshell execution complete %d\n", status);
-	}
+		if (data->cmd_block[block]->pipe_fd[0] > 0 && block > 0)
+			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
+		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
+			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
+    }
+	// else
+	// {
+	// 	int wstatus;
+	// 	waitpid(pid, &status, 0);
+	// 	printf("Subshell execution complete %d\n", status);
+	// }
 }

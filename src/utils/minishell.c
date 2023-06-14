@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/13 09:53:59 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 13:13:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	check_command(t_data *data, t_token *input, int block)
 				// printf("this needs a quick fix\n");
 				ft_export(data, input->next, block);
 			else if (ft_strcmp(input->token, "pwd") == 0)
-				ft_pwd();
+				// ft_pwd();
+				create_subshell(ft_pwd, data, input, block);
 			else if (ft_strcmp(input->token, "unset") == 0)
 				ft_unset(&data->env, input);
 			else
@@ -94,6 +95,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 		while (block > input->pipe_block && input->next)
 			input = input->next;
 	}
+	// while (data->cmd_block_count-- > 0)
+	// 	wait(NULL);
 }
 
 // will need to get the return value to somewhere
@@ -147,6 +150,9 @@ int	main(int argc, char **argv, char **envp)
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 		}
+		while (wait(NULL) > 0)
+			;
+
 		free_token(data->tokens);
 		free(data->p);
 	}
