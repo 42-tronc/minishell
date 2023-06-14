@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/13 12:59:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 09:43:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_cmd_block
 struct s_data {
 	t_env		*env;
 	char		**og_env;
-	t_env		*export; // to remove at one point
 	t_cmd_block	**cmd_block;
 	char		**paths;
 	int			cmd_block_count;
