@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 17:23:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 12:18:23 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,47 +58,6 @@ void	ft_env_add_back(t_env **lst, t_env *new)
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new;
-}
-
-/**
- * @brief gets the envp from a main function and fills a t_env linked list
- * will set the variable in `var` and value in `value`
- *
- * @param envp from a main function where (char **envp)
- * @return t_env* the linked list with every var and its value from the env
- */
-t_env	*fill_env(char **envp)
-{
-	int		i;
-	int		j;
-	t_env	*ll_env;
-	t_env	*current;
-
-	i = -1;
-	ll_env = NULL;
-	while (envp[++i])
-	{
-		j = -1;
-		while (envp[i][++j])
-		{
-			if (envp[i][j] == '=')
-			{
-				envp[i][j] = '\0';
-				current = ft_env_new(envp[i], envp[i] + j + 1);
-				// printf("`%s`", current->var);
-				// printf("`%s`\n", current->value);
-
-				if (!current)
-					return (NULL);
-					// free memory here
-				ft_env_add_back(&ll_env, current);
-				break;
-			}
-			// j++;
-		}
-		// i++;
-	}
-	return (ll_env);
 }
 
 char	*ft_getenv(t_env *env, char *var)
@@ -173,12 +132,12 @@ void	create_subshell(void (*func)(t_data*, t_token*, int), t_data *data, t_token
 	if (pid == -1)
 	{
 		perror("fork");
-		return ;
+		return ; // will need to exit here
 	}
 	else if (pid == 0)
 	{
-		check_input(data, block); // might not be needed
-		check_output(data, block);
+		// check_input(data, block); // might not be needed
+		// check_output(data, block);
 		func(data, input, block);
 		_exit(0);
 	}

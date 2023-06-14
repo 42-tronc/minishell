@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/12 13:14:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/13 14:15:53 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,81 +123,142 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
-int	check_output(t_data *data, int block)
+int	check_output(t_data *data, int block, char *cmd_path)
 {
+	printf(RED"OUTPUT block %d/%d%s\n", block + 1, data->cmd_block_count, RESET);
 	if (data->cmd_block[block]->out_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
 			return (FAILURE);
 		close(data->cmd_block[block]->out_fd);
 	}
+	// if not the last block, put output to pipe
+	else if (block < data->cmd_block_count - 1)
+	{
+		printf("PIPE: STDOUT -> [%d][%d] for %s\n", block, STDOUT_FILENO, cmd_path);
+		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO], STDOUT_FILENO) == -1)
+			return (FAILURE);
+		// close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
+	}
+	// sinon STDOUT to STDOUT
+
 	return (0);
 }
 
-int	check_input(t_data *data, int block)
+int	check_input(t_data *data, int block, char *cmd_path)
 {
+	printf(RED"INPUT block %d/%d%s\n", block + 1, data->cmd_block_count, RESET);
 	if (data->cmd_block[block]->in_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
 			return (FAILURE);
 		close(data->cmd_block[block]->in_fd);
 	}
+	// if not the first block, then get the input of last pipe
+	else if (block > 0)
+	{
+		block -= 1;
+		printf("PIPE: STDIN <- [%d][%d] for %s\n", block, STDIN_FILENO, cmd_path);
+		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) == -1)
+			return (FAILURE);
+		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
+	}
+	// sinon STDIN to STDIN
+
 	return (0);
 }
 
-void	exec_command(t_data *data, t_token *input, int block)
+int	create_pipe(t_data *data)
 {
-	// printf(BOLD BLUE"\n exec_command\n"RESET); // debug
-	(void) data;
-	int		fd[2];
-	// will need fd[pipe_count][2];
-	int		pid = 0;
+	int	i;
+
+	i = 0;
+	if (data->cmd_block_count < 1)
+		return (SUCCESS);
+	// printf("cmd block count = %d\n", data->cmd_block_count);
+	// data->cmd_block
+	while (i < data->cmd_block_count - 1)
+	{
+		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
+			return (FAILURE);
+		printf("pipe[%d][0]=%d\t pipe[%d][1]=%d\n", i, data->cmd_block[i]->pipe_fd[0], i, data->cmd_block[i]->pipe_fd[1]);
+		i++;
+		// printf("pipe[%d][0]=%d\t pipe[%d][1]=%d\n", i, data->cmd_block[i]->pipe_fd[0], i, data->cmd_block[i]->pipe_fd[1]);
+	}
+	printf("created %d pipes\n", i);
+	return (SUCCESS);
+}
+
+void exec_command(t_data *data, t_token *input, int block) {
+    pid_t pid;
+    char *command_path;
+    char **command_args;
+
+    command_path = get_validpath(data, input);
+    if (!command_path) {
+        printf(RED BOLD "%s: %scommand not found (blocked the rest of the exec)\n", input->token, NO_BOLD);
+        return; // will need to close fd here if opened
+    }
+	// printf(YELLOW"Path: %s`%s`\n"RESET, BOLD, command_path); // debug
+
+    command_args = get_cmd_args(input, command_path);
+
+    pid = fork();
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) {
+        // child process
+        check_input(data, block, command_path);
+        check_output(data, block, command_path);
+
+        execve(command_path, command_args, NULL);
+        printf(BOLD RED "%s: %scommand not found\n", input->token, NO_BOLD);
+        exit(EXIT_FAILURE);
+    } else {
+        // parent process
+        int wstatus;
+
+		if (data->cmd_block[block]->pipe_fd[0] > 0 && block > 0)
+			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
+		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
+			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
+        waitpid(pid, &wstatus, 0);
+
+
+        printf("Subshell execv complete %d\n", wstatus);
+        if (WIFEXITED(wstatus)) {
+            int statuscode = WEXITSTATUS(wstatus);
+            if (statuscode == 0)
+                printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
+            else
+                printf("failure with %d\n", statuscode);
+        }
+    }
+}
+
+
+/* void	exec_command(t_data *data, t_token *input, int block)
+{
+	pid_t	pid;
 	char	*command_path;
 	char	**command_args;
 
-	/* if (!input)
-	{
-		printf(BOLD RED"No input\n"RESET);
-		return ;
-	} */
 	command_path = get_validpath(data, input);
 	if (!command_path)
 	{
 		printf(RED BOLD"%s: %scommand not found (blocked the rest of the exec)\n", input->token, NO_BOLD);
-		// will need to close fd here if opened
-		return;
+		return; // will need to close fd here if opened
 	}
-	printf(YELLOW"Path: %s`%s`\n"RESET, BOLD, command_path); // debug
-
 	command_args = get_cmd_args(input, command_path);
-	// printf(BOLD GREEN" get_cmd_args%s\n", RESET); // debug
 
 	// --- START DEBUG
 	// Print the array elements for verification
 	// for (int i = 0; command_args[i]; i++)
 	// 	printf("arg[%d]\t`%s`\n", i, command_args[i]);
 	// --- END DEBUG
-
-	// exec part
-	// pas si c le dernier
-	if (pipe(fd) == -1)
-	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
-	// printf(GREEN"\t󰟥 PIPE\n"RESET);
-
-	// will need a loop
-	/*
-	while (i < pipecount)
-	{
-		if (pipe(fd[i]) < 0)
-		{
-			close previous pipe if i > 0
-			and return error
-		}
-	}
-	 */
 
 	pid = fork();
 	if (pid == -1)
@@ -209,29 +270,22 @@ void	exec_command(t_data *data, t_token *input, int block)
 	if (pid == 0)
 	{
 		// child process
-		// printf(GREEN"\t FORK%s\n", MAGENTA);
-		// dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-
-		check_input(data, block);
-		check_output(data, block);
+		check_input(data, block, command_path);
+		check_output(data, block, command_path);
 		// if (command_path)
-			execve(command_path, command_args, NULL);
-
-		// perror(BOLD RED" execve"RESET);
-		// printf("something's wrong i can feel it\n");
+		execve(command_path, command_args, NULL);
 		printf(BOLD RED"%s: %scommand not found\n", input->token, NO_BOLD);
-
 	}
 	else
 	{
-		close(fd[0]);
-		close(fd[1]);
+		// parent process
 
 		// this might be shit
 		int	wstatus;
-		wait(&wstatus);
+		waitpid(pid, &wstatus, 0);
+		// close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
+		// close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
+		printf("Subshell execv complete %d\n", wstatus);
 		// printf("wstatus %d\n", wstatus);
 		if (WIFEXITED(wstatus))
 		{
@@ -241,8 +295,7 @@ void	exec_command(t_data *data, t_token *input, int block)
 			else
 				printf("failure with %d\n", statuscode);
 		}
-		// probably is
 	}
-	// printf(BOLD GREEN" exec_command\n\n"RESET);
 	return ;
 }
+ */
