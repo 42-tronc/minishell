@@ -60,7 +60,6 @@ typedef struct s_cmd_block
 
 struct s_data {
 	t_env		*env;
-	char		**og_env;
 	t_cmd_block	**cmd_block;
 	char		**paths;
 	int			cmd_block_count;
