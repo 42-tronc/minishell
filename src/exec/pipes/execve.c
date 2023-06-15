@@ -196,17 +196,9 @@ int	exec_execve(t_data *data, t_token *input, int block)
     char	**command_args;
 
 	(void)block;
-    command_path = get_validpath(data, input);
-    command_args = get_cmd_args(input, command_path);
-    execve(command_path, command_args, NULL);
-	// printf("test123\n");
-	// printf(BOLD RED "%s: %scommand not found\n"RESET, input->token, NO_BOLD);
-	// ft_putstr_fd(BOLD RED, STDERR_FILENO);
-	// ft_putstr_fd(input->token, STDERR_FILENO);
-	// ft_putstr_fd(NO_BOLD": command not found\n"RESET, STDERR_FILENO);
-	fprintf(stderr, BOLD RED "%s: %scommand not found\n"RESET, input->token, NO_BOLD);
-	// fprintf(stderr, "This is an error message: %s\n", "Error occurred");
-	return (FAILURE);
+	ft_putstr_fd(input->token, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);
 }
 
 void	exec_command(t_data *data, t_token *input, int block)
