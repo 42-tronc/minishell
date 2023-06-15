@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 14:48:03 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 11:30:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
 		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
 			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
-    }
+}
 	// else
 	// {
 	// 	int wstatus;
