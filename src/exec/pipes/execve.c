@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/15 13:02:56 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 17:43:10 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ int	check_output(t_data *data, int block)
 // int	check_input(t_data *data, int block, char *cmd_path)
 int	check_input(t_data *data, int block)
 {
-	// printf(RED"INPUT block %d/%d%s\n", block + 1, data->cmd_block_count, RESET);
+	int	tmp_pipe[2];
+
 	if (data->cmd_block[block]->in_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
@@ -154,6 +155,15 @@ int	check_input(t_data *data, int block)
 		close(data->cmd_block[block]->in_fd);
 	}
 	// if not the first block, then get the input of last pipe
+	else if (data->cmd_block[block]->heredoc)
+	{
+		pipe(tmp_pipe);
+		dup2(tmp_pipe[0], 0);
+		write(tmp_pipe[1], data->cmd_block[block]->heredoc,
+			ft_strlen(data->cmd_block[block]->heredoc));
+		free(data->cmd_block[block]->heredoc);
+		close(tmp_pipe[1]);
+	}
 	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
 	// else if (block > 0)
 	{
