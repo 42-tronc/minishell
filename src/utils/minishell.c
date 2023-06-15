@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/15 13:57:33 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 17:26:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,14 @@ void	exec_code(t_data *data)
 	}
 	// data->status = WEXITSTATUS(status);
 	// printf("wexit = %d\n", data->status);
-	printf("Subshell execv complete %d\n", status);
+	// printf("Subshell execv complete %d\n", status);
 	if (WIFEXITED(status)) {
 		int statuscode = WEXITSTATUS(status);
 		if (statuscode == 0)
 			printf(BOLD GREEN "success\n" RESET);
 			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
 		else
-			printf("failure with %d\n", statuscode);
+			printf(RED"failure with %d\n" RESET, statuscode);
 	}
 }
 
