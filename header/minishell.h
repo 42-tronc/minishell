@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 14:24:48 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 12:21:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_cmd_block
 	int		pipe_fd[2];
 	char	*cmd_path; // MIGHT NOT BE NEEDED
 	char	**cmd_args; // MIGHT NOT BE NEEDED
+	pid_t	pid;
 	// int		*pipin;
 	// int		*pipout;
 }			t_cmd_block;
@@ -63,6 +64,7 @@ struct s_data {
 	t_cmd_block	**cmd_block;
 	char		**paths;
 	int			cmd_block_count;
+	int			status;
 	int			i;
 	t_parsing	*p;
 	t_token		*tokens;

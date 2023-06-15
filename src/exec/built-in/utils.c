@@ -126,8 +126,9 @@ void	print_error(int code)
 void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
 {
 	pid_t	pid;
-	// int		status;
+	int		status;
 
+	status = 0;
 	pid = fork();
 	// data->pid[block] = pid;
 	if (pid == -1)
@@ -139,12 +140,12 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	{
 		check_input(data, block); // might not be needed
 		check_output(data, block);
-		if (func(data, input, block))
-			exit(1);
-		exit(0);
+		status = func(data, input, block);
+		exit(status);
 	}
 	else
 	{
+		data->cmd_block[block]->pid = pid;
 		if (data->cmd_block[block]->pipe_fd[0] > 0 && block > 0)
 			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
 		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
