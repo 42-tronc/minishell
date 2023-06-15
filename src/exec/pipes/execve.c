@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 15:05:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 13:02:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,10 +192,13 @@ int	create_pipe(t_data *data)
 
 int	exec_execve(t_data *data, t_token *input, int block)
 {
-    char	*command_path;
-    char	**command_args;
+	char	*command_path;
+	char	**command_args;
 
 	(void)block;
+	command_path = get_validpath(data, input);
+	command_args = get_cmd_args(input, command_path);
+	execve(command_path, command_args, NULL);
 	ft_putstr_fd(input->token, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	return (127);
@@ -204,61 +207,4 @@ int	exec_execve(t_data *data, t_token *input, int block)
 void	exec_command(t_data *data, t_token *input, int block)
 {
 	create_subshell(exec_execve, data, input, block);
-	// printf("456test\n");
-	// printf(BOLD RED "2 %s: %scommand not found\n"RESET, input->token, NO_BOLD);
 }
-
-/* void	exec_command(t_data *data, t_token *input, int block) {
-    pid_t pid;
-    char *command_path;
-    char **command_args;
-
-    command_path = get_validpath(data, input);
-    // if (!command_path) {
-    //     printf(RED BOLD "%s: %scommand not found (blocked the rest of the exec)\n", input->token, NO_BOLD);
-    //     return; // will need to close fd here if opened
-    // }
-	// printf(YELLOW"Path: %s`%s`\n"RESET, BOLD, command_path); // debug
-
-    command_args = get_cmd_args(input, command_path);
-	// printf("command_args = %s\n", command_args[0]);
-
-    pid = fork();
-    if (pid == -1) {
-        perror("fork");
-        exit(EXIT_FAILURE);
-    }
-
-
-    if (pid == 0) {
-        // child process
-        check_input(data, block);
-        check_output(data, block);
-
-        execve(command_path, command_args, NULL);
-        // printf(BOLD RED "%s: %scommand not found\n", input->token, NO_BOLD);
-		ft_putstr_fd(BOLD RED, STDERR_FILENO);
-		ft_putstr_fd(input->token, STDERR_FILENO);
-		ft_putstr_fd(NO_BOLD": command not found\n"RESET, STDERR_FILENO);
-        exit(EXIT_FAILURE);
-    } else {
-        // parent process
-        // int wstatus;
-
-		if (data->cmd_block[block]->pipe_fd[0] > 0 && block > 0)
-			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
-		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
-			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
-        // waitpid(pid, &wstatus, 0);
-
-
-        // printf("Subshell execv complete %d\n", wstatus);
-        // if (WIFEXITED(wstatus)) {
-        //     int statuscode = WEXITSTATUS(wstatus);
-        //     if (statuscode == 0)
-        //         printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
-        //     else
-        //         printf("failure with %d\n", statuscode);
-        // }
-    }
-} */

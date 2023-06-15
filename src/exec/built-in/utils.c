@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/15 11:30:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 12:44:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 
 	status = 0;
 	pid = fork();
-	// data->pid[block] = pid;
 	if (pid == -1)
 	{
 		perror("fork");

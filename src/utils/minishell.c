@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/15 12:42:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 13:02:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	exec_code(t_data *data)
 	printf("wexit = %d\n", data->status);
 }
 
-// need to stop if one check fails
-// need to check if there is a pipe block after
 void	exec_dispatch(t_data *data, t_token *input)
 {
 	int	error;
