@@ -189,7 +189,7 @@ char		*get_var_name(char *str);
 char		*get_before_dollar(char *str, t_data *p, int i, int size);
 void		free_expand(t_parsing *p);
 int			replace_var(t_token *temp, t_data *p);
-int			expand_tokens(t_token *tokens, t_data *data);
+int			expand_tokens(t_token **tokens, t_data *data);
 
 // dollar2.c
 int	next_char(char c);
