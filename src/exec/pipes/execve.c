@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/15 17:43:10 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 18:00:43 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,13 @@ char	*get_validpath(t_data *data, t_token *input)
 		return (NULL);
 	if (ft_strchr(input->token, '/') && !access(input->token, X_OK))
 		return (input->token);
-	// Update paths in case it changed
 	if (ft_getpaths(data))
 		return (NULL);
 	while (data->paths[i] && error_access)
 	{
-		// error_access = 0;
 		command_path = ft_strjoin(data->paths[i], input->token);
 		if (!command_path)
 			return (NULL);
-		// printf("checking %s\n", command_path);
 		error_access = access(command_path, X_OK);
 		if (!error_access)
 			return (command_path);
@@ -81,11 +78,8 @@ static size_t	_count_cmd_args(t_token *input)
 			break ;
 		else if (ft_strcmp(input->type, ARG) == 0)
 			size++;
-		// printf(BOLD YELLOW "`%s`\t%shas type: %s%s\tin block %s%d%s\n",
-			// input->token, NO_BOLD, BOLD, input->type, BOLD, input->pipe_block, NO_BOLD);
 		input = input->next;
 	}
-	// printf(BOLD YELLOW"%ld %sargument(s)\n"RESET, size, NO_BOLD);
 	return (size);
 }
 
@@ -96,10 +90,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	char	**array;
 
 	if (!input)
-	{
-		printf(BOLD RED "No arg\n" RESET);
 		return (NULL);
-	}
 	size = _count_cmd_args(input);
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
@@ -119,31 +110,24 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
-// int	check_output(t_data *data, int block, char *cmd_path)
 int	check_output(t_data *data, int block)
 {
-	// printf(RED"OUTPUT block %d/%d%s\n", block + 1, data->cmd_block_count, RESET);
 	if (data->cmd_block[block]->out_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
 			return (FAILURE);
 		close(data->cmd_block[block]->out_fd);
 	}
-	// if not the last block, put output to pipe
 	else if (block < data->cmd_block_count - 1)
 	{
-		// printf("PIPE: STDOUT -> [%d][%d] for %s\n", block, STDOUT_FILENO, cmd_path);
-		// printf("%s\t prend [%d][%d] en OUT\n", cmd_path, block, STDOUT_FILENO);
-		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO], STDOUT_FILENO) == -1)
+		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
+				STDOUT_FILENO) == -1)
 			return (FAILURE);
-		// close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
+		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
-	// sinon STDOUT to STDOUT
-
 	return (0);
 }
 
-// int	check_input(t_data *data, int block, char *cmd_path)
 int	check_input(t_data *data, int block)
 {
 	int	tmp_pipe[2];
@@ -154,7 +138,6 @@ int	check_input(t_data *data, int block)
 			return (FAILURE);
 		close(data->cmd_block[block]->in_fd);
 	}
-	// if not the first block, then get the input of last pipe
 	else if (data->cmd_block[block]->heredoc)
 	{
 		pipe(tmp_pipe);
@@ -165,17 +148,13 @@ int	check_input(t_data *data, int block)
 		close(tmp_pipe[1]);
 	}
 	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
-	// else if (block > 0)
 	{
 		block -= 1;
-		// printf("PIPE: STDIN  <- [%d][%d] for %s\n", block, STDIN_FILENO, cmd_path);
-		// printf("%s\t prend [%d][%d] en IN\n", cmd_path, block, STDIN_FILENO);
-		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) == -1)
+		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) ==
+			-1)
 			return (FAILURE);
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
-	// sinon STDIN to STDIN
-
 	return (0);
 }
 
@@ -186,17 +165,12 @@ int	create_pipe(t_data *data)
 	i = 0;
 	if (data->cmd_block_count < 1)
 		return (SUCCESS);
-	// printf("cmd block count = %d\n", data->cmd_block_count);
-	// data->cmd_block
 	while (i < data->cmd_block_count - 1)
 	{
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
 			return (FAILURE);
-		// printf("pipe[%d][0]=%d\t pipe[%d][1]=%d\n", i, data->cmd_block[i]->pipe_fd[0], i, data->cmd_block[i]->pipe_fd[1]);
 		i++;
-		// printf("pipe[%d][0]=%d\t pipe[%d][1]=%d\n", i, data->cmd_block[i]->pipe_fd[0], i, data->cmd_block[i]->pipe_fd[1]);
 	}
-	// printf("created %d pipes\n", i);
 	return (SUCCESS);
 }
 
