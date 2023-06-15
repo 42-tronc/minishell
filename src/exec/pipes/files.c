@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/09 11:17:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/15 16:51:27 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	open_heredoc(t_data *data, t_token *input, int block)
 		line = readline("> ");
 		if (!line)
 		{
-			printf("lillaskallet: warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
+			printf("warning: here-document delimited by end-of-file (wanted `%s')\n", input->token);
 			break;
 		}
 		else if (ft_strcmp(line, input->token) == 0)
