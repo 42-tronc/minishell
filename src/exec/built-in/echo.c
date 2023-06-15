@@ -74,14 +74,12 @@ int	echo_print(t_data *data, t_token *input, int block)
 	first = 1;
 	while (input && input->pipe_block == block)
 	{
-		if (input->token[0] != '\0' && ft_strcmp(input->type, ARG) == 0)
+		if (ft_strcmp(input->type, ARG) == 0)
 		{
 			write(STDOUT_FILENO, input->token, ft_strlen(input->token));
 			first = 0;
 		}
-		if (input->token[0] == '\0')
-			first = 1;
-		else if (input->next && ft_strcmp(input->next->type, ARG) == 0 && !first)
+		if (input->next && ft_strcmp(input->next->type, ARG) == 0 && !first)
 			write(STDOUT_FILENO, " ", 1);
 		input = input->next;
 	}

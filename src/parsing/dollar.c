@@ -102,35 +102,28 @@ int	replace_var(t_token *temp, t_data *p)
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
 	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
 	if (!p->p->new_token)
-	{
-		free(temp->token);
-		temp->token = NULL;
-		return (free_expand(p->p), 2);
-	}
+		return (free_expand(p->p), 1);
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
-	if (!temp->token)
-		return (free_expand(p->p), 1);
-	return (free_expand(p->p), 0);
+	free_expand(p->p);
+	return (0);
 }
 
-int	expand_tokens(t_token *tokens, t_data *data)
+int	expand_tokens(t_token **tokens, t_data *data)
 {
-	data->p->before = NULL;
-	data->p->var_value = NULL;
-	data->p->var_name = NULL;
-	data->p->before = NULL;
-	data->p->before = NULL;
-	while (tokens)
+	t_token	*temp;
+
+	temp = *tokens;
+	while (temp)
 	{
 		data->p->i = 0;
-		while (processed_line(tokens->token, data->p))
+		while (processed_line(temp->token, data->p))
 		{
-			if (replace_var(tokens, data) == 1)
+			if (replace_var(temp, data))
 				return (1);
 			data->i = 0;
 		}
-		tokens = tokens->next;
+		temp = temp->next;
 	}
 	return (0);
 }
