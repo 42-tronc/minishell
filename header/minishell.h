@@ -86,7 +86,6 @@ struct s_token {
 	char	*token;
 	char	*type;
 	int		pipe_block;
-	t_token **head_ref;
 	t_token	*prev;
 	t_token	*next;
 };
@@ -253,13 +252,9 @@ int	is_symbol(int c);
 int	ft_char2(int c);
 void	p_quote(t_parsing *p, char c);
 
-int	replace_list(t_data *data);
-
 // tokens_lst.c
 int	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
-void delete_token(t_token **head_ref, t_token *del);
-t_token	**find_head_ref(t_token *temp);
 void	free_token(t_token *tokens);
 
 // exec_char.c
