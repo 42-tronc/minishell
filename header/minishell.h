@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 07:18:32 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/16 10:48:18 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,11 @@ void	p_quote(t_parsing *p, char c);
 int	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
 void	free_token(t_token *tokens);
+
+int	replace_list(t_data *data);
+
+void  delete_token(t_token **head_ref, t_token *del);
+t_token **find_head_ref(t_token *temp);
 
 // exec_char.c
 char	**get_array_cmd(t_token *temp);

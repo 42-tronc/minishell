@@ -163,8 +163,7 @@ int	main(int argc, char **argv, char **envp)
 	get_signal();
 	while (1)
 	{
-		if (getting_line(data))
-			return (free(data->p), free_list(data->env), free(data), 1);
+		getting_line(data);
 		if (data->tokens && !prepare_token(data))
 		{
 			if (init_data(data))

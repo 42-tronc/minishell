@@ -6,7 +6,7 @@
 /*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:06:41 by aascedu           #+#    #+#             */
-/*   Updated: 2023/06/15 17:06:43 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:49:01 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,3 @@ int	replace_list(t_data *data)
 	return (0);
 }
 
-// Mme Bozon, 0678170685 adb@regie-trocadero.fr
