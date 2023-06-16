@@ -90,7 +90,7 @@ int	replace_var(t_token *temp, t_data *p)
 	if (temp->token[p->i] == '?')
 	{
 		p->p->var_name = ft_strdup("1");
-		p->p->var_value = ft_strdup("[retValue]");
+		p->p->var_value = ft_strdup(ft_itoa(p->status));
 	}
 	else
 	{

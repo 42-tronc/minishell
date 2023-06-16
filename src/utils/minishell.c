@@ -88,12 +88,13 @@ void	exec_code(t_data *data)
 	// printf("Subshell execv complete %d\n", status);
 	if (WIFEXITED(status)) {
 		int statuscode = WEXITSTATUS(status);
-		if (statuscode == 0)
-			printf(BOLD GREEN "success\n" RESET);
-			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
-		else
+		if (statuscode != 0)
 			printf(RED"failure with %d\n" RESET, statuscode);
+			// printf(BOLD GREEN "success\n" RESET);
+			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
+		// else
 	}
+	data->status = status;
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
