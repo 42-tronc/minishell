@@ -85,6 +85,7 @@ struct s_token {
 	char	*token;
 	char	*type;
 	int		pipe_block;
+	int		in_quote;
 	t_token **head_ref;
 	t_token	*prev;
 	t_token	*next;

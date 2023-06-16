@@ -32,7 +32,7 @@ int	replace_list(t_data *data)
 	temp = data->tokens;
 	while (temp)
 	{
-		if (temp->token && !temp->token[0])
+		if (temp->token && !temp->token[0] && !temp->in_quote)
 		{
 			if (&temp == find_head_ref(temp))
 				data->tokens = temp->next;
