@@ -122,6 +122,7 @@ int	expand_tokens(t_token **tokens, t_data *data)
 			if (replace_var(temp, data))
 				return (1);
 			data->i = 0;
+			temp->from_expand = 1;
 		}
 		temp = temp->next;
 	}

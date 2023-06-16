@@ -18,6 +18,8 @@ int	get_size(t_parsing *p, char *str)
 	int	size;
 
 	i = 0;
+	p->dquote = 0;
+	p->quote = 0;
 	size = 0;
 	while (str && str[i])
 	{
@@ -40,6 +42,8 @@ void	copy_without_quotes(char *dst, char *src, t_parsing *p)
 
 	i_dst = -1;
 	i_src = 0;
+	p->quote = 0;
+	p->dquote = 0;
 	while (src && src[i_src])
 	{
 		p_quote(p, src[i_src]);
@@ -62,13 +66,9 @@ int	remove_quotes(t_token **tokens, t_data *data)
 	temp = *tokens;
 	while (temp)
 	{
-		data->p->quote = 0;
-		data->p->dquote = 0;
 		new = malloc(sizeof(char) * (get_size(data->p, temp->token) + 1));
 		if (!new)
 			return (1);
-		data->p->quote = 0;
-		data->p->dquote = 0;
 		copy_without_quotes(new, temp->token, data->p);
 		if (ft_strcmp(temp->token, new))
 			temp->in_quote = 1;
