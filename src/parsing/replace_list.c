@@ -26,6 +26,7 @@ int	need_to_new(t_token *tokens)
 int	replace_list(t_data *data)
 {
 	t_token	*temp;
+	t_token	*save;
 
 	if (need_to_new(data->tokens))
 		return (0);
@@ -40,10 +41,13 @@ int	replace_list(t_data *data)
 				temp->prev->next = temp->next;
 			if (temp->next)
 				temp->next->prev = temp->prev;
+			save = temp->next;
 			free(temp->token);
 			free(temp);
+			temp = save;
 		}
-		temp = temp->next;
+		else
+			temp = temp->next;
 	}
 	return (0);
 }
