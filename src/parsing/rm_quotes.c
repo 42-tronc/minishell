@@ -70,6 +70,8 @@ int	remove_quotes(t_token **tokens, t_data *data)
 		data->p->quote = 0;
 		data->p->dquote = 0;
 		copy_without_quotes(new, temp->token, data->p);
+		if (ft_strcmp(temp->token, new))
+			temp->in_quote = 1;
 		free(temp->token);
 		temp->token = ft_strdup(new);
 		if (!temp->token)

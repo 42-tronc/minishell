@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 07:52:13 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/14 14:48:03 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,10 @@ void	print_error(int code)
 void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
 {
 	pid_t	pid;
-	int		status;
+	// int		status;
 
-	status = 0;
 	pid = fork();
+	// data->pid[block] = pid;
 	if (pid == -1)
 	{
 		perror("fork");
@@ -137,21 +137,19 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	}
 	else if (pid == 0)
 	{
-		if (check_input(data, block) == FAILURE)
-			return ; // dup2 failed exit here
-		if (check_output(data, block) == FAILURE)
-			return ; // dup2 failed exit here
-		status = func(data, input, block);
-		exit(status);
+		check_input(data, block); // might not be needed
+		check_output(data, block);
+		if (func(data, input, block))
+			exit(1);
+		exit(0);
 	}
 	else
 	{
-		data->cmd_block[block]->pid = pid;
 		if (data->cmd_block[block]->pipe_fd[0] > 0 && block > 0)
 			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
 		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
 			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
-}
+    }
 	// else
 	// {
 	// 	int wstatus;
