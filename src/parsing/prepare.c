@@ -23,5 +23,7 @@ int	prepare_token(t_data *data)
 		return (1);
 	if (syntax_error(data))
 		return (1);
+	if (replace_list(data))
+		return (1);
 	return (0);
 }
