@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/15 12:21:33 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/16 07:18:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_token		t_token;
 typedef enum e_exit_code {
 	PIPE_ERROR = -3,
 	MALLOC_ERROR = -2,
-	FAILURE = -1,
+	FAILURE = 1,
 	SUCCESS = 0,
 }	t_exit_code;
 
@@ -170,6 +170,10 @@ char	**get_cmd_args(t_token *input, char *command_path);
 int	check_output(t_data *data, int block);
 int	check_input(t_data *data, int block);
 int	create_pipe(t_data *data);
+int	env_size(t_env *env);
+void	free_env_array(char **env_array);
+char	**env_to_array(t_env *env);
+int	exec_cmd(t_data *data, t_token *input, int block);
 int	exec_execve(t_data *data, t_token *input, int block);
 void	exec_command(t_data *data, t_token *input, int block);
 
@@ -185,11 +189,11 @@ void	ft_fork(void);
 char	*ft_strjoin_heredoc(char *s1, char *s2);
 
 // dollar.c
-char		*get_var_name(char *str);
-char		*get_before_dollar(char *str, t_data *p, int i, int size);
-void		free_expand(t_parsing *p);
-int			replace_var(t_token *temp, t_data *p);
-int			expand_tokens(t_token **tokens, t_data *data);
+char	*get_var_name(char *str);
+char	*get_before_dollar(char *str, t_data *p, int i, int size);
+void	free_expand(t_parsing *p);
+int	replace_var(t_token *temp, t_data *p);
+int	expand_tokens(t_token **tokens, t_data *data);
 
 // dollar2.c
 int	next_char(char c);
@@ -259,6 +263,7 @@ char	**get_array_cmd(t_token *temp);
 // minishell.c
 void	print_tokens_linked_list(t_token *head);
 void	check_command(t_data *data, t_token *input, int block);
+void	exec_code(t_data *data);
 void	exec_dispatch(t_data *data, t_token *input);
 int	init_data(t_data *data);
 
