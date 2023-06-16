@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 13:13:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/16 09:38:14 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,31 @@ void	check_command(t_data *data, t_token *input, int block)
 	}
 }
 
+void	exec_code(t_data *data)
+{
+	int	block;
+	int	status;
 
-// need to stop if one check fails
-// need to check if there is a pipe block after
+	block = 0;
+	status = 0; // Variable to store the return status of the child process
+	while (block < data->cmd_block_count)
+	{
+		waitpid(data->cmd_block[block]->pid, &status, 0);
+		block++;
+	}
+	// data->status = WEXITSTATUS(status);
+	// printf("wexit = %d\n", data->status);
+	// printf("Subshell execv complete %d\n", status);
+	if (WIFEXITED(status)) {
+		int statuscode = WEXITSTATUS(status);
+		if (statuscode == 0)
+			printf(BOLD GREEN "success\n" RESET);
+			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
+		else
+			printf(RED"failure with %d\n" RESET, statuscode);
+	}
+}
+
 void	exec_dispatch(t_data *data, t_token *input)
 {
 	int	error;
@@ -95,8 +117,9 @@ void	exec_dispatch(t_data *data, t_token *input)
 		while (block > input->pipe_block && input->next)
 			input = input->next;
 	}
-	// while (data->cmd_block_count-- > 0)
-	// 	wait(NULL);
+	exec_code(data);
+	// while (wait(NULL) > 0)
+	// 	;
 }
 
 // will need to get the return value to somewhere
@@ -148,8 +171,9 @@ int	main(int argc, char **argv, char **envp)
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 		}
-		while (wait(NULL) > 0)
-			;
+		// while (wait(NULL) > 0)
+		// 	;
+
 		free_token(data->tokens);
 		free(data->p);
 	}
