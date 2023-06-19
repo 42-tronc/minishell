@@ -6,13 +6,13 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 15:10:29 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 15:13:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_env(t_env *node)
+void	free_env_node(t_env *node)
 {
 	free(node->var);
 	free(node->value);
@@ -38,7 +38,7 @@ static void	unset_key(t_env **env, const char *token)
 				previous->next = current->next;
 			tmp = current;
 			current = current->next;
-			free_env(tmp);
+			free_env_node(tmp);
 			break ;
 		}
 		previous = current;
