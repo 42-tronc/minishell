@@ -33,6 +33,7 @@ void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d)
 		temp->from_expand = 1;
 		temp = temp->next;
 	}
+	temp->from_expand = 1;
 	if (next)
 	{
 		temp->next = next;

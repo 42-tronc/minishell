@@ -106,6 +106,7 @@ int	replace_var(t_token *temp, t_data *p)
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
 	free_expand(p->p);
+	temp->from_expand = 1;
 	return (0);
 }
 
@@ -122,7 +123,6 @@ int	expand_tokens(t_token **tokens, t_data *data)
 			if (replace_var(temp, data))
 				return (1);
 			data->i = 0;
-			temp->from_expand = 1;
 		}
 		temp = temp->next;
 	}
