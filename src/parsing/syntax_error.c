@@ -44,6 +44,7 @@ int	check_last_token(t_token *temp)
 	if (!ft_strcmp(temp->type, CHEVRON_L) \
 	|| !ft_strcmp(temp->type, CHEVRON_R) \
 	|| !ft_strcmp(temp->type, CHEVRON_RR) \
+	|| !ft_strcmp(temp->type, HERE_DOC) \
 	|| !ft_strcmp(temp->type, PIPE))
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
