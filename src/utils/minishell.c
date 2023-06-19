@@ -23,7 +23,7 @@ void	print_tokens_linked_list(t_token *head)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("Type : %s && token[%d]:'%s' in pipe block:%d\n",temp->type, i++, temp->token, temp->pipe_block);
+		printf("Type : %s && token[%d]:'%s' FROM EXPAND?=%d\n",temp->type, i++, temp->token, temp->from_expand);
 		// if (temp->next == NULL)
 		// 	last = temp;
 		temp = temp->next;
@@ -88,12 +88,13 @@ void	exec_code(t_data *data)
 	// printf("Subshell execv complete %d\n", status);
 	if (WIFEXITED(status)) {
 		int statuscode = WEXITSTATUS(status);
-		if (statuscode == 0)
-			printf(BOLD GREEN "success\n" RESET);
-			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
-		else
+		if (statuscode != 0)
 			printf(RED"failure with %d\n" RESET, statuscode);
+			// printf(BOLD GREEN "success\n" RESET);
+			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
+		// else
 	}
+	data->status = status;
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
@@ -168,13 +169,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (init_data(data))
 				exit(FAILURE);
-
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 		}
 		// while (wait(NULL) > 0)
 		// 	;
-
 		free_token(data->tokens);
 		free(data->p);
 	}

@@ -65,7 +65,7 @@ void	id_tokens(t_token **tokens, t_token *temp)
 			temp->type = CHEVRON_R;
 		else if (!ft_strcmp(temp->token, ">>"))
 			temp->type = CHEVRON_RR;
-		else if (!ft_strcmp(temp->token, "|"))
+		else if (!ft_strcmp(temp->token, "|") && !temp->from_expand)
 		{
 			temp->type = PIPE;
 			if (temp->prev)

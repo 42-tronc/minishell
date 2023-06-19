@@ -51,4 +51,3 @@ int	replace_list(t_data *data)
 	}
 	return (0);
 }
-
