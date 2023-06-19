@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 13:33:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 14:04:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,25 @@ int	ft_setenv(t_env *env, char *var, char *value)
 	return (ft_addenv(&env, var, value));
 }
 
-void	print_error(int code)
+void	exit_error(int code, char *source)
 {
-	char	*error[1];
+	char	*error[4];
 
-	error[0] = "Malloc failed to allocate a memory space";
+	error[E_MALLOC] = "Malloc failed to allocate a memory space";
+	error[E_DUP2] = "Dup2 failed to duplicate the file descriptor";
+	error[E_PIPE] = "Pipe failed to create a pipe";
+	error[E_FORK] = "For failed to create a child process";
+	// error[] = "";
 
 	// should prob print to fd 2
-	printf(RED"Error: %s\n"RESET, error[code]);
+	// printf(RED"Error: %s\n"RESET, error[code]);
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(error[code], 2);
+	if (source)
+	{
+		ft_putstr_fd(" in ", 2);
+		ft_putstr_fd(source, 2);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -136,9 +147,9 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	}
 	else if (pid == 0)
 	{
-		if (check_input(data, block) == FAILURE)
+		if (check_input(data, block) == EXIT_FAILURE)
 			return ; // dup2 failed exit here
-		if (check_output(data, block) == FAILURE)
+		if (check_output(data, block) == EXIT_FAILURE)
 			return ; // dup2 failed exit here
 		status = func(data, input, block);
 		exit(status);

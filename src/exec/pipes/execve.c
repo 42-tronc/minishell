@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 11:38:16 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 14:03:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 		{
 			array[i] = ft_strdup(input->token);
 			if (!array[i])
-				exit (FAILURE); // exit here
+				exit (EXIT_FAILURE); // exit here
 			i++;
 		}
 		input = input->next;
@@ -117,14 +117,14 @@ int	check_output(t_data *data, int block)
 	if (data->cmd_block[block]->out_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
-			return (FAILURE);
+			return (EXIT_FAILURE);
 		close(data->cmd_block[block]->out_fd);
 	}
 	else if (block < data->cmd_block_count - 1)
 	{
 		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
 				STDOUT_FILENO) == -1)
-			return (FAILURE);
+			return (EXIT_FAILURE);
 		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
 	return (0);
@@ -137,7 +137,7 @@ int	check_input(t_data *data, int block)
 	if (data->cmd_block[block]->in_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
-			return (FAILURE);
+			return (EXIT_FAILURE);
 		close(data->cmd_block[block]->in_fd);
 	}
 	else if (data->cmd_block[block]->heredoc)
@@ -154,7 +154,7 @@ int	check_input(t_data *data, int block)
 		block -= 1;
 		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) ==
 			-1)
-			return (FAILURE);
+			return (EXIT_FAILURE);
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
 	return (0);
@@ -166,14 +166,14 @@ int	create_pipe(t_data *data)
 
 	i = 0;
 	if (data->cmd_block_count < 1)
-		return (SUCCESS);
+		return (EXIT_SUCCESS);
 	while (i < data->cmd_block_count - 1)
 	{
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
-			return (FAILURE);
+			return (EXIT_FAILURE);
 		i++;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 int	env_size(t_env *env)
@@ -253,10 +253,10 @@ int	exec_cmd(t_data *data, t_token *input, int block)
 	env_array = env_to_array(data->env);
 	command_path = get_validpath(data, input);
 	// if (!command_path)
-	// 	return (FAILURE);
+	// 	return (EXIT_FAILURE);
 	command_args = get_cmd_args(input, command_path);
 	if (!command_args)
-		return (FAILURE);
+		return (EXIT_FAILURE);
 	printf("going to run %s\n", command_path);
 	execve(command_path, command_args, env_array);
 	free_array(env_array);

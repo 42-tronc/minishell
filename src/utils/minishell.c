@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 12:31:11 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 14:03:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,18 +130,18 @@ int	init_data(t_data *data)
 	}
 	data->cmd_block = ft_calloc(data->cmd_block_count + 1, sizeof(t_cmd_block*));
 	if (!data->cmd_block)
-		return (MALLOC_ERROR);
+		return (E_MALLOC);
 	i = 0;
 	while (i < data->cmd_block_count)
 	{
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
 		if (!data->cmd_block[i])
-			return (MALLOC_ERROR); // exit here
+			return (E_MALLOC); // exit here
 		data->cmd_block[i]->in_fd = -2;
 		data->cmd_block[i]->out_fd = -2;
 		i++;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -161,7 +161,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data->tokens && !prepare_token(data))
 		{
 			if (init_data(data))
-				exit(FAILURE);
+				exit(EXIT_FAILURE);
 
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 11:38:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 14:03:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ typedef struct s_parsing	t_parsing;
 typedef struct s_token		t_token;
 
 typedef enum e_exit_code {
-	PIPE_ERROR = -3,
-	MALLOC_ERROR = -2,
-	FAILURE = 1,
-	SUCCESS = 0,
+	E_MALLOC = 0,
+	E_DUP2 = 1,
+	E_PIPE = 2,
+	E_FORK = 3,
+	// EXIT_SUCCESS,
+	// EXIT_FAILURE,
 }	t_exit_code;
 
 typedef struct s_env
@@ -160,7 +162,7 @@ t_env	*ft_env_new(char *var, char *value);
 void	ft_env_add_back(t_env **lst, t_env *new);
 char	*ft_getenv(t_env *env, char *var);
 int	ft_setenv(t_env *env, char *var, char *value);
-void	print_error(int code);
+void	exit_error(int code, char *source);
 void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
 
 // execve.c
