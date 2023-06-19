@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 14:03:02 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 14:59:22 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				create_subshell(ft_pwd, data, input, block);
 			else if (ft_strcmp(input->token, "unset") == 0)
-				ft_unset(&data->env, input);
+				ft_unset(&data->env, input, block);
 			else
 				exec_command(data, input, block);
 		}

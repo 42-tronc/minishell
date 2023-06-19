@@ -155,7 +155,8 @@ void	ft_export(t_data *data, t_token *input, int block);
 int	ft_pwd(t_data *data, t_token *input, int block);
 
 // unset.c
-void	ft_unset(t_env **env, t_token *args);
+void	free_env(t_env *node);
+void	ft_unset(t_env **env, t_token *input, int block);
 
 // utils.c
 t_env	*ft_env_new(char *var, char *value);

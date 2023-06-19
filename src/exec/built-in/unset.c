@@ -6,88 +6,51 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/05/31 08:19:12 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 15:10:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-NEED TO
-
-3 cas differents:
-- debut
-	null les vars
-	free
-	reset le head de la liste a la 2eme liste
-- milieu
-	set le next du previous sur `current->next`
-	null les vars
-	free
-- fin
-	set le next du previous sur `NULL`
-	null les vars
-	free
-
-*/
-
-static void	free_env(t_env *node)
+void	free_env(t_env *node)
 {
 	free(node->var);
 	free(node->value);
 	free(node);
 }
 
-void	ft_unset(t_env **env, t_token *args)
+static void	unset_key(t_env **env, const char *token)
 {
-	t_env	*current;
 	t_env	*tmp;
-	t_env	*prev;
+	t_env	*current;
+	t_env	*previous;
 
-	while (args)
+	current = *env;
+	previous = NULL;
+	while (current)
 	{
-		current = *env;
-		prev = NULL;
-		while (current)
+		if (ft_strcmp(current->var, token) == 0)
 		{
-			// found node to delete
-			if (ft_strcmp(args->token, current->var) == 0)
-			{
-				printf("found %s\n", args->token);
-				// is the first node
-				if (!prev)
-					*env = current->next;
-				// not the first node
-				else
-					prev->next = current->next;
-				tmp = current;
-				current = current->next;
-
-				free_env(tmp);
-				// free(tmp->var);
-				// free(tmp->value);
-				// free(tmp);
-				break;
-			}
-			prev = current;
+			printf("found %s\n", token);
+			if (!previous)
+				*env = current->next;
+			else
+				previous->next = current->next;
+			tmp = current;
 			current = current->next;
+			free_env(tmp);
+			break ;
 		}
-		args = args->next;
+		previous = current;
+		current = current->next;
 	}
 }
 
-/* int	main(int ac, char **av, char **envp)
+void	ft_unset(t_env **env, t_token *input, int block)
 {
-	(void) ac;
-	(void) av;
-
-// 	t_env	*env;
-// 	env = list_env(envp);
-// 	ft_setenv(env, "MY_VAR", "world");
-// 	ft_env(env);
-// 	printf("\n\n\n\nSORTED HERE\n\n");
-// 	ft_sort_env(env);
-// 	ft_env(env);
-
-	return (0);
-} */
+	while (input && input->pipe_block == block)
+	{
+		unset_key(env, input->token);
+		input = input->next;
+	}
+}
