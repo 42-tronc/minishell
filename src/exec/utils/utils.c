@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:20:23 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:33:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,8 @@ int	count_arguments(t_token *input)
 	return (arg_count);
 }
 
-
 void	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
 {
-	printf("cmd block count =%d\n", data->cmd_block_count);
 	if (data->cmd_block_count == 1)
 		func(data, input, block);
 	else
