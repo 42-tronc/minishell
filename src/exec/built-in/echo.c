@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 11:52:47 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 13:56:34 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	echo_print(t_data *data, t_token *input, int block)
 	int	newline;
 
 	(void)data;
-	(void)block;
 	newline = check_newline(&input);
 	first = 1;
 	while (input && input->pipe_block == block)
