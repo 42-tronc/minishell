@@ -273,7 +273,4 @@ void	exec_code(t_data *data);
 void	exec_dispatch(t_data *data, t_token *input);
 int	init_data(t_data *data);
 
-// split_paths.c
-char	**split_paths(char const *s, char c);
-
 #endif
