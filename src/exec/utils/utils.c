@@ -73,13 +73,15 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
  * @param block block of the pipe
  * @return int number of arguments
  */
-int	count_arguments(t_token *input, int block)
+int	count_arguments(t_token *input)
 {
 	int		arg_count;
 
 	arg_count = 0;
-	while (input && input->pipe_block == block)
+	while (input)
 	{
+		if (ft_strcmp(input->type, PIPE) == 0)
+			break ;
 		if (ft_strcmp(input->type, ARG) == 0)
 			arg_count++;
 		input = input->next;

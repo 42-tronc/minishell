@@ -186,7 +186,7 @@ char	**split_paths(char const *s, char c);
 // utils.c
 void	exit_error(int code, char *source);
 void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
-int	count_arguments(t_token *input, int block);
+int	count_arguments(t_token *input);
 
 // utils_env.c
 t_env	*ft_env_new(char *var, char *value);
