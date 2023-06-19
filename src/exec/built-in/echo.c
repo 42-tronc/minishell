@@ -6,17 +6,17 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 13:56:34 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 15:27:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief checks if string is a -n+ of some sort
+ * @brief checks if string is a -n (-nnnn) of some sort
  *
  * @param str string to check
- * @return int 1 if it is, else 0
+ * @return 1 if there is a -n, else 0
  */
 static int	is_dash_n(char *str)
 {
@@ -45,7 +45,7 @@ static int	is_dash_n(char *str)
  * @param input t_token of the first arg
  * @return int 1 if there is a newline, else 0
  */
-int	check_newline(t_token **input)
+static int	check_newline(t_token **input)
 {
 	int	newline;
 
@@ -63,7 +63,15 @@ int	check_newline(t_token **input)
 	return (newline);
 }
 
-int	echo_print(t_data *data, t_token *input, int block)
+/**
+ * @brief prints the args of echo
+ *
+ * @param data t_data struct with every var in it
+ * @param input t_token struct with the input
+ * @param block block of the pipe
+ * @return int 0 if success, else 1
+ */
+static int	echo_print(t_data *data, t_token *input, int block)
 {
 	int	first;
 	int	newline;
@@ -88,10 +96,11 @@ int	echo_print(t_data *data, t_token *input, int block)
 }
 
 /**
- * @brief print a string or an array of strings
+ * @brief creates a subshell to execute the echo
  *
- * @param ac nb of args passed
- * @param av array of args to print
+ * @param data t_data struct with every var in it
+ * @param input t_token struct with the input
+ * @param block block of the pipe
  */
 void	ft_echo(t_data *data, t_token *input, int block)
 {
