@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 10:05:09 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 11:31:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ void	print_tokens_linked_list(t_token *head)
 // might need to change the export and set to only print if there is a value, if not it is a export
 void	check_command(t_data *data, t_token *input, int block)
 {
-	// printf("checking command in block %d\n", block);
 	while (input && input->pipe_block == block)
 	{
-		// printf("checking %s being a %s\n", input->token, input->type);
 		if (input->type && ft_strcmp(input->type, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
@@ -57,10 +55,8 @@ void	check_command(t_data *data, t_token *input, int block)
 				ft_exit(input->next);
 			}
 			else if (ft_strcmp(input->token, "export") == 0)
-				// printf("this needs a quick fix\n");
 				ft_export(data, input->next, block);
 			else if (ft_strcmp(input->token, "pwd") == 0)
-				// ft_pwd();
 				create_subshell(ft_pwd, data, input, block);
 			else if (ft_strcmp(input->token, "unset") == 0)
 				ft_unset(&data->env, input);
