@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:43:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:44:16 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,15 @@ static void	open_heredoc(t_data *data, t_token *input, int block)
 		line = readline("> ");
 		if (!line)
 		{
-			printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
+			printf("warning: here-document delimited by EOF (wanted `%s')\n",
 				input->token);
 			break ;
 		}
 		else if (ft_strcmp(line, input->token) == 0)
-		{
-			printf("found the EOF\n"); // DELETE
 			break ;
-		}
 		else if (is_last)
-			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(data->cmd_block[block]->heredoc,
-				line);
+			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(\
+			data->cmd_block[block]->heredoc, line);
 	}
 }
 
