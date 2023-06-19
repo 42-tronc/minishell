@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 11:50:34 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 13:30:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char	*get_cd_path(t_data *data, t_token *input)
 		if (ft_getenv(data->env, "OLDPWD"))
 		{
 			path = ft_getenv(data->env, "OLDPWD");
+			printf("%s\n", path);
 		}
 		else
 		{
@@ -36,33 +37,60 @@ static char	*get_cd_path(t_data *data, t_token *input)
 }
 
 /**
- * @brief Goes into the directory specified (works with `~`)
- * `-` will go to the last directory if available.
- * `~` or `NULL` will go to the home directory
- * @param path absolute or relative path to go to.
+ * @brief Counts the number of arguments in the input
+ *
+ * @param input input with the first argument
+ * @param block block of the pipe
+ * @return int number of arguments
  */
-void	ft_cd(t_data *data, t_token *input)
+static int	count_arguments(t_token *input, int block)
 {
+	int		arg_count;
+	t_token	*current;
+
+	arg_count = 0;
+	current = input;
+	while (current && current->pipe_block == block)
+	{
+		if (ft_strcmp(current->type, ARG) == 0)
+			arg_count++;
+		current = current->next;
+	}
+	return (arg_count);
+}
+
+/**
+ * @brief Changes the current working directory
+ * `cd` or `cd ~` will go to the home directory
+ * `-` will go to the last directory if available.
+ *
+ * @param data t_data struct
+ * @param input t_token from the first argument
+ * @param block block of the pipe
+ * @return int 0 if success, 1 if failure
+ */
+int	ft_cd(t_data *data, t_token *input, int block)
+{
+	int		arg_count;
 	char	*path;
 	char	previous[BUFSIZ];
 
-	if (input && input->next)
+	arg_count = count_arguments(input, block);
+	if (arg_count > 1)
 	{
 		printf("cd: too many arguments\n");
-		return ;
+		return (1);
 	}
+	while (input && input->pipe_block == block && ft_strcmp(input->type,
+			ARG) != 0)
+		input = input->next;
 	getcwd(previous, BUFSIZ);
 	path = get_cd_path(data, input);
-	printf("path = `%s`\n", path); // DEBUG
 	if (!path)
-		return ;
+		return (1);
 	if (chdir(path) == -1)
 		perror("cd");
 	else
-	{
 		ft_setenv(data->env, "OLDPWD", previous);
-		printf("New OLDPWD\t%s\n", ft_getenv(data->env, "OLDPWD"));
-	}
-	// printf("New path\t"); // DEBUG
-	// ft_pwd();             // DEBUG
+	return (0);
 }
