@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:15:06 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:16:05 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ char	*get_validpath(t_data *data, t_token *input)
 	return (NULL);
 }
 
+/**
+ * @brief Put the cmd and its arguments in an array
+ * @remark The first argument is the command itself
+ * @remark The last argument is NULL
+ *
+ * @param input t_token struct with the input
+ * @param command_path path of the command
+ * @return char** array with the command and its arguments
+ */
 char	**get_cmd_args(t_token *input, char *command_path)
 {
 	size_t	i;
