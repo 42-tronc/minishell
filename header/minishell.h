@@ -134,8 +134,6 @@ struct s_token {
 int	ft_cd(t_data *data, t_token *input, int block);
 
 // echo.c
-int	check_newline(t_token **input);
-int	echo_print(t_data *data, t_token *input, int block);
 void	ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
