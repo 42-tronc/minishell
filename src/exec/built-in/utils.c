@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 07:52:13 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 10:51:06 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_env	*ft_env_new(char *var, char *value)
 		free(dst);
 		return (NULL);
 	}
-	dst->next = NULL; // Set next to NULL for the new node
+	dst->next = NULL;
 	return (dst);
 }
 
@@ -73,7 +73,6 @@ char	*ft_getenv(t_env *env, char *var)
 	}
 	return (NULL);
 }
-
 
 static int	ft_addenv(t_env **env, char *var, char *value)
 {
@@ -152,10 +151,4 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
 			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
 }
-	// else
-	// {
-	// 	int wstatus;
-	// 	waitpid(pid, &status, 0);
-	// 	printf("Subshell execution complete %d\n", status);
-	// }
 }
