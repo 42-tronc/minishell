@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 13:30:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 13:51:13 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,13 @@ int	ft_cd(t_data *data, t_token *input, int block)
 	getcwd(previous, BUFSIZ);
 	path = get_cd_path(data, input);
 	if (!path)
-		return (1);
+		return (EXIT_FAILURE);
 	if (chdir(path) == -1)
+	{
 		perror("cd");
+		return (EXIT_FAILURE);
+	}
 	else
 		ft_setenv(data->env, "OLDPWD", previous);
-	return (0);
+	return (EXIT_SUCCESS);
 }
