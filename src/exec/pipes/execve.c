@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:53:43 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:57:14 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	create_pipe(t_data *data)
 	while (i < data->cmd_block_count - 1)
 	{
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
-			error_exit(E_PIPE, "create_pipe");
+			exit_error(E_PIPE, "create_pipe");
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -198,7 +198,7 @@ char	**env_to_array(t_env *env)
 	size = env_size(env);
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
-		error_exit(E_MALLOC, "env_to_array");
+		exit_error(E_MALLOC, "env_to_array");
 	i = 0;
 	while (env)
 	{
@@ -207,13 +207,13 @@ char	**env_to_array(t_env *env)
 		if (!array[i])
 		{
 			free_array(array);
-			error_exit(E_MALLOC, "env_to_array");
+			exit_error(E_MALLOC, "env_to_array");
 		}
 		array[i] = ft_strjoin(array[i], env->value);
 		if (!array[i])
 		{
 			free_array(array);
-			error_exit(E_MALLOC, "env_to_array");
+			exit_error(E_MALLOC, "env_to_array");
 		}
 		env = env->next;
 		i++;
