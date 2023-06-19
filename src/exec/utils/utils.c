@@ -64,3 +64,26 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
 	}
 }
+
+/**
+ * @brief Counts the number of arguments in the input
+ * @remark The command is not counted as an argument
+ *
+ * @param input t_token with the first argument
+ * @param block block of the pipe
+ * @return int number of arguments
+ */
+int	count_arguments(t_token *input, int block)
+{
+	int		arg_count;
+
+	arg_count = 0;
+	while (input && input->pipe_block == block)
+	{
+		if (ft_strcmp(input->type, ARG) == 0)
+			arg_count++;
+		input = input->next;
+	}
+	return (arg_count);
+}
+

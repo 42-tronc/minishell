@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 15:23:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 16:21:48 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,6 @@ static char	*get_cd_path(t_data *data, t_token *input)
 	else
 		path = input->token;
 	return (path);
-}
-
-/**
- * @brief Counts the number of arguments in the input
- * @remark The command is not counted as an argument
- *
- * @param input t_token with the first argument
- * @param block block of the pipe
- * @return int number of arguments
- */
-static int	count_arguments(t_token *input, int block)
-{
-	int		arg_count;
-	t_token	*current;
-
-	arg_count = 0;
-	current = input;
-	while (current && current->pipe_block == block)
-	{
-		if (ft_strcmp(current->type, ARG) == 0)
-			arg_count++;
-		current = current->next;
-	}
-	return (arg_count);
 }
 
 /**
