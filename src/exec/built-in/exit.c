@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/01 12:43:03 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 11:32:39 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,16 @@ long long	ft_atoll(const char *str)
 	return (result);
 }
 
-void	ft_exit(t_token *input)
+void	ft_exit(t_data *data, t_token *input)
 {
 	int		i;
 	char	*token;
 	int		exit_code;
 
+	free(data->p);
+	free(data->cmd_block);
 	if (!input)
 		exit(0);
-	// Check if the input string is a valid number
 	i = 0;
 	token = input->token;
 	while (token[i])
@@ -102,6 +103,5 @@ void	ft_exit(t_token *input)
 	printf("error code %d\n", exit_code);
 	while (exit_code < 0)
 		exit_code = exit_code + 256;
-	// exit_code = exit_code ;
-	exit(exit_code % 256 );
+	exit(exit_code % 256);
 }

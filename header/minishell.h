@@ -143,7 +143,7 @@ t_env	*fill_env(char **envp);
 
 // exit.c
 long	long	ft_atoll(const char *str);
-void	ft_exit(t_token *input);
+void	ft_exit(t_data *data, t_token *input);
 
 // export.c
 void	add_env_entry(t_env *env, t_token *input, int block);
@@ -174,7 +174,6 @@ int	env_size(t_env *env);
 void	free_env_array(char **env_array);
 char	**env_to_array(t_env *env);
 int	exec_cmd(t_data *data, t_token *input, int block);
-int	exec_execve(t_data *data, t_token *input, int block);
 void	exec_command(t_data *data, t_token *input, int block);
 
 // files.c
