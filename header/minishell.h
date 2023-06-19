@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 15:13:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:19:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ char	**split_paths(char const *s, char c);
 void	exit_error(int code, char *source);
 void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
 int	count_arguments(t_token *input);
+void	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
 
 // utils_env.c
 t_env	*ft_env_new(char *var, char *value);
