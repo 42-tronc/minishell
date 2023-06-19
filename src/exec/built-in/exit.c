@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 16:55:05 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:33:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,21 @@ long long	ft_atoll(const char *str)
 
 int	ft_exit(t_data *data, t_token *input, int block)
 {
-	char	*token;
 	int		exit_code;
 
 	(void)block;
-	free(data->p);
-	free(data->cmd_block);
 	if (!input)
 		exit(0);
-	token = input->token;
-	exit_code = ft_atoll(token);
+	exit_code = ft_atoll(input->token);
+	if (count_arguments(input) > 1)
+	{
+		ft_putendl_fd("exit error: too many arguments.", 2);
+		return (EXIT_FAILURE);
+	}
 	while (exit_code < 0)
 		exit_code = exit_code + 256;
+	free(data->p);
+	free(data->cmd_block);
 	exit(exit_code % 256);
-	return (0);
+	return (EXIT_SUCCESS);
 }
