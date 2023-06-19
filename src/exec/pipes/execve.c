@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 14:03:02 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:15:06 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,6 @@ char	*get_validpath(t_data *data, t_token *input)
 	return (NULL);
 }
 
-/**
- * @brief Counts the number of arguments + cmd to malloc
- *
- * @param input
- * @return size_t cmd + args count
- */
-static size_t	_count_cmd_args(t_token *input)
-{
-	size_t	size;
-
-	size = 0;
-	if (ft_strcmp(input->type, CMD) == 0)
-		size++;
-	input = input->next;
-	while (input)
-	{
-		if (ft_strcmp(input->type, PIPE) == 0)
-			break ;
-		else if (ft_strcmp(input->type, ARG) == 0)
-			size++;
-		input = input->next;
-	}
-	return (size);
-}
-
 char	**get_cmd_args(t_token *input, char *command_path)
 {
 	size_t	i;
@@ -91,7 +66,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 
 	if (!input)
 		return (NULL);
-	size = _count_cmd_args(input);
+	size = count_arguments(input) + 1;
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
 		return (NULL); // exit here
