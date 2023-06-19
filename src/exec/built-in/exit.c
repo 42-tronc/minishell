@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 14:45:25 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 14:46:12 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	ft_exit(t_data *data, t_token *input)
 		exit(0);
 	token = input->token;
 	exit_code = ft_atoll(token);
-	printf("error code %d\n", exit_code);
 	while (exit_code < 0)
 		exit_code = exit_code + 256;
 	exit(exit_code % 256);
