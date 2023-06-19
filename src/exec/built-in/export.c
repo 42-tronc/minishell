@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 14:51:13 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:36:08 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,7 @@ static int	export_print(t_data *data, t_token *input, int block)
 
 void	ft_export(t_data *data, t_token *input, int block)
 {
-	int	print;
-
-	print = 1;
-	while (input)
-	{
-		if (ft_strcmp(input->type, ARG) == 0)
-		{
-			print = 0;
-			break ;
-		}
-		input = input->next;
-	}
-	if (print)
+	if (count_arguments(input) == 0)
 		create_subshell(export_print, data, input, block);
 	else
 		add_env_entry(data->env, input, block);
