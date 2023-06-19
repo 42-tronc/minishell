@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 11:57:33 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 14:51:13 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,15 @@ void	add_env_entry(t_env *env, t_token *input, int block)
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
 			var = ft_strdup(input->token);
+			if (!var)
+				exit_error(E_MALLOC, "add_env_entry");
 			value = ft_strchr(var, '=');
 			if (value)
 			{
 				*value = '\0';
 				value++;
 			}
-			// else
-			// printf("var = `%s` | value = `%s`\n", var, value);
 			ft_setenv(env, var, value);
-			printf("getenv %s = `%s`\n", var, ft_getenv(env, var));
 		}
 		input = input->next;
 	}
@@ -84,7 +83,7 @@ static int	export_print(t_data *data, t_token *input, int block)
 		if (data->env->value)
 			printf("declare -x %s=\"%s\"\n", data->env->var, data->env->value);
 		else
-			printf(RED "declare -x %s%s\n", data->env->var, RESET);
+			printf("declare -x %s\n", data->env->var);
 		data->env = data->env->next;
 	}
 	return (0);
@@ -94,8 +93,6 @@ void	ft_export(t_data *data, t_token *input, int block)
 {
 	int	print;
 
-	(void)data;
-	(void)block;
 	print = 1;
 	while (input)
 	{
