@@ -156,14 +156,6 @@ int	ft_pwd(t_data *data, t_token *input, int block);
 void	free_env_node(t_env *node);
 void	ft_unset(t_env **env, t_token *input, int block);
 
-// utils.c
-t_env	*ft_env_new(char *var, char *value);
-void	ft_env_add_back(t_env **lst, t_env *new);
-char	*ft_getenv(t_env *env, char *var);
-int	ft_setenv(t_env *env, char *var, char *value);
-void	exit_error(int code, char *source);
-void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
-
 // execve.c
 int	ft_getpaths(t_data *data);
 char	*get_validpath(t_data *data, t_token *input);
@@ -187,6 +179,19 @@ void	ft_fork(void);
 
 // strjoin_heredoc.c
 char	*ft_strjoin_heredoc(char *s1, char *s2);
+
+// split_paths.c
+char	**split_paths(char const *s, char c);
+
+// utils.c
+void	exit_error(int code, char *source);
+void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
+
+// utils_env.c
+t_env	*ft_env_new(char *var, char *value);
+void	ft_env_add_back(t_env **lst, t_env *new);
+char	*ft_getenv(t_env *env, char *var);
+int	ft_setenv(t_env *env, char *var, char *value);
 
 // dollar.c
 char	*get_var_name(char *str);
