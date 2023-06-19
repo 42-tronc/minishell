@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 11:32:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 11:33:22 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "env") == 0)
 				ft_env(data, input, block);
 			else if (ft_strcmp(input->token, "exit") == 0)
-			{
 				ft_exit(data, input->next);
-			}
 			else if (ft_strcmp(input->token, "export") == 0)
 				ft_export(data, input->next, block);
 			else if (ft_strcmp(input->token, "pwd") == 0)
