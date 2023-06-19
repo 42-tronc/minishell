@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 14:46:12 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 16:55:05 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ long long	ft_atoll(const char *str)
 	return (result);
 }
 
-void	ft_exit(t_data *data, t_token *input)
+int	ft_exit(t_data *data, t_token *input, int block)
 {
 	char	*token;
 	int		exit_code;
 
+	(void)block;
 	free(data->p);
 	free(data->cmd_block);
 	if (!input)
@@ -85,4 +86,5 @@ void	ft_exit(t_data *data, t_token *input)
 	while (exit_code < 0)
 		exit_code = exit_code + 256;
 	exit(exit_code % 256);
+	return (0);
 }
