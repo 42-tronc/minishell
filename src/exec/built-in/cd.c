@@ -6,12 +6,19 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 13:51:13 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 15:23:44 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Gets the path to change directory to
+ *
+ * @param data t_data struct with every var in it
+ * @param input t_token struct with the input
+ * @return char* path to change directory to
+ */
 static char	*get_cd_path(t_data *data, t_token *input)
 {
 	char	*path;
@@ -38,8 +45,9 @@ static char	*get_cd_path(t_data *data, t_token *input)
 
 /**
  * @brief Counts the number of arguments in the input
+ * @remark The command is not counted as an argument
  *
- * @param input input with the first argument
+ * @param input t_token with the first argument
  * @param block block of the pipe
  * @return int number of arguments
  */
