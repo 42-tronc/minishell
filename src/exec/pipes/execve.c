@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 07:58:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 11:38:16 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	env_size(t_env *env)
 	return (size);
 }
 
-void	free_env_array(char **env_array)
+void	free_array(char **env_array)
 {
 	char	**current;
 
@@ -221,13 +221,13 @@ char	**env_to_array(t_env *env)
 		array[i] = ft_strjoin(env->var, "=");
 		if (!array[i])
 		{
-			free_env_array(array);
+			free_array(array);
 			return (NULL);
 		}
 		array[i] = ft_strjoin(array[i], env->value);
 		if (!array[i])
 		{
-			free_env_array(array);
+			free_array(array);
 			return (NULL);
 		}
 		env = env->next;
@@ -247,16 +247,20 @@ int	exec_cmd(t_data *data, t_token *input, int block)
 {
 	char	*command_path;
 	char	**command_args;
+	char	**env_array;
 
 	(void) block;
+	env_array = env_to_array(data->env);
 	command_path = get_validpath(data, input);
 	// if (!command_path)
 	// 	return (FAILURE);
 	command_args = get_cmd_args(input, command_path);
 	if (!command_args)
 		return (FAILURE);
-	execve(command_path, command_args, env_to_array(data->env));
-	free_env_array(command_args);
+	printf("going to run %s\n", command_path);
+	execve(command_path, command_args, env_array);
+	free_array(env_array);
+	free_array(command_args);
 	ft_putstr_fd(input->token, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	return (127);
