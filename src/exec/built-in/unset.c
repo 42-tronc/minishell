@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 15:13:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/20 13:57:06 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	unset_key(t_env **env, const char *token)
 	{
 		if (ft_strcmp(current->var, token) == 0)
 		{
-			printf("found %s\n", token);
 			if (!previous)
 				*env = current->next;
 			else

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:53:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/20 15:31:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	check_command(t_data *data, t_token *input, int block)
 		if (input->type && ft_strcmp(input->type, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
-				ft_cd(data, input->next, block);
+				data->status = ft_cd(data, input->next, block);
 			else if (ft_strcmp(input->token, "echo") == 0)
 				ft_echo(data, input->next, block);
 			else if (ft_strcmp(input->token, "env") == 0)
@@ -52,7 +52,7 @@ void	check_command(t_data *data, t_token *input, int block)
 				// ft_exit(data, input->next);
 				check_alone(ft_exit, data, input->next, block);
 			else if (ft_strcmp(input->token, "export") == 0)
-				ft_export(data, input->next, block);
+				data->status = ft_export(data, input->next, block);
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				create_subshell(ft_pwd, data, input, block);
 			else if (ft_strcmp(input->token, "unset") == 0)
@@ -68,9 +68,10 @@ void	exec_code(t_data *data)
 {
 	int	block;
 	int	status;
+	int statuscode;
 
 	block = 0;
-	status = 0; // Variable to store the return status of the child process
+	status = -1; // Variable to store the return status of the child process
 	while (block < data->cmd_block_count)
 	{
 		waitpid(data->cmd_block[block]->pid, &status, 0);
@@ -78,16 +79,16 @@ void	exec_code(t_data *data)
 	}
 	// data->status = WEXITSTATUS(status);
 	// printf("wexit = %d\n", data->status);
-	// printf("Subshell execv complete %d\n", status);
 	if (WIFEXITED(status)) {
-		int statuscode = WEXITSTATUS(status);
-		if (statuscode != 0)
-			printf(RED"failure with %d\n" RESET, statuscode);
+		statuscode = WEXITSTATUS(status);
+		// if (statuscode != 0)
+			// printf(RED"failure with %d\n" RESET, statuscode);
 			// printf(BOLD GREEN "success\n" RESET);
 			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
 		// else
 	}
-	data->status = status;
+	if (status != -1)
+		data->status = statuscode;
 }
 
 void	exec_dispatch(t_data *data, t_token *input)
@@ -107,6 +108,11 @@ void	exec_dispatch(t_data *data, t_token *input)
 			error = check_outfile(data, input, block);
 		if (!error)
 			check_command(data, input, block); // will be changed
+		if (block == data->cmd_block_count - 1 && error)
+		{
+			data->status = 1;
+			return ;
+		}
 		block++;
 		while (block > input->pipe_block && input->next)
 			input = input->next;
@@ -163,12 +169,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (init_data(data))
 				exit(EXIT_FAILURE);
-
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 		}
-		// while (wait(NULL) > 0)
-		// 	;
 		free_token(data->tokens);
 		free(data->p);
 	}
