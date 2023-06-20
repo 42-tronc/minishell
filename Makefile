@@ -91,7 +91,7 @@ DIR_EXEC_BUILTIN := $(SRC_FOLDER)exec/built-in/
 SRC_EXEC_BUILTIN := cd.c echo.c env.c exit.c export.c pwd.c unset.c
 
 DIR_EXEC := $(SRC_FOLDER)exec/pipes/
-SRC_EXEC := fork.c execve.c strjoin_heredoc.c dispatch.c
+SRC_EXEC := execve.c strjoin_heredoc.c
 
 DIR_EXEC_UTILS := $(SRC_FOLDER)exec/utils/
 SRC_EXEC_UTILS := split_paths.c utils_files.c utils_env.c utils.c
