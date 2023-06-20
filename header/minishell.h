@@ -235,6 +235,7 @@ int	prepare_token(t_data *data);
 // rm_quotes.c
 int	get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
+int	remove_quotes_expand(t_token **tokens, t_data *data);
 int	remove_quotes(t_token **tokens, t_data *data);
 
 // signal.c
