@@ -97,7 +97,7 @@ DIR_EXEC_UTILS := $(SRC_FOLDER)exec/utils/
 SRC_EXEC_UTILS := split_paths.c utils_files.c utils_env.c utils.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
-SCR_PARSING := tokens.c tokens2.c parsing.c envp.c envp_lst.c tokens_lst.c dollar.c dollar2.c identification.c prepare.c tilde.c rm_quotes.c syntax_error.c signal.c
+SCR_PARSING := tokens.c tokens2.c cut_expand.c parsing.c envp.c envp_lst.c replace_list.c tokens_lst.c dollar.c dollar2.c identification.c prepare.c tilde.c rm_quotes.c syntax_error.c signal.c
 
 
 # -------------- RECIPES --------------

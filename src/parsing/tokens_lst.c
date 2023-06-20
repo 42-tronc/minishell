@@ -12,6 +12,27 @@
 
 #include "minishell.h"
 
+t_token	**find_head_ref(t_token *temp)
+{
+	while (temp->prev)
+		temp = temp->prev;
+	return (temp->head_ref);
+}
+
+void	delete_token(t_token **head_ref, t_token *del)
+{
+	if (*head_ref == NULL || del == NULL)
+		return ;
+	if (*head_ref == del)
+		*head_ref = del->next;
+	if (del->next != NULL)
+		del->next->prev = del->prev;
+	if (del->prev != NULL)
+		del->prev->next = del->next;
+	free(del->token);
+	free(del);
+}
+
 int	ft_tokenadd_back(t_token **lst, t_token *new)
 {
 	t_token	*temp;
@@ -23,6 +44,7 @@ int	ft_tokenadd_back(t_token **lst, t_token *new)
 	{
 		new->prev = NULL;
 		*lst = new;
+		new->head_ref = lst;
 		return (0);
 	}
 	while (temp->next)
@@ -42,6 +64,9 @@ t_token	*ft_tokennew(void *content)
 	dst->token = (char *)content;
 	dst->type = NULL;
 	dst->next = NULL;
+	dst->prev = NULL;
+	dst->in_quote = 0;
+	dst->from_expand = 0;
 	dst->pipe_block = 0;
 	return (dst);
 }
