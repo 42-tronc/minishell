@@ -48,6 +48,8 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	}
 	else if (pid == 0)
 	{
+		if (block < data->cmd_block_count - 1 && data->cmd_block[block]->pipe_fd[0] > 0)
+			close(data->cmd_block[block]->pipe_fd[0]);
 		if (check_input(data, block) == EXIT_FAILURE)
 			return ; // dup2 failed exit here
 		if (check_output(data, block) == EXIT_FAILURE)
@@ -58,7 +60,7 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	else
 	{
 		data->cmd_block[block]->pid = pid;
-		if (data->cmd_block[block]->pipe_fd[0] > 0 && block > 0)
+		if (block > 0 && data->cmd_block[block - 1]->pipe_fd[0] > 0)
 			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
 		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
 			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
