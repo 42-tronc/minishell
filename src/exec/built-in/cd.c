@@ -6,12 +6,19 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 11:50:34 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:05:57 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Gets the path to change directory to
+ *
+ * @param data t_data struct with every var in it
+ * @param input t_token struct with the input
+ * @return char* path to change directory to
+ */
 static char	*get_cd_path(t_data *data, t_token *input)
 {
 	char	*path;
@@ -23,6 +30,7 @@ static char	*get_cd_path(t_data *data, t_token *input)
 		if (ft_getenv(data->env, "OLDPWD"))
 		{
 			path = ft_getenv(data->env, "OLDPWD");
+			printf("%s\n", path);
 		}
 		else
 		{
@@ -36,33 +44,40 @@ static char	*get_cd_path(t_data *data, t_token *input)
 }
 
 /**
- * @brief Goes into the directory specified (works with `~`)
+ * @brief Changes the current working directory
+ * `cd` or `cd ~` will go to the home directory
  * `-` will go to the last directory if available.
- * `~` or `NULL` will go to the home directory
- * @param path absolute or relative path to go to.
+ *
+ * @param data t_data struct
+ * @param input t_token from the first argument
+ * @param block block of the pipe
+ * @return int 0 if success, 1 if failure
  */
-void	ft_cd(t_data *data, t_token *input)
+int	ft_cd(t_data *data, t_token *input, int block)
 {
+	int		arg_count;
 	char	*path;
 	char	previous[BUFSIZ];
 
-	if (input && input->next)
+	arg_count = count_arguments(input);
+	if (arg_count > 1)
 	{
 		printf("cd: too many arguments\n");
-		return ;
+		return (1);
 	}
+	while (input && input->pipe_block == block && ft_strcmp(input->type,
+			ARG) != 0)
+		input = input->next;
 	getcwd(previous, BUFSIZ);
 	path = get_cd_path(data, input);
-	printf("path = `%s`\n", path); // DEBUG
 	if (!path)
-		return ;
+		return (EXIT_FAILURE);
 	if (chdir(path) == -1)
-		perror("cd");
-	else
 	{
-		ft_setenv(data->env, "OLDPWD", previous);
-		printf("New OLDPWD\t%s\n", ft_getenv(data->env, "OLDPWD"));
+		perror("cd");
+		return (EXIT_FAILURE);
 	}
-	// printf("New path\t"); // DEBUG
-	// ft_pwd();             // DEBUG
+	else
+		ft_setenv(data->env, "OLDPWD", previous);
+	return (EXIT_SUCCESS);
 }

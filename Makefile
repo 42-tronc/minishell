@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/06/07 09:38:37 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/06/19 17:42:03 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,18 +81,20 @@ HEADER := header/minishell.h
 
 SRC_FOLDER := src/
 OBJ_DIR := obj/
-# SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_EXEC) $(SCR_PARSING))
-SRC = $(addprefix $(SRC_FOLDER), $(SRC_BUILTIN) $(SRC_EXEC) $(SRC_UTILS) $(SCR_PARSING))
+SRC = $(addprefix $(SRC_FOLDER), $(SRC_EXEC_BUILTIN) $(SRC_EXEC) $(SRC_EXEC_UTILS) $(SRC_UTILS) $(SCR_PARSING))
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_UTILS := $(SRC_FOLDER)utils/
-SRC_UTILS := minishell.c exec_char.c split_paths.c
+SRC_UTILS := minishell.c exec_char.c
 
-DIR_BUILTIN := $(SRC_FOLDER)exec/built-in/
-SRC_BUILTIN := utils.c echo.c pwd.c cd.c env.c export.c unset.c exit.c
+DIR_EXEC_BUILTIN := $(SRC_FOLDER)exec/built-in/
+SRC_EXEC_BUILTIN := cd.c echo.c env.c exit.c export.c pwd.c unset.c
 
 DIR_EXEC := $(SRC_FOLDER)exec/pipes/
-SRC_EXEC := fork.c execve.c files.c strjoin_heredoc.c dispatch.c
+SRC_EXEC := execve.c strjoin_heredoc.c
+
+DIR_EXEC_UTILS := $(SRC_FOLDER)exec/utils/
+SRC_EXEC_UTILS := split_paths.c utils_files.c utils_env.c utils.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := tokens.c tokens2.c cut_expand.c parsing.c envp.c envp_lst.c replace_list.c tokens_lst.c dollar.c dollar2.c identification.c prepare.c tilde.c rm_quotes.c syntax_error.c signal.c
@@ -109,10 +111,13 @@ $(NAME): $(LIBFT_NAME) $(OBJ)
 $(OBJ_DIR)%.o : $(DIR_UTILS)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(OBJ_DIR)%.o : $(DIR_BUILTIN)%.c $(HEADER) | $(OBJ_DIR)
+$(OBJ_DIR)%.o : $(DIR_EXEC_BUILTIN)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_DIR)%.o : $(DIR_EXEC)%.c $(HEADER) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OBJ_DIR)%.o : $(DIR_EXEC_UTILS)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_DIR)%.o : $(DIR_PARSING)%.c $(HEADER) | $(OBJ_DIR)

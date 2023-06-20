@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 11:53:53 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 13:56:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	print_env(t_data *data, t_token *input, int block)
 		{
 			ft_putstr_fd("env can't take any options or arguments\n",
 				STDERR_FILENO);
-			return (FAILURE);
+			return (EXIT_FAILURE);
 		}
 		input = input->next;
 	}
@@ -62,17 +62,13 @@ t_env	*fill_env(char **envp)
 			{
 				envp[i][j] = '\0';
 				current = ft_env_new(envp[i], envp[i] + j + 1);
-				// printf("`%s`", current->var);
-				// printf("`%s`\n", current->value);
-				if (!current)
-					return (NULL);
-				// free memory here
+				// if (!current)
+				// 	exit_error(E_MALLOC, "fill_env");
+					// return (NULL);
 				ft_env_add_back(&ll_env, current);
 				break ;
 			}
-			// j++;
 		}
-		// i++;
 	}
 	return (ll_env);
 }

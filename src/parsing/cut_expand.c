@@ -41,16 +41,6 @@ void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d)
 	}
 }
 
-void	free_array(char **array)
-{
-	int	i;
-
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
-}
-
 int	cutting_expand(t_data *data)
 {
 	char	**array;

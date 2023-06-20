@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 10:48:18 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:19:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ typedef struct s_parsing	t_parsing;
 typedef struct s_token		t_token;
 
 typedef enum e_exit_code {
-	PIPE_ERROR = -3,
-	MALLOC_ERROR = -2,
-	FAILURE = 1,
-	SUCCESS = 0,
+	E_MALLOC = 0,
+	E_DUP2 = 1,
+	E_PIPE = 2,
+	E_FORK = 3,
+	// EXIT_SUCCESS,
+	// EXIT_FAILURE,
 }	t_exit_code;
 
 typedef struct s_env
@@ -132,11 +134,9 @@ struct s_token {
 
 //	===== @functions =====
 // cd.c
-void	ft_cd(t_data *data, t_token *input);
+int	ft_cd(t_data *data, t_token *input, int block);
 
 // echo.c
-int	check_newline(t_token **input);
-int	echo_print(t_data *data, t_token *input, int block);
 void	ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
@@ -146,7 +146,7 @@ t_env	*fill_env(char **envp);
 
 // exit.c
 long	long	ft_atoll(const char *str);
-void	ft_exit(t_token *input);
+int	ft_exit(t_data *data, t_token *input, int block);
 
 // export.c
 void	add_env_entry(t_env *env, t_token *input, int block);
@@ -156,15 +156,8 @@ void	ft_export(t_data *data, t_token *input, int block);
 int	ft_pwd(t_data *data, t_token *input, int block);
 
 // unset.c
-void	ft_unset(t_env **env, t_token *args);
-
-// utils.c
-t_env	*ft_env_new(char *var, char *value);
-void	ft_env_add_back(t_env **lst, t_env *new);
-char	*ft_getenv(t_env *env, char *var);
-int	ft_setenv(t_env *env, char *var, char *value);
-void	print_error(int code);
-void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
+void	free_env_node(t_env *node);
+void	ft_unset(t_env **env, t_token *input, int block);
 
 // execve.c
 int	ft_getpaths(t_data *data);
@@ -174,10 +167,9 @@ int	check_output(t_data *data, int block);
 int	check_input(t_data *data, int block);
 int	create_pipe(t_data *data);
 int	env_size(t_env *env);
-void	free_env_array(char **env_array);
+void	free_array(char **env_array);
 char	**env_to_array(t_env *env);
 int	exec_cmd(t_data *data, t_token *input, int block);
-int	exec_execve(t_data *data, t_token *input, int block);
 void	exec_command(t_data *data, t_token *input, int block);
 
 // files.c
@@ -190,6 +182,21 @@ void	ft_fork(void);
 
 // strjoin_heredoc.c
 char	*ft_strjoin_heredoc(char *s1, char *s2);
+
+// split_paths.c
+char	**split_paths(char const *s, char c);
+
+// utils.c
+void	exit_error(int code, char *source);
+void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
+int	count_arguments(t_token *input);
+void	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
+
+// utils_env.c
+t_env	*ft_env_new(char *var, char *value);
+void	ft_env_add_back(t_env **lst, t_env *new);
+char	*ft_getenv(t_env *env, char *var);
+int	ft_setenv(t_env *env, char *var, char *value);
 
 // dollar.c
 char	*get_var_name(char *str);
@@ -276,8 +283,5 @@ void	check_command(t_data *data, t_token *input, int block);
 void	exec_code(t_data *data);
 void	exec_dispatch(t_data *data, t_token *input);
 int	init_data(t_data *data);
-
-// split_paths.c
-char	**split_paths(char const *s, char c);
 
 #endif

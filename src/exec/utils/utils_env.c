@@ -1,24 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 07:52:13 by croy             ###   ########lyon.fr   */
+/*   Created: 2023/06/19 15:19:50 by croy              #+#    #+#             */
+/*   Updated: 2023/06/19 15:19:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief creates a new t_env and dupe the var and value
- *
- * @param var
- * @param value
- * @return t_env* a new t_env node
- */
 t_env	*ft_env_new(char *var, char *value)
 {
 	t_env	*dst;
@@ -39,7 +32,7 @@ t_env	*ft_env_new(char *var, char *value)
 		free(dst);
 		return (NULL);
 	}
-	dst->next = NULL; // Set next to NULL for the new node
+	dst->next = NULL;
 	return (dst);
 }
 
@@ -73,7 +66,6 @@ char	*ft_getenv(t_env *env, char *var)
 	}
 	return (NULL);
 }
-
 
 static int	ft_addenv(t_env **env, char *var, char *value)
 {
@@ -110,52 +102,4 @@ int	ft_setenv(t_env *env, char *var, char *value)
 		current = current->next;
 	}
 	return (ft_addenv(&env, var, value));
-}
-
-void	print_error(int code)
-{
-	char	*error[1];
-
-	error[0] = "Malloc failed to allocate a memory space";
-
-	// should prob print to fd 2
-	printf(RED"Error: %s\n"RESET, error[code]);
-	exit(EXIT_FAILURE);
-}
-
-void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
-{
-	pid_t	pid;
-	int		status;
-
-	status = 0;
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return ; // will need to exit here
-	}
-	else if (pid == 0)
-	{
-		if (check_input(data, block) == FAILURE)
-			return ; // dup2 failed exit here
-		if (check_output(data, block) == FAILURE)
-			return ; // dup2 failed exit here
-		status = func(data, input, block);
-		exit(status);
-	}
-	else
-	{
-		data->cmd_block[block]->pid = pid;
-		if (data->cmd_block[block]->pipe_fd[0] > 0 && block > 0)
-			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
-		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
-			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
-}
-	// else
-	// {
-	// 	int wstatus;
-	// 	waitpid(pid, &status, 0);
-	// 	printf("Subshell execution complete %d\n", status);
-	// }
 }

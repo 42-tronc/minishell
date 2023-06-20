@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/16 07:58:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/19 17:57:14 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*get_validpath(t_data *data, t_token *input)
 	{
 		command_path = ft_strjoin(data->paths[i], input->token);
 		if (!command_path)
-			return (NULL); // Need to exit here
+			exit_error(E_MALLOC, "get_validpath");
 		error_access = access(command_path, X_OK);
 		if (!error_access)
 			return (command_path);
@@ -59,30 +59,14 @@ char	*get_validpath(t_data *data, t_token *input)
 }
 
 /**
- * @brief Counts the number of arguments + cmd to malloc
+ * @brief Put the cmd and its arguments in an array
+ * @remark The first argument is the command itself
+ * @remark The last argument is NULL
  *
- * @param input
- * @return size_t cmd + args count
+ * @param input t_token struct with the input
+ * @param command_path path of the command
+ * @return char** array with the command and its arguments
  */
-static size_t	_count_cmd_args(t_token *input)
-{
-	size_t	size;
-
-	size = 0;
-	if (ft_strcmp(input->type, CMD) == 0)
-		size++;
-	input = input->next;
-	while (input)
-	{
-		if (ft_strcmp(input->type, PIPE) == 0)
-			break ;
-		else if (ft_strcmp(input->type, ARG) == 0)
-			size++;
-		input = input->next;
-	}
-	return (size);
-}
-
 char	**get_cmd_args(t_token *input, char *command_path)
 {
 	size_t	i;
@@ -91,10 +75,10 @@ char	**get_cmd_args(t_token *input, char *command_path)
 
 	if (!input)
 		return (NULL);
-	size = _count_cmd_args(input);
+	size = count_arguments(input) + 1;
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
-		return (NULL); // exit here
+		exit_error(E_MALLOC, "get_cmd_args");
 	i = 1;
 	input = input->next;
 	array[0] = command_path;
@@ -104,7 +88,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 		{
 			array[i] = ft_strdup(input->token);
 			if (!array[i])
-				exit (FAILURE); // exit here
+				exit_error(E_MALLOC, "get_cmd_args");
 			i++;
 		}
 		input = input->next;
@@ -117,14 +101,14 @@ int	check_output(t_data *data, int block)
 	if (data->cmd_block[block]->out_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
-			return (FAILURE);
+			exit_error(E_DUP2, "check_output");
 		close(data->cmd_block[block]->out_fd);
 	}
 	else if (block < data->cmd_block_count - 1)
 	{
 		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
 				STDOUT_FILENO) == -1)
-			return (FAILURE);
+			exit_error(E_DUP2, "check_output");
 		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
 	return (0);
@@ -137,13 +121,15 @@ int	check_input(t_data *data, int block)
 	if (data->cmd_block[block]->in_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
-			return (FAILURE);
+			exit_error(E_DUP2, "check_input");
 		close(data->cmd_block[block]->in_fd);
 	}
 	else if (data->cmd_block[block]->heredoc)
 	{
-		pipe(tmp_pipe);
-		dup2(tmp_pipe[0], 0);
+		if ((pipe(tmp_pipe) == -1))
+			exit_error(E_PIPE, "check_input");
+		if (dup2(tmp_pipe[0], 0) == -1)
+			exit_error(E_DUP2, "check_input");
 		write(tmp_pipe[1], data->cmd_block[block]->heredoc,
 			ft_strlen(data->cmd_block[block]->heredoc));
 		free(data->cmd_block[block]->heredoc);
@@ -152,9 +138,8 @@ int	check_input(t_data *data, int block)
 	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
 	{
 		block -= 1;
-		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) ==
-			-1)
-			return (FAILURE);
+		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) == -1)
+			exit_error(E_DUP2, "check_input");
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
 	return (0);
@@ -166,14 +151,14 @@ int	create_pipe(t_data *data)
 
 	i = 0;
 	if (data->cmd_block_count < 1)
-		return (SUCCESS);
+		return (EXIT_SUCCESS);
 	while (i < data->cmd_block_count - 1)
 	{
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
-			return (FAILURE);
+			exit_error(E_PIPE, "create_pipe");
 		i++;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 int	env_size(t_env *env)
@@ -189,7 +174,7 @@ int	env_size(t_env *env)
 	return (size);
 }
 
-void	free_env_array(char **env_array)
+void	free_array(char **env_array)
 {
 	char	**current;
 
@@ -213,7 +198,7 @@ char	**env_to_array(t_env *env)
 	size = env_size(env);
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
-		return (NULL); // exit here
+		exit_error(E_MALLOC, "env_to_array");
 	i = 0;
 	while (env)
 	{
@@ -221,14 +206,14 @@ char	**env_to_array(t_env *env)
 		array[i] = ft_strjoin(env->var, "=");
 		if (!array[i])
 		{
-			free_env_array(array);
-			return (NULL);
+			free_array(array);
+			exit_error(E_MALLOC, "env_to_array");
 		}
 		array[i] = ft_strjoin(array[i], env->value);
 		if (!array[i])
 		{
-			free_env_array(array);
-			return (NULL);
+			free_array(array);
+			exit_error(E_MALLOC, "env_to_array");
 		}
 		env = env->next;
 		i++;
@@ -247,22 +232,20 @@ int	exec_cmd(t_data *data, t_token *input, int block)
 {
 	char	*command_path;
 	char	**command_args;
+	char	**env_array;
 
 	(void) block;
+	env_array = env_to_array(data->env);
 	command_path = get_validpath(data, input);
 	// if (!command_path)
-	// 	return (FAILURE);
+	// 	return (EXIT_FAILURE);
 	command_args = get_cmd_args(input, command_path);
 	if (!command_args)
-		return (FAILURE);
-	execve(command_path, command_args, env_to_array(data->env));
-	free_env_array(command_args);
+		return (EXIT_FAILURE);
+	execve(command_path, command_args, env_array);
+	free_array(env_array);
+	free_array(command_args);
 	ft_putstr_fd(input->token, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	return (127);
-}
-
-void	exec_command(t_data *data, t_token *input, int block)
-{
-	create_subshell(exec_cmd, data, input, block);
 }
