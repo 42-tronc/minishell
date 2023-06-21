@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/20 15:31:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:09:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "unset") == 0)
 				ft_unset(&data->env, input, block);
 			else
-				create_subshell(exec_cmd, data, input, block);
+				create_subshell(execve_cmd, data, input, block);
 		}
 		input = input->next;
 	}

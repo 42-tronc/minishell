@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:07:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:09:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ char	**env_to_array(t_env *env)
 	return (array);
 }
 
-int	exec_cmd(t_data *data, t_token *input, int block)
+int	execve_cmd(t_data *data, t_token *input, int block)
 {
 	char	*command_path;
 	char	**command_args;

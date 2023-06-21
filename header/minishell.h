@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/20 14:11:05 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:09:50 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int	create_pipe(t_data *data);
 int	env_size(t_env *env);
 void	free_array(char **env_array);
 char	**env_to_array(t_env *env);
-int	exec_cmd(t_data *data, t_token *input, int block);
+int	execve_cmd(t_data *data, t_token *input, int block);
 void	exec_command(t_data *data, t_token *input, int block);
 
 // files.c
