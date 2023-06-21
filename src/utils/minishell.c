@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:09:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 12:47:06 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ void	exec_dispatch(t_data *data, t_token *input)
 			input = input->next;
 	}
 	exec_code(data);
-	// while (wait(NULL) > 0)
-	// 	;
 }
 
 // will need to get the return value to somewhere
