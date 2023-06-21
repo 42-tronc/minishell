@@ -286,7 +286,6 @@ void	free_token(t_token *tokens);
 char	**get_array_cmd(t_token *temp);
 
 // minishell.c
-void	print_tokens_linked_list(t_token *head);
 void	check_command(t_data *data, t_token *input, int block);
 void	exec_code(t_data *data);
 void	exec_dispatch(t_data *data, t_token *input);
