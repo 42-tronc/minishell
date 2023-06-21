@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:43:01 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 11:43:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 11:45:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	free_array(char **env_array)
 {
-	char	**current;
+	size_t	i;
 
 	if (!env_array)
 		return ;
-	current = env_array;
-	while (*current)
+	i = 0;
+	while (env_array[i])
 	{
-		free(*current);
-		current++;
+		free(env_array[i]);
+		i++;
 	}
 	free(env_array);
 }
