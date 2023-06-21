@@ -91,6 +91,20 @@ void	exec_code(t_data *data)
 		data->status = statuscode;
 }
 
+static void	close_pipes(t_data *data, int block)
+{
+	if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
+	{
+		close(data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO]);
+		data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] = -3;
+	}
+	if (block < data->cmd_block_count - 1 && data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
+	{
+		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
+		data->cmd_block[block]->pipe_fd[STDOUT_FILENO] = -3;
+	}
+}
+
 void	exec_dispatch(t_data *data, t_token *input)
 {
 	int	error;
@@ -108,6 +122,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 			error = check_outfile(data, input, block);
 		if (!error)
 			check_command(data, input, block); // will be changed
+		else
+			close_pipes(data, block);
 		if (block == data->cmd_block_count - 1 && error)
 		{
 			data->status = 1;
