@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/20 14:23:36 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 16:05:13 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_var_name(char *var)
 	return (status);
 }
 
-int	add_env_entry(t_env *env, t_token *input, int block)
+int	add_env_entry(t_data *data, t_token *input, int block)
 {
 	char	*var;
 	char	*value;
@@ -88,7 +88,7 @@ int	add_env_entry(t_env *env, t_token *input, int block)
 			}
 			if (check_var_name(var))
 				return (1);
-			ft_setenv(env, var, value);
+			ft_setenv(data->env, var, value);
 		}
 		input = input->next;
 	}
@@ -121,6 +121,7 @@ int	ft_export(t_data *data, t_token *input, int block)
 	if (count_arguments(input) == 0)
 		create_subshell(export_print, data, input, block);
 	else
-		status = add_env_entry(data->env, input, block);
+		// status = add_env_entry(data->env, input, block);
+		status = check_alone(add_env_entry, data, input, block);
 	return (status);
 }

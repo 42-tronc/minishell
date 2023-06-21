@@ -150,7 +150,7 @@ int	ft_exit(t_data *data, t_token *input, int block);
 
 // export.c
 int	check_var_name(char *var);
-int	add_env_entry(t_env *env, t_token *input, int block);
+int	add_env_entry(t_data *data, t_token *input, int block);
 int	ft_export(t_data *data, t_token *input, int block);
 
 // pwd.c
