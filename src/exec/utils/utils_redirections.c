@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:58:59 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:12:16 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:21:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ int	check_output(t_data *data, int block)
 	return (0);
 }
 
+static void	handle_heredoc(t_cmd_block *cmd_block)
+{
+	int	tmp_pipe[2];
+
+	if (pipe(tmp_pipe) == -1)
+		exit_error(E_PIPE, "handle_heredoc");
+	if (dup2(tmp_pipe[STDIN_FILENO], STDIN_FILENO) == -1)
+		exit_error(E_DUP2, "handle_heredoc");
+	write(tmp_pipe[STDOUT_FILENO], cmd_block->heredoc,
+		ft_strlen(cmd_block->heredoc));
+	free(cmd_block->heredoc);
+	close(tmp_pipe[STDOUT_FILENO]);
+}
+
 /**
  * @brief redirects the input of the current cmd
  * from the infile if there is one,
@@ -53,8 +67,6 @@ int	check_output(t_data *data, int block)
  */
 int	check_input(t_data *data, int block)
 {
-	int	tmp_pipe[2];
-
 	if (data->cmd_block[block]->in_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
@@ -62,16 +74,7 @@ int	check_input(t_data *data, int block)
 		close(data->cmd_block[block]->in_fd);
 	}
 	else if (data->cmd_block[block]->heredoc)
-	{
-		if ((pipe(tmp_pipe) == -1))
-			exit_error(E_PIPE, "check_input");
-		if (dup2(tmp_pipe[STDIN_FILENO], STDIN_FILENO) == -1)
-			exit_error(E_DUP2, "check_input");
-		write(tmp_pipe[STDOUT_FILENO], data->cmd_block[block]->heredoc,
-			ft_strlen(data->cmd_block[block]->heredoc));
-		free(data->cmd_block[block]->heredoc);
-		close(tmp_pipe[STDOUT_FILENO]);
-	}
+		handle_heredoc(data->cmd_block[block]);
 	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
 	{
 		block -= 1;
