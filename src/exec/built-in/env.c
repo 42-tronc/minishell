@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 13:56:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 09:55:48 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ t_env	*fill_env(char **envp)
 			{
 				envp[i][j] = '\0';
 				current = ft_env_new(envp[i], envp[i] + j + 1);
-				// if (!current)
-				// 	exit_error(E_MALLOC, "fill_env");
-					// return (NULL);
+				if (!current)
+					exit_error(E_MALLOC, "fill_env");
 				ft_env_add_back(&ll_env, current);
 				break ;
 			}
