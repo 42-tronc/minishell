@@ -6,39 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:58:59 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:21:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:22:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief redirects the output of the current cmd
- * to the outfile if there is one,
- * to the input of the next cmd if there is one,
- * or to the stdout if there is none of the above
- *
- * @param data
- * @param block
- * @return int 0 if success, exit otherwise
- */
-int	check_output(t_data *data, int block)
-{
-	if (data->cmd_block[block]->out_fd > 0)
-	{
-		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
-		close(data->cmd_block[block]->out_fd);
-	}
-	else if (block < data->cmd_block_count - 1)
-	{
-		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
-				STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
-		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
-	}
-	return (0);
-}
 
 static void	handle_heredoc(t_cmd_block *cmd_block)
 {
@@ -82,6 +54,34 @@ int	check_input(t_data *data, int block)
 			STDIN_FILENO) == -1)
 			exit_error(E_DUP2, "check_input");
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
+	}
+	return (0);
+}
+
+/**
+ * @brief redirects the output of the current cmd
+ * to the outfile if there is one,
+ * to the input of the next cmd if there is one,
+ * or to the stdout if there is none of the above
+ *
+ * @param data
+ * @param block
+ * @return int 0 if success, exit otherwise
+ */
+int	check_output(t_data *data, int block)
+{
+	if (data->cmd_block[block]->out_fd > 0)
+	{
+		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
+			exit_error(E_DUP2, "check_output");
+		close(data->cmd_block[block]->out_fd);
+	}
+	else if (block < data->cmd_block_count - 1)
+	{
+		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
+				STDOUT_FILENO) == -1)
+			exit_error(E_DUP2, "check_output");
+		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
 	return (0);
 }
