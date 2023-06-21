@@ -163,7 +163,6 @@ void	ft_unset(t_env **env, t_token *input, int block);
 // execve.c
 char	**get_cmd_args(t_token *input, char *command_path);
 int	env_size(t_env *env);
-void	free_array(char **env_array);
 char	**env_to_array(t_env *env);
 int	execve_cmd(t_data *data, t_token *input, int block);
 
@@ -189,6 +188,9 @@ int	ft_setenv(t_env *env, char *var, char *value);
 void	check_heredoc(t_data *data, t_token *input, int block);
 int	check_infile(t_data *data, t_token *input, int block);
 int	check_outfile(t_data *data, t_token *input, int block);
+
+// utils_free.c
+void	free_array(char **env_array);
 
 // utils_path.c
 char	*get_validpath(t_data *data, t_token *input);

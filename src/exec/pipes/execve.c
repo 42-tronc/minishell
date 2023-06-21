@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 11:40:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 11:42:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,6 @@ int	env_size(t_env *env)
 		env = env->next;
 	}
 	return (size);
-}
-
-void	free_array(char **env_array)
-{
-	char	**current;
-
-	if (!env_array)
-		return ;
-	current = env_array;
-	while (*current)
-	{
-		free(*current);
-		current++;
-	}
-	free(env_array);
 }
 
 char	**env_to_array(t_env *env)
