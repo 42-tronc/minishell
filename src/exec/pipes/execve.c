@@ -20,6 +20,8 @@ int	ft_getpaths(t_data *data)
 	if (!paths)
 		return (1);
 	data->paths = split_paths(paths, ':');
+	if (!data->paths)
+		exit_error(E_MALLOC, "ft_getpaths");
 	return (0);
 }
 
