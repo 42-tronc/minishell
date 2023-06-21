@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:58:59 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:07:05 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:12:16 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,20 @@ int	check_input(t_data *data, int block)
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
 	return (0);
+}
+
+int	create_pipe(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->cmd_block_count < 1)
+		return (EXIT_SUCCESS);
+	while (i < data->cmd_block_count - 1)
+	{
+		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
+			exit_error(E_PIPE, "create_pipe");
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }

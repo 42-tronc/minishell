@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:09:50 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:13:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,23 +96,6 @@ char	**get_cmd_args(t_token *input, char *command_path)
 		input = input->next;
 	}
 	return (array);
-}
-
-
-int	create_pipe(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	if (data->cmd_block_count < 1)
-		return (EXIT_SUCCESS);
-	while (i < data->cmd_block_count - 1)
-	{
-		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
-			exit_error(E_PIPE, "create_pipe");
-		i++;
-	}
-	return (EXIT_SUCCESS);
 }
 
 int	env_size(t_env *env)
