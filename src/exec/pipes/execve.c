@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:57:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 10:07:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,54 +96,6 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
-int	check_output(t_data *data, int block)
-{
-	if (data->cmd_block[block]->out_fd > 0)
-	{
-		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
-		close(data->cmd_block[block]->out_fd);
-	}
-	else if (block < data->cmd_block_count - 1)
-	{
-		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
-				STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
-		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
-	}
-	return (0);
-}
-
-int	check_input(t_data *data, int block)
-{
-	int	tmp_pipe[2];
-
-	if (data->cmd_block[block]->in_fd > 0)
-	{
-		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
-			exit_error(E_DUP2, "check_input");
-		close(data->cmd_block[block]->in_fd);
-	}
-	else if (data->cmd_block[block]->heredoc)
-	{
-		if ((pipe(tmp_pipe) == -1))
-			exit_error(E_PIPE, "check_input");
-		if (dup2(tmp_pipe[0], 0) == -1)
-			exit_error(E_DUP2, "check_input");
-		write(tmp_pipe[1], data->cmd_block[block]->heredoc,
-			ft_strlen(data->cmd_block[block]->heredoc));
-		free(data->cmd_block[block]->heredoc);
-		close(tmp_pipe[1]);
-	}
-	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
-	{
-		block -= 1;
-		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) == -1)
-			exit_error(E_DUP2, "check_input");
-		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
-	}
-	return (0);
-}
 
 int	create_pipe(t_data *data)
 {
