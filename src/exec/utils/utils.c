@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/20 14:26:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 16:05:51 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,14 @@ int	count_arguments(t_token *input)
 	return (arg_count);
 }
 
-void	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
+int	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
 {
+	int	status;
+
+	status = 0;
 	if (data->cmd_block_count == 1)
-		func(data, input, block);
+		status = func(data, input, block);
 	else
 		create_subshell(func, data, input, block);
+	return (status);
 }
