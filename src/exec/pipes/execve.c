@@ -6,59 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:13:33 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 11:40:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_getpaths(t_data *data)
-{
-	char	*paths;
-
-	paths = ft_getenv(data->env, "PATH");
-	if (!paths)
-		return (1);
-	data->paths = split_paths(paths, ':');
-	if (!data->paths)
-		exit_error(E_MALLOC, "ft_getpaths");
-	return (0);
-}
-
-/**
- * @brief Gets the path of the command passed as input
- *
- * @param data t_data struct with every var in it
- * @param input token with the command
- * @return char* path of the command or NULL if not found
- */
-char	*get_validpath(t_data *data, t_token *input)
-{
-	int		i;
-	int		error_access;
-	char	*command_path;
-
-	i = 0;
-	error_access = 1;
-	if (!input)
-		return (NULL);
-	if (ft_strchr(input->token, '/') && !access(input->token, X_OK))
-		return (input->token);
-	if (ft_getpaths(data))
-		return (NULL);
-	while (data->paths[i] && error_access)
-	{
-		command_path = ft_strjoin(data->paths[i], input->token);
-		if (!command_path)
-			exit_error(E_MALLOC, "get_validpath");
-		error_access = access(command_path, X_OK);
-		if (!error_access)
-			return (command_path);
-		free(command_path);
-		i++;
-	}
-	return (NULL);
-}
 
 /**
  * @brief Put the cmd and its arguments in an array
@@ -100,7 +52,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 
 int	env_size(t_env *env)
 {
-	int size;
+	int	size;
 
 	size = 0;
 	while (env)
@@ -171,7 +123,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	char	**command_args;
 	char	**env_array;
 
-	(void) block;
+	(void)block;
 	env_array = env_to_array(data->env);
 	command_path = get_validpath(data, input);
 	// if (!command_path)
