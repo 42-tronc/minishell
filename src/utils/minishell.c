@@ -6,34 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 12:47:06 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 13:46:24 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// debug functions
-void	print_tokens_linked_list(t_token *head)
-{
-	t_token	*temp;
-	int		i;
-
-	temp = head;
-	// last = NULL;
-	i = 0;
-	while (temp != NULL)
-	{
-		printf("Type : %s && token[%d]:'%s' FROM EXPAND?=%d\n",temp->type, i++, temp->token, temp->from_expand);
-		// if (temp->next == NULL)
-		// 	last = temp;
-		temp = temp->next;
-	}
-	// while (last)
-	// {
-	// 	printf("token prev:%s\n", last->token_id);
-	// 	last = last->prev;
-	// }
-}
 
 // might need to change the export and set to only print if there is a value, if not it is a export
 void	check_command(t_data *data, t_token *input, int block)
