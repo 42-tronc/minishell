@@ -149,6 +149,7 @@ long	long	ft_atoll(const char *str);
 int	ft_exit(t_data *data, t_token *input, int block);
 
 // export.c
+int	check_var_name(char *var);
 int	add_env_entry(t_env *env, t_token *input, int block);
 int	ft_export(t_data *data, t_token *input, int block);
 
@@ -160,25 +161,11 @@ void	free_env_node(t_env *node);
 void	ft_unset(t_env **env, t_token *input, int block);
 
 // execve.c
-int	ft_getpaths(t_data *data);
-char	*get_validpath(t_data *data, t_token *input);
 char	**get_cmd_args(t_token *input, char *command_path);
-int	check_output(t_data *data, int block);
-int	check_input(t_data *data, int block);
-int	create_pipe(t_data *data);
 int	env_size(t_env *env);
 void	free_array(char **env_array);
 char	**env_to_array(t_env *env);
 int	execve_cmd(t_data *data, t_token *input, int block);
-void	exec_command(t_data *data, t_token *input, int block);
-
-// files.c
-void	check_heredoc(t_data *data, t_token *input, int block);
-int	check_infile(t_data *data, t_token *input, int block);
-int	check_outfile(t_data *data, t_token *input, int block);
-
-// fork.c
-void	ft_fork(void);
 
 // strjoin_heredoc.c
 char	*ft_strjoin_heredoc(char *s1, char *s2);
@@ -197,6 +184,25 @@ t_env	*ft_env_new(char *var, char *value);
 void	ft_env_add_back(t_env **lst, t_env *new);
 char	*ft_getenv(t_env *env, char *var);
 int	ft_setenv(t_env *env, char *var, char *value);
+
+// utils_files.c
+void	check_heredoc(t_data *data, t_token *input, int block);
+int	check_infile(t_data *data, t_token *input, int block);
+int	check_outfile(t_data *data, t_token *input, int block);
+
+// utils_path.c
+char	*get_validpath(t_data *data, t_token *input);
+
+// utils_redirections.c
+int	check_input(t_data *data, int block);
+int	check_output(t_data *data, int block);
+int	create_pipe(t_data *data);
+
+// cut_expand.c
+void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d);
+int	copy_propre_quote(t_token *temp);
+void	free_cutting_expand(char **array, t_token *temp);
+int	cutting_expand(t_data *data);
 
 // dollar.c
 char	*get_var_name(char *str);
@@ -232,6 +238,10 @@ int	getting_line(t_data *data);
 // prepare.c
 int	prepare_token(t_data *data);
 
+// replace_list.c
+int	need_to_new(t_token *tokens);
+int	replace_list(t_data *data);
+
 // rm_quotes.c
 int	get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
@@ -264,16 +274,11 @@ int	ft_char2(int c);
 void	p_quote(t_parsing *p, char c);
 
 // tokens_lst.c
+t_token	**find_head_ref(t_token *temp);
+void	delete_token(t_token **head_ref, t_token *del);
 int	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
 void	free_token(t_token *tokens);
-
-int	replace_list(t_data *data);
-
-int	cutting_expand(t_data *data);
-
-void  delete_token(t_token **head_ref, t_token *del);
-t_token **find_head_ref(t_token *temp);
 
 // exec_char.c
 char	**get_array_cmd(t_token *temp);
