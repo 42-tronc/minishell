@@ -141,7 +141,6 @@ void	ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
 int	print_env(t_data *data, t_token *input, int block);
-void	ft_env(t_data *data, t_token *input, int block);
 t_env	*fill_env(char **envp);
 
 // exit.c
