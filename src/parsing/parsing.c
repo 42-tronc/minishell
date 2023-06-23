@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:19:54 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/05/15 18:17:39 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/23 11:17:43 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ int	getting_line(t_data *data)
 		data->p->quote = 0;
 		data->p->dquote = 0;
 		if (!even_quote(data->p, str) || !right_symbols(data->p, str))
+		{
+			data->status = 1;
 			return (free(str), 1);
+		}
 		if (cutting_line(&data->tokens, data->p, str))
 			return (free(str), 1);
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:53:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/23 10:45:10 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_tokens_linked_list(t_token *head)
 	i = 0;
 	while (temp != NULL)
 	{
-		printf("Type : %s && token[%d]:'%s' FROM EXPAND?=%d\n",temp->type, i++, temp->token, temp->from_expand);
+		printf("Type : %s && token[%d]:'%s' inquote?=%d, fromexpand:%d\n",temp->type, i++, temp->token, temp->in_quote, temp->from_expand);
 		// if (temp->next == NULL)
 		// 	last = temp;
 		temp = temp->next;
@@ -169,7 +169,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		// while (wait(NULL) > 0)
 		// 	;
-		free_token(data->tokens);
+		if (data->tokens)
+			free_token(data->tokens);
 		free(data->p);
 	}
 	if (data->env)

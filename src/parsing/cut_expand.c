@@ -6,7 +6,7 @@
 /*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:27:47 by aascedu           #+#    #+#             */
-/*   Updated: 2023/06/16 16:27:49 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:26:37 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ int	cutting_expand(t_data *data)
 		save = temp->next;
 		if (temp->token && !temp->token[0])
 			;
-		else if (temp->from_expand)
+		else if (temp->from_expand && !temp->in_quote)
 		{
-			if (remove_quotes_expand(&data->tokens, data))
+			if (remove_quotes(&data->tokens, data))
 				return (1);
 			array = ft_split(temp->token, ' ');
 			if (!array)
