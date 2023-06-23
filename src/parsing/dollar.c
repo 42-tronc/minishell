@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:28:05 by aascedu           #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/23 11:46:53 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ char	*get_before_dollar(char *str, t_data *p, int i, int size)
 	return (res);
 }
 
-void	free_expand(t_parsing *p)
+void	free_expand(t_parsing *p, int to_free)
 {
-	if (p->var_value && p->var_name[0] == '1')
+	if (to_free)
 		free(p->var_value);
 	if (p->var_name)
 		free(p->var_name);
@@ -83,20 +83,20 @@ void	free_expand(t_parsing *p)
 		free(p->new_token);
 }
 
-int	replace_var(t_token *temp, t_data *p)
+int	replace_var(t_token *temp, t_data *p, int to_free)
 {
 	p->p->before = get_before_dollar(temp->token, p, -1, -1);
 	p->i++;
 	if (temp->token[p->i] == '?')
-	{
 		p->p->var_name = ft_strdup("1");
-		p->p->var_value = ft_strdup(ft_itoa(p->status));
-	}
+	if (temp->token[p->i] == '?')
+		p->p->var_value = ft_itoa(p->status);
 	else
 	{
 		p->p->var_name = get_var_name(temp->token + p->i);
 		if (p->p->var_name)
 			p->p->var_value = ft_getenv(p->env, p->p->var_name);
+		to_free = 0;
 	}
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
@@ -105,7 +105,7 @@ int	replace_var(t_token *temp, t_data *p)
 		return (1);
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
-	free_expand(p->p);
+	free_expand(p->p, to_free);
 	temp->from_expand = 1;
 	return (0);
 }
@@ -120,7 +120,7 @@ int	expand_tokens(t_token **tokens, t_data *data)
 		data->p->i = 0;
 		while (processed_line(temp->token, data->p))
 		{
-			if (replace_var(temp, data))
+			if (replace_var(temp, data, 1))
 				return (1);
 			data->i = 0;
 		}
