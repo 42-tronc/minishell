@@ -181,7 +181,7 @@ int	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *inpu
 t_env	*ft_env_new(char *var, char *value);
 void	ft_env_add_back(t_env **lst, t_env *new);
 char	*ft_getenv(t_env *env, char *var);
-int	ft_setenv(t_env *env, char *var, char *value);
+int	ft_setenv(t_env **env, char *var, char *value);
 
 // utils_files.c
 void	check_heredoc(t_data *data, t_token *input, int block);
