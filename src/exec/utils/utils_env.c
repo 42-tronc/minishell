@@ -12,6 +12,15 @@
 
 #include "minishell.h"
 
+/**
+ * @brief Creates a new t_env entry with the given variable and value.
+ *
+ * @param var The variable string.
+ * @param value The value string.
+ * @return t_env* A pointer to the newly created t_env entry.
+ * @note The returned pointer should be freed when no longer needed.
+ * @note If the allocation fails, the function exits with an error.
+ */
 t_env	*ft_env_new(char *var, char *value)
 {
 	t_env	*dst;
