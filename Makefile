@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/06/23 10:57:50 by aascedu          ###   ########.fr        #
+#    Updated: 2023/06/24 20:57:32 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ DIR_EXEC := $(SRC_FOLDER)exec/pipes/
 SRC_EXEC := execve.c strjoin_heredoc.c
 
 DIR_EXEC_UTILS := $(SRC_FOLDER)exec/utils/
-SRC_EXEC_UTILS := split_paths.c utils_env.c utils_files.c utils_free.c utils_path.c utils_redirections.c utils.c
+SRC_EXEC_UTILS := split_paths.c utils_env.c utils_files.c utils_free.c utils_init.c utils_path.c utils_redirections.c utils.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := check_in_quotes.c  tokens.c tokens2.c cut_expand.c parsing.c envp.c envp_lst.c replace_list.c tokens_lst.c dollar.c dollar2.c identification.c prepare.c tilde.c rm_quotes.c syntax_error.c signal.c

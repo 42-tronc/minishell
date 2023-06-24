@@ -141,7 +141,6 @@ void	ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
 int	print_env(t_data *data, t_token *input, int block);
-void	fill_env(t_data *data, char **envp);
 
 // exit.c
 long	long	ft_atoll(const char *str);
@@ -190,6 +189,9 @@ int	check_outfile(t_data *data, t_token *input, int block);
 
 // utils_free.c
 void	free_array(char **env_array);
+
+// utils_init.c
+void	fill_env(t_data *data, char **envp);
 
 // utils_path.c
 char	*get_validpath(t_data *data, t_token *input);
