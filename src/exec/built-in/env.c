@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/22 15:30:12 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/24 20:53:34 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	print_env(t_data *data, t_token *input, int block)
 	}
 	while (data->env)
 	{
-		printf("%s=%s\n", data->env->var, data->env->value);
+		if (data->env->value && ft_strlen(data->env->value) > 0)
+			printf("%s=%s\n", data->env->var, data->env->value);
 		data->env = data->env->next;
 	}
 	return (0);
