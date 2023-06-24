@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/23 11:44:49 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/06/24 22:07:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -141,7 +142,6 @@ void	ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
 int	print_env(t_data *data, t_token *input, int block);
-t_env	*fill_env(char **envp);
 
 // exit.c
 long	long	ft_atoll(const char *str);
@@ -181,7 +181,7 @@ int	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *inpu
 t_env	*ft_env_new(char *var, char *value);
 void	ft_env_add_back(t_env **lst, t_env *new);
 char	*ft_getenv(t_env *env, char *var);
-int	ft_setenv(t_env *env, char *var, char *value);
+int	ft_setenv(t_env **env, char *var, char *value);
 
 // utils_files.c
 void	check_heredoc(t_data *data, t_token *input, int block);
@@ -190,6 +190,9 @@ int	check_outfile(t_data *data, t_token *input, int block);
 
 // utils_free.c
 void	free_array(char **env_array);
+
+// utils_init.c
+void	fill_env(t_data *data, char **envp);
 
 // utils_path.c
 char	*get_validpath(t_data *data, t_token *input);

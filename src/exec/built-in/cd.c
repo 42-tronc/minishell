@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/20 13:59:22 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/24 20:32:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ int	ft_cd(t_data *data, t_token *input, int block)
 		return (EXIT_FAILURE);
 	}
 	else
-		ft_setenv(data->env, "OLDPWD", previous);
+		ft_setenv(&(data->env), "OLDPWD", previous);
 	return (EXIT_SUCCESS);
 }
