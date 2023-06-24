@@ -281,8 +281,6 @@ int	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
 void	free_token(t_token *tokens);
 
-<<<<<<< HEAD
-=======
 // replace_list.c
 int	need_to_new(t_token *tokens);
 int	ft_tokensize(t_token *temp);
@@ -295,7 +293,6 @@ int	cutting_expand(t_data *data);
 void  delete_token(t_token **head_ref, t_token *del);
 t_token **find_head_ref(t_token *temp);
 
->>>>>>> 6b320811e933243584ecd995d7a926fab5ad73af
 // exec_char.c
 char	**get_array_cmd(t_token *temp);
 
