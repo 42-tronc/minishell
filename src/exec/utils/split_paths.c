@@ -6,21 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:18:44 by croy              #+#    #+#             */
-/*   Updated: 2023/05/04 16:40:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 11:59:44 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	free_tab(char **tab)
-{
-	size_t	i;
-
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
-}
 
 static int	count_lines(char const *str, char c)
 {
@@ -76,7 +66,7 @@ static void	set_string(char **tab, char *str, char c)
 		{
 			tab[lines] = write_word(str + i, c);
 			if (!tab[lines])
-				return (free_tab(tab));
+				return (free_array(tab));
 			lines++;
 		}
 		was_sep = (str[i] == c);

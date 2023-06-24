@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:05:57 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/20 13:59:22 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_cd(t_data *data, t_token *input, int block)
 	arg_count = count_arguments(input);
 	if (arg_count > 1)
 	{
-		printf("cd: too many arguments\n");
+		ft_putendl_fd("cd: too many arguments", 2);
 		return (1);
 	}
 	while (input && input->pipe_block == block && ft_strcmp(input->type,

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 15:05:57 by croy              #+#    #+#             */
-/*   Updated: 2023/05/11 13:12:34 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/20 11:29:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ char	*ft_strjoin_heredoc(char *s1, char *s2)
 
 	if (!s1 && !s2)
 		return (NULL);
-
-	// printf("len(s1)=%ld\n", ft_strlen(s1));
-	// printf("len(s2)=%ld\n", ft_strlen(s2));
 	dst = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
 	if (!dst)
 		return (NULL);

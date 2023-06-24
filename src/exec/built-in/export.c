@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:36:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 16:05:13 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,34 @@ static void	export_sort(t_env *env)
 	}
 }
 
-void	add_env_entry(t_env *env, t_token *input, int block)
+int	check_var_name(char *var)
+{
+	int	i;
+	int	status;
+
+	status = 0;
+	i = -1;
+	if (!var || !var[0])
+		status = 1;
+	while (var && var[++i])
+	{
+		if (!ft_isalpha(var[0]) && var[0] != '_')
+			status = 1;
+		if (!ft_isalnum(var[i]) && var[i] != '_')
+			status = 1;
+	}
+	if (status)
+		ft_putendl_fd("export: not a valid identifier", 2);
+	return (status);
+}
+
+int	add_env_entry(t_data *data, t_token *input, int block)
 {
 	char	*var;
 	char	*value;
 
 	if (!input)
-		return ;
+		return (1);
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
@@ -65,10 +86,13 @@ void	add_env_entry(t_env *env, t_token *input, int block)
 				*value = '\0';
 				value++;
 			}
-			ft_setenv(env, var, value);
+			if (check_var_name(var))
+				return (1);
+			ft_setenv(data->env, var, value);
 		}
 		input = input->next;
 	}
+	return (0);
 }
 
 static int	export_print(t_data *data, t_token *input, int block)
@@ -89,10 +113,15 @@ static int	export_print(t_data *data, t_token *input, int block)
 	return (0);
 }
 
-void	ft_export(t_data *data, t_token *input, int block)
+int	ft_export(t_data *data, t_token *input, int block)
 {
+	int	status;
+
+	status = 0;
 	if (count_arguments(input) == 0)
 		create_subshell(export_print, data, input, block);
 	else
-		add_env_entry(data->env, input, block);
+		// status = add_env_entry(data->env, input, block);
+		status = check_alone(add_env_entry, data, input, block);
+	return (status);
 }

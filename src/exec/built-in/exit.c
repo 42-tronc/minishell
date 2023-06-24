@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:33:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/20 14:35:05 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static long long	convert_digits(const char *str, int *i, int sign)
 		digit = str[*i] - '0';
 		if (is_overflow(result, digit * sign))
 		{
-			ft_putendl_fd("exit error: overflow during number conversion.", 2);
+			ft_putendl_fd("exit error: numeric argument required", 2);
 			exit(2);
 		}
 		result = result * 10 + digit * sign;
@@ -65,7 +65,7 @@ long long	ft_atoll(const char *str)
 		i++;
 	if (str[i])
 	{
-		ft_putendl_fd("exit error: numeric argument required.", 2);
+		ft_putendl_fd("exit error: numeric argument required", 2);
 		exit(2);
 	}
 	return (result);
@@ -81,7 +81,8 @@ int	ft_exit(t_data *data, t_token *input, int block)
 	exit_code = ft_atoll(input->token);
 	if (count_arguments(input) > 1)
 	{
-		ft_putendl_fd("exit error: too many arguments.", 2);
+		ft_putendl_fd("exit error: too many arguments", 2);
+		data->status = 1;
 		return (EXIT_FAILURE);
 	}
 	while (exit_code < 0)

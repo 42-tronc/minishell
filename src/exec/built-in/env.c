@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 13:56:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/22 15:30:12 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ int	print_env(t_data *data, t_token *input, int block)
 	return (0);
 }
 
-void	ft_env(t_data *data, t_token *input, int block)
-{
-	create_subshell(print_env, data, input, block);
-}
-
 /**
  * @brief gets the envp from a main function and fills a t_env linked list
  * will set the variable in `var` and value in `value`
@@ -55,6 +50,7 @@ t_env	*fill_env(char **envp)
 	ll_env = NULL;
 	while (envp[++i])
 	{
+		// printf("envp[%d]=%s\n", i, envp[i]);
 		j = -1;
 		while (envp[i][++j])
 		{
@@ -62,9 +58,8 @@ t_env	*fill_env(char **envp)
 			{
 				envp[i][j] = '\0';
 				current = ft_env_new(envp[i], envp[i] + j + 1);
-				// if (!current)
-				// 	exit_error(E_MALLOC, "fill_env");
-					// return (NULL);
+				if (!current)
+					exit_error(E_MALLOC, "fill_env");
 				ft_env_add_back(&ll_env, current);
 				break ;
 			}

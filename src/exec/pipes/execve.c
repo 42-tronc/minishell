@@ -6,57 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:57:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/21 11:42:55 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_getpaths(t_data *data)
-{
-	char	*paths;
-
-	paths = ft_getenv(data->env, "PATH");
-	if (!paths)
-		return (1);
-	data->paths = split_paths(paths, ':');
-	return (0);
-}
-
-/**
- * @brief Gets the path of the command passed as input
- *
- * @param data t_data struct with every var in it
- * @param input token with the command
- * @return char* path of the command or NULL if not found
- */
-char	*get_validpath(t_data *data, t_token *input)
-{
-	int		i;
-	int		error_access;
-	char	*command_path;
-
-	i = 0;
-	error_access = 1;
-	if (!input)
-		return (NULL);
-	if (ft_strchr(input->token, '/') && !access(input->token, X_OK))
-		return (input->token);
-	if (ft_getpaths(data))
-		return (NULL);
-	while (data->paths[i] && error_access)
-	{
-		command_path = ft_strjoin(data->paths[i], input->token);
-		if (!command_path)
-			exit_error(E_MALLOC, "get_validpath");
-		error_access = access(command_path, X_OK);
-		if (!error_access)
-			return (command_path);
-		free(command_path);
-		i++;
-	}
-	return (NULL);
-}
 
 /**
  * @brief Put the cmd and its arguments in an array
@@ -96,74 +50,9 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	return (array);
 }
 
-int	check_output(t_data *data, int block)
-{
-	if (data->cmd_block[block]->out_fd > 0)
-	{
-		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
-		close(data->cmd_block[block]->out_fd);
-	}
-	else if (block < data->cmd_block_count - 1)
-	{
-		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
-				STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
-		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
-	}
-	return (0);
-}
-
-int	check_input(t_data *data, int block)
-{
-	int	tmp_pipe[2];
-
-	if (data->cmd_block[block]->in_fd > 0)
-	{
-		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
-			exit_error(E_DUP2, "check_input");
-		close(data->cmd_block[block]->in_fd);
-	}
-	else if (data->cmd_block[block]->heredoc)
-	{
-		if ((pipe(tmp_pipe) == -1))
-			exit_error(E_PIPE, "check_input");
-		if (dup2(tmp_pipe[0], 0) == -1)
-			exit_error(E_DUP2, "check_input");
-		write(tmp_pipe[1], data->cmd_block[block]->heredoc,
-			ft_strlen(data->cmd_block[block]->heredoc));
-		free(data->cmd_block[block]->heredoc);
-		close(tmp_pipe[1]);
-	}
-	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
-	{
-		block -= 1;
-		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], STDIN_FILENO) == -1)
-			exit_error(E_DUP2, "check_input");
-		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
-	}
-	return (0);
-}
-
-int	create_pipe(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	if (data->cmd_block_count < 1)
-		return (EXIT_SUCCESS);
-	while (i < data->cmd_block_count - 1)
-	{
-		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
-			exit_error(E_PIPE, "create_pipe");
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	env_size(t_env *env)
 {
-	int size;
+	int	size;
 
 	size = 0;
 	while (env)
@@ -172,21 +61,6 @@ int	env_size(t_env *env)
 		env = env->next;
 	}
 	return (size);
-}
-
-void	free_array(char **env_array)
-{
-	char	**current;
-
-	if (!env_array)
-		return ;
-	current = env_array;
-	while (*current)
-	{
-		free(*current);
-		current++;
-	}
-	free(env_array);
 }
 
 char	**env_to_array(t_env *env)
@@ -228,13 +102,13 @@ char	**env_to_array(t_env *env)
 	return (array);
 }
 
-int	exec_cmd(t_data *data, t_token *input, int block)
+int	execve_cmd(t_data *data, t_token *input, int block)
 {
 	char	*command_path;
 	char	**command_args;
 	char	**env_array;
 
-	(void) block;
+	(void)block;
 	env_array = env_to_array(data->env);
 	command_path = get_validpath(data, input);
 	// if (!command_path)

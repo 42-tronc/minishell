@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 17:44:16 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/20 14:30:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,18 @@ int	check_infile(t_data *data, t_token *input, int block)
 	{
 		if (ft_strcmp(input->type, INFILE) == 0)
 		{
-			printf("INFILE: %s%s%s\n", BOLD, input->token, NO_BOLD); // DELETE
+			// printf("INFILE: %s%s%s\n", BOLD, input->token, NO_BOLD); // DELETE
 			if (data->cmd_block[block]->in_fd >= 0)
 				close(data->cmd_block[block]->in_fd);
 			data->cmd_block[block]->in_fd = open(input->token, O_RDONLY);
 			if (data->cmd_block[block]->in_fd == -1) // REFACTOR
 			{
 				perror(BOLD RED "open" RESET);
+				data->status = 1;
 				return (-1);
 			}
-			else                                                      // DELETE
-				printf(GREEN "OK: %s%s\n" RESET, BOLD, input->token); // DELETE
+			// else                                                      // DELETE
+				// printf(GREEN "OK: %s%s\n" RESET, BOLD, input->token); // DELETE
 		}
 		input = input->next;
 	}
@@ -125,11 +126,12 @@ int	check_outfile(t_data *data, t_token *input, int block)
 			if (data->cmd_block[block]->out_fd == -1)
 			{
 				perror(BOLD RED "open" RESET);
+				data->status = 1;
 				return (-1);
 			}
-			else
-				printf(GREEN "file: %s%s%s\tfd: %s%d%s\n\n", BOLD, input->token,
-					NO_BOLD, BOLD, data->cmd_block[block]->out_fd, RESET);
+			// else
+				// printf(GREEN "file: %s%s%s\tfd: %s%d%s\n\n", BOLD, input->token,
+					// NO_BOLD, BOLD, data->cmd_block[block]->out_fd, RESET);
 			// DELETE
 		}
 		input = input->next;
