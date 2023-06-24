@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/24 20:40:22 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/24 22:24:53 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,24 +102,53 @@ char	**env_to_array(t_env *env)
 	return (array);
 }
 
+static int	is_executable_file(t_token *input, char *path)
+{
+	struct stat	file_stat;
+
+	if (!path || stat(path, &file_stat) == -1)
+	{
+		ft_putstr_fd(input->token, STDERR_FILENO);
+		if (!path)
+			ft_putendl_fd(": command not found", STDERR_FILENO);
+		else
+			ft_putendl_fd(": no such file or directory", STDERR_FILENO);
+		return (127);
+	}
+	else if (S_ISDIR(file_stat.st_mode) || access(path, X_OK) == -1)
+	{
+		ft_putstr_fd(input->token, STDERR_FILENO);
+		if (S_ISDIR(file_stat.st_mode))
+			ft_putendl_fd(": is a directory", STDERR_FILENO);
+		else
+			ft_putendl_fd(": permission denied", STDERR_FILENO);
+		return (126);
+	}
+	return (0);
+}
+
 int	execve_cmd(t_data *data, t_token *input, int block)
 {
+	int		status;
 	char	*command_path;
 	char	**command_args;
 	char	**env_array;
 
 	(void)block;
+	status = 0;
 	env_array = env_to_array(data->env);
 	command_path = get_validpath(data, input);
-	// if (!command_path)
-	// 	return (EXIT_FAILURE);
-	command_args = get_cmd_args(input, command_path);
-	if (!command_args)
-		return (EXIT_FAILURE);
-	execve(command_path, command_args, env_array);
+	status = is_executable_file(input, command_path);
+	if (status == EXIT_SUCCESS)
+	{
+		command_args = get_cmd_args(input, command_path);
+		if (!command_args)
+			return (EXIT_FAILURE);
+		execve(command_path, command_args, env_array);
+		free_array(command_args);
+	}
+	else
+		free(command_path);
 	free_array(env_array);
-	free_array(command_args);
-	ft_putstr_fd(input->token, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	return (127);
+	return (status);
 }
