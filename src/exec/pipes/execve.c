@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 11:42:55 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/24 20:40:22 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,22 @@ char	**env_to_array(t_env *env)
 	size = env_size(env);
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
-		exit_error(E_MALLOC, "env_to_array");
+		exit_error(E_MALLOC, "env_to_array 1");
 	i = 0;
 	while (env)
 	{
 		// array[i] = ft_strjoin(env->var, env->value);
 		array[i] = ft_strjoin(env->var, "=");
-		if (!array[i])
+		if (!array[i] && env->var)
 		{
 			free_array(array);
-			exit_error(E_MALLOC, "env_to_array");
+			exit_error(E_MALLOC, "env_to_array 2");
 		}
 		array[i] = ft_strjoin(array[i], env->value);
-		if (!array[i])
+		if (!array[i] && env->value)
 		{
 			free_array(array);
-			exit_error(E_MALLOC, "env_to_array");
+			exit_error(E_MALLOC, "env_to_array 3");
 		}
 		env = env->next;
 		i++;
