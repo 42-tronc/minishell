@@ -164,14 +164,10 @@ int	main(int argc, char **argv, char **envp)
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 		}
-<<<<<<< HEAD
-		free_token(data->tokens);
-=======
 		// while (wait(NULL) > 0)
 		// 	;
 		if (data->tokens)
 			free_token(data->tokens);
->>>>>>> 6b320811e933243584ecd995d7a926fab5ad73af
 		free(data->p);
 	}
 	if (data->env)

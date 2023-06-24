@@ -199,6 +199,10 @@ int	check_input(t_data *data, int block);
 int	check_output(t_data *data, int block);
 int	create_pipe(t_data *data);
 
+// check_in_quotes.c
+int	token_in_quotes(char *str);
+void	check_in_quotes(t_token **tokens, t_data *data);
+
 // cut_expand.c
 void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d);
 int	copy_propre_quote(t_token *temp);
@@ -241,12 +245,12 @@ int	prepare_token(t_data *data);
 
 // replace_list.c
 int	need_to_new(t_token *tokens);
-int	replace_list(t_data *data);
+int	ft_tokensize(t_token *temp);
+int	replace_list(t_data *data, t_token *save, int lst_size);
 
 // rm_quotes.c
 int	get_size(t_parsing *p, char *str);
 void	copy_without_quotes(char *dst, char *src, t_parsing *p);
-int	remove_quotes_expand(t_token **tokens, t_data *data);
 int	remove_quotes(t_token **tokens, t_data *data);
 
 // signal.c
@@ -280,18 +284,6 @@ void	delete_token(t_token **head_ref, t_token *del);
 int	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokennew(void *content);
 void	free_token(t_token *tokens);
-
-// replace_list.c
-int	need_to_new(t_token *tokens);
-int	ft_tokensize(t_token *temp);
-int	replace_list(t_data *data, t_token *save, int lst_size);
-
-void	check_in_quotes(t_token **tokens, t_data *data);
-
-int	cutting_expand(t_data *data);
-
-void  delete_token(t_token **head_ref, t_token *del);
-t_token **find_head_ref(t_token *temp);
 
 // exec_char.c
 char	**get_array_cmd(t_token *temp);
