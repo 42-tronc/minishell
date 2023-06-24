@@ -141,7 +141,7 @@ void	ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
 int	print_env(t_data *data, t_token *input, int block);
-t_env	*fill_env(char **envp);
+void	fill_env(t_data *data, char **envp);
 
 // exit.c
 long	long	ft_atoll(const char *str);

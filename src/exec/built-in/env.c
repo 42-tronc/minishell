@@ -39,20 +39,18 @@ int	print_env(t_data *data, t_token *input, int block)
  * @param envp from a main function where (char **envp)
  * @return t_env* the linked list with every var and its value from the env
  */
-t_env	*fill_env(char **envp)
+void	fill_env(t_data *data, char **envp)
 {
 	int		i;
 	int		j;
-	t_env	*ll_env;
 	t_env	*current;
 
-	i = -1;
-	ll_env = NULL;
-	while (envp[++i])
+	i = 0;
+	data->env = NULL;
+	while (envp[i])
 	{
-		// printf("envp[%d]=%s\n", i, envp[i]);
-		j = -1;
-		while (envp[i][++j])
+		j = 0;
+		while (envp[i][j])
 		{
 			if (envp[i][j] == '=')
 			{
@@ -60,10 +58,11 @@ t_env	*fill_env(char **envp)
 				current = ft_env_new(envp[i], envp[i] + j + 1);
 				if (!current)
 					exit_error(E_MALLOC, "fill_env");
-				ft_env_add_back(&ll_env, current);
+				ft_env_add_back(&(data->env), current);
 				break ;
 			}
+			j++;
 		}
+		i++;
 	}
-	return (ll_env);
 }
