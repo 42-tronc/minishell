@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/24 22:24:53 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 10:08:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,6 @@ char	**env_to_array(t_env *env, int size, char *copy)
 		i++;
 	}
 	array[i] = NULL;
-	// char **current = array;
-	// while (*current)
-	// {
-	// 	printf("%s\n", *current);
-	// 	current++;
-	// }
 	return (array);
 }
 
