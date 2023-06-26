@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/24 20:45:17 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:16:21 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	check_command(t_data *data, t_token *input, int block)
 			if (ft_strcmp(input->token, "cd") == 0)
 				data->status = ft_cd(data, input->next, block);
 			else if (ft_strcmp(input->token, "echo") == 0)
-				ft_echo(data, input->next, block);
+				// ft_echo(data, input->next, block);
+				create_subshell(ft_echo, data, input, block);
 			else if (ft_strcmp(input->token, "env") == 0)
 				// ft_env(data, input, block);
 				create_subshell(print_env, data, input, block);

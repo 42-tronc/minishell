@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:09:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:18:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ struct s_token {
 int	ft_cd(t_data *data, t_token *input, int block);
 
 // echo.c
-void	ft_echo(t_data *data, t_token *input, int block);
+int	ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
 int	print_env(t_data *data, t_token *input, int block);
