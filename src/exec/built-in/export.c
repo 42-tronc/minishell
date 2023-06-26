@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:26:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:38:12 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	ft_export(t_data *data, t_token *input, int block)
 	if (count_arguments(input) == 0)
 		create_subshell(export_print, data, input, block);
 	else
-		// status = add_env_entry(data->env, input, block);
 		status = check_alone(add_env_entry, data, input, block);
 	return (status);
 }
