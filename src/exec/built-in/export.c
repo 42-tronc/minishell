@@ -6,20 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/24 20:32:48 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:26:19 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	swap_var(char **current, char **next)
-{
-	char	*tmp;
-
-	tmp = *current;
-	*current = *next;
-	*next = tmp;
-}
 
 static void	export_sort(t_env *env)
 {

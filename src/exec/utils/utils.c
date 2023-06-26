@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:06:09 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:27:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,21 @@ int	count_arguments(t_token *input)
 		input = input->next;
 	}
 	return (arg_count);
+}
+
+/**
+ * @brief swaps the values of two char pointers
+ *
+ * @param current first char pointer
+ * @param next second char pointer
+ */
+void	swap_var(char **current, char **next)
+{
+	char	*tmp;
+
+	tmp = *current;
+	*current = *next;
+	*next = tmp;
 }
 
 int	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
