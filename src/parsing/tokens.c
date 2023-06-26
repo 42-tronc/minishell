@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:31:40 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/04/27 10:49:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 14:13:06 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	get_end_token(t_parsing *p, char *str)
 	while (str && str[i])
 	{
 		p_quote(p, str[i]);
-		if (str[i] == ' ' && !p->quote && !p->dquote)
+		if ((str[i] == ' ' || str[i] == '\t') && !p->quote && !p->dquote)
 			return (i - 1);
 		else if (is_symbol(str[i]) && is_symbol(str[i + 1]) \
 		&& str[i] != str[i + 1] && !p->quote && !p->dquote)
@@ -61,7 +61,7 @@ int	cutting_line(t_token **temp, t_parsing *p, char *str)
 
 	while (str && str[p->i])
 	{
-		if (str[p->i] != ' ')
+		if (str[p->i] != ' ' && str[p->i] != '\t')
 		{
 			p->start = p->i;
 			p->i = get_end_token(p, str);
