@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/06/24 20:57:32 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/06/26 15:01:12 by aascedu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,8 @@ SCR_PARSING := check_in_quotes.c  tokens.c tokens2.c cut_expand.c parsing.c envp
 
 
 # -------------- RECIPES --------------
-all: $(NAME)
+all: rsc
+	make $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo -e "\n$(BOLD)Hello $(FG_ORANGE)$(USER)$(RESET)"
