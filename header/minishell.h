@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 10:17:30 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 13:00:09 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int	ft_pwd(t_data *data, t_token *input, int block);
 
 // unset.c
 void	free_env_node(t_env *node);
-void	ft_unset(t_env **env, t_token *input, int block);
+int	ft_unset(t_env **env, t_token *input, int block);
 
 // execve.c
 char	**get_cmd_args(t_token *input, char *command_path);
