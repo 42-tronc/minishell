@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 13:00:09 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 15:46:16 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,8 +262,8 @@ void	redisplay_prompt(int sig);
 void	get_signal(void);
 
 // syntax_error.c
-int	similar_type(t_token *temp);
-int	check_last_token(t_token *temp);
+int	similar_type(t_data *data, t_token *temp);
+int	check_last_token(t_data *data, t_token *temp);
 int	syntax_error(t_data *data);
 
 // tilde.c
