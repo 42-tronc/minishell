@@ -63,32 +63,28 @@ int	env_size(t_env *env)
 	return (size);
 }
 
-char	**env_to_array(t_env *env)
+char	**env_to_array(t_env *env, int size, char *copy)
 {
 	int		i;
-	int		size;
 	char	**array;
 
-	size = env_size(env);
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
 		exit_error(E_MALLOC, "env_to_array 1");
 	i = 0;
 	while (env)
 	{
-		// array[i] = ft_strjoin(env->var, env->value);
-		array[i] = ft_strjoin(env->var, "=");
-		if (!array[i] && env->var)
-		{
+		copy = ft_strjoin(env->var, "=");
+		if (!copy && env->var)
 			free_array(array);
+		if (!copy && env->var)
 			exit_error(E_MALLOC, "env_to_array 2");
-		}
-		array[i] = ft_strjoin(array[i], env->value);
+		array[i] = ft_strjoin(copy, env->value);
+		free(copy);
 		if (!array[i] && env->value)
-		{
 			free_array(array);
+		if (!array[i] && env->value)
 			exit_error(E_MALLOC, "env_to_array 3");
-		}
 		env = env->next;
 		i++;
 	}
@@ -136,7 +132,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 
 	(void)block;
 	status = 0;
-	env_array = env_to_array(data->env);
+	env_array = env_to_array(data->env, env_size(data->env), NULL);
 	command_path = get_validpath(data, input);
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)

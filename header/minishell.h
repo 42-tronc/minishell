@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:28:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 10:14:22 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void	ft_unset(t_env **env, t_token *input, int block);
 // execve.c
 char	**get_cmd_args(t_token *input, char *command_path);
 int	env_size(t_env *env);
-char	**env_to_array(t_env *env);
+char	**env_to_array(t_env *env, int size, char *copy);
 int	execve_cmd(t_data *data, t_token *input, int block);
 
 // strjoin_heredoc.c
