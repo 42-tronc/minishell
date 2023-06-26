@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 11:29:10 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 12:52:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	unset_key(t_env **env, const char *token)
 	}
 }
 
-void	ft_unset(t_env **env, t_token *input, int block)
+int	ft_unset(t_env **env, t_token *input, int block)
 {
 	while (input && input->pipe_block == block)
 	{
@@ -53,4 +53,5 @@ void	ft_unset(t_env **env, t_token *input, int block)
 			unset_key(env, input->token);
 		input = input->next;
 	}
+	return (0);
 }
