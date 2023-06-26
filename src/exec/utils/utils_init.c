@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/06/25 14:20:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 08:55:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	fill_default_env(t_data *data)
 {
-	ft_setenv(&(data->env), "OLDPWD", "");
+	ft_setenv(&(data->env), "OLDPWD", NULL);
 	if (!ft_getenv(data->env, "SHLVL"))
 		ft_setenv(&(data->env), "SHLVL", "1");
 	else
