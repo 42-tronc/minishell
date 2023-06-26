@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:58:59 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 10:22:19 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:06:44 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	handle_heredoc(t_cmd_block *cmd_block)
  * @param block
  * @return int 0 if success, exit otherwise
  */
-int	check_input(t_data *data, int block)
+void	check_input(t_data *data, int block)
 {
 	if (data->cmd_block[block]->in_fd > 0)
 	{
@@ -55,7 +55,6 @@ int	check_input(t_data *data, int block)
 			exit_error(E_DUP2, "check_input");
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
-	return (0);
 }
 
 /**
@@ -68,7 +67,7 @@ int	check_input(t_data *data, int block)
  * @param block
  * @return int 0 if success, exit otherwise
  */
-int	check_output(t_data *data, int block)
+void	check_output(t_data *data, int block)
 {
 	if (data->cmd_block[block]->out_fd > 0)
 	{
@@ -83,7 +82,6 @@ int	check_output(t_data *data, int block)
 			exit_error(E_DUP2, "check_output");
 		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
-	return (0);
 }
 
 int	create_pipe(t_data *data)

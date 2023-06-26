@@ -6,12 +6,19 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/20 14:35:05 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:25:28 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief checks if the result of the conversion is an overflow
+ *
+ * @param result int to check for overflow
+ * @param digit single digit to check for overflow
+ * @return int 1 if overflow, 0 if not
+ */
 static int	is_overflow(long long result, int digit)
 {
 	if (result > LLONG_MAX / 10 || (result == LLONG_MAX / 10
@@ -23,6 +30,14 @@ static int	is_overflow(long long result, int digit)
 	return (0);
 }
 
+/**
+ * @brief converts the digits of the string to a long long
+ *
+ * @param str string to convert
+ * @param i index of the string to start the conversion from
+ * @param sign of the number
+ * @return long long converted number
+ */
 static long long	convert_digits(const char *str, int *i, int sign)
 {
 	int			digit;
@@ -43,6 +58,12 @@ static long long	convert_digits(const char *str, int *i, int sign)
 	return (result);
 }
 
+/**
+ * @brief converts a string to a long long
+ *
+ * @param str string to convert
+ * @return long long converted number
+ */
 long long	ft_atoll(const char *str)
 {
 	int			i;
@@ -71,6 +92,14 @@ long long	ft_atoll(const char *str)
 	return (result);
 }
 
+/**
+ * @brief exits the shell
+ *
+ * @param data t_data struct with status and vars to free
+ * @param input t_token struct to check for args
+ * @param block void in this case
+ * @return int EXIT_SUCCESS or EXIT_FAILURE
+ */
 int	ft_exit(t_data *data, t_token *input, int block)
 {
 	int		exit_code;

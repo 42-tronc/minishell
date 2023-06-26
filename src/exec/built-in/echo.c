@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:41:40 by croy              #+#    #+#             */
-/*   Updated: 2023/06/19 15:27:02 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:16:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	check_newline(t_token **input)
  * @param block block of the pipe
  * @return int 0 if success, else 1
  */
-static int	echo_print(t_data *data, t_token *input, int block)
+int	ft_echo(t_data *data, t_token *input, int block)
 {
 	int	first;
 	int	newline;
@@ -93,16 +93,4 @@ static int	echo_print(t_data *data, t_token *input, int block)
 	if (newline)
 		write(STDOUT_FILENO, "\n", 1);
 	return (0);
-}
-
-/**
- * @brief creates a subshell to execute the echo
- *
- * @param data t_data struct with every var in it
- * @param input t_token struct with the input
- * @param block block of the pipe
- */
-void	ft_echo(t_data *data, t_token *input, int block)
-{
-	create_subshell(echo_print, data, input, block);
 }

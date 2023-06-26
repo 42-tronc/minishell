@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 16:05:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:27:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	exit_error(int code, char *source)
 	error[E_FORK] = "For failed to create a child process";
 	// error[] = "";
 
-	// should prob print to fd 2
-	// printf(RED"Error: %s\n"RESET, error[code]);
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(error[code], 2);
 	if (source)
@@ -42,18 +40,13 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	status = 0;
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		return ; // will need to exit here
-	}
+		exit_error(E_FORK, "create_subshell");
 	else if (pid == 0)
 	{
 		if (block < data->cmd_block_count - 1 && data->cmd_block[block]->pipe_fd[0] > 0)
 			close(data->cmd_block[block]->pipe_fd[0]);
-		if (check_input(data, block) == EXIT_FAILURE)
-			return ; // dup2 failed exit here
-		if (check_output(data, block) == EXIT_FAILURE)
-			return ; // dup2 failed exit here
+		check_input(data, block);
+		check_output(data, block);
 		status = func(data, input, block);
 		exit(status);
 	}
@@ -89,6 +82,21 @@ int	count_arguments(t_token *input)
 		input = input->next;
 	}
 	return (arg_count);
+}
+
+/**
+ * @brief swaps the values of two char pointers
+ *
+ * @param current first char pointer
+ * @param next second char pointer
+ */
+void	swap_var(char **current, char **next)
+{
+	char	*tmp;
+
+	tmp = *current;
+	*current = *next;
+	*next = tmp;
 }
 
 int	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)

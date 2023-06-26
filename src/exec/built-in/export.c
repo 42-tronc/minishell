@@ -6,20 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/24 20:32:48 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:39:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	swap_var(char **current, char **next)
-{
-	char	*tmp;
-
-	tmp = *current;
-	*current = *next;
-	*next = tmp;
-}
 
 static void	export_sort(t_env *env)
 {
@@ -45,7 +36,7 @@ static void	export_sort(t_env *env)
 	}
 }
 
-int	check_var_name(char *var)
+static int	check_var_name(char *var)
 {
 	int	i;
 	int	status;
@@ -121,7 +112,6 @@ int	ft_export(t_data *data, t_token *input, int block)
 	if (count_arguments(input) == 0)
 		create_subshell(export_print, data, input, block);
 	else
-		// status = add_env_entry(data->env, input, block);
 		status = check_alone(add_env_entry, data, input, block);
 	return (status);
 }
