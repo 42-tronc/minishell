@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 16:05:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:06:09 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	{
 		if (block < data->cmd_block_count - 1 && data->cmd_block[block]->pipe_fd[0] > 0)
 			close(data->cmd_block[block]->pipe_fd[0]);
-		if (check_input(data, block) == EXIT_FAILURE)
-			return ; // dup2 failed exit here
-		if (check_output(data, block) == EXIT_FAILURE)
-			return ; // dup2 failed exit here
+		check_input(data, block);
+		check_output(data, block);
 		status = func(data, input, block);
 		exit(status);
 	}
