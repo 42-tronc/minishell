@@ -22,8 +22,6 @@ void	exit_error(int code, char *source)
 	error[E_FORK] = "For failed to create a child process";
 	// error[] = "";
 
-	// should prob print to fd 2
-	// printf(RED"Error: %s\n"RESET, error[code]);
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(error[code], 2);
 	if (source)
@@ -42,10 +40,7 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	status = 0;
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		return ; // will need to exit here
-	}
+		exit_error(E_FORK, "create_subshell");
 	else if (pid == 0)
 	{
 		if (block < data->cmd_block_count - 1 && data->cmd_block[block]->pipe_fd[0] > 0)
