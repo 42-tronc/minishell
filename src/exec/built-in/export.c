@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:38:12 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 09:39:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	export_sort(t_env *env)
 	}
 }
 
-int	check_var_name(char *var)
+static int	check_var_name(char *var)
 {
 	int	i;
 	int	status;
