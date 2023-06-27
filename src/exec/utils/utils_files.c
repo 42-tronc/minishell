@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/20 14:30:32 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/27 13:51:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	open_heredoc(t_data *data, t_token *input, int block)
 		}
 		else if (ft_strcmp(line, input->token) == 0)
 			break ;
+		// if need expand in line, do it here
 		else if (is_last)
 			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(\
 			data->cmd_block[block]->heredoc, line);

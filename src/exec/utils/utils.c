@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:27:31 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/27 14:10:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,29 @@ void	exit_error(int code, char *source)
 	exit(EXIT_FAILURE);
 }
 
+void	close_all_pipes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->cmd_block_count)
+	{
+		if (data->cmd_block[i]->pipe_fd[0] > 0) // Close the read end of the pipe in the child
+		{
+			printf("closing fd[%d][%d]=%d\n", i, 0, data->cmd_block[i]->pipe_fd[0]);
+			close(data->cmd_block[i]->pipe_fd[0]);
+			data->cmd_block[i]->pipe_fd[0] = -1;
+		}
+		if (data->cmd_block[i]->pipe_fd[1] > 0) // Close the write end of the pipe in the child
+		{
+			printf("closing fd[%d][%d]=%d\n", i, 1, data->cmd_block[i]->pipe_fd[1]);
+			close(data->cmd_block[i]->pipe_fd[1]);
+			data->cmd_block[i]->pipe_fd[1] = -1;
+		}
+		i++;
+	}
+}
+
 void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block)
 {
 	pid_t	pid;
@@ -47,6 +70,7 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 			close(data->cmd_block[block]->pipe_fd[0]);
 		check_input(data, block);
 		check_output(data, block);
+		close_all_pipes(data);
 		status = func(data, input, block);
 		exit(status);
 	}
