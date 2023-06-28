@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/27 14:13:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/28 12:02:05 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exit_error(int code, char *source)
 	error[E_DUP2] = "Dup2 failed to duplicate the file descriptor";
 	error[E_PIPE] = "Pipe failed to create a pipe";
 	error[E_FORK] = "For failed to create a child process";
-	// error[] = "";
+
 
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(error[code], 2);
@@ -39,15 +39,13 @@ void	close_all_pipes(t_data *data)
 	i = 0;
 	while (i < data->cmd_block_count)
 	{
-		if (data->cmd_block[i]->pipe_fd[0] > 0) // Close the read end of the pipe in the child
+		if (data->cmd_block[i]->pipe_fd[0] > 0)
 		{
-			// printf("closing fd[%d][%d]=%d\n", i, 0, data->cmd_block[i]->pipe_fd[0]);
 			close(data->cmd_block[i]->pipe_fd[0]);
 			data->cmd_block[i]->pipe_fd[0] = -1;
 		}
-		if (data->cmd_block[i]->pipe_fd[1] > 0) // Close the write end of the pipe in the child
+		if (data->cmd_block[i]->pipe_fd[1] > 0)
 		{
-			// printf("closing fd[%d][%d]=%d\n", i, 1, data->cmd_block[i]->pipe_fd[1]);
 			close(data->cmd_block[i]->pipe_fd[1]);
 			data->cmd_block[i]->pipe_fd[1] = -1;
 		}
@@ -78,9 +76,9 @@ void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token 
 	{
 		data->cmd_block[block]->pid = pid;
 		if (block > 0 && data->cmd_block[block - 1]->pipe_fd[0] > 0)
-			close(data->cmd_block[block - 1]->pipe_fd[0]); // Close the read end of the pipe in the child
+			close(data->cmd_block[block - 1]->pipe_fd[0]);
 		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_block_count - 1)
-			close(data->cmd_block[block]->pipe_fd[1]); // Close the write end of the pipe in the parent
+			close(data->cmd_block[block]->pipe_fd[1]);
 	}
 }
 
