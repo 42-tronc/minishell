@@ -6,6 +6,9 @@
 # !*/ then unignores anything that is a directory. This is crucial.
 # !*.* unignores all files with an extension.
 
+# Codespace
+.devcontainer
+
 # Ignore .nfs files caused by the school being dogsheet
 .nfs*
 
