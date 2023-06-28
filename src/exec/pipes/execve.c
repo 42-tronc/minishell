@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 10:08:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/28 12:36:43 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ static int	is_executable_file(t_token *input, char *path)
 
 	if (!path || stat(path, &file_stat) == -1)
 	{
-		ft_putstr_fd(input->token, STDERR_FILENO);
+		write(STDERR_FILENO, input->token, ft_strlen(input->token));
+		// ft_putstr_fd(input->token, STDERR_FILENO);
 		if (!path)
 			ft_putendl_fd(": command not found", STDERR_FILENO);
 		else
