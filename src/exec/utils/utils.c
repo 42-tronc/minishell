@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/28 12:02:05 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/28 12:11:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ void	exit_error(int code, char *source)
 	error[E_DUP2] = "Dup2 failed to duplicate the file descriptor";
 	error[E_PIPE] = "Pipe failed to create a pipe";
 	error[E_FORK] = "For failed to create a child process";
-
-
-	ft_putstr_fd("Error: ", 2);
-	ft_putstr_fd(error[code], 2);
+	write(2, "\e[31mError: ", 12);
+	write(2, error[code], ft_strlen(error[code]));
 	if (source)
 	{
-		ft_putstr_fd(" in ", 2);
-		ft_putstr_fd(source, 2);
+		write(2, " in \e[1m", 8);
+		write(2, source, ft_strlen(source));
 	}
 	exit(EXIT_FAILURE);
 }
