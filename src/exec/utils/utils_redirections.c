@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:58:59 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:06:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 07:50:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	check_output(t_data *data, int block)
 			exit_error(E_DUP2, "check_output");
 		close(data->cmd_block[block]->out_fd);
 	}
-	else if (block < data->cmd_block_count - 1)
+	else if (block < data->cmdblk_ct - 1)
 	{
 		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
 				STDOUT_FILENO) == -1)
@@ -89,9 +89,9 @@ int	create_pipe(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->cmd_block_count < 1)
+	if (data->cmdblk_ct < 1)
 		return (EXIT_SUCCESS);
-	while (i < data->cmd_block_count - 1)
+	while (i < data->cmdblk_ct - 1)
 	{
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
 			exit_error(E_PIPE, "create_pipe");
