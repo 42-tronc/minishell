@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 15:46:16 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/06/29 07:52:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ struct s_data {
 	t_env		*env;
 	t_cmd_block	**cmd_block;
 	char		**paths;
-	int			cmd_block_count;
+	int			cmd_ct;
 	int			status;
 	int			i;
 	t_parsing	*p;
@@ -172,10 +172,8 @@ char	**split_paths(char const *s, char c);
 
 // utils.c
 void	exit_error(int code, char *source);
-void	create_subshell(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
 int	count_arguments(t_token *input);
 void	swap_var(char **current, char **next);
-int	check_alone(int (*func)(t_data*, t_token*, int), t_data *data, t_token *input, int block);
 
 // utils_env.c
 t_env	*ft_env_new(char *var, char *value);
@@ -190,9 +188,11 @@ int	check_outfile(t_data *data, t_token *input, int block);
 
 // utils_free.c
 void	free_array(char **env_array);
+void	free_cmd_block(t_data *data);
 
 // utils_init.c
 void	fill_env(t_data *data, char **envp);
+int	init_data(t_data *data);
 
 // utils_path.c
 char	*get_validpath(t_data *data, t_token *input);
@@ -201,6 +201,11 @@ char	*get_validpath(t_data *data, t_token *input);
 void	check_input(t_data *data, int block);
 void	check_output(t_data *data, int block);
 int	create_pipe(t_data *data);
+
+// utils_subshell.c
+int	check_alone(int (*func)(t_data *, t_token *, int), t_data *data,t_token *input, int block);
+void	close_all_pipes(t_data *data);
+void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,t_token *input, int block);
 
 // check_in_quotes.c
 int	token_in_quotes(char *str);
@@ -292,9 +297,7 @@ void	free_token(t_token *tokens);
 char	**get_array_cmd(t_token *temp);
 
 // minishell.c
-void	check_command(t_data *data, t_token *input, int block);
 void	exec_code(t_data *data);
 void	exec_dispatch(t_data *data, t_token *input);
-int	init_data(t_data *data);
 
 #endif

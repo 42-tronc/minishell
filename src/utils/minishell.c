@@ -6,14 +6,13 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 12:53:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 08:06:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// might need to change the export and set to only print if there is a value, if not it is a export
-void	check_command(t_data *data, t_token *input, int block)
+static void	check_command(t_data *data, t_token *input, int block)
 {
 	while (input && input->pipe_block == block)
 	{
@@ -22,13 +21,10 @@ void	check_command(t_data *data, t_token *input, int block)
 			if (ft_strcmp(input->token, "cd") == 0)
 				data->status = ft_cd(data, input->next, block);
 			else if (ft_strcmp(input->token, "echo") == 0)
-				// ft_echo(data, input->next, block);
 				create_subshell(ft_echo, data, input, block);
 			else if (ft_strcmp(input->token, "env") == 0)
-				// ft_env(data, input, block);
 				create_subshell(print_env, data, input, block);
 			else if (ft_strcmp(input->token, "exit") == 0)
-				// ft_exit(data, input->next);
 				check_alone(ft_exit, data, input->next, block);
 			else if (ft_strcmp(input->token, "export") == 0)
 				data->status = ft_export(data, input->next, block);
@@ -47,25 +43,17 @@ void	exec_code(t_data *data)
 {
 	int	block;
 	int	status;
-	int statuscode;
+	int	statuscode;
 
 	block = 0;
-	status = -1; // Variable to store the return status of the child process
-	while (block < data->cmd_block_count)
+	status = -1;
+	while (block < data->cmd_ct)
 	{
 		waitpid(data->cmd_block[block]->pid, &status, 0);
 		block++;
 	}
-	// data->status = WEXITSTATUS(status);
-	// printf("wexit = %d\n", data->status);
-	if (WIFEXITED(status)) {
+	if (WIFEXITED(status))
 		statuscode = WEXITSTATUS(status);
-		// if (statuscode != 0)
-			// printf(RED"failure with %d\n" RESET, statuscode);
-			// printf(BOLD GREEN "success\n" RESET);
-			// printf(BOLD GREEN "%s: %ssuccess\n" RESET, input->token, NO_BOLD);
-		// else
-	}
 	if (status != -1)
 		data->status = statuscode;
 }
@@ -77,7 +65,8 @@ static void	close_pipes(t_data *data, int block)
 		close(data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO]);
 		data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] = -3;
 	}
-	if (block < data->cmd_block_count - 1 && data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
+	if (block < data->cmd_ct - 1
+		&& data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
 	{
 		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 		data->cmd_block[block]->pipe_fd[STDOUT_FILENO] = -3;
@@ -91,19 +80,17 @@ void	exec_dispatch(t_data *data, t_token *input)
 
 	error = 0;
 	block = 0;
-	// printf("cmd block count = %d\n", data->cmd_block_count);
-	while (input && block < data->cmd_block_count)
+	while (input && block < data->cmd_ct)
 	{
-		// printf(RED "block=%d\ncurrent block %d\n" RESET, block, input->pipe_block);
 		check_heredoc(data, input, block);
 		error = check_infile(data, input, block);
 		if (!error)
 			error = check_outfile(data, input, block);
 		if (!error)
-			check_command(data, input, block); // will be changed
+			check_command(data, input, block);
 		else
 			close_pipes(data, block);
-		if (block == data->cmd_block_count - 1 && error)
+		if (block == data->cmd_ct - 1 && error)
 		{
 			data->status = 1;
 			return ;
@@ -115,52 +102,9 @@ void	exec_dispatch(t_data *data, t_token *input)
 	exec_code(data);
 }
 
-// will need to get the return value to somewhere
-int	init_data(t_data *data)
-{
-	int		i;
-	t_token	*temp;
-
-	temp = data->tokens;
-	data->cmd_block_count = 1;
-	while (temp)
-	{
-		if (!ft_strcmp(temp->type, PIPE))
-			data->cmd_block_count++;
-		temp = temp->next;
-	}
-	data->cmd_block = ft_calloc(data->cmd_block_count + 1, sizeof(t_cmd_block*));
-	if (!data->cmd_block)
-		return (E_MALLOC);
-	i = 0;
-	while (i < data->cmd_block_count)
-	{
-		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
-		if (!data->cmd_block[i])
-			return (E_MALLOC); // exit here
-		data->cmd_block[i]->in_fd = -2;
-		data->cmd_block[i]->out_fd = -2;
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-static void	free_cmd_block(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->cmd_block_count)
-	{
-		free(data->cmd_block[i]);
-		i++;
-	}
-	free(data->cmd_block);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
-	t_data 	*data;
+	t_data	*data;
 
 	(void)argv;
 	if (argc != 1)
@@ -179,8 +123,6 @@ int	main(int argc, char **argv, char **envp)
 			exec_dispatch(data, data->tokens);
 			free_cmd_block(data);
 		}
-		// while (wait(NULL) > 0)
-		// 	;
 		if (data->tokens)
 			free_token(data->tokens);
 		free(data->p);
