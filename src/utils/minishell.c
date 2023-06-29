@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int	g_ret_value;
+
 static void	check_command(t_data *data, t_token *input, int block)
 {
 	while (input && input->pipe_block == block)
@@ -19,7 +21,7 @@ static void	check_command(t_data *data, t_token *input, int block)
 		if (input->type && ft_strcmp(input->type, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
-				data->status = ft_cd(data, input->next, block);
+				g_ret_value = ft_cd(data, input->next, block);
 			else if (ft_strcmp(input->token, "echo") == 0)
 				create_subshell(ft_echo, data, input, block);
 			else if (ft_strcmp(input->token, "env") == 0)
@@ -27,11 +29,11 @@ static void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "exit") == 0)
 				check_alone(ft_exit, data, input->next, block);
 			else if (ft_strcmp(input->token, "export") == 0)
-				data->status = ft_export(data, input->next, block);
+				g_ret_value = ft_export(data, input->next, block);
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				create_subshell(ft_pwd, data, input, block);
 			else if (ft_strcmp(input->token, "unset") == 0)
-				data->status = ft_unset(&data->env, input, block);
+				g_ret_value = ft_unset(&data->env, input, block);
 			else
 				create_subshell(execve_cmd, data, input, block);
 		}
@@ -55,7 +57,7 @@ void	exec_code(t_data *data)
 	if (WIFEXITED(status))
 		statuscode = WEXITSTATUS(status);
 	if (status != -1)
-		data->status = statuscode;
+		g_ret_value = statuscode;
 }
 
 static void	close_pipes(t_data *data, int block)
@@ -92,7 +94,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 			close_pipes(data, block);
 		if (block == data->cmd_ct - 1 && error)
 		{
-			data->status = 1;
+			g_ret_value = 1;
 			return ;
 		}
 		block++;
@@ -128,5 +130,4 @@ int	main(int argc, char **argv, char **envp)
 		free(data->p);
 	}
 	free_list(data->env);
-	return (0);
 }

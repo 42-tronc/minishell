@@ -90,7 +90,7 @@ int	replace_var(t_token *temp, t_data *p, int to_free)
 	if (temp->token[p->i] == '?')
 		p->p->var_name = ft_strdup("1");
 	if (temp->token[p->i] == '?')
-		p->p->var_value = ft_itoa(p->status);
+		p->p->var_value = ft_itoa(g_ret_value);
 	else
 	{
 		p->p->var_name = get_var_name(temp->token + p->i);

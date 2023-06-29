@@ -13,8 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// # include "exec.h"
-// # include "parsing.h"
+extern int	g_ret_value;
+
 # include "libft.h"
 # include <signal.h>
 # include <fcntl.h>
@@ -29,7 +29,6 @@
 
 typedef struct s_data		t_data;
 typedef struct s_parsing	t_parsing;
-// typedef struct s_env		t_env;
 typedef struct s_token		t_token;
 
 typedef enum e_exit_code {
@@ -37,8 +36,6 @@ typedef enum e_exit_code {
 	E_DUP2 = 1,
 	E_PIPE = 2,
 	E_FORK = 3,
-	// EXIT_SUCCESS,
-	// EXIT_FAILURE,
 }	t_exit_code;
 
 typedef struct s_env
@@ -54,11 +51,9 @@ typedef struct s_cmd_block
 	int		out_fd;
 	char	*heredoc;
 	int		pipe_fd[2];
-	char	*cmd_path; // MIGHT NOT BE NEEDED
-	char	**cmd_args; // MIGHT NOT BE NEEDED
+	char	*cmd_path;
+	char	**cmd_args;
 	pid_t	pid;
-	// int		*pipin;
-	// int		*pipout;
 }			t_cmd_block;
 
 struct s_data {
@@ -96,7 +91,6 @@ struct s_token {
 	t_token	*next;
 };
 
-// define for token_id.
 # define CHEVRON_L "<"
 # define CHEVRON_R ">"
 # define INFILE "infile"
@@ -109,12 +103,6 @@ struct s_token {
 # define HERE_DOC "here_doc"
 # define CHEVRON_RR ">>"
 # define MY_NULL "my_null"
-
-// # define RED	"\e[31;1m"
-// # define YELLOW	"\e[33;1m"
-// # define GREEN	"\e[32;1m"
-// # define UNDERLINE	"\e[4m"
-// # define RESET	"\e[0m"
 
 # define BLACK		"\e[30m"
 # define RED		"\e[31m"
@@ -267,8 +255,8 @@ void	redisplay_prompt(int sig);
 void	get_signal(void);
 
 // syntax_error.c
-int	similar_type(t_data *data, t_token *temp);
-int	check_last_token(t_data *data, t_token *temp);
+int	similar_type(t_token *temp);
+int	check_last_token(t_token *temp);
 int	syntax_error(t_data *data);
 
 // tilde.c

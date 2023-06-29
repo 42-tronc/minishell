@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	similar_type(t_data *data, t_token *temp)
+int	similar_type(t_token *temp)
 {
 	int	symbol1;
 	int	symbol2;
@@ -20,7 +20,7 @@ int	similar_type(t_data *data, t_token *temp)
 	symbol1 = 0;
 	symbol2 = 0;
 	if (!ft_strcmp(temp->type, PIPE) && !ft_strcmp(temp->prev->type, PIPE))
-		data->status = 2;
+		g_ret_value = 2;
 	if (!ft_strcmp(temp->type, PIPE) && !ft_strcmp(temp->prev->type, PIPE))
 		return (1);
 	if (!ft_strcmp(temp->type, CHEVRON_L) \
@@ -35,13 +35,13 @@ int	similar_type(t_data *data, t_token *temp)
 	|| !ft_strcmp(temp->prev->type, HERE_DOC))
 		symbol2 = 1;
 	if (symbol1 && symbol2)
-		data->status = 2;
+		g_ret_value = 2;
 	if (symbol1 && symbol2)
 		return (1);
 	return (0);
 }
 
-int	check_last_token(t_data *data, t_token *temp)
+int	check_last_token(t_token *temp)
 {
 	while (temp->next)
 		temp = temp->next;
@@ -51,7 +51,7 @@ int	check_last_token(t_data *data, t_token *temp)
 	|| !ft_strcmp(temp->type, HERE_DOC) \
 	|| !ft_strcmp(temp->type, PIPE))
 	{
-		data->status = 2;
+		g_ret_value = 2;
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (1);
 	}
@@ -73,7 +73,7 @@ int	syntax_error(t_data *data)
 		}
 		else if (temp->prev)
 		{
-			if (similar_type(data, temp))
+			if (similar_type(temp))
 			{
 				printf("minishell: syntax error near unexpected token \
 `%s'\n", temp->token);
@@ -82,7 +82,7 @@ int	syntax_error(t_data *data)
 		}
 		temp = temp->next;
 	}
-	if (check_last_token(data, data->tokens))
+	if (check_last_token(data->tokens))
 		return (1);
 	return (0);
 }

@@ -23,10 +23,7 @@ int	prepare_token(t_data *data)
 		return (1);
 	if (!need_to_new(data->tokens) \
 		&& replace_list(data, NULL, ft_tokensize(data->tokens)))
-	{
-		data->status = 0;
 		return (1);
-	}
 	id_tokens(&data->tokens, NULL);
 	if (remove_quotes(&data->tokens, data))
 		return (1);
