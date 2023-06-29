@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:50:56 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 07:52:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ struct s_data {
 	t_env		*env;
 	t_cmd_block	**cmd_block;
 	char		**paths;
-	int			cmdblk_ct;
+	int			cmd_ct;
 	int			status;
 	int			i;
 	t_parsing	*p;

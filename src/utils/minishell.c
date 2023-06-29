@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:50:56 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 07:52:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exec_code(t_data *data)
 
 	block = 0;
 	status = -1; // Variable to store the return status of the child process
-	while (block < data->cmdblk_ct)
+	while (block < data->cmd_ct)
 	{
 		waitpid(data->cmd_block[block]->pid, &status, 0);
 		block++;
@@ -77,7 +77,7 @@ static void	close_pipes(t_data *data, int block)
 		close(data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO]);
 		data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] = -3;
 	}
-	if (block < data->cmdblk_ct - 1 && data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
+	if (block < data->cmd_ct - 1 && data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
 	{
 		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 		data->cmd_block[block]->pipe_fd[STDOUT_FILENO] = -3;
@@ -91,8 +91,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 
 	error = 0;
 	block = 0;
-	// printf("cmd block count = %d\n", data->cmdblk_ct);
-	while (input && block < data->cmdblk_ct)
+	// printf("cmd block count = %d\n", data->cmd_ct);
+	while (input && block < data->cmd_ct)
 	{
 		// printf(RED "block=%d\ncurrent block %d\n" RESET, block, input->pipe_block);
 		check_heredoc(data, input, block);
@@ -103,7 +103,7 @@ void	exec_dispatch(t_data *data, t_token *input)
 			check_command(data, input, block); // will be changed
 		else
 			close_pipes(data, block);
-		if (block == data->cmdblk_ct - 1 && error)
+		if (block == data->cmd_ct - 1 && error)
 		{
 			data->status = 1;
 			return ;
@@ -122,18 +122,18 @@ int	init_data(t_data *data)
 	t_token	*temp;
 
 	temp = data->tokens;
-	data->cmdblk_ct = 1;
+	data->cmd_ct = 1;
 	while (temp)
 	{
 		if (!ft_strcmp(temp->type, PIPE))
-			data->cmdblk_ct++;
+			data->cmd_ct++;
 		temp = temp->next;
 	}
-	data->cmd_block = ft_calloc(data->cmdblk_ct + 1, sizeof(t_cmd_block*));
+	data->cmd_block = ft_calloc(data->cmd_ct + 1, sizeof(t_cmd_block*));
 	if (!data->cmd_block)
 		return (E_MALLOC);
 	i = 0;
-	while (i < data->cmdblk_ct)
+	while (i < data->cmd_ct)
 	{
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
 		if (!data->cmd_block[i])
@@ -150,7 +150,7 @@ static void	free_cmd_block(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->cmdblk_ct)
+	while (i < data->cmd_ct)
 	{
 		free(data->cmd_block[i]);
 		i++;
