@@ -94,7 +94,7 @@ int	check_infile(t_data *data, t_token *input, int block)
 			if (data->cmd_block[block]->in_fd == -1)
 			{
 				perror(BOLD RED "open" RESET);
-				data->status = 1;
+				g_ret_value = 1;
 				return (-1);
 			}
 		}
@@ -121,7 +121,7 @@ int	check_outfile(t_data *data, t_token *input, int block)
 			if (data->cmd_block[block]->out_fd == -1)
 			{
 				perror(BOLD RED "open" RESET);
-				data->status = 1;
+				g_ret_value = 1;
 				return (-1);
 			}
 		}

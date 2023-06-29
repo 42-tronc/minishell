@@ -14,16 +14,18 @@
 
 void	exit_program(t_data *data)
 {
+	g_ret_value = 131;
 	free(data->p);
 	free_list(data->env);
 	free(data);
 	printf("exit\n");
-	exit (1);
+	exit (g_ret_value);
 }
 
 void	redisplay_prompt(int sig)
 {
 	(void)sig;
+	g_ret_value = 130;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -32,7 +34,6 @@ void	redisplay_prompt(int sig)
 
 void	get_signal(void)
 {
-	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, &redisplay_prompt);

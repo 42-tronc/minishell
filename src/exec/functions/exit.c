@@ -111,7 +111,7 @@ int	ft_exit(t_data *data, t_token *input, int block)
 	if (count_arguments(input) > 1)
 	{
 		ft_putendl_fd("exit error: too many arguments", 2);
-		data->status = 1;
+		g_ret_value = 1;
 		return (EXIT_FAILURE);
 	}
 	if (ft_strcmp(input->type, ARG) == 0)

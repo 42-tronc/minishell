@@ -84,7 +84,7 @@ int	getting_line(t_data *data)
 		data->p->dquote = 0;
 		if (!even_quote(data->p, str) || !right_symbols(data->p, str))
 		{
-			data->status = 1;
+			g_ret_value = 1;
 			return (free(str), 1);
 		}
 		if (cutting_line(&data->tokens, data->p, str))
