@@ -258,6 +258,7 @@ void	get_signal_exec(void);
 // signal2.c
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
+void	handle_signals(int signal);
 
 // syntax_error.c
 int	similar_type(t_token *temp);

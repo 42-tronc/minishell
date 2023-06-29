@@ -49,6 +49,7 @@ void	exec_code(t_data *data)
 
 	block = 0;
 	status = -1;
+	statuscode = 0;
 	while (block < data->cmd_ct)
 	{
 		waitpid(data->cmd_block[block]->pid, &status, 0);
@@ -56,6 +57,10 @@ void	exec_code(t_data *data)
 	}
 	if (WIFEXITED(status))
 		statuscode = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		handle_signals(WTERMSIG(status));
+	}
 	if (status != -1)
 		g_ret_value = statuscode;
 }
@@ -119,7 +124,7 @@ int	main(int argc, char **argv, char **envp)
 		getting_line(data);
 		if (data->tokens && !prepare_token(data))
 		{
-			get_signal_exec();
+
 			if (init_data(data))
 				exit(EXIT_FAILURE);
 			create_pipe(data);
