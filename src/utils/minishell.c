@@ -130,5 +130,4 @@ int	main(int argc, char **argv, char **envp)
 		free(data->p);
 	}
 	free_list(data->env);
-	return (g_ret_value);
 }

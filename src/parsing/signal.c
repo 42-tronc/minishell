@@ -14,7 +14,6 @@
 
 void	exit_program(t_data *data)
 {
-	g_ret_value = 131;
 	free(data->p);
 	free_list(data->env);
 	free(data);
