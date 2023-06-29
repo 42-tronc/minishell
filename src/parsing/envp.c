@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:17:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/05/25 14:09:47 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 09:28:09 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	free_list(t_env *lst)
 	t_env	*current;
 	t_env	*temp1;
 
+	if (!lst)
+		return ;
 	current = lst;
 	while (current != NULL)
 	{

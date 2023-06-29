@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 08:04:02 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 09:34:54 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	fill_default_env(t_data *data)
 	char	*shlvl;
 	char	*cwd;
 
-	ft_setenv(&(data->env), "OLDPWD", NULL);
 	if (!ft_getenv(data->env, "SHLVL"))
 		ft_setenv(&(data->env), "SHLVL", "1");
 	else if (ft_atoi(ft_getenv(data->env, "SHLVL")) >= 999)
@@ -37,6 +36,7 @@ static void	fill_default_env(t_data *data)
 		ft_setenv(&(data->env), "PWD", cwd);
 		free(cwd);
 	}
+	ft_setenv(&(data->env), "OLDPWD", NULL);
 }
 
 /**

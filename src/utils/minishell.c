@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 08:06:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 09:28:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ int	main(int argc, char **argv, char **envp)
 			free_token(data->tokens);
 		free(data->p);
 	}
-	if (data->env)
-		free_list(data->env);
+	free_list(data->env);
 	return (0);
 }
