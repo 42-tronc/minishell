@@ -46,10 +46,17 @@ void	close_all_pipes(t_data *data)
 	}
 }
 
-static void	_ignore_sig(void)
+void	ignore_sig(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+static void	_gain_two_lines(t_data *data, int block)
+{
+	check_input(data, block);
+	check_output(data, block);
+	close_all_pipes(data);
 }
 
 void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
@@ -59,7 +66,6 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 	int		status;
 
 	status = 0;
-	_ignore_sig();
 	pid = fork();
 	if (pid == -1)
 		exit_error(E_FORK, "create_subshell");
@@ -68,9 +74,7 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 		get_signal_exec();
 		if (block < data->cmd_ct - 1 && data->cmd_block[block]->pipe_fd[0] > 0)
 			close(data->cmd_block[block]->pipe_fd[0]);
-		check_input(data, block);
-		check_output(data, block);
-		close_all_pipes(data);
+		_gain_two_lines(data, block);
 		status = func(data, input, block);
 		exit(status);
 	}

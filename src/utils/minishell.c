@@ -124,9 +124,9 @@ int	main(int argc, char **argv, char **envp)
 		getting_line(data);
 		if (data->tokens && !prepare_token(data))
 		{
-
 			if (init_data(data))
 				exit(EXIT_FAILURE);
+			ignore_sig();
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 			free_cmd_block(data);
