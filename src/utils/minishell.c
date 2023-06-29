@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 08:05:28 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 08:06:49 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	exec_dispatch(t_data *data, t_token *input)
 	}
 	exec_code(data);
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
