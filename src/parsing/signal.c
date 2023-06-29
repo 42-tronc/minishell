@@ -33,12 +33,15 @@ void	redisplay_prompt(int sig)
 
 void	get_signal_prompt(void)
 {
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &redisplay_prompt);
 }
 
 void	get_signal_exec(void)
 {
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
 }
