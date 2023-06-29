@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/27 13:51:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 07:56:16 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ static void	open_heredoc(t_data *data, t_token *input, int block)
 		}
 		else if (ft_strcmp(line, input->token) == 0)
 			break ;
-		// if need expand in line, do it here
 		else if (is_last)
 			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(\
-			data->cmd_block[block]->heredoc, line);
+				data->cmd_block[block]->heredoc, line);
 	}
 }
 
@@ -89,25 +88,21 @@ int	check_infile(t_data *data, t_token *input, int block)
 	{
 		if (ft_strcmp(input->type, INFILE) == 0)
 		{
-			// printf("INFILE: %s%s%s\n", BOLD, input->token, NO_BOLD); // DELETE
 			if (data->cmd_block[block]->in_fd >= 0)
 				close(data->cmd_block[block]->in_fd);
 			data->cmd_block[block]->in_fd = open(input->token, O_RDONLY);
-			if (data->cmd_block[block]->in_fd == -1) // REFACTOR
+			if (data->cmd_block[block]->in_fd == -1)
 			{
 				perror(BOLD RED "open" RESET);
 				data->status = 1;
 				return (-1);
 			}
-			// else                                                      // DELETE
-				// printf(GREEN "OK: %s%s\n" RESET, BOLD, input->token); // DELETE
 		}
 		input = input->next;
 	}
 	return (0);
 }
 
-// if there is an out file dont send it to the pipe
 int	check_outfile(t_data *data, t_token *input, int block)
 {
 	int	flags;
@@ -118,7 +113,6 @@ int	check_outfile(t_data *data, t_token *input, int block)
 		if (ft_strcmp(input->type, OUTFILE) == 0 || ft_strcmp(input->type,
 				APPEND) == 0)
 		{
-			// printf("OUTFILE: %s%s%s\n", BOLD, input->token, NO_BOLD);
 			if (ft_strcmp(input->type, APPEND) == 0)
 				flags = (O_WRONLY | O_CREAT | O_APPEND);
 			if (data->cmd_block[block]->out_fd >= 0)
@@ -130,10 +124,6 @@ int	check_outfile(t_data *data, t_token *input, int block)
 				data->status = 1;
 				return (-1);
 			}
-			// else
-				// printf(GREEN "file: %s%s%s\tfd: %s%d%s\n\n", BOLD, input->token,
-					// NO_BOLD, BOLD, data->cmd_block[block]->out_fd, RESET);
-			// DELETE
 		}
 		input = input->next;
 	}

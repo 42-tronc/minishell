@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/28 13:02:15 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 07:56:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,15 @@ static int	is_executable_file(t_token *input, char *path)
 	if (!path || stat(path, &file_stat) == -1)
 	{
 		write(STDERR_FILENO, input->token, ft_strlen(input->token));
-		// ft_putstr_fd(input->token, STDERR_FILENO);
 		if (!path)
 			write(STDERR_FILENO, ": command not found\n", 21);
-			// ft_putendl_fd(": command not found", STDERR_FILENO);
 		else
 			write(STDERR_FILENO, ": no such file or directory\n", 28);
-			// ft_putendl_fd(": no such file or directory", STDERR_FILENO);
 		return (127);
 	}
 	else if (S_ISDIR(file_stat.st_mode) || access(path, X_OK) == -1)
 	{
 		write(STDERR_FILENO, input->token, ft_strlen(input->token));
-		// ft_putstr_fd(input->token, STDERR_FILENO);
 		if (S_ISDIR(file_stat.st_mode))
 			ft_putendl_fd(": is a directory", STDERR_FILENO);
 		else
