@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 12:49:00 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 08:04:02 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,33 @@ void	fill_env(t_data *data, char **envp)
 		i++;
 	}
 	fill_default_env(data);
+}
+
+int	init_data(t_data *data)
+{
+	int		i;
+	t_token	*temp;
+
+	temp = data->tokens;
+	data->cmd_ct = 1;
+	while (temp)
+	{
+		if (!ft_strcmp(temp->type, PIPE))
+			data->cmd_ct++;
+		temp = temp->next;
+	}
+	data->cmd_block = ft_calloc(data->cmd_ct + 1, sizeof(t_cmd_block *));
+	if (!data->cmd_block)
+		return (E_MALLOC);
+	i = 0;
+	while (i < data->cmd_ct)
+	{
+		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
+		if (!data->cmd_block[i])
+			return (E_MALLOC);
+		data->cmd_block[i]->in_fd = -2;
+		data->cmd_block[i]->out_fd = -2;
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }

@@ -102,48 +102,6 @@ void	exec_dispatch(t_data *data, t_token *input)
 	exec_code(data);
 }
 
-// will need to get the return value to somewhere
-int	init_data(t_data *data)
-{
-	int		i;
-	t_token	*temp;
-
-	temp = data->tokens;
-	data->cmd_ct = 1;
-	while (temp)
-	{
-		if (!ft_strcmp(temp->type, PIPE))
-			data->cmd_ct++;
-		temp = temp->next;
-	}
-	data->cmd_block = ft_calloc(data->cmd_ct + 1, sizeof(t_cmd_block*));
-	if (!data->cmd_block)
-		return (E_MALLOC);
-	i = 0;
-	while (i < data->cmd_ct)
-	{
-		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
-		if (!data->cmd_block[i])
-			return (E_MALLOC); // exit here
-		data->cmd_block[i]->in_fd = -2;
-		data->cmd_block[i]->out_fd = -2;
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-static void	free_cmd_block(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->cmd_ct)
-	{
-		free(data->cmd_block[i]);
-		i++;
-	}
-	free(data->cmd_block);
-}
 
 int	main(int argc, char **argv, char **envp)
 {

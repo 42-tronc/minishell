@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:43:01 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 11:45:49 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 08:02:43 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,17 @@ void	free_array(char **env_array)
 		i++;
 	}
 	free(env_array);
+}
+
+void	free_cmd_block(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->cmd_ct)
+	{
+		free(data->cmd_block[i]);
+		i++;
+	}
+	free(data->cmd_block);
 }
