@@ -113,12 +113,13 @@ int	main(int argc, char **argv, char **envp)
 		return ((void)printf("Don't put args !\n"), 1);
 	data = ft_calloc(1, sizeof(t_data));
 	fill_env(data, envp);
-	get_signal();
 	while (1)
 	{
+		get_signal_prompt();
 		getting_line(data);
 		if (data->tokens && !prepare_token(data))
 		{
+			get_signal_exec();
 			if (init_data(data))
 				exit(EXIT_FAILURE);
 			create_pipe(data);

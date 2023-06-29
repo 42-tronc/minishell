@@ -31,9 +31,14 @@ void	redisplay_prompt(int sig)
 	rl_redisplay();
 }
 
-void	get_signal(void)
+void	get_signal_prompt(void)
 {
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, &redisplay_prompt);
+}
+
+void	get_signal_exec(void)
+{
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 }
