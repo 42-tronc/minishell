@@ -34,7 +34,6 @@ void	redisplay_prompt(int sig)
 void	get_signal_prompt(void)
 {
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, &redisplay_prompt);
 }
 
