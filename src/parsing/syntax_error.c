@@ -6,7 +6,7 @@
 /*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 08:54:49 by aascedu           #+#    #+#             */
-/*   Updated: 2023/06/26 15:47:07 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:22:25 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ int	similar_type(t_data *data, t_token *temp)
 	symbol1 = 0;
 	symbol2 = 0;
 	if (!ft_strcmp(temp->type, PIPE) && !ft_strcmp(temp->prev->type, PIPE))
-	{
 		data->status = 2;
+	if (!ft_strcmp(temp->type, PIPE) && !ft_strcmp(temp->prev->type, PIPE))
 		return (1);
-	}
 	if (!ft_strcmp(temp->type, CHEVRON_L) \
 	|| !ft_strcmp(temp->type, CHEVRON_R) \
 	|| !ft_strcmp(temp->type, CHEVRON_RR) \
@@ -36,10 +35,9 @@ int	similar_type(t_data *data, t_token *temp)
 	|| !ft_strcmp(temp->prev->type, HERE_DOC))
 		symbol2 = 1;
 	if (symbol1 && symbol2)
-	{
 		data->status = 2;
+	if (symbol1 && symbol2)
 		return (1);
-	}
 	return (0);
 }
 
