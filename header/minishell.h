@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:52:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/30 09:31:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,12 @@ int	ft_echo(t_data *data, t_token *input, int block);
 // env.c
 int	print_env(t_data *data, t_token *input, int block);
 
+// execve.c
+char	**get_cmd_args(t_token *input, char *command_path);
+int	env_size(t_env *env);
+char	**env_to_array(t_env *env, int size, char *copy);
+int	execve_cmd(t_data *data, t_token *input, int block);
+
 // exit.c
 long	long	ft_atoll(const char *str);
 int	ft_exit(t_data *data, t_token *input, int block);
@@ -145,15 +151,6 @@ int	ft_pwd(t_data *data, t_token *input, int block);
 // unset.c
 void	free_env_node(t_env *node);
 int	ft_unset(t_env **env, t_token *input, int block);
-
-// execve.c
-char	**get_cmd_args(t_token *input, char *command_path);
-int	env_size(t_env *env);
-char	**env_to_array(t_env *env, int size, char *copy);
-int	execve_cmd(t_data *data, t_token *input, int block);
-
-// strjoin_heredoc.c
-char	*ft_strjoin_heredoc(char *s1, char *s2);
 
 // split_paths.c
 char	**split_paths(char const *s, char c);
@@ -170,13 +167,17 @@ char	*ft_getenv(t_env *env, char *var);
 int	ft_setenv(t_env **env, char *var, char *value);
 
 // utils_files.c
-void	check_heredoc(t_data *data, t_token *input, int block);
+int	check_heredoc(t_data *data, t_token *input, int block);
 int	check_infile(t_data *data, t_token *input, int block);
 int	check_outfile(t_data *data, t_token *input, int block);
 
 // utils_free.c
 void	free_array(char **env_array);
 void	free_cmd_block(t_data *data);
+void	free_quit(t_data *data);
+
+// utils_heredoc.c
+char	*ft_strjoin_heredoc(char *s1, char *s2);
 
 // utils_init.c
 void	fill_env(t_data *data, char **envp);
@@ -193,6 +194,7 @@ int	create_pipe(t_data *data);
 // utils_subshell.c
 int	check_alone(int (*func)(t_data *, t_token *, int), t_data *data,t_token *input, int block);
 void	close_all_pipes(t_data *data);
+void	ignore_sig(void);
 void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,t_token *input, int block);
 
 // check_in_quotes.c
@@ -254,9 +256,10 @@ void	exit_program(t_data *data);
 void	redisplay_prompt(int sig);
 void	get_signal_prompt(void);
 void	get_signal_exec(void);
-void	ignore_sig(void);
+void	get_signal_heredoc(void);
 
 // signal2.c
+void	handle_signals_heredoc(int signal);
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
 void	handle_signals(int signal);

@@ -45,3 +45,10 @@ void	get_signal_exec(void)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
 }
+
+void	get_signal_heredoc(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_signals_heredoc);
+}
