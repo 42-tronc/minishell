@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:18:45 by aascedu           #+#    #+#             */
-/*   Updated: 2023/06/29 14:19:43 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/06/30 09:37:45 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	handle_signals(int signal)
 
 void	handle_signals_heredoc(int signal)
 {
-		(void)signal;
-		printf("\n");
-		g_ret_value = 130;
-		close(0);
+	(void)signal;
+	printf("\n");
+	g_ret_value = 130;
+	close(0);
 }
