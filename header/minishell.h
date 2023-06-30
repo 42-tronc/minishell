@@ -256,12 +256,13 @@ void	exit_program(t_data *data);
 void	redisplay_prompt(int sig);
 void	get_signal_prompt(void);
 void	get_signal_exec(void);
+void	get_signal_heredoc(void);
 
 // signal2.c
+void	handle_signals_heredoc(int signal);
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
 void	handle_signals(int signal);
-void	get_signal_heredoc(void);
 
 // syntax_error.c
 int	similar_type(t_token *temp);
