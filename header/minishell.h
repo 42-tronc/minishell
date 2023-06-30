@@ -167,7 +167,7 @@ char	*ft_getenv(t_env *env, char *var);
 int	ft_setenv(t_env **env, char *var, char *value);
 
 // utils_files.c
-void	check_heredoc(t_data *data, t_token *input, int block);
+int	check_heredoc(t_data *data, t_token *input, int block);
 int	check_infile(t_data *data, t_token *input, int block);
 int	check_outfile(t_data *data, t_token *input, int block);
 
@@ -261,6 +261,7 @@ void	get_signal_exec(void);
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
 void	handle_signals(int signal);
+void	get_signal_heredoc(void);
 
 // syntax_error.c
 int	similar_type(t_token *temp);

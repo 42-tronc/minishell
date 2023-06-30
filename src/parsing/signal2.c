@@ -40,3 +40,11 @@ void	handle_signals(int signal)
 		printf("Quit (core dumped)\n");
 	}
 }
+
+void	handle_signals_heredoc(int signal)
+{
+		(void)signal;
+		printf("\n");
+		g_ret_value = 130;
+		close(0);
+}

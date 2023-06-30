@@ -41,15 +41,19 @@ static int	is_last_input(t_token *input, int block)
  * @param input token starting where heredoc is
  * @param block which command block to check
  */
-static void	open_heredoc(t_data *data, t_token *input, int block)
+static int	open_heredoc(t_data *data, t_token *input, int block)
 {
 	char	*line;
 	int		is_last;
 
+	ignore_sig();
 	is_last = is_last_input(input, block);
 	while (1)
 	{
+		get_signal_heredoc();
 		line = readline("> ");
+		if (g_ret_value == 130)
+			return (EXIT_FAILURE);
 		if (!line)
 		{
 			printf("warning: here-document delimited by EOF (wanted `%s')\n",
@@ -62,6 +66,7 @@ static void	open_heredoc(t_data *data, t_token *input, int block)
 			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(\
 				data->cmd_block[block]->heredoc, line);
 	}
+	return (0);
 }
 
 /**
@@ -71,15 +76,16 @@ static void	open_heredoc(t_data *data, t_token *input, int block)
  * @param input token from the very start
  * @param block which command block to check
  */
-void	check_heredoc(t_data *data, t_token *input, int block)
+int	check_heredoc(t_data *data, t_token *input, int block)
 {
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, LIMITER) == 0)
-			open_heredoc(data, input, block);
+			if (open_heredoc(data, input, block))
+				return (1);
 		input = input->next;
 	}
-	return ;
+	return (0);
 }
 
 int	check_infile(t_data *data, t_token *input, int block)
