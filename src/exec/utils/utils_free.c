@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:43:01 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 08:02:43 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/30 09:27:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,14 @@ void	free_cmd_block(t_data *data)
 		i++;
 	}
 	free(data->cmd_block);
+}
+
+void	free_quit(t_data *data)
+{
+	free_token(data->tokens);
+	free_cmd_block(data);
+	free(data->p);
+	free_list(data->env);
+	free(data);
+	exit(EXIT_FAILURE);
 }
