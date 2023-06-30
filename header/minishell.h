@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 09:25:36 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/30 09:31:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_parsing	t_parsing;
 typedef struct s_token		t_token;
 
 typedef enum e_exit_code {
-	E_MALLOC = 1,
-	E_DUP2 = 2,
-	E_PIPE = 3,
-	E_FORK = 4,
+	E_MALLOC = 0,
+	E_DUP2 = 1,
+	E_PIPE = 2,
+	E_FORK = 3,
 }	t_exit_code;
 
 typedef struct s_env
