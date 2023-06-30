@@ -6,14 +6,12 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 09:31:18 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/30 09:43:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-extern int	g_ret_value;
 
 # include "libft.h"
 # include <signal.h>
@@ -27,6 +25,7 @@ extern int	g_ret_value;
 # include <readline/readline.h>
 # include <readline/history.h>
 
+extern int					g_ret_value;
 typedef struct s_data		t_data;
 typedef struct s_parsing	t_parsing;
 typedef struct s_token		t_token;
@@ -86,7 +85,7 @@ struct s_token {
 	int		pipe_block;
 	int		in_quote;
 	int		from_expand;
-	t_token **head_ref;
+	t_token	**head_ref;
 	t_token	*prev;
 	t_token	*next;
 };
@@ -123,179 +122,182 @@ struct s_token {
 
 //	===== @functions =====
 // cd.c
-int	ft_cd(t_data *data, t_token *input, int block);
+int			ft_cd(t_data *data, t_token *input, int block);
 
 // echo.c
-int	ft_echo(t_data *data, t_token *input, int block);
+int			ft_echo(t_data *data, t_token *input, int block);
 
 // env.c
-int	print_env(t_data *data, t_token *input, int block);
+int			print_env(t_data *data, t_token *input, int block);
 
 // execve.c
-char	**get_cmd_args(t_token *input, char *command_path);
-int	env_size(t_env *env);
-char	**env_to_array(t_env *env, int size, char *copy);
-int	execve_cmd(t_data *data, t_token *input, int block);
+char		**get_cmd_args(t_token *input, char *command_path);
+int			env_size(t_env *env);
+char		**env_to_array(t_env *env, int size, char *copy);
+int			execve_cmd(t_data *data, t_token *input, int block);
 
 // exit.c
-long	long	ft_atoll(const char *str);
-int	ft_exit(t_data *data, t_token *input, int block);
+long long	ft_atoll(const char *str);
+int			ft_exit(t_data *data, t_token *input, int block);
 
 // export.c
-int	add_env_entry(t_data *data, t_token *input, int block);
-int	ft_export(t_data *data, t_token *input, int block);
+int			add_env_entry(t_data *data, t_token *input, int block);
+int			ft_export(t_data *data, t_token *input, int block);
 
 // pwd.c
-int	ft_pwd(t_data *data, t_token *input, int block);
+int			ft_pwd(t_data *data, t_token *input, int block);
 
 // unset.c
-void	free_env_node(t_env *node);
-int	ft_unset(t_env **env, t_token *input, int block);
+void		free_env_node(t_env *node);
+int			ft_unset(t_env **env, t_token *input, int block);
 
 // split_paths.c
-char	**split_paths(char const *s, char c);
+char		**split_paths(char const *s, char c);
 
 // utils.c
-void	exit_error(int code, char *source);
-int	count_arguments(t_token *input);
-void	swap_var(char **current, char **next);
+void		exit_error(int code, char *source);
+int			count_arguments(t_token *input);
+void		swap_var(char **current, char **next);
 
 // utils_env.c
-t_env	*ft_env_new(char *var, char *value);
-void	ft_env_add_back(t_env **lst, t_env *new);
-char	*ft_getenv(t_env *env, char *var);
-int	ft_setenv(t_env **env, char *var, char *value);
+t_env		*ft_env_new(char *var, char *value);
+void		ft_env_add_back(t_env **lst, t_env *new);
+char		*ft_getenv(t_env *env, char *var);
+int			ft_setenv(t_env **env, char *var, char *value);
 
 // utils_files.c
-int	check_heredoc(t_data *data, t_token *input, int block);
-int	check_infile(t_data *data, t_token *input, int block);
-int	check_outfile(t_data *data, t_token *input, int block);
+int			check_heredoc(t_data *data, t_token *input, int block);
+int			check_infile(t_data *data, t_token *input, int block);
+int			check_outfile(t_data *data, t_token *input, int block);
 
 // utils_free.c
-void	free_array(char **env_array);
-void	free_cmd_block(t_data *data);
-void	free_quit(t_data *data);
+void		free_array(char **env_array);
+void		free_cmd_block(t_data *data);
+void		free_quit(t_data *data);
 
 // utils_heredoc.c
-char	*ft_strjoin_heredoc(char *s1, char *s2);
+char		*ft_strjoin_heredoc(char *s1, char *s2);
 
 // utils_init.c
-void	fill_env(t_data *data, char **envp);
-int	init_data(t_data *data);
+void		fill_env(t_data *data, char **envp);
+int			init_data(t_data *data);
 
 // utils_path.c
-char	*get_validpath(t_data *data, t_token *input);
+char		*get_validpath(t_data *data, t_token *input);
 
 // utils_redirections.c
-void	check_input(t_data *data, int block);
-void	check_output(t_data *data, int block);
-int	create_pipe(t_data *data);
+void		check_input(t_data *data, int block);
+void		check_output(t_data *data, int block);
+int			create_pipe(t_data *data);
 
 // utils_subshell.c
-int	check_alone(int (*func)(t_data *, t_token *, int), t_data *data,t_token *input, int block);
-void	close_all_pipes(t_data *data);
-void	ignore_sig(void);
-void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,t_token *input, int block);
+int			check_alone(int (*func)(t_data *, t_token *, int), \
+t_data *data, t_token *input, int block);
+void		close_all_pipes(t_data *data);
+void		ignore_sig(void);
+void		create_subshell(int (*func)(t_data *, t_token *, int), \
+t_data *data, t_token *input, int block);
 
 // check_in_quotes.c
-int	token_in_quotes(char *str);
-void	check_in_quotes(t_token **tokens, t_data *data);
+int			token_in_quotes(char *str);
+void		check_in_quotes(t_token **tokens, t_data *data);
 
 // cut_expand.c
-void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d);
-int	copy_propre_quote(t_token *temp);
-void	free_cutting_expand(char **array, t_token *temp);
-int	cutting_expand(t_data *data);
+void		add_token_in_middle(t_token	*prev, t_token *next, \
+char **a, t_data *d);
+int			copy_propre_quote(t_token *temp);
+void		free_cutting_expand(char **array, t_token *temp);
+int			cutting_expand(t_data *data);
 
 // dollar.c
-char	*get_var_name(char *str);
-char	*get_before_dollar(char *str, t_data *p, int i, int size);
-void	free_expand(t_parsing *p, int to_free);
-int	replace_var(t_token *temp, t_data *p, int to_free);
-int	expand_tokens(t_token **tokens, t_data *data);
+char		*get_var_name(char *str);
+char		*get_before_dollar(char *str, t_data *p, int i, int size);
+void		free_expand(t_parsing *p, int to_free);
+int			replace_var(t_token *temp, t_data *p, int to_free);
+int			expand_tokens(t_token **tokens, t_data *data);
 
 // dollar2.c
-int	next_char(char c);
-int	processed_line(char *str, t_parsing *p);
-int	str_cpy_dollar(char *dst, char *src, int index);
-char	*ft_strjoin_dollar(char const *s1, char const *s2);
+int			next_char(char c);
+int			processed_line(char *str, t_parsing *p);
+int			str_cpy_dollar(char *dst, char *src, int index);
+char		*ft_strjoin_dollar(char const *s1, char const *s2);
 
 // envp.c
-void	free_list(t_env *lst);
+void		free_list(t_env *lst);
 
 // envp_lst.c
-void	ft_envadd_back(t_env **env, t_env *new);
-t_env	*ft_envnew(char *var, char *value);
+void		ft_envadd_back(t_env **env, t_env *new);
+t_env		*ft_envnew(char *var, char *value);
 
 // identification.c
-int	is_first_cmd(t_token *head);
-void	choose_token_id(t_token *temp);
-void	id_tokens(t_token **tokens, t_token *temp);
+int			is_first_cmd(t_token *head);
+void		choose_token_id(t_token *temp);
+void		id_tokens(t_token **tokens, t_token *temp);
 
 // parsing.c
-int	even_quote(t_parsing *p, char *str);
-int	triple_symbol(char *str, int i);
-int	right_symbols(t_parsing *p, char *str);
-int	getting_line(t_data *data);
+int			even_quote(t_parsing *p, char *str);
+int			triple_symbol(char *str, int i);
+int			right_symbols(t_parsing *p, char *str);
+int			getting_line(t_data *data);
 
 // prepare.c
-int	prepare_token(t_data *data);
+int			prepare_token(t_data *data);
 
 // replace_list.c
-int	need_to_new(t_token *tokens);
-int	ft_tokensize(t_token *temp);
-int	replace_list(t_data *data, t_token *save, int lst_size);
+int			need_to_new(t_token *tokens);
+int			ft_tokensize(t_token *temp);
+int			replace_list(t_data *data, t_token *save, int lst_size);
 
 // rm_quotes.c
-int	get_size(t_parsing *p, char *str);
-void	copy_without_quotes(char *dst, char *src, t_parsing *p);
-int	remove_quotes(t_token **tokens, t_data *data);
+int			get_size(t_parsing *p, char *str);
+void		copy_without_quotes(char *dst, char *src, t_parsing *p);
+int			remove_quotes(t_token **tokens, t_data *data);
 
 // signal.c
-void	exit_program(t_data *data);
-void	redisplay_prompt(int sig);
-void	get_signal_prompt(void);
-void	get_signal_exec(void);
-void	get_signal_heredoc(void);
+void		exit_program(t_data *data);
+void		redisplay_prompt(int sig);
+void		get_signal_prompt(void);
+void		get_signal_exec(void);
+void		get_signal_heredoc(void);
 
 // signal2.c
-void	handle_signals_heredoc(int signal);
-void	handle_sigint(int signal);
-void	handle_sigquit(int signal);
-void	handle_signals(int signal);
+void		handle_signals_heredoc(int signal);
+void		handle_sigint(int signal);
+void		handle_sigquit(int signal);
+void		handle_signals(int signal);
 
 // syntax_error.c
-int	similar_type(t_token *temp);
-int	check_last_token(t_token *temp);
-int	syntax_error(t_data *data);
+int			similar_type(t_token *temp);
+int			check_last_token(t_token *temp);
+int			syntax_error(t_data *data);
 
 // tilde.c
-int	is_tilde(t_parsing *p, char *str);
-int	replace_tilde(t_token *temp, t_data *data);
-int	expand_tilde(t_token **tokens, t_data *data);
+int			is_tilde(t_parsing *p, char *str);
+int			replace_tilde(t_token *temp, t_data *data);
+int			expand_tilde(t_token **tokens, t_data *data);
 
 // tokens.c
-int	get_end_token(t_parsing *p, char *str);
-char	*copy_str_from_to(int from, int to, char *str);
-int	cutting_line(t_token **temp, t_parsing *p, char *str);
+int			get_end_token(t_parsing *p, char *str);
+char		*copy_str_from_to(int from, int to, char *str);
+int			cutting_line(t_token **temp, t_parsing *p, char *str);
 
 // tokens2.c
-int	is_symbol(int c);
-int	ft_char2(int c);
-void	p_quote(t_parsing *p, char c);
+int			is_symbol(int c);
+int			ft_char2(int c);
+void		p_quote(t_parsing *p, char c);
 
 // tokens_lst.c
-t_token	**find_head_ref(t_token *temp);
-void	delete_token(t_token **head_ref, t_token *del);
-int	ft_tokenadd_back(t_token **lst, t_token *new);
-t_token	*ft_tokennew(void *content);
-void	free_token(t_token *tokens);
+t_token		**find_head_ref(t_token *temp);
+void		delete_token(t_token **head_ref, t_token *del);
+int			ft_tokenadd_back(t_token **lst, t_token *new);
+t_token		*ft_tokennew(void *content);
+void		free_token(t_token *tokens);
 
 // exec_char.c
-char	**get_array_cmd(t_token *temp);
+char		**get_array_cmd(t_token *temp);
 
 // minishell.c
-void	exec_code(t_data *data);
-void	exec_dispatch(t_data *data, t_token *input);
+void		exec_code(t_data *data);
+void		exec_dispatch(t_data *data, t_token *input);
 
 #endif
