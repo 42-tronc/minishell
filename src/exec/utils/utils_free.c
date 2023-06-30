@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:43:01 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 09:27:36 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/30 13:04:04 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,16 @@ void	free_quit(t_data *data)
 	free_list(data->env);
 	free(data);
 	exit(EXIT_FAILURE);
+}
+
+void	close_parent_fd(t_data *data, int block)
+{
+	if (block > 0 && data->cmd_block[block - 1]->pipe_fd[0] > 0)
+		close(data->cmd_block[block - 1]->pipe_fd[0]);
+	if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_ct - 1)
+		close(data->cmd_block[block]->pipe_fd[1]);
+	if (data->cmd_block[block]->in_fd > 0)
+		close(data->cmd_block[block]->in_fd);
+	if (data->cmd_block[block]->out_fd > 0)
+		close(data->cmd_block[block]->out_fd);
 }

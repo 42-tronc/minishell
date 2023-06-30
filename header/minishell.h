@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 09:43:58 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/30 13:04:27 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int			check_outfile(t_data *data, t_token *input, int block);
 void		free_array(char **env_array);
 void		free_cmd_block(t_data *data);
 void		free_quit(t_data *data);
+void		close_parent_fd(t_data *data, int block);
 
 // utils_heredoc.c
 char		*ft_strjoin_heredoc(char *s1, char *s2);

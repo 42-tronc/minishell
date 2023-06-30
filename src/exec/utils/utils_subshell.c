@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 07:54:16 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:54:48 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/30 13:04:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,6 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 	else
 	{
 		data->cmd_block[block]->pid = pid;
-		if (block > 0 && data->cmd_block[block - 1]->pipe_fd[0] > 0)
-			close(data->cmd_block[block - 1]->pipe_fd[0]);
-		if (data->cmd_block[block]->pipe_fd[1] > 0 && block < data->cmd_ct - 1)
-			close(data->cmd_block[block]->pipe_fd[1]);
+		close_parent_fd(data, block);
 	}
 }
