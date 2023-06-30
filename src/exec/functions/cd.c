@@ -78,6 +78,6 @@ int	ft_cd(t_data *data, t_token *input, int block)
 		return (EXIT_FAILURE);
 	}
 	else
-		ft_setenv(&(data->env), "OLDPWD", previous);
+		ft_setenv(data, &(data->env), "OLDPWD", previous);
 	return (EXIT_SUCCESS);
 }

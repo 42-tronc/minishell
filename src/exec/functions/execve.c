@@ -21,7 +21,7 @@
  * @param command_path path of the command
  * @return char** array with the command and its arguments
  */
-char	**get_cmd_args(t_token *input, char *command_path)
+char	**get_cmd_args(t_data *data, t_token *input, char *command_path)
 {
 	size_t	i;
 	size_t	size;
@@ -32,7 +32,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	size = count_arguments(input) + 1;
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
-		exit_error(E_MALLOC, "get_cmd_args");
+		exit_error(data, E_MALLOC, "get_cmd_args");
 	i = 1;
 	input = input->next;
 	array[0] = command_path;
@@ -42,7 +42,7 @@ char	**get_cmd_args(t_token *input, char *command_path)
 		{
 			array[i] = ft_strdup(input->token);
 			if (!array[i])
-				exit_error(E_MALLOC, "get_cmd_args");
+				exit_error(data, E_MALLOC, "get_cmd_args");
 			i++;
 		}
 		input = input->next;
@@ -63,14 +63,14 @@ int	env_size(t_env *env)
 	return (size);
 }
 
-char	**env_to_array(t_env *env, int size, char *copy)
+char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
 {
 	int		i;
 	char	**array;
 
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
-		exit_error(E_MALLOC, "env_to_array 1");
+		exit_error(data, E_MALLOC, "env_to_array 1");
 	i = 0;
 	while (env)
 	{
@@ -78,13 +78,13 @@ char	**env_to_array(t_env *env, int size, char *copy)
 		if (!copy && env->var)
 			free_array(array);
 		if (!copy && env->var)
-			exit_error(E_MALLOC, "env_to_array 2");
+			exit_error(data, E_MALLOC, "env_to_array 2");
 		array[i] = ft_strjoin(copy, env->value);
 		free(copy);
 		if (!array[i] && env->value)
 			free_array(array);
 		if (!array[i] && env->value)
-			exit_error(E_MALLOC, "env_to_array 3");
+			exit_error(data, E_MALLOC, "env_to_array 3");
 		env = env->next;
 		i++;
 	}
@@ -126,12 +126,12 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 
 	(void)block;
 	status = 0;
-	env_array = env_to_array(data->env, env_size(data->env), NULL);
+	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
 	command_path = get_validpath(data, input);
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{
-		command_args = get_cmd_args(input, command_path);
+		command_args = get_cmd_args(data, input, command_path);
 		if (!command_args)
 			return (EXIT_FAILURE);
 		execve(command_path, command_args, env_array);

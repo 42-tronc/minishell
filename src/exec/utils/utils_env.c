@@ -21,13 +21,13 @@
  * @note The returned pointer should be freed when no longer needed.
  * @note If the allocation fails, the function exits with an error.
  */
-t_env	*ft_env_new(char *var, char *value)
+t_env	*ft_env_new(t_data *data, char *var, char *value)
 {
 	t_env	*dst;
 
 	dst = malloc(sizeof(t_env));
 	if (!dst)
-		exit_error(E_MALLOC, "ft_env_new");
+		exit_error(data, E_MALLOC, "ft_env_new");
 	dst->var = NULL;
 	dst->value = NULL;
 	if (var)
@@ -39,7 +39,7 @@ t_env	*ft_env_new(char *var, char *value)
 		if (!dst->value)
 			free(dst->var);
 		free(dst);
-		exit_error(E_MALLOC, "ft_env_new");
+		exit_error(data, E_MALLOC, "ft_env_new");
 	}
 	dst->next = NULL;
 	return (dst);
@@ -76,13 +76,13 @@ char	*ft_getenv(t_env *env, char *var)
 	return (NULL);
 }
 
-static int	ft_addenv(t_env **env, char *var, char *value)
+static int	ft_addenv(t_data *data, t_env **env, char *var, char *value)
 {
 	t_env	*new_entry;
 
 	if (!var)
 		return (1);
-	new_entry = ft_env_new(var, value);
+	new_entry = ft_env_new(data, var, value);
 	if (!new_entry)
 		return (2);
 	if (*env)
@@ -92,7 +92,7 @@ static int	ft_addenv(t_env **env, char *var, char *value)
 	return (0);
 }
 
-int	ft_setenv(t_env **env, char *var, char *value)
+int	ft_setenv(t_data *data, t_env **env, char *var, char *value)
 {
 	t_env	*current;
 
@@ -113,5 +113,5 @@ int	ft_setenv(t_env **env, char *var, char *value)
 		}
 		current = current->next;
 	}
-	return (ft_addenv(env, var, value));
+	return (ft_addenv(data, env, var, value));
 }

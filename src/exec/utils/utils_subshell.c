@@ -68,7 +68,7 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 	status = 0;
 	pid = fork();
 	if (pid == -1)
-		exit_error(E_FORK, "create_subshell");
+		exit_error(data, E_FORK, "create_subshell");
 	else if (pid == 0)
 	{
 		get_signal_exec();
