@@ -18,25 +18,25 @@ static void	fill_default_env(t_data *data)
 	char	*cwd;
 
 	if (!ft_getenv(data->env, "SHLVL"))
-		ft_setenv(&(data->env), "SHLVL", "1");
+		ft_setenv(data, &(data->env), "SHLVL", "1");
 	else if (ft_atoi(ft_getenv(data->env, "SHLVL")) >= 999)
 	{
 		write(2, "bash: warning: shell level too high, resetting to 1\n", 52);
-		ft_setenv(&(data->env), "SHLVL", "1");
+		ft_setenv(data, &(data->env), "SHLVL", "1");
 	}
 	else
 	{
 		shlvl = ft_itoa(ft_atoi(ft_getenv(data->env, "SHLVL")) + 1);
-		ft_setenv(&(data->env), "SHLVL", shlvl);
+		ft_setenv(data, &(data->env), "SHLVL", shlvl);
 		free(shlvl);
 	}
 	if (!ft_getenv(data->env, "PWD"))
 	{
 		cwd = getcwd(NULL, 0);
-		ft_setenv(&(data->env), "PWD", cwd);
+		ft_setenv(data, &(data->env), "PWD", cwd);
 		free(cwd);
 	}
-	ft_setenv(&(data->env), "OLDPWD", NULL);
+	ft_setenv(data, &(data->env), "OLDPWD", NULL);
 }
 
 /**
@@ -62,9 +62,9 @@ void	fill_env(t_data *data, char **envp)
 			if (envp[i][j] == '=')
 			{
 				envp[i][j] = '\0';
-				current = ft_env_new(envp[i], envp[i] + j + 1);
+				current = ft_env_new(data, envp[i], envp[i] + j + 1);
 				if (!current)
-					exit_error(E_MALLOC, "fill_env");
+					exit_error(data, E_MALLOC, "fill_env");
 				ft_env_add_back(&(data->env), current);
 				break ;
 			}

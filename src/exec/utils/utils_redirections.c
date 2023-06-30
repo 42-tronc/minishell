@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-static void	handle_heredoc(t_cmd_block *cmd_block)
+static void	handle_heredoc(t_data *data, t_cmd_block *cmd_block)
 {
 	int	tmp_pipe[2];
 
 	if (pipe(tmp_pipe) == -1)
-		exit_error(E_PIPE, "handle_heredoc");
+		exit_error(data, E_PIPE, "handle_heredoc");
 	if (dup2(tmp_pipe[STDIN_FILENO], STDIN_FILENO) == -1)
-		exit_error(E_DUP2, "handle_heredoc");
+		exit_error(data, E_DUP2, "handle_heredoc");
 	write(tmp_pipe[STDOUT_FILENO], cmd_block->heredoc,
 		ft_strlen(cmd_block->heredoc));
 	free(cmd_block->heredoc);
@@ -42,17 +42,17 @@ void	check_input(t_data *data, int block)
 	if (data->cmd_block[block]->in_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
-			exit_error(E_DUP2, "check_input");
+			exit_error(data, E_DUP2, "check_input");
 		close(data->cmd_block[block]->in_fd);
 	}
 	else if (data->cmd_block[block]->heredoc)
-		handle_heredoc(data->cmd_block[block]);
+		handle_heredoc(data, data->cmd_block[block]);
 	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
 	{
 		block -= 1;
 		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], \
 			STDIN_FILENO) == -1)
-			exit_error(E_DUP2, "check_input");
+			exit_error(data, E_DUP2, "check_input");
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
 }
@@ -72,14 +72,14 @@ void	check_output(t_data *data, int block)
 	if (data->cmd_block[block]->out_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
+			exit_error(data, E_DUP2, "check_output");
 		close(data->cmd_block[block]->out_fd);
 	}
 	else if (block < data->cmd_ct - 1)
 	{
 		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
 				STDOUT_FILENO) == -1)
-			exit_error(E_DUP2, "check_output");
+			exit_error(data, E_DUP2, "check_output");
 		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
 }
@@ -94,7 +94,7 @@ int	create_pipe(t_data *data)
 	while (i < data->cmd_ct - 1)
 	{
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
-			exit_error(E_PIPE, "create_pipe");
+			exit_error(data, E_PIPE, "create_pipe");
 		i++;
 	}
 	return (EXIT_SUCCESS);

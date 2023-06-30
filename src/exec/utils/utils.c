@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	exit_error(int code, char *source)
+void	exit_error(t_data *data, int code, char *source)
 {
 	char	*error[4];
 
@@ -27,6 +27,7 @@ void	exit_error(int code, char *source)
 		write(2, " in \e[1m", 8);
 		write(2, source, ft_strlen(source));
 	}
+	free_quit(data);
 	exit(EXIT_FAILURE);
 }
 

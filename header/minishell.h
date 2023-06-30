@@ -131,9 +131,9 @@ int			ft_echo(t_data *data, t_token *input, int block);
 int			print_env(t_data *data, t_token *input, int block);
 
 // execve.c
-char		**get_cmd_args(t_token *input, char *command_path);
+char		**get_cmd_args(t_data *data, t_token *input, char *command_path);
 int			env_size(t_env *env);
-char		**env_to_array(t_env *env, int size, char *copy);
+char		**env_to_array(t_data *data, t_env *env, int size, char *copy);
 int			execve_cmd(t_data *data, t_token *input, int block);
 
 // exit.c
@@ -155,15 +155,15 @@ int			ft_unset(t_env **env, t_token *input, int block);
 char		**split_paths(char const *s, char c);
 
 // utils.c
-void		exit_error(int code, char *source);
+void		exit_error(t_data *data, int code, char *source);
 int			count_arguments(t_token *input);
 void		swap_var(char **current, char **next);
 
 // utils_env.c
-t_env		*ft_env_new(char *var, char *value);
+t_env		*ft_env_new(t_data *data, char *var, char *value);
 void		ft_env_add_back(t_env **lst, t_env *new);
 char		*ft_getenv(t_env *env, char *var);
-int			ft_setenv(t_env **env, char *var, char *value);
+int			ft_setenv(t_data *data, t_env **env, char *var, char *value);
 
 // utils_files.c
 int			check_heredoc(t_data *data, t_token *input, int block);
