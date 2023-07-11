@@ -26,6 +26,7 @@ void	exit_error(t_data *data, int code, char *source)
 	{
 		write(2, " in \e[1m", 8);
 		write(2, source, ft_strlen(source));
+		write(2, "\n", 1);
 	}
 	free_quit(data);
 	exit(EXIT_FAILURE);
