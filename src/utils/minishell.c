@@ -114,9 +114,9 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 
 	(void)argv;
-	if (argc != 1)
-		return ((void)printf("Don't put args !\n"), 1);
 	data = ft_calloc(1, sizeof(t_data));
+	if (argc != 1 || !data)
+		return (1);
 	fill_env(data, envp);
 	while (1)
 	{
