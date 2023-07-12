@@ -87,8 +87,6 @@ int	cutting_expand(t_data *data)
 			;
 		else if (temp->from_expand && !temp->in_quote)
 		{
-			if (remove_quotes(&data->tokens, data))
-				return (1);
 			array = ft_split(temp->token, ' ');
 			if (!array)
 				return (1);

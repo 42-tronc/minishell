@@ -66,17 +66,20 @@ int	remove_quotes(t_token **tokens, t_data *data)
 	temp = *tokens;
 	while (temp)
 	{
-		new = malloc(sizeof(char) * (get_size(data->p, temp->token) + 1));
-		if (!new)
-			return (1);
-		copy_without_quotes(new, temp->token, data->p);
-		if (ft_strcmp(temp->token, new))
-			temp->in_quote = 1;
-		free(temp->token);
-		temp->token = ft_strdup(new);
-		if (!temp->token)
-			return (free(new), 1);
-		free(new);
+		if (!temp->from_expand)
+		{
+			new = malloc(sizeof(char) * (get_size(data->p, temp->token) + 1));
+			if (!new)
+				return (1);
+			copy_without_quotes(new, temp->token, data->p);
+			if (ft_strcmp(temp->token, new))
+				temp->in_quote = 1;
+			free(temp->token);
+			temp->token = ft_strdup(new);
+			if (!temp->token)
+				return (free(new), 1);
+			free(new);
+		}
 		temp = temp->next;
 	}
 	return (0);

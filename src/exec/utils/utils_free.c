@@ -47,7 +47,6 @@ void	free_quit(t_data *data)
 	free(data->p);
 	free_list(data->env);
 	free(data);
-	exit(EXIT_FAILURE);
 }
 
 void	close_parent_fd(t_data *data, int block)
