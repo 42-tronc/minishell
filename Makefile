@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/06/29 08:55:35 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/07/15 17:32:10 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,14 +97,24 @@ DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := check_in_quotes.c  tokens.c tokens2.c cut_expand.c parsing.c envp.c envp_lst.c replace_list.c tokens_lst.c dollar.c dollar2.c identification.c prepare.c tilde.c rm_quotes.c syntax_error.c signal.c signal2.c
 
 
+# Add a variable to store the path of custom_malloc.c
+CUSTOM_MALLOC_SRC := custom_malloc.c
+OBJ += $(OBJ_DIR)custom_malloc.o
+# make && valgrind --soname-synonyms=somalloc=custom_malloc.so --suppressions=valgrind_ignore_readline_reachable.txt ./minishell
+
 # -------------- RECIPES --------------
 all: rsc
 	make $(NAME)
+	gcc -shared -fPIC -o custom_malloc.so custom_malloc.c
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo -e "\n$(BOLD)Hello $(FG_ORANGE)$(USER)$(RESET)"
 	${CC} ${CFLAGS} -o $(NAME) $(OBJ) $(LIBFT_NAME) -lreadline
 	@echo -e "$(BG_LIGHT_GREEN)Compiled:\t$(RESET) $(FG_WHITE)$(UNDERLINE)$(NAME)$(RESET) has been created."
+
+# Add a new target to compile custom_malloc.c
+$(OBJ_DIR)custom_malloc.o: $(CUSTOM_MALLOC_SRC) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_DIR)%.o : $(DIR_UTILS)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
