@@ -46,6 +46,7 @@ typedef struct s_env
 
 typedef struct s_cmd_block
 {
+	int		is_last;
 	int		in_fd;
 	int		out_fd;
 	char	*heredoc;
@@ -166,6 +167,7 @@ char		*ft_getenv(t_env *env, char *var);
 int			ft_setenv(t_data *data, t_env **env, char *var, char *value);
 
 // utils_files.c
+int			save_here_doc(t_data *data, t_token *input, char *line, int block);
 int			check_heredoc(t_data *data, t_token *input, int block);
 int			check_infile(t_data *data, t_token *input, int block);
 int			check_outfile(t_data *data, t_token *input, int block);

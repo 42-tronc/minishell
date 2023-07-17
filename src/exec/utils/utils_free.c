@@ -34,6 +34,7 @@ void	free_cmd_block(t_data *data)
 	i = 0;
 	while (i < data->cmd_ct)
 	{
+		free(data->cmd_block[i]->heredoc);
 		free(data->cmd_block[i]);
 		i++;
 	}
