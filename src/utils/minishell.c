@@ -14,6 +14,25 @@
 
 int	g_ret_value;
 
+static void	close_pipes(t_data *data, int block)
+{
+	if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
+	{
+		close(data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO]);
+		data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] = -3;
+	}
+	if (block < data->cmd_ct - 1
+		&& data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
+	{
+		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
+		data->cmd_block[block]->pipe_fd[STDOUT_FILENO] = -3;
+	}
+	if (data->cmd_block[block]->out_fd > 0)
+		close(data->cmd_block[block]->out_fd);
+	if (data->cmd_block[block]->in_fd > 0)
+		close(data->cmd_block[block]->in_fd);
+}
+
 static void	check_command(t_data *data, t_token *input, int block)
 {
 	while (input && input->pipe_block == block)
@@ -39,6 +58,7 @@ static void	check_command(t_data *data, t_token *input, int block)
 		}
 		input = input->next;
 	}
+	close_pipes(data, block);
 }
 
 void	exec_code(t_data *data)
@@ -63,21 +83,6 @@ void	exec_code(t_data *data)
 	}
 	if (!WIFSIGNALED(status) && status != -1)
 		g_ret_value = statuscode;
-}
-
-static void	close_pipes(t_data *data, int block)
-{
-	if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
-	{
-		close(data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO]);
-		data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] = -3;
-	}
-	if (block < data->cmd_ct - 1
-		&& data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
-	{
-		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
-		data->cmd_block[block]->pipe_fd[STDOUT_FILENO] = -3;
-	}
 }
 
 void	exec_dispatch(t_data *data, t_token *input)

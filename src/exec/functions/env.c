@@ -33,7 +33,7 @@ int	print_env(t_data *data, t_token *input, int block)
 	}
 	while (data->env)
 	{
-		if (data->env->value && ft_strlen(data->env->value) > 0)
+		if (data->env->value)
 			printf("%s=%s\n", data->env->var, data->env->value);
 		data->env = data->env->next;
 	}
