@@ -61,7 +61,7 @@ void	exec_code(t_data *data)
 	{
 		handle_signals(WTERMSIG(status));
 	}
-	if (status != -1)
+	if (!WIFSIGNALED(status) && status != -1)
 		g_ret_value = statuscode;
 }
 
@@ -89,7 +89,8 @@ void	exec_dispatch(t_data *data, t_token *input)
 	block = 0;
 	while (input && block < data->cmd_ct)
 	{
-		check_heredoc(data, input, block);
+		if (check_heredoc(data, input, block))
+			return ;
 		error = check_infile(data, input, block);
 		if (!error)
 			error = check_outfile(data, input, block);
@@ -98,10 +99,9 @@ void	exec_dispatch(t_data *data, t_token *input)
 		else
 			close_pipes(data, block);
 		if (block == data->cmd_ct - 1 && error)
-		{
 			g_ret_value = 1;
+		if (block == data->cmd_ct - 1 && error)
 			return ;
-		}
 		block++;
 		while (block > input->pipe_block && input->next)
 			input = input->next;

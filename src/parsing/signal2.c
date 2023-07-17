@@ -46,5 +46,4 @@ void	handle_signals_heredoc(int signal)
 	(void)signal;
 	printf("\n");
 	g_ret_value = 130;
-	close(0);
 }

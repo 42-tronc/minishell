@@ -52,7 +52,7 @@ void	ignore_sig(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-static void	_gain_two_lines(t_data *data, int block)
+static void	check_io(t_data *data, int block)
 {
 	check_input(data, block);
 	check_output(data, block);
@@ -74,7 +74,7 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 		get_signal_exec();
 		if (block < data->cmd_ct - 1 && data->cmd_block[block]->pipe_fd[0] > 0)
 			close(data->cmd_block[block]->pipe_fd[0]);
-		_gain_two_lines(data, block);
+		check_io(data, block);
 		status = func(data, input, block);
 		exit(status);
 	}

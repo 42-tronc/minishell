@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	print_tokens(t_token *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens)
+	{
+		printf("temp[%i]:%s\n", i, tokens->token);
+		i++;
+		tokens = tokens->next;
+	}
+}
+
 int	prepare_token(t_data *data)
 {
 	check_in_quotes(&data->tokens, data);

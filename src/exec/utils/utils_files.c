@@ -44,27 +44,17 @@ static int	is_last_input(t_token *input, int block)
 static int	open_heredoc(t_data *data, t_token *input, int block)
 {
 	char	*line;
-	int		is_last;
 
 	ignore_sig();
-	is_last = is_last_input(input, block);
+	data->cmd_block[block]->is_last = is_last_input(input, block);
 	while (1)
 	{
 		get_signal_heredoc();
 		line = readline("> ");
 		if (g_ret_value == 130)
-			return (EXIT_FAILURE);
-		if (!line)
-		{
-			printf("warning: here-document delimited by EOF (wanted `%s')\n",
-				input->token);
+			return (free(line), EXIT_FAILURE);
+		if (save_here_doc(data, input, line, block))
 			break ;
-		}
-		else if (ft_strcmp(line, input->token) == 0)
-			break ;
-		else if (is_last)
-			data->cmd_block[block]->heredoc = ft_strjoin_heredoc(\
-				data->cmd_block[block]->heredoc, line);
 	}
 	return (0);
 }

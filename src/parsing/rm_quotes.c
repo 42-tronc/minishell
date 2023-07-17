@@ -66,7 +66,7 @@ int	remove_quotes(t_token **tokens, t_data *data)
 	temp = *tokens;
 	while (temp)
 	{
-		if (!temp->from_expand)
+		if (temp->in_quote)
 		{
 			new = malloc(sizeof(char) * (get_size(data->p, temp->token) + 1));
 			if (!new)
