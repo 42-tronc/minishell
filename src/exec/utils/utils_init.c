@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 09:31:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/22 16:08:43 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	init_data(t_data *data)
 			return (E_MALLOC);
 		data->cmd_block[i]->in_fd = -2;
 		data->cmd_block[i]->out_fd = -2;
-		i++;
+		data->cmd_block[i++]->heredoc_here = 0;
 	}
 	return (EXIT_SUCCESS);
 }

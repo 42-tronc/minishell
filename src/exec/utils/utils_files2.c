@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:45 by aascedu           #+#    #+#             */
-/*   Updated: 2023/07/17 15:08:46 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/07/22 16:11:39 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	save_here_doc(t_data *data, t_token *input, char *line, int block)
 {
+	data->cmd_block[block]->heredoc_here = 1;
 	if (!line)
 	{
 		printf("warning: here-document delimited by EOF (wanted `%s')\n",
@@ -29,6 +30,9 @@ int	save_here_doc(t_data *data, t_token *input, char *line, int block)
 		data->cmd_block[block]->heredoc = ft_strjoin_heredoc(\
 			data->cmd_block[block]->heredoc, line);
 	else
+	{
 		free(line);
+		data->cmd_block[block]->heredoc_here = 0;
+	}
 	return (0);
 }

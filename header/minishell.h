@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 13:04:27 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/22 15:42:53 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_cmd_block
 	int		is_last;
 	int		in_fd;
 	int		out_fd;
+	int		heredoc_here;
 	char	*heredoc;
 	int		pipe_fd[2];
 	char	*cmd_path;
