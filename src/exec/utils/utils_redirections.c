@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:58:59 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:52:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/22 16:12:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	check_input(t_data *data, int block)
 			exit_error(data, E_DUP2, "check_input");
 		close(data->cmd_block[block]->in_fd);
 	}
-	else if (data->cmd_block[block]->heredoc)
+	else if (data->cmd_block[block]->heredoc_here)
 		handle_heredoc(data, data->cmd_block[block]);
 	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
 	{
