@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 09:27:27 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/24 07:46:24 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(1, sizeof(t_data));
 	if (argc != 1 || !data)
-		return (1);
+		return (free(data), 1);
 	fill_env(data, envp);
 	while (1)
 	{
