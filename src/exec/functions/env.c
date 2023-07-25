@@ -22,6 +22,8 @@
  */
 int	print_env(t_data *data, t_token *input, int block)
 {
+	t_env	*save;
+
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
@@ -31,11 +33,14 @@ int	print_env(t_data *data, t_token *input, int block)
 		}
 		input = input->next;
 	}
+	save = data->env;
 	while (data->env)
 	{
 		if (data->env->value)
 			printf("%s=%s\n", data->env->var, data->env->value);
 		data->env = data->env->next;
 	}
+	free_list(save);
+	free_quit(data);
 	return (0);
 }
