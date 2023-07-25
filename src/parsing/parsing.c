@@ -69,9 +69,8 @@ int	getting_line(t_data *data)
 {
 	char	*str;
 
-	// data->p = ft_calloc(1, sizeof(t_parsing));
-	data->p = NULL;
 	data->tokens = NULL;
+	data->p = ft_calloc(1, sizeof(t_parsing));
 	if (!data->p)
 	{
 		free_list(data->env);
