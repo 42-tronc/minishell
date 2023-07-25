@@ -140,5 +140,4 @@ int	main(int argc, char **argv, char **envp)
 			free_token(data->tokens);
 		free(data->p);
 	}
-	free_list(data->env);
 }
