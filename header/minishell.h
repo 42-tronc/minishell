@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/07/22 15:42:53 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:37:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void		fill_env(t_data *data, char **envp);
 int			init_data(t_data *data);
 
 // utils_path.c
-char		*get_validpath(t_data *data, t_token *input);
+char		*get_validpath(t_data *data, t_token *input, char **env_array);
 
 // utils_redirections.c
 void		check_input(t_data *data, int block);

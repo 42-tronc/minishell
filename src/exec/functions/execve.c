@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 16:13:15 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:38:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	(void)block;
 	status = 0;
 	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
-	command_path = get_validpath(data, input);
+	command_path = get_validpath(data, input, env_array);
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{

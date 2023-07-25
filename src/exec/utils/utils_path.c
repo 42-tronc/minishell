@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:31:15 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 16:14:58 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:36:42 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ static int	ft_getpaths(t_data *data)
 
 	paths = ft_getenv(data->env, "PATH");
 	if (!paths)
-		return (1);
+		return (EXIT_FAILURE);
 	data->paths = split_paths(paths, ':');
 	if (!data->paths)
-		exit_error(data, E_MALLOC, "ft_getpaths");
+		return (EXIT_FAILURE);
+		// exit_error(data, E_MALLOC, "ft_getpaths");
 	return (0);
 }
 
@@ -32,19 +33,21 @@ static int	ft_getpaths(t_data *data)
  * @param input token with the command
  * @return char* path of the command or NULL if not found
  */
-char	*get_validpath(t_data *data, t_token *input)
+char	*get_validpath(t_data *data, t_token *input, char **env_array)
 {
 	int		i;
 	char	*command_path;
 
 	i = 0;
 	command_path = ft_strdup(input->token);
+	// if (!command_path)
+	// 	exit_error(data, E_MALLOC, "get_validpath");
 	if (!input || !ft_strcmp(input->token, ""))
 		return (NULL);
 	if (ft_strchr(input->token, '/'))
 		return (command_path);
 	if (ft_getpaths(data))
-		return (NULL);
+		return (free(command_path), free_array(env_array), exit_error(data, E_MALLOC, "ft_getpaths"), NULL);
 	free(command_path);
 	while (data->paths[i])
 	{
