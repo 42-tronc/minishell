@@ -67,6 +67,8 @@ int	cutting_line(t_token **temp, t_parsing *p, char *str)
 			p->i = get_end_token(p, str);
 			token = copy_str_from_to(p->start, p->i, str);
 			if (!token)
+				printf("error while cutting input (probably malloc)\n");
+			if (!token)
 				return (1);
 			if (ft_tokenadd_back(temp, ft_tokennew(token)))
 				return (free(token), 1);

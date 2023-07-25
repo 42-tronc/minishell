@@ -22,7 +22,6 @@ static int	ft_getpaths(t_data *data)
 	data->paths = split_paths(paths, ':');
 	if (!data->paths)
 		return (EXIT_FAILURE);
-		// exit_error(data, E_MALLOC, "ft_getpaths");
 	return (0);
 }
 
@@ -40,14 +39,13 @@ char	*get_validpath(t_data *data, t_token *input, char **env_array)
 
 	i = 0;
 	command_path = ft_strdup(input->token);
-	// if (!command_path)
-	// 	exit_error(data, E_MALLOC, "get_validpath");
 	if (!input || !ft_strcmp(input->token, ""))
 		return (NULL);
 	if (ft_strchr(input->token, '/'))
 		return (command_path);
 	if (ft_getpaths(data))
-		return (free(command_path), free_array(env_array), exit_error(data, E_MALLOC, "ft_getpaths"), NULL);
+		return (free(command_path), \
+		free_array(env_array), exit_error(data, E_MALLOC, "ft_getpaths"), NULL);
 	free(command_path);
 	while (data->paths[i])
 	{

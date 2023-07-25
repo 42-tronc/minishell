@@ -134,13 +134,11 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 		command_args = get_cmd_args(input, command_path);
 		if (command_args)
 			execve(command_path, command_args, env_array);
+		free_array(command_args);
 	}
 	free(command_path);
 	free_array(env_array);
 	free_array(data->paths);
-	if (!command_args)
-		exit_error(data, E_MALLOC, "get_cmd_args");
-	free_array(command_args);
 	free_quit(data);
 	return (status);
 }
