@@ -69,10 +69,14 @@ int	getting_line(t_data *data)
 {
 	char	*str;
 
+	data->tokens = NULL;
 	data->p = ft_calloc(1, sizeof(t_parsing));
 	if (!data->p)
-		return (1);
-	data->tokens = NULL;
+	{
+		free_list(data->env);
+		free(data);
+		exit(1);
+	}
 	str = readline(BOLD WHITE"minishell> "RESET);
 	if (!str)
 		exit_program(data);

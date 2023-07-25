@@ -139,7 +139,7 @@ char		**env_to_array(t_data *data, t_env *env, int size, char *copy);
 int			execve_cmd(t_data *data, t_token *input, int block);
 
 // exit.c
-long long	ft_atoll(const char *str);
+long long	ft_atoll(t_data *data, char *str);
 int			ft_exit(t_data *data, t_token *input, int block);
 
 // export.c
