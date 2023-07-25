@@ -130,7 +130,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data->tokens && !prepare_token(data))
 		{
 			if (init_data(data))
-				return (free_quit(data), 1);
+				return (free_token(data->tokens), free(data->p), free_list(data->env), free(data), 1);
 			ignore_sig();
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
