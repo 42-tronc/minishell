@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:54:39 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:27:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exit_error(t_data *data, int code, char *source)
 	{
 		write(2, " in \e[1m", 8);
 		write(2, source, ft_strlen(source));
-		write(2, "\n", 1);
+		write(2, "\e[0m\n", 5);
 	}
 	free_quit(data);
 	exit(EXIT_FAILURE);
