@@ -43,7 +43,8 @@ char	*get_validpath(t_data *data, t_token *input, char **env_array)
 	if (ft_strchr(input->token, '/'))
 		return (command_path);
 	if (ft_getpaths(data))
-		return (free(command_path), free_array(env_array), exit_error(data, E_MALLOC, "ft_getpaths"), NULL);
+		return (free(command_path), \
+		free_array(env_array), exit_error(data, E_MALLOC, "ft_getpaths"), NULL);
 	free(command_path);
 	while (data->paths[i])
 	{
