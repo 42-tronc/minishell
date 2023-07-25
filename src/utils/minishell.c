@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/07/24 07:46:24 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:50:09 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ int	main(int argc, char **argv, char **envp)
 		if (data->tokens && !prepare_token(data))
 		{
 			if (init_data(data))
-				return (free_token(data->tokens), free(data->p), free_list(data->env), free(data), 1);
+				return (free_token(data->tokens), free(data->p),
+					free_list(data->env), free(data), EXIT_FAILURE);
 			ignore_sig();
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
