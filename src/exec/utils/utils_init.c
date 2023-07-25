@@ -94,11 +94,15 @@ int	init_data(t_data *data)
 	i = 0;
 	while (i < data->cmd_ct)
 	{
-		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
+		if (i < 2)
+			data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
+		else
+			data->cmd_block[i] = NULL;
 		if (!data->cmd_block[i])
+		{
 			free_cmd_block(data);
-		if (!data->cmd_block[i])		
 			return (EXIT_FAILURE);
+		}
 		data->cmd_block[i]->in_fd = -2;
 		data->cmd_block[i]->out_fd = -2;
 		data->cmd_block[i++]->heredoc_here = 0;
