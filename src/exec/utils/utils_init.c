@@ -95,7 +95,6 @@ int	init_data(t_data *data)
 	while (i < data->cmd_ct)
 	{
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
-		// data->cmd_block[i] = NULL;
 		if (!data->cmd_block[i])
 		{
 			free_cmd_block(data);
