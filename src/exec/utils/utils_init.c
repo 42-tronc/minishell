@@ -89,6 +89,7 @@ int	init_data(t_data *data)
 		temp = temp->next;
 	}
 	data->cmd_block = ft_calloc(data->cmd_ct + 1, sizeof(t_cmd_block *));
+	// data->cmd_block = NULL;
 	if (!data->cmd_block)
 		return (EXIT_FAILURE);
 	i = 0;
