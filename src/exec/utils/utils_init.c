@@ -98,7 +98,7 @@ int	init_data(t_data *data)
 		if (!data->cmd_block[i])
 		{
 			free_cmd_block(data);
-			return (E_MALLOC);
+			return (EXIT_FAILURE);
 		}
 		data->cmd_block[i]->in_fd = -2;
 		data->cmd_block[i]->out_fd = -2;
