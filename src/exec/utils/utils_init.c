@@ -97,7 +97,7 @@ int	init_data(t_data *data)
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
 		if (!data->cmd_block[i])
 		{
-			free_cmd_block(data->cmd_block);
+			free_cmd_block(data);
 			return (E_MALLOC);
 		}
 		data->cmd_block[i]->in_fd = -2;
