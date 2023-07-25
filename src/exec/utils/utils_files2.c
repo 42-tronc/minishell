@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:45 by aascedu           #+#    #+#             */
-/*   Updated: 2023/07/22 16:11:39 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:46:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ int	save_here_doc(t_data *data, t_token *input, char *line, int block)
 		return (1);
 	}
 	else if (data->cmd_block[block]->is_last)
+	{
 		data->cmd_block[block]->heredoc = ft_strjoin_heredoc(\
-			data->cmd_block[block]->heredoc, line);
+		data->cmd_block[block]->heredoc, line);
+		if (!data->cmd_block[block]->heredoc)
+			return (exit_error(data, E_MALLOC, "save_here_doc"), 1);
+	}
 	else
 	{
 		free(line);
