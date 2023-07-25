@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:56:36 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:13:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**get_cmd_args(t_data *data, t_token *input, char *command_path)
 	size = count_arguments(input) + 1;
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
-		exit_error(data, E_MALLOC, "get_cmd_args");
+		exit_error(data, E_MALLOC, "get_cmd_args"); // a mettre en null
 	i = 1;
 	input = input->next;
 	array[0] = command_path;
@@ -136,6 +136,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 			return (EXIT_FAILURE);
 		execve(command_path, command_args, env_array);
 	}
+	free_array(command_args);
 	free(command_path);
 	free_array(env_array);
 	free_array(data->paths);

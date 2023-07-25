@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:31:15 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 12:29:47 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:14:58 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ char	*get_validpath(t_data *data, t_token *input)
 			return (NULL);
 		if (access(command_path, F_OK) == 0)
 			return (command_path);
-		i++;
 		free(command_path);
+		i++;
 	}
 	return (NULL);
 }
