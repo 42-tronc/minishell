@@ -67,9 +67,9 @@ int	right_symbols(t_parsing *p, char *str)
 
 void	set_parsing_info(t_data *data)
 {
-		data->p->i = 0;
-		data->p->quote = 0;
-		data->p->dquote = 0;
+	data->p->i = 0;
+	data->p->quote = 0;
+	data->p->dquote = 0;
 }
 
 int	getting_line(t_data *data)
