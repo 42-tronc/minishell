@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 16:38:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 17:09:59 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param command_path path of the command
  * @return char** array with the command and its arguments
  */
-char	**get_cmd_args(t_data *data, t_token *input, char *command_path)
+char	**get_cmd_args(t_token *input, char *command_path)
 {
 	size_t	i;
 	size_t	size;
@@ -32,7 +32,7 @@ char	**get_cmd_args(t_data *data, t_token *input, char *command_path)
 	size = count_arguments(input) + 1;
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
-		exit_error(data, E_MALLOC, "get_cmd_args"); // a mettre en null
+		return (NULL);
 	i = 1;
 	input = input->next;
 	array[0] = command_path;
@@ -131,15 +131,16 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{
-		command_args = get_cmd_args(data, input, command_path);
-		if (!command_args)
-			return (EXIT_FAILURE);
-		execve(command_path, command_args, env_array);
+		command_args = get_cmd_args(input, command_path);
+		if (command_args)
+			execve(command_path, command_args, env_array);
 	}
-	free_array(command_args);
 	free(command_path);
 	free_array(env_array);
 	free_array(data->paths);
+	if (!command_args)
+		exit_error(data, E_MALLOC, "get_cmd_args");
+	free_array(command_args);
 	free_quit(data);
 	return (status);
 }

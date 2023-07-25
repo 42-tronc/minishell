@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 16:37:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 17:08:39 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int			ft_echo(t_data *data, t_token *input, int block);
 int			print_env(t_data *data, t_token *input, int block);
 
 // execve.c
-char		**get_cmd_args(t_data *data, t_token *input, char *command_path);
+char		**get_cmd_args(t_token *input, char *command_path);
 int			env_size(t_env *env);
 char		**env_to_array(t_data *data, t_env *env, int size, char *copy);
 int			execve_cmd(t_data *data, t_token *input, int block);
