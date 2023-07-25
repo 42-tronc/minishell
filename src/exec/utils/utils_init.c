@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/07/22 16:08:43 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 17:27:01 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	init_data(t_data *data)
 	while (i < data->cmd_ct)
 	{
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
+		// data->cmd_block[i] = NULL;
 		if (!data->cmd_block[i])
 		{
 			free_cmd_block(data);

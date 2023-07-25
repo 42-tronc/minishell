@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:23:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/28 12:16:31 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:10:40 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	print_env(t_data *data, t_token *input, int block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
+			free_quit(data);
 			write(STDERR_FILENO, "\e[31menv doesn't take any arguments\n", 35);
 			return (EXIT_FAILURE);
 		}
