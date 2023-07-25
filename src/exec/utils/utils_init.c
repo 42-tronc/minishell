@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 17:27:01 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 17:53:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	init_data(t_data *data)
 		if (!data->cmd_block[i])
 		{
 			free_cmd_block(data);
-			return (E_MALLOC);
+			return (EXIT_FAILURE);
 		}
 		data->cmd_block[i]->in_fd = -2;
 		data->cmd_block[i]->out_fd = -2;
