@@ -38,7 +38,7 @@ static int	is_overflow(long long result, int digit)
  * @param sign of the number
  * @return long long converted number
  */
-static long long	convert_digits(const char *str, int *i, int sign)
+static long long	convert_digits(t_data *data, char *str, int *i, int sign)
 {
 	int			digit;
 	long long	result;
@@ -50,6 +50,7 @@ static long long	convert_digits(const char *str, int *i, int sign)
 		if (is_overflow(result, digit * sign))
 		{
 			ft_putendl_fd("exit error: numeric argument required", 2);
+			free_quit(data);
 			exit(2);
 		}
 		result = result * 10 + digit * sign;
@@ -64,7 +65,7 @@ static long long	convert_digits(const char *str, int *i, int sign)
  * @param str string to convert
  * @return long long converted number
  */
-long long	ft_atoll(const char *str)
+long long	ft_atoll(t_data *data, char *str)
 {
 	int			i;
 	int			sign;
@@ -81,12 +82,13 @@ long long	ft_atoll(const char *str)
 			sign = -1;
 		i++;
 	}
-	result = convert_digits(str, &i, sign);
+	result = convert_digits(data, str, &i, sign);
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	if (str[i])
 	{
 		ft_putendl_fd("exit error: numeric argument required", 2);
+		free_quit(data);
 		exit(2);
 	}
 	return (result);
@@ -107,19 +109,22 @@ int	ft_exit(t_data *data, t_token *input, int block)
 	(void)block;
 	exit_code = 0;
 	if (!input)
+	{
+		free_quit(data);
 		exit(0);
+	}
 	if (count_arguments(input) > 1)
 	{
 		ft_putendl_fd("exit error: too many arguments", 2);
 		g_ret_value = 1;
+		free_quit(data);
 		return (EXIT_FAILURE);
 	}
 	if (ft_strcmp(input->type, ARG) == 0)
-		exit_code = ft_atoll(input->token);
+		exit_code = ft_atoll(data, input->token);
 	while (exit_code < 0)
 		exit_code = exit_code + 256;
-	free(data->p);
-	free(data->cmd_block);
+	free_quit(data);
 	exit(exit_code % 256);
 	return (EXIT_SUCCESS);
 }
