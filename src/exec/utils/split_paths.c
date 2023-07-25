@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:18:44 by croy              #+#    #+#             */
-/*   Updated: 2023/06/21 11:59:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/25 16:40:21 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*write_word(char *s1, char c)
 	return (dst);
 }
 
-static void	set_string(char **tab, char *str, char c)
+static int	dispatch_string(char **tab, char *str, char c)
 {
 	size_t	i;
 	size_t	lines;
@@ -66,12 +66,13 @@ static void	set_string(char **tab, char *str, char c)
 		{
 			tab[lines] = write_word(str + i, c);
 			if (!tab[lines])
-				return (free_array(tab));
+				return (free_array(tab), EXIT_FAILURE);
 			lines++;
 		}
 		was_sep = (str[i] == c);
 		i++;
 	}
+	return (0);
 }
 
 /**
@@ -97,7 +98,8 @@ char	**split_paths(char const *s, char c)
 	tab = malloc(sizeof(char *) * (lines + 1));
 	if (!tab)
 		return (NULL);
-	set_string(tab, (char *)s, c);
+	if (dispatch_string(tab, (char *)s, c))
+		return (NULL);
 	if (tab)
 		tab[lines] = NULL;
 	return (tab);
