@@ -92,5 +92,6 @@ int	ft_echo(t_data *data, t_token *input, int block)
 	}
 	if (newline)
 		write(STDOUT_FILENO, "\n", 1);
+	free_quit(data);
 	return (0);
 }

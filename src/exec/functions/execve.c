@@ -42,7 +42,7 @@ char	**get_cmd_args(t_data *data, t_token *input, char *command_path)
 		{
 			array[i] = ft_strdup(input->token);
 			if (!array[i])
-				exit_error(data, E_MALLOC, "get_cmd_args");
+				return (free_array(array), NULL);
 			i++;
 		}
 		input = input->next;
@@ -135,10 +135,10 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 		if (!command_args)
 			return (EXIT_FAILURE);
 		execve(command_path, command_args, env_array);
-		free_array(command_args);
 	}
-	else
-		free(command_path);
+	free(command_path);
 	free_array(env_array);
+	free_array(data->paths);
+	free_quit(data);
 	return (status);
 }

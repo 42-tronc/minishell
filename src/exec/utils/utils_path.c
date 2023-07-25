@@ -38,21 +38,23 @@ char	*get_validpath(t_data *data, t_token *input)
 	char	*command_path;
 
 	i = 0;
+	command_path = ft_strdup(input->token);
 	if (!input || !ft_strcmp(input->token, ""))
 		return (NULL);
 	if (ft_strchr(input->token, '/'))
-		return (input->token);
+		return (command_path);
 	if (ft_getpaths(data))
 		return (NULL);
+	free(command_path);
 	while (data->paths[i])
 	{
 		command_path = ft_strjoin(data->paths[i], input->token);
 		if (!command_path)
-			exit_error(data, E_MALLOC, "get_validpath");
+			return (NULL);
 		if (access(command_path, F_OK) == 0)
 			return (command_path);
-		free(command_path);
 		i++;
+		free(command_path);
 	}
 	return (NULL);
 }
