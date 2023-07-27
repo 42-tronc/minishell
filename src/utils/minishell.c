@@ -14,7 +14,7 @@
 
 int	g_ret_value;
 
-static void	close_pipes(t_data *data, int block)
+void	close_pipes(t_data *data, int block)
 {
 	if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
 	{

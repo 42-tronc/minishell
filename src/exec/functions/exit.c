@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/07/27 11:46:08 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/06/26 13:51:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ long long	ft_atoll(t_data *data, char *str)
 	if (str[i])
 	{
 		ft_putendl_fd("exit error: numeric argument required", 2);
-		free_quit(data);
 		exit(2);
 	}
 	return (result);

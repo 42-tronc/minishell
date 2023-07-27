@@ -21,9 +21,8 @@
  * @param command_path path of the command
  * @return char** array with the command and its arguments
  */
-char	**get_cmd_args(t_token *input, char *command_path)
+char	**get_cmd_args(t_token *input, char *command_path, size_t i)
 {
-	size_t	i;
 	size_t	size;
 	char	**array;
 
@@ -33,17 +32,18 @@ char	**get_cmd_args(t_token *input, char *command_path)
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
-	i = 1;
 	input = input->next;
-	array[0] = command_path;
+	array[0] = ft_strdup(command_path);
+	if (!array[0])
+		return ((void)printf("Error Malloc in get_cmd_args\n"), NULL);
 	while (input && i < size)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
 			array[i] = ft_strdup(input->token);
-			if (!array[i])
-				return (free_array(array), NULL);
-			i++;
+			if (!array[i++])
+				return ((void)printf("Error malloc get_cmd_args\n"),
+					free_array(array), NULL);
 		}
 		input = input->next;
 	}
@@ -127,18 +127,20 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	(void)block;
 	status = 0;
 	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
+	data->paths = NULL;
 	command_path = get_validpath(data, input, env_array);
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{
-		command_args = get_cmd_args(input, command_path);
+		command_args = get_cmd_args(input, command_path, 1);
 		if (command_args)
 			execve(command_path, command_args, env_array);
-		free_array(command_args);
 	}
 	free(command_path);
 	free_array(env_array);
 	free_array(data->paths);
+	close_pipes(data, block);
 	free_quit(data);
+	exit (status);
 	return (status);
 }

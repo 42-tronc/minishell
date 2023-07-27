@@ -47,6 +47,7 @@ static int	open_heredoc(t_data *data, t_token *input, int block)
 
 	ignore_sig();
 	data->cmd_block[block]->is_last = is_last_input(input, block);
+	g_ret_value = 0;
 	while (1)
 	{
 		get_signal_heredoc();

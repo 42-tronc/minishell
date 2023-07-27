@@ -133,7 +133,7 @@ int			ft_echo(t_data *data, t_token *input, int block);
 int			print_env(t_data *data, t_token *input, int block);
 
 // execve.c
-char		**get_cmd_args(t_token *input, char *command_path);
+char		**get_cmd_args(t_token *input, char *command_path, size_t i);
 int			env_size(t_env *env);
 char		**env_to_array(t_data *data, t_env *env, int size, char *copy);
 int			execve_cmd(t_data *data, t_token *input, int block);
@@ -300,6 +300,7 @@ void		free_token(t_token *tokens);
 char		**get_array_cmd(t_token *temp);
 
 // minishell.c
+void		close_pipes(t_data *data, int block);
 void		exec_code(t_data *data);
 void		exec_dispatch(t_data *data, t_token *input);
 
