@@ -209,7 +209,6 @@ void		check_in_quotes(t_token **tokens, t_data *data);
 // cut_expand.c
 void		add_token_in_middle(t_token	*prev, t_token *next, \
 char **a, t_data *d);
-int			copy_propre_quote(t_token *temp);
 void		free_cutting_expand(char **array, t_token *temp);
 int			cutting_expand(t_data *data);
 

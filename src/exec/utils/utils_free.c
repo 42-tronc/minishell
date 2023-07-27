@@ -32,7 +32,7 @@ void	free_cmd_block(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->cmd_ct)
+	while (data->cmd_block[i])
 	{
 		free(data->cmd_block[i]->heredoc);
 		free(data->cmd_block[i]);

@@ -60,6 +60,8 @@ t_token	*ft_tokennew(void *content)
 
 	dst = malloc(sizeof(t_token));
 	if (!dst)
+		printf("error malloc for new token in list\n");
+	if (!dst)
 		return (NULL);
 	dst->token = (char *)content;
 	dst->type = NULL;

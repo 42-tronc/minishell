@@ -75,9 +75,8 @@ void	fill_env(t_data *data, char **envp)
 	fill_default_env(data);
 }
 
-int	init_data(t_data *data)
+void	count_cmd_ct(t_data *data)
 {
-	int		i;
 	t_token	*temp;
 
 	temp = data->tokens;
@@ -88,6 +87,13 @@ int	init_data(t_data *data)
 			data->cmd_ct++;
 		temp = temp->next;
 	}
+}
+
+int	init_data(t_data *data)
+{
+	int		i;
+
+	count_cmd_ct(data);
 	data->cmd_block = ft_calloc(data->cmd_ct + 1, sizeof(t_cmd_block *));
 	if (!data->cmd_block)
 		return (EXIT_FAILURE);
@@ -95,7 +101,6 @@ int	init_data(t_data *data)
 	while (i < data->cmd_ct)
 	{
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
-		// data->cmd_block[i] = NULL;
 		if (!data->cmd_block[i])
 		{
 			free_cmd_block(data);

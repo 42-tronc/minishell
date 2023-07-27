@@ -12,15 +12,8 @@
 
 #include "minishell.h"
 
-void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d)
+static void	link_list(t_data *d, t_token *prev, t_token *next, t_token *temp)
 {
-	int		i;
-	t_token	*temp;
-
-	temp = NULL;
-	i = -1;
-	while (a[++i])
-		ft_tokenadd_back(&temp, ft_tokennew(a[i]));
 	if (prev)
 	{
 		temp->prev = prev;
@@ -41,29 +34,32 @@ void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d)
 	}
 }
 
-int	copy_propre_quote(t_token *temp)
+void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d)
 {
-	char	*new;
-	int		i_old;
-	int		i_new;
+	int		i;
+	int		k;
+	t_token	*temp;
 
-	new = malloc(sizeof(char) * (ft_strlen(temp->token) - 1));
-	if (!new)
-		return (1);
-	i_old = -1;
-	i_new = -1;
-	while (temp->token[++i_old])
+	temp = NULL;
+	i = -1;
+	k = -1;
+	while (a[++i])
 	{
-		if (i_old == 0)
-			i_old++;
-		else if (i_old == (int)ft_strlen(temp->token))
-			break ;
-		new[++i_new] = temp->token[i_old];
+		ft_tokenadd_back(&temp, ft_tokennew(a[i]));
+		while (++k <= i)
+		{
+			if (!temp->token)
+			{
+				free_token(temp);
+				free_token(d->tokens);
+				free(d->p);
+				free_list(d->env);
+				free(d);
+				exit (1);
+			}
+		}
 	}
-	new[i_new] = '\0';
-	free(temp->token);
-	temp->token = new;
-	return (0);
+	link_list(d, prev, next, temp);
 }
 
 void	free_cutting_expand(char **array, t_token *temp)
