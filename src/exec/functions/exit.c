@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:49 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 13:51:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/27 11:46:08 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,14 @@ int	ft_exit(t_data *data, t_token *input, int block)
 		free_quit(data);
 		exit(0);
 	}
+	if (ft_strcmp(input->type, ARG) == 0)
+		exit_code = ft_atoll(data, input->token);
 	if (count_arguments(input) > 1)
 	{
 		ft_putendl_fd("exit error: too many arguments", 2);
 		g_ret_value = 1;
-		free_quit(data);
 		return (EXIT_FAILURE);
 	}
-	if (ft_strcmp(input->type, ARG) == 0)
-		exit_code = ft_atoll(data, input->token);
 	while (exit_code < 0)
 		exit_code = exit_code + 256;
 	free_quit(data);
