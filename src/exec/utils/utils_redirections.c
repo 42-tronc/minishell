@@ -22,8 +22,8 @@ static void	handle_heredoc(t_data *data, t_cmd_block *cmd_block)
 		exit_error(data, E_DUP2, "handle_heredoc");
 	write(tmp_pipe[STDOUT_FILENO], cmd_block->heredoc,
 		ft_strlen(cmd_block->heredoc));
-	free(cmd_block->heredoc);
 	close(tmp_pipe[STDOUT_FILENO]);
+	close(tmp_pipe[STDIN_FILENO]);
 }
 
 /**
