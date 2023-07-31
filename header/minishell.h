@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 17:08:39 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/07/31 14:31:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,22 +105,10 @@ struct s_token {
 # define CHEVRON_RR ">>"
 # define MY_NULL "my_null"
 
-# define BLACK		"\e[30m"
 # define RED		"\e[31m"
-# define GREEN		"\e[32m"
-# define YELLOW		"\e[33m"
-# define BLUE		"\e[34m"
-# define MAGENTA	"\e[35m"
-# define CYAN		"\e[36m"
 # define WHITE		"\e[37m"
 # define RESET		"\e[0m"
-
 # define BOLD		"\e[1m"
-# define NO_BOLD	"\e[22m"
-# define UNDERL		"\e[4m"
-# define NO_UNDERL	"\e[24m"
-# define REVERSED	"\e[7m"
-# define ORANGE 	"\e[38;5;208;1m"
 
 //	===== @functions =====
 // cd.c
