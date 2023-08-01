@@ -33,6 +33,8 @@ int	processed_line(char *str, t_parsing *p)
 	i = 0;
 	found_dollar = 0;
 	found_alpha = 0;
+	p->quote = 0;
+	p->dquote = 0;
 	while (str && str[i])
 	{
 		p_quote(p, str[i]);

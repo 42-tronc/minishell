@@ -45,8 +45,11 @@ static void	unset_key(t_env **env, const char *token)
 	}
 }
 
-int	ft_unset(t_env **env, t_token *input, int block)
+int	ft_unset(t_data *data, t_token *input, int block)
 {
+	t_env	**env;
+
+	env = &data->env;
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)

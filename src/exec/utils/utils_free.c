@@ -43,11 +43,50 @@ void	free_cmd_block(t_data *data)
 
 void	free_quit(t_data *data)
 {
-	free_token(data->tokens);
-	free_cmd_block(data);
-	free(data->p);
-	free_list(data->env);
-	free(data);
+	if (data && data->tokens)
+	{
+		free_token(data->tokens);
+		data->tokens = NULL;
+	}
+	if (data && data->cmd_block)
+	{
+		free_cmd_block(data);
+		data->cmd_block = NULL;
+	}
+	if (data && data->p)
+	{
+		free(data->p);
+		data->p = NULL;
+	}
+	if (data && data->env)
+	{
+		free_list(data->env);
+		data->env = NULL;
+	}
+	if (data)
+	{
+		free(data);
+		data = NULL;
+	}
+}
+
+void	free_in_while(t_data *data)
+{
+	if (data && data->tokens)
+	{
+		free_token(data->tokens);
+		data->tokens = NULL;
+	}
+	if (data && data->p)
+	{
+		free(data->p);
+		data->p = NULL;
+	}
+	if (data && data->cmd_block)
+	{
+		free_cmd_block(data);
+		data->cmd_block = NULL;
+	}
 }
 
 void	close_parent_fd(t_data *data, int block)

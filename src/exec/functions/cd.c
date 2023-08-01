@@ -59,6 +59,7 @@ int	ft_cd(t_data *data, t_token *input, int block)
 	char	*path;
 	char	previous[BUFSIZ];
 
+	ft_bzero(previous, BUFSIZ); // a 
 	arg_count = count_arguments(input);
 	if (arg_count > 1)
 	{
