@@ -3,6 +3,8 @@
 [![Norminette CI](https://github.com/42-tronc/minishell/actions/workflows/norm.yml/badge.svg?branch=master)](https://github.com/42-tronc/minishell/actions/workflows/norm.yml)
 [![Makefile CI](https://github.com/42-tronc/minishell/actions/workflows/make.yml/badge.svg)](https://github.com/42-tronc/minishell/actions/workflows/make.yml)
 
+[![croy's 42 minishell Score](https://badge42.vercel.app/api/v2/clks1zewm004008lbv2c5fhru/project/3053512)](https://github.com/42-tronc/minishell/)
+
 This project is about creating a simple shell - your own little bash - and will give you a lot of experience with processes and file descriptors.
 
 <details>
