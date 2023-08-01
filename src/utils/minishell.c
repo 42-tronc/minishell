@@ -40,7 +40,7 @@ static void	check_command(t_data *data, t_token *input, int block)
 		if (input->type && ft_strcmp(input->type, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
-				g_ret_value = ft_cd(data, input->next, block);
+				check_alone(ft_cd, data, input->next, block);
 			else if (ft_strcmp(input->token, "echo") == 0)
 				create_subshell(ft_echo, data, input, block);
 			else if (ft_strcmp(input->token, "env") == 0)
@@ -52,7 +52,7 @@ static void	check_command(t_data *data, t_token *input, int block)
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				create_subshell(ft_pwd, data, input, block);
 			else if (ft_strcmp(input->token, "unset") == 0)
-				g_ret_value = ft_unset(&data->env, input, block);
+				check_alone(ft_unset, data, input, block);
 			else
 				create_subshell(execve_cmd, data, input, block);
 		}
@@ -135,10 +135,7 @@ int	main(int argc, char **argv, char **envp)
 			ignore_sig();
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
-			free_cmd_block(data);
 		}
-		if (data->tokens)
-			free_token(data->tokens);
-		free(data->p);
+		free_in_while(data);
 	}
 }

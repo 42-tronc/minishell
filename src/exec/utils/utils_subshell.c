@@ -76,6 +76,7 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 			close(data->cmd_block[block]->pipe_fd[0]);
 		check_io(data, block);
 		status = func(data, input, block);
+		free_quit(data);
 		exit(status);
 	}
 	else

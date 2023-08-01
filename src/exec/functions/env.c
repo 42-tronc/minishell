@@ -24,24 +24,22 @@ int	print_env(t_data *data, t_token *input, int block)
 {
 	t_env	*save;
 
+	save = data->env;
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
-			free_quit(data);
 			write(STDERR_FILENO, "\e[31menv doesn't take any arguments\n", 35);
 			return (EXIT_FAILURE);
 		}
 		input = input->next;
 	}
-	save = data->env;
 	while (data->env)
 	{
 		if (data->env->value)
 			printf("%s=%s\n", data->env->var, data->env->value);
 		data->env = data->env->next;
 	}
-	free_list(save);
-	free_quit(data);
+	data->env = save;
 	return (0);
 }

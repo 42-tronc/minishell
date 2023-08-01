@@ -88,6 +88,7 @@ long long	ft_atoll(t_data *data, char *str)
 	if (str[i])
 	{
 		ft_putendl_fd("exit error: numeric argument required", 2);
+		free_quit(data);
 		exit(2);
 	}
 	return (result);

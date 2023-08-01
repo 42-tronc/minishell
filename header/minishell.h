@@ -139,7 +139,7 @@ int			ft_pwd(t_data *data, t_token *input, int block);
 
 // unset.c
 void		free_env_node(t_env *node);
-int			ft_unset(t_env **env, t_token *input, int block);
+int			ft_unset(t_data *data, t_token *input, int block);
 
 // split_paths.c
 char		**split_paths(char const *s, char c);
@@ -165,6 +165,7 @@ int			check_outfile(t_data *data, t_token *input, int block);
 void		free_array(char **env_array);
 void		free_cmd_block(t_data *data);
 void		free_quit(t_data *data);
+void		free_in_while(t_data *data);
 void		close_parent_fd(t_data *data, int block);
 
 // utils_heredoc.c
