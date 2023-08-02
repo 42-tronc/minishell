@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:00:46 by croy              #+#    #+#             */
-/*   Updated: 2023/06/14 14:27:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/02 12:25:43 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int	ft_pwd(t_data *data, t_token *input, int block)
 	if (getcwd(cwd, BUFSIZ))
 		printf("%s\n", cwd);
 	else
-		return (perror("pwd"), 1);
+		return (perror(BOLD RED "pwd" RESET), 1);
 	return (0);
 }
