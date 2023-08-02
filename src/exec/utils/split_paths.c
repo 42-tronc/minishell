@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:18:44 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 16:40:21 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/02 11:39:37 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,14 @@ char	**split_paths(char const *s, char c)
 	if (tab)
 		tab[lines] = NULL;
 	return (tab);
+}
+
+void	handle_execve_failure(t_data *data, int block, char *command_path,
+	char **env_array)
+{
+	free(command_path);
+	free_array(env_array);
+	free_array(data->paths);
+	close_pipes(data, block);
+	free_quit(data);
 }

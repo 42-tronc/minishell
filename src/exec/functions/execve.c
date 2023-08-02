@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/01 17:57:14 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/02 11:39:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 		if (command_args)
 			execve(command_path, command_args, env_array);
 	}
-	free(command_path);
-	free_array(env_array);
-	free_array(data->paths);
-	close_pipes(data, block);
-	free_quit(data);
+	handle_execve_failure(data, block, command_path, env_array);
 	exit (status);
 	return (status);
 }

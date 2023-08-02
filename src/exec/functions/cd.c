@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/06/24 20:32:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/02 14:00:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,25 @@ static char	*get_cd_path(t_data *data, t_token *input)
 }
 
 /**
+ * @brief Counts the number of arguments
+ *
+ * @param inpu t_token struct with the input
+ * @return int number of arguments
+ */
+static int	check_arg_count(t_token *input)
+{
+	int	arg_count;
+
+	arg_count = count_arguments(input);
+	if (arg_count > 1)
+	{
+		ft_putendl_fd("cd: too many arguments", 2);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+/**
  * @brief Changes the current working directory
  * `cd` or `cd ~` will go to the home directory
  * `-` will go to the last directory if available.
@@ -55,30 +74,32 @@ static char	*get_cd_path(t_data *data, t_token *input)
  */
 int	ft_cd(t_data *data, t_token *input, int block)
 {
-	int		arg_count;
 	char	*path;
 	char	previous[BUFSIZ];
 
-	ft_bzero(previous, BUFSIZ); // a 
-	arg_count = count_arguments(input);
-	if (arg_count > 1)
-	{
-		ft_putendl_fd("cd: too many arguments", 2);
-		return (1);
-	}
+	ft_bzero(previous, BUFSIZ);
+	if (check_arg_count(input))
+		return (EXIT_FAILURE);
 	while (input && input->pipe_block == block && ft_strcmp(input->type,
 			ARG) != 0)
 		input = input->next;
-	getcwd(previous, BUFSIZ);
-	path = get_cd_path(data, input);
+	if (!getcwd(previous, BUFSIZ))
+	{
+		// perror(BOLD RED "cd pwd" RESET);
+		printf(BOLD RED "cd:%s current directory might have been deleted, going to "
+			"home directory%s\n", NO_BOLD, RESET);
+		path = ft_getenv(data->env, "HOME");
+		// return (EXIT_FAILURE);
+	}
+	else
+		path = get_cd_path(data, input);
 	if (!path)
 		return (EXIT_FAILURE);
 	if (chdir(path) == -1)
 	{
-		perror("cd");
+		perror(BOLD RED "cd" RESET);
 		return (EXIT_FAILURE);
 	}
-	else
-		ft_setenv(data, &(data->env), "OLDPWD", previous);
+	ft_setenv(data, &(data->env), "OLDPWD", previous);
 	return (EXIT_SUCCESS);
 }

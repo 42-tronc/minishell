@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/07/31 14:31:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/02 13:58:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ struct s_token {
 # define WHITE		"\e[37m"
 # define RESET		"\e[0m"
 # define BOLD		"\e[1m"
+# define NO_BOLD	"\e[22m"
 
 //	===== @functions =====
 // cd.c
@@ -143,6 +144,8 @@ int			ft_unset(t_data *data, t_token *input, int block);
 
 // split_paths.c
 char		**split_paths(char const *s, char c);
+void		handle_execve_failure(t_data *data, int block, \
+	char *command_path, char **env_array);
 
 // utils.c
 void		exit_error(t_data *data, int code, char *source);
