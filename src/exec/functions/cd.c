@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+// ignore unused but set variable
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
 /**
  * @brief Gets the path to change directory to
@@ -74,10 +76,12 @@ static int	check_arg_count(t_token *input)
  */
 int	ft_cd(t_data *data, t_token *input, int block)
 {
+	int		error_oldpwd;
 	char	*path;
 	char	previous[BUFSIZ];
 
-	ft_bzero(previous, BUFSIZ);
+	error_oldpwd = 0;
+	// ft_bzero(previous, BUFSIZ);
 	if (check_arg_count(input))
 		return (EXIT_FAILURE);
 	while (input && input->pipe_block == block && ft_strcmp(input->type,
@@ -85,14 +89,11 @@ int	ft_cd(t_data *data, t_token *input, int block)
 		input = input->next;
 	if (!getcwd(previous, BUFSIZ))
 	{
-		// perror(BOLD RED "cd pwd" RESET);
-		printf(BOLD RED "cd:%s current directory might have been deleted, going to "
-			"home directory%s\n", NO_BOLD, RESET);
-		path = ft_getenv(data->env, "HOME");
-		// return (EXIT_FAILURE);
+		error_oldpwd = 1;
+		if (input && input->token && ft_strncmp(input->token, ".", 1) == 0)
+			return (perror(BOLD RED "cd" RESET), EXIT_FAILURE);
 	}
-	else
-		path = get_cd_path(data, input);
+	path = get_cd_path(data, input);
 	if (!path)
 		return (EXIT_FAILURE);
 	if (chdir(path) == -1)
@@ -100,6 +101,7 @@ int	ft_cd(t_data *data, t_token *input, int block)
 		perror(BOLD RED "cd" RESET);
 		return (EXIT_FAILURE);
 	}
-	ft_setenv(data, &(data->env), "OLDPWD", previous);
+	if (!error_oldpwd)
+		ft_setenv(data, &(data->env), "OLDPWD", previous);
 	return (EXIT_SUCCESS);
 }
