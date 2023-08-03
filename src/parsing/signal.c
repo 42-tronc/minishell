@@ -18,6 +18,7 @@ void	exit_program(t_data *data)
 	free_list(data->env);
 	free(data);
 	printf("exit\n");
+	rl_clear_history();
 	exit (g_ret_value);
 }
 
