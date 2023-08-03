@@ -130,10 +130,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	data->paths = NULL;
 	command_path = get_validpath(data, input, env_array);
 	if (!command_path && !data->paths)
-	{
-		printf("no path and no command\n");
 		command_path = ft_strjoin("./", input->token);
-	}
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{
