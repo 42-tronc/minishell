@@ -71,13 +71,13 @@ int	add_env_entry(t_data *data, t_token *input, int block)
 			var = ft_strdup(input->token);
 			if (!var)
 				exit_error(data, E_MALLOC, "add_env_entry");
-			if (check_var_name(var))
-				return (free(var), 1);
 			value = ft_strchr(var, '=');
 			if (value)
 				*value = '\0';
 			if (value)
 				value++;
+			if (check_var_name(var))
+				return (free(var), 1);
 			ft_setenv(data, &(data->env), var, value);
 			free(var);
 		}
