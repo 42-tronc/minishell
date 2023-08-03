@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 17:09:59 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/02 11:39:33 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,11 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
 	data->paths = NULL;
 	command_path = get_validpath(data, input, env_array);
+	if (!command_path && !data->paths)
+	{
+		printf("no path and no command\n");
+		command_path = ft_strjoin("./", input->token);
+	}
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{
@@ -136,11 +141,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 		if (command_args)
 			execve(command_path, command_args, env_array);
 	}
-	free(command_path);
-	free_array(env_array);
-	free_array(data->paths);
-	close_pipes(data, block);
-	free_quit(data);
+	handle_execve_failure(data, block, command_path, env_array);
 	exit (status);
 	return (status);
 }
