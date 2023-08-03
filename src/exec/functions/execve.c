@@ -139,6 +139,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 			execve(command_path, command_args, env_array);
 	}
 	handle_execve_failure(data, block, command_path, env_array);
+	rl_clear_history();
 	exit (status);
 	return (status);
 }

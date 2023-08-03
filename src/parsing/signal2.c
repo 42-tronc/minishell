@@ -24,6 +24,7 @@ void	handle_sigquit(int signal)
 	(void)signal;
 	g_ret_value = 131;
 	printf("Quit (core dumped)\n");
+	rl_clear_history();
 	exit (g_ret_value);
 }
 

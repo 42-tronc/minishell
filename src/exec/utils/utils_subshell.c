@@ -77,6 +77,7 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 		check_io(data, block);
 		status = func(data, input, block);
 		free_quit(data);
+		rl_clear_history();
 		exit(status);
 	}
 	else
