@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-// ignore unused but set variable
-#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
 /**
  * @brief Gets the path to change directory to
@@ -81,7 +79,6 @@ int	ft_cd(t_data *data, t_token *input, int block)
 	char	previous[BUFSIZ];
 
 	error_oldpwd = 0;
-	// ft_bzero(previous, BUFSIZ);
 	if (check_arg_count(input))
 		return (EXIT_FAILURE);
 	while (input && input->pipe_block == block && ft_strcmp(input->type,
@@ -97,10 +94,7 @@ int	ft_cd(t_data *data, t_token *input, int block)
 	if (!path)
 		return (EXIT_FAILURE);
 	if (chdir(path) == -1)
-	{
-		perror(BOLD RED "cd" RESET);
-		return (EXIT_FAILURE);
-	}
+		return (perror(BOLD RED "cd" RESET), EXIT_FAILURE);
 	if (!error_oldpwd)
 		ft_setenv(data, &(data->env), "OLDPWD", previous);
 	return (EXIT_SUCCESS);
