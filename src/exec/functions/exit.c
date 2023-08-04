@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+static void	exit_rl_history(t_data *data)
+{
+	free_quit(data);
+	rl_clear_history();
+}
+
 /**
  * @brief checks if the result of the conversion is an overflow
  *
@@ -50,7 +56,7 @@ static long long	convert_digits(t_data *data, char *str, int *i, int sign)
 		if (is_overflow(result, digit * sign))
 		{
 			ft_putendl_fd("exit error: numeric argument required", 2);
-			free_quit(data);
+			exit_rl_history(data);
 			exit(2);
 		}
 		result = result * 10 + digit * sign;
@@ -88,7 +94,7 @@ long long	ft_atoll(t_data *data, char *str)
 	if (str[i])
 	{
 		ft_putendl_fd("exit error: numeric argument required", 2);
-		free_quit(data);
+		exit_rl_history(data);
 		exit(2);
 	}
 	return (result);
@@ -110,7 +116,7 @@ int	ft_exit(t_data *data, t_token *input, int block)
 	exit_code = 0;
 	if (!input)
 	{
-		free_quit(data);
+		exit_rl_history(data);
 		exit(0);
 	}
 	if (ft_strcmp(input->type, ARG) == 0)
@@ -123,7 +129,7 @@ int	ft_exit(t_data *data, t_token *input, int block)
 	}
 	while (exit_code < 0)
 		exit_code = exit_code + 256;
-	free_quit(data);
+	exit_rl_history(data);
 	exit(exit_code % 256);
 	return (EXIT_SUCCESS);
 }

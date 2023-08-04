@@ -27,6 +27,18 @@ static int	ft_getpaths(t_data *data)
 	return (0);
 }
 
+char	*check_path(t_data *data, char *command_path, t_token *input)
+{
+	int	is_path;
+
+	is_path = 0;
+	if (ft_getenv(data->env, "PATH"))
+		is_path = 1;
+	if (is_path == 0 && input->token && ft_strcmp(input->token, ""))
+		command_path = ft_strjoin("./", input->token);
+	return (command_path);
+}
+
 /**
  * @brief Gets the path of the command passed as input
  *
@@ -41,7 +53,7 @@ char	*get_validpath(t_data *data, t_token *input, char **env_array)
 
 	i = -1;
 	command_path = ft_strdup(input->token);
-	if (!input || !ft_strcmp(input->token, ""))
+	if (!input || !ft_strcmp(command_path, ""))
 		return (free(command_path), NULL);
 	if (ft_strchr(input->token, '/'))
 		return (command_path);
