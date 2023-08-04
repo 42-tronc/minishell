@@ -179,7 +179,6 @@ void		fill_env(t_data *data, char **envp);
 int			init_data(t_data *data);
 
 // utils_path.c
-char		*check_path(t_data *data, char *command_path, t_token *input);
 char		*get_validpath(t_data *data, t_token *input, char **env_array);
 
 // utils_redirections.c
