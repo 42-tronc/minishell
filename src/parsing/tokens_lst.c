@@ -68,6 +68,7 @@ t_token	*ft_tokennew(void *content)
 	dst->next = NULL;
 	dst->prev = NULL;
 	dst->in_quote = 0;
+	dst->limiter = 0;
 	dst->from_expand = 0;
 	dst->pipe_block = 0;
 	return (dst);

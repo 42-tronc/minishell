@@ -52,7 +52,7 @@ int	check_last_token(t_token *temp)
 	|| !ft_strcmp(temp->type, PIPE))
 	{
 		g_ret_value = 2;
-		ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
+		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
 		return (1);
 	}
 	return (0);

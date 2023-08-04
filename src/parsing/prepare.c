@@ -19,7 +19,7 @@ void	print_tokens(t_token *tokens)
 	i = 0;
 	while (tokens)
 	{
-		printf("temp[%i]:%s\n", i, tokens->token);
+		printf("temp[%i]:%s et type:%s\n", i, tokens->token, tokens->type);
 		i++;
 		tokens = tokens->next;
 	}
@@ -27,19 +27,21 @@ void	print_tokens(t_token *tokens)
 
 int	prepare_token(t_data *data)
 {
+	id_tokens(&data->tokens, NULL);
 	check_in_quotes(&data->tokens, data);
 	if (expand_tokens(&data->tokens, data))
 		return (1);
 	if (cutting_expand(data))
 		return (1);
+	id_tokens(&data->tokens, NULL);
 	if (expand_tilde(&data->tokens, data))
 		return (1);
 	if (!need_to_new(data->tokens) \
 		&& replace_list(data, NULL, ft_tokensize(data->tokens)))
 		return (1);
-	id_tokens(&data->tokens, NULL);
 	if (remove_quotes(&data->tokens, data))
 		return (1);
+	id_tokens(&data->tokens, NULL);
 	if (syntax_error(data))
 		return (1);
 	return (0);

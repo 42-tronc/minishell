@@ -42,7 +42,10 @@ void	choose_token_id(t_token *temp)
 	else if (!ft_strcmp(temp->prev->type, CHEVRON_R))
 		temp->type = OUTFILE;
 	else if (!ft_strcmp(temp->prev->type, HERE_DOC))
+	{
 		temp->type = LIMITER;
+		temp->limiter = 1;
+	}
 	else if (!ft_strcmp(temp->prev->type, CHEVRON_RR))
 		temp->type = APPEND;
 	else if (is_first_cmd(temp))
