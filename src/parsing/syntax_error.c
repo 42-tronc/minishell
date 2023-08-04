@@ -52,7 +52,7 @@ int	check_last_token(t_token *temp)
 	|| !ft_strcmp(temp->type, PIPE))
 	{
 		g_ret_value = 2;
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
 		return (1);
 	}
 	return (0);
@@ -60,27 +60,27 @@ int	check_last_token(t_token *temp)
 
 int	syntax_error(t_data *data)
 {
-	t_token	*temp;
+	t_token	*t;
 
-	temp = data->tokens;
-	while (temp)
+	t = data->tokens;
+	while (t)
 	{
-		if (!temp->prev && !ft_strcmp(temp->type, PIPE))
+		if (!t->prev && !ft_strcmp(t->type, PIPE))
 		{
-			printf("minishell: syntax error near unexpected token \
-`%s'\n", temp->token);
+			ft_putendl_fd("syntax error near unexpected token", 2);
+			g_ret_value = 2;
 			return (1);
 		}
-		else if (temp->prev)
+		else if (t->prev)
 		{
-			if (similar_type(temp))
+			if (similar_type(t))
 			{
-				printf("minishell: syntax error near unexpected token \
-`%s'\n", temp->token);
+				ft_putendl_fd("syntax error near unexpected token", 2);
+				g_ret_value = 2;
 				return (1);
 			}
 		}
-		temp = temp->next;
+		t = t->next;
 	}
 	if (check_last_token(data->tokens))
 		return (1);
