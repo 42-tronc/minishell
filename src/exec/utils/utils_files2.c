@@ -19,7 +19,7 @@ int	save_here_doc(t_data *data, t_token *input, char *line, int block)
 	{
 		write(2, "warning: here-document delimited by EOF wanted ", 47);
 		ft_putendl_fd(input->token, 2);
-		return (0);
+		return (1);
 	}
 	else if (ft_strcmp(line, input->token) == 0)
 	{
