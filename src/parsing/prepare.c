@@ -6,7 +6,7 @@
 /*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:57:28 by aascedu           #+#    #+#             */
-/*   Updated: 2023/06/23 11:50:26 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/08/04 18:35:16 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	prepare_token(t_data *data)
 	if (!need_to_new(data->tokens) \
 		&& replace_list(data, NULL, ft_tokensize(data->tokens)))
 		return (1);
+	id_tokens(&data->tokens, NULL);
 	if (remove_quotes(&data->tokens, data))
 		return (1);
-	id_tokens(&data->tokens, NULL);
 	if (syntax_error(data))
 		return (1);
 	return (0);
