@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:45 by aascedu           #+#    #+#             */
-/*   Updated: 2023/07/25 16:46:37 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/04 15:31:01 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	save_here_doc(t_data *data, t_token *input, char *line, int block)
 	data->cmd_block[block]->heredoc_here = 1;
 	if (!line)
 	{
-		printf("warning: here-document delimited by EOF (wanted `%s')\n",
-			input->token);
-		return (1);
+		write(2, "warning: here-document delimited by EOF wanted ", 47);
+		ft_putendl_fd(input->token, 2);
+		return (0);
 	}
 	else if (ft_strcmp(line, input->token) == 0)
 	{
