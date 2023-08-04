@@ -129,8 +129,10 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
 	data->paths = NULL;
 	command_path = get_validpath(data, input, env_array);
-	if (!command_path && !data->paths && input->token[0])
-		command_path = ft_strjoin("./", input->token);
+	if (!command_path && !ft_getenv(data->env, "PATH") && access(input->token, F_OK) == 0)
+		command_path = input->token; // a voir si faut pas strdup
+	// if (!command_path && !data->paths && input->token[0])
+	// 	command_path = ft_strjoin("./", input->token);
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{
