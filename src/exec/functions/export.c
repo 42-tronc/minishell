@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 09:39:35 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/04 15:16:24 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	export_sort(t_env *env)
 	}
 }
 
-static int	check_var_name(char *var)
+int	check_var_name(char *var, char *fn)
 {
 	int	i;
 	int	status;
@@ -53,7 +53,12 @@ static int	check_var_name(char *var)
 			status = 1;
 	}
 	if (status)
-		ft_putendl_fd("export: not a valid identifier", 2);
+	{
+		write(2, fn, ft_strlen(fn));
+		write(2, ": ", 2);
+		write(2, var, ft_strlen(var));
+		ft_putendl_fd(": not a valid identifier", 2);
+	}
 	return (status);
 }
 
@@ -76,7 +81,7 @@ int	add_env_entry(t_data *data, t_token *input, int block)
 				*value = '\0';
 			if (value)
 				value++;
-			if (check_var_name(var))
+			if (check_var_name(var, "export"))
 				return (free(var), 1);
 			ft_setenv(data, &(data->env), var, value);
 			free(var);

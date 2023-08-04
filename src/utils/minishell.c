@@ -40,19 +40,19 @@ static void	check_command(t_data *data, t_token *input, int block)
 		if (input->type && ft_strcmp(input->type, CMD) == 0)
 		{
 			if (ft_strcmp(input->token, "cd") == 0)
-				check_alone(ft_cd, data, input->next, block);
+				g_ret_value = check_alone(ft_cd, data, input->next, block);
 			else if (ft_strcmp(input->token, "echo") == 0)
 				create_subshell(ft_echo, data, input, block);
 			else if (ft_strcmp(input->token, "env") == 0)
 				create_subshell(print_env, data, input, block);
 			else if (ft_strcmp(input->token, "exit") == 0)
-				check_alone(ft_exit, data, input->next, block);
+				g_ret_value = check_alone(ft_exit, data, input->next, block);
 			else if (ft_strcmp(input->token, "export") == 0)
 				g_ret_value = ft_export(data, input->next, block);
 			else if (ft_strcmp(input->token, "pwd") == 0)
 				create_subshell(ft_pwd, data, input, block);
 			else if (ft_strcmp(input->token, "unset") == 0)
-				check_alone(ft_unset, data, input, block);
+				g_ret_value = check_alone(ft_unset, data, input, block);
 			else
 				create_subshell(execve_cmd, data, input, block);
 		}

@@ -41,7 +41,7 @@ char	*get_validpath(t_data *data, t_token *input, char **env_array)
 
 	i = -1;
 	command_path = ft_strdup(input->token);
-	if (!input || !ft_strcmp(input->token, ""))
+	if (!input || !ft_strcmp(command_path, ""))
 		return (free(command_path), NULL);
 	if (ft_strchr(input->token, '/'))
 		return (command_path);

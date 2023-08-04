@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/06/26 12:52:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/04 15:21:17 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,21 @@ static void	unset_key(t_env **env, const char *token)
 
 int	ft_unset(t_data *data, t_token *input, int block)
 {
+	int		status;
 	t_env	**env;
 
+	status = EXIT_SUCCESS;
 	env = &data->env;
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
-			unset_key(env, input->token);
+		{
+			if (!check_var_name(input->token, "unset"))
+				unset_key(env, input->token);
+			else
+				status = EXIT_FAILURE;
+		}
 		input = input->next;
 	}
-	return (0);
+	return (status);
 }

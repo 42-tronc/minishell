@@ -31,7 +31,7 @@ int	even_quote(t_parsing *p, char *str)
 	}
 	if (nb_quote % 2 || nb_dquote % 2)
 	{
-		printf("quotes or double quotes aren't closed correctly\n");
+		ft_putendl_fd("quotes or double quotes aren't closed correctly", 2);
 		return (0);
 	}
 	return (1);
@@ -58,7 +58,8 @@ int	right_symbols(t_parsing *p, char *str)
 		p_quote(p, str[i]);
 		if (p->quote == 0 && p->dquote == 0 && triple_symbol(str, i))
 		{
-			printf("minishell: syntax error near unexpected token %c\n", str[i]);
+			ft_putendl_fd("minishell: syntax error near unexpected token", 2);
+			g_ret_value = 2;
 			return (0);
 		}
 	}
