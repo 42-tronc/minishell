@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:31:15 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 16:36:42 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/04 17:10:51 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_validpath(t_data *data, t_token *input, char **env_array)
 
 	i = -1;
 	command_path = ft_strdup(input->token);
-	if (!input || !ft_strcmp(command_path, ""))
+	if (!input || !command_path || !ft_strcmp(command_path, ""))
 		return (free(command_path), NULL);
 	if (ft_strchr(input->token, '/'))
 		return (command_path);

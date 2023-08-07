@@ -21,9 +21,9 @@ char	*get_var_name(char *str)
 	i = -1;
 	while (str && str[++i])
 	{
-		if (ft_isdigit(str[i]))
-			i++;
-		if (ft_isdigit(str[i]) || !next_char(str[i]))
+		if (ft_isdigit(str[0]))
+			return (NULL);
+		if (!next_char(str[i]))
 			break ;
 	}
 	if (!i)
@@ -31,12 +31,9 @@ char	*get_var_name(char *str)
 	res = malloc(sizeof(char) * (i + 1));
 	if (!res)
 		return (NULL);
-	j = 0;
-	while (j < i)
-	{
+	j = -1;
+	while (++j < i)
 		res[j] = str[j];
-		j++;
-	}
 	res[j] = '\0';
 	return (res);
 }
@@ -96,6 +93,8 @@ int	replace_var(t_token *temp, t_data *p, int to_free)
 		p->p->var_name = get_var_name(temp->token + p->i);
 		if (p->p->var_name)
 			p->p->var_value = ft_getenv(p->env, p->p->var_name);
+		else
+			p->p->var_name = ft_strdup("1");
 		to_free = 0;
 	}
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
@@ -115,14 +114,18 @@ int	expand_tokens(t_token **tokens, t_data *data)
 	t_token	*temp;
 
 	temp = *tokens;
+	data->p->new_token = NULL;
 	while (temp)
 	{
 		data->p->i = 0;
-		while (processed_line(temp->token, data->p))
+		if (temp->limiter == 0)
 		{
-			if (replace_var(temp, data, 1))
-				return (1);
-			data->i = 0;
+			while (processed_line(temp->token, data->p))
+			{
+				if (replace_var(temp, data, 1))
+					return (1);
+				data->i = 0;
+			}
 		}
 		temp = temp->next;
 	}
