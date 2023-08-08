@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 07:54:16 by croy              #+#    #+#             */
-/*   Updated: 2023/06/30 13:04:46 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/08 15:14:46 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,6 @@ int	check_alone(int (*func)(t_data *, t_token *, int), t_data *data,
 	else
 		create_subshell(func, data, input, block);
 	return (status);
-}
-
-void	close_all_pipes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->cmd_ct)
-	{
-		if (data->cmd_block[i]->pipe_fd[0] > 0)
-		{
-			close(data->cmd_block[i]->pipe_fd[0]);
-			data->cmd_block[i]->pipe_fd[0] = -1;
-		}
-		if (data->cmd_block[i]->pipe_fd[1] > 0)
-		{
-			close(data->cmd_block[i]->pipe_fd[1]);
-			data->cmd_block[i]->pipe_fd[1] = -1;
-		}
-		i++;
-	}
 }
 
 void	ignore_sig(void)
@@ -73,7 +52,7 @@ void	create_subshell(int (*func)(t_data *, t_token *, int), t_data *data,
 	{
 		get_signal_exec();
 		if (block < data->cmd_ct - 1 && data->cmd_block[block]->pipe_fd[0] > 0)
-			close(data->cmd_block[block]->pipe_fd[0]);
+			close_fd(data->cmd_block[block]->pipe_fd[0]);
 		check_io(data, block);
 		status = func(data, input, block);
 		free_quit(data);

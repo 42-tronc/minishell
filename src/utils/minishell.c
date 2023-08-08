@@ -6,32 +6,13 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:37:22 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 17:50:09 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/08 15:01:36 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_ret_value;
-
-void	close_pipes(t_data *data, int block)
-{
-	if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
-	{
-		close(data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO]);
-		data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] = -3;
-	}
-	if (block < data->cmd_ct - 1
-		&& data->cmd_block[block]->pipe_fd[STDOUT_FILENO] > 0)
-	{
-		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
-		data->cmd_block[block]->pipe_fd[STDOUT_FILENO] = -3;
-	}
-	if (data->cmd_block[block]->out_fd > 0)
-		close(data->cmd_block[block]->out_fd);
-	if (data->cmd_block[block]->in_fd > 0)
-		close(data->cmd_block[block]->in_fd);
-}
 
 static void	check_command(t_data *data, t_token *input, int block)
 {
@@ -136,6 +117,7 @@ int	main(int argc, char **argv, char **envp)
 			create_pipe(data);
 			exec_dispatch(data, data->tokens);
 		}
+		close_all_pipes(data);
 		free_in_while(data);
 	}
 }

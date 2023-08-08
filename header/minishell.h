@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/04 15:08:45 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/08 14:49:29 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,11 @@ char		**split_paths(char const *s, char c);
 void		handle_execve_failure(t_data *data, int block, \
 	char *command_path, char **env_array);
 
+// utils_close.c
+void		close_fd(int fd);
+void		close_parent_fd(t_data *data, int block);
+void		close_pipes(t_data *data, int block);
+
 // utils.c
 void		exit_error(t_data *data, int code, char *source);
 int			count_arguments(t_token *input);
@@ -171,7 +176,6 @@ void		free_array(char **env_array);
 void		free_cmd_block(t_data *data);
 void		free_quit(t_data *data);
 void		free_in_while(t_data *data);
-void		close_parent_fd(t_data *data, int block);
 
 // utils_heredoc.c
 char		*ft_strjoin_heredoc(char *s1, char *s2);
@@ -294,7 +298,6 @@ void		free_token(t_token *tokens);
 char		**get_array_cmd(t_token *temp);
 
 // minishell.c
-void		close_pipes(t_data *data, int block);
 void		exec_code(t_data *data);
 void		exec_dispatch(t_data *data, t_token *input);
 

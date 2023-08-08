@@ -108,6 +108,8 @@ int	init_data(t_data *data)
 		}
 		data->cmd_block[i]->in_fd = -2;
 		data->cmd_block[i]->out_fd = -2;
+		data->cmd_block[i]->pipe_fd[0] = -2;
+		data->cmd_block[i]->pipe_fd[1] = -2;
 		data->cmd_block[i++]->heredoc_here = 0;
 	}
 	return (EXIT_SUCCESS);
