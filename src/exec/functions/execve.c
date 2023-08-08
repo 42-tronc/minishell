@@ -124,7 +124,6 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	char	**command_args;
 	char	**env_array;
 
-	(void)block;
 	status = 0;
 	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
 	data->paths = NULL;
@@ -138,8 +137,9 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 		command_args = get_cmd_args(input, command_path, 1);
 		if (command_args)
 			execve(command_path, command_args, env_array);
+		if (command_args)
+			free_array(command_args);
 	}
-	free_array(command_args);
 	handle_execve_failure(data, block, command_path, env_array);
 	rl_clear_history();
 	exit (status);
