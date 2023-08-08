@@ -24,7 +24,7 @@ int	next_char(char c)
 		return (1);
 }
 
-int	processed_line(char *str, t_parsing *p)
+int	processed_line(char *s, t_parsing *p)
 {
 	int	i;
 	int	found_dollar;
@@ -35,12 +35,13 @@ int	processed_line(char *str, t_parsing *p)
 	found_alpha = 0;
 	p->quote = 0;
 	p->dquote = 0;
-	while (str && str[i])
+	while (s && s[i])
 	{
-		p_quote(p, str[i]);
-		if (!p->quote && str[i] == '$')
+		p_quote(p, s[i]);
+		if (!p->quote && s[i] == '$')
 			found_dollar++;
-		else if (found_dollar % 2 != 0 && (ft_isalnum(str[i]) || str[i] == '?'))
+		else if (found_dollar % 2 != 0 && (ft_isalnum(s[i]) || s[i] == '?'
+				|| (s[i] == '\"' && p->dquote) || (s[i] == '\'' && p->quote)))
 			found_alpha = 1;
 		else
 			found_dollar = 0;
