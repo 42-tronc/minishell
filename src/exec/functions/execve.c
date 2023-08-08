@@ -35,7 +35,7 @@ char	**get_cmd_args(t_token *input, char *command_path, size_t i)
 	input = input->next;
 	array[0] = ft_strdup(command_path);
 	if (!array[0])
-		return ((void)printf("Error Malloc in get_cmd_args\n"), NULL);
+		return (printf("Error Malloc in get_cmd_args\n"), free(array), NULL);
 	while (input && i < size)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
@@ -139,6 +139,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 		if (command_args)
 			execve(command_path, command_args, env_array);
 	}
+	free_array(command_args);
 	handle_execve_failure(data, block, command_path, env_array);
 	rl_clear_history();
 	exit (status);
