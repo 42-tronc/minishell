@@ -84,6 +84,16 @@ void	check_output(t_data *data, int block)
 	}
 }
 
+static void	error_close_pipes(t_data *data, int i)
+{
+	while (i >= 0)
+	{
+		close(data->cmd_block[i]->pipe_fd[STDIN_FILENO]);
+		close(data->cmd_block[i]->pipe_fd[STDOUT_FILENO]);
+		i--;
+	}
+}
+
 int	create_pipe(t_data *data)
 {
 	int	i;
@@ -94,7 +104,10 @@ int	create_pipe(t_data *data)
 	while (i < data->cmd_ct - 1)
 	{
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
+		{
+			error_close_pipes(data, i - 1);
 			exit_error(data, E_PIPE, "create_pipe");
+		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
