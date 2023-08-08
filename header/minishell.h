@@ -215,7 +215,7 @@ int			expand_tokens(t_token **tokens, t_data *data);
 
 // dollar2.c
 int			next_char(char c);
-int			processed_line(char *str, t_parsing *p);
+int			processed_line(char *s, t_parsing *p);
 int			str_cpy_dollar(char *dst, char *src, int index);
 char		*ft_strjoin_dollar(char const *s1, char const *s2);
 
