@@ -19,7 +19,11 @@ static void	handle_heredoc(t_data *data, t_cmd_block *cmd_block)
 	if (pipe(tmp_pipe) == -1)
 		exit_error(data, E_PIPE, "handle_heredoc");
 	if (dup2(tmp_pipe[STDIN_FILENO], STDIN_FILENO) == -1)
+	{
+		close(tmp_pipe[STDIN_FILENO]);
+		close(tmp_pipe[STDOUT_FILENO]);
 		exit_error(data, E_DUP2, "handle_heredoc");
+	}
 	write(tmp_pipe[STDOUT_FILENO], cmd_block->heredoc,
 		ft_strlen(cmd_block->heredoc));
 	close(tmp_pipe[STDOUT_FILENO]);
@@ -42,7 +46,10 @@ void	check_input(t_data *data, int block)
 	if (data->cmd_block[block]->in_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
+		{
+			close(data->cmd_block[block]->in_fd);
 			exit_error(data, E_DUP2, "check_input");
+		}
 		close(data->cmd_block[block]->in_fd);
 	}
 	else if (data->cmd_block[block]->heredoc_here)
@@ -50,9 +57,12 @@ void	check_input(t_data *data, int block)
 	else if (block > 0 && data->cmd_block[block - 1]->pipe_fd[STDIN_FILENO] > 0)
 	{
 		block -= 1;
-		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO], \
-			STDIN_FILENO) == -1)
+		if (dup2(data->cmd_block[block]->pipe_fd[STDIN_FILENO],
+				STDIN_FILENO) == -1)
+		{
+			close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 			exit_error(data, E_DUP2, "check_input");
+		}
 		close(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
 }
@@ -72,14 +82,20 @@ void	check_output(t_data *data, int block)
 	if (data->cmd_block[block]->out_fd > 0)
 	{
 		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
+		{
+			close(data->cmd_block[block]->out_fd);
 			exit_error(data, E_DUP2, "check_output");
+		}
 		close(data->cmd_block[block]->out_fd);
 	}
 	else if (block < data->cmd_ct - 1)
 	{
 		if (dup2(data->cmd_block[block]->pipe_fd[STDOUT_FILENO],
 				STDOUT_FILENO) == -1)
+		{
+			close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 			exit_error(data, E_DUP2, "check_output");
+		}
 		close(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
 }
