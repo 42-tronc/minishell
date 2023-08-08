@@ -28,6 +28,7 @@ void	exit_error(t_data *data, int code, char *source)
 		write(2, source, ft_strlen(source));
 		write(2, "\e[0m\n", 5);
 	}
+	close_all_pipes(data);
 	free_quit(data);
 	exit(EXIT_FAILURE);
 }

@@ -25,27 +25,6 @@ int	check_alone(int (*func)(t_data *, t_token *, int), t_data *data,
 	return (status);
 }
 
-void	close_all_pipes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->cmd_ct)
-	{
-		if (data->cmd_block[i]->pipe_fd[0] > 0)
-		{
-			close(data->cmd_block[i]->pipe_fd[0]);
-			data->cmd_block[i]->pipe_fd[0] = -1;
-		}
-		if (data->cmd_block[i]->pipe_fd[1] > 0)
-		{
-			close(data->cmd_block[i]->pipe_fd[1]);
-			data->cmd_block[i]->pipe_fd[1] = -1;
-		}
-		i++;
-	}
-}
-
 void	ignore_sig(void)
 {
 	signal(SIGINT, SIG_IGN);
