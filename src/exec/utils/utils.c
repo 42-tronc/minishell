@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 16:27:18 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/08 15:05:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_error(t_data *data, int code, char *source)
 	error[E_MALLOC] = "Malloc failed to allocate a memory space";
 	error[E_DUP2] = "Dup2 failed to duplicate the file descriptor";
 	error[E_PIPE] = "Pipe failed to create a pipe";
-	error[E_FORK] = "For failed to create a child process";
+	error[E_FORK] = "Fork failed to create a child process";
 	write(2, "\e[31mError: ", 12);
 	write(2, error[code], ft_strlen(error[code]));
 	if (source)
