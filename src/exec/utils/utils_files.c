@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:28 by croy              #+#    #+#             */
-/*   Updated: 2023/06/29 07:56:16 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/08 14:57:59 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	check_infile(t_data *data, t_token *input, int block)
 		if (ft_strcmp(input->type, INFILE) == 0)
 		{
 			if (data->cmd_block[block]->in_fd >= 0)
-				close(data->cmd_block[block]->in_fd);
+				close_fd(data->cmd_block[block]->in_fd);
 			data->cmd_block[block]->in_fd = open(input->token, O_RDONLY);
 			if (data->cmd_block[block]->in_fd == -1)
 			{
@@ -113,7 +113,7 @@ int	check_outfile(t_data *data, t_token *input, int block)
 			if (ft_strcmp(input->type, APPEND) == 0)
 				flags = (O_WRONLY | O_CREAT | O_APPEND);
 			if (data->cmd_block[block]->out_fd >= 0)
-				close(data->cmd_block[block]->out_fd);
+				close_fd(data->cmd_block[block]->out_fd);
 			data->cmd_block[block]->out_fd = open(input->token, flags, 0777);
 			if (data->cmd_block[block]->out_fd == -1)
 			{
