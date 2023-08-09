@@ -26,6 +26,8 @@ void	close_all_pipes(t_data *data)
 	int	i;
 
 	i = 0;
+	if (!data->cmd_block)
+		return ;
 	while (i < data->cmd_ct)
 	{
 		close_fd(data->cmd_block[i]->pipe_fd[0]);

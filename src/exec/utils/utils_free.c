@@ -35,7 +35,9 @@ void	free_cmd_block(t_data *data)
 	while (data->cmd_block[i])
 	{
 		free(data->cmd_block[i]->heredoc);
+		data->cmd_block[i]->heredoc = NULL;
 		free(data->cmd_block[i]);
+		data->cmd_block[i] = NULL;
 		i++;
 	}
 	free(data->cmd_block);
