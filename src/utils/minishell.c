@@ -107,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		get_signal_prompt();
-		getting_line(data);
+		getting_line(data, NULL);
 		if (data->tokens && !prepare_token(data))
 		{
 			if (init_data(data))

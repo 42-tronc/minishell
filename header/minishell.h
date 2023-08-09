@@ -239,7 +239,7 @@ void		id_tokens(t_token **tokens, t_token *temp);
 int			even_quote(t_parsing *p, char *str);
 int			triple_symbol(char *str, int i);
 int			right_symbols(t_parsing *p, char *str);
-int			getting_line(t_data *data);
+int			getting_line(t_data *data, char *str);
 
 // prepare.c
 int			prepare_token(t_data *data);
