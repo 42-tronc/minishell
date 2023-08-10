@@ -6,13 +6,13 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:38:39 by croy              #+#    #+#             */
-/*   Updated: 2023/08/08 15:05:31 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:41:53 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_error(t_data *data, int code, char *source)
+void	print_error(int code, char *source)
 {
 	char	*error[4];
 
@@ -20,7 +20,7 @@ void	exit_error(t_data *data, int code, char *source)
 	error[E_DUP2] = "Dup2 failed to duplicate the file descriptor";
 	error[E_PIPE] = "Pipe failed to create a pipe";
 	error[E_FORK] = "Fork failed to create a child process";
-	write(2, "\e[31mError: ", 12);
+	write(2, "\e[31;1mError: \e[22m", 19);
 	write(2, error[code], ft_strlen(error[code]));
 	if (source)
 	{
@@ -28,6 +28,11 @@ void	exit_error(t_data *data, int code, char *source)
 		write(2, source, ft_strlen(source));
 		write(2, "\e[0m\n", 5);
 	}
+}
+
+void	clean_exit(t_data *data, int code, char *source)
+{
+	print_error(code, source);
 	close_all_pipes(data);
 	free_quit(data);
 	exit(EXIT_FAILURE);
