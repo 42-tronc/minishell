@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*get_var_name(char *str)
+char	*get_var_name(t_data *data, char *str)
 {
 	int		i;
 	int		j;
@@ -30,7 +30,7 @@ char	*get_var_name(char *str)
 		return (NULL);
 	res = malloc(sizeof(char) * (i + 1));
 	if (!res)
-		return (NULL);
+		exit_dollar(data);
 	j = -1;
 	while (++j < i)
 		res[j] = str[j];
@@ -58,7 +58,7 @@ char	*get_before_dollar(char *str, t_data *p, int i, int size)
 		return (NULL);
 	res = malloc(sizeof(char) * (size + 1));
 	if (!res)
-		return (NULL);
+		exit_dollar(p);
 	while (++i < size)
 		res[i] = str[i];
 	res[i] = '\0';
@@ -66,45 +66,49 @@ char	*get_before_dollar(char *str, t_data *p, int i, int size)
 	return (res);
 }
 
-void	free_expand(t_parsing *p, int to_free)
+void	join_n_clean(t_token *temp, t_data *p)
 {
-	if (to_free)
-		free(p->var_value);
-	if (p->var_name)
-		free(p->var_name);
-	if (p->before)
-		free(p->before);
-	if (p->before_and_value)
-		free(p->before_and_value);
-	if (p->new_token)
-		free(p->new_token);
-}
-
-int	replace_var(t_token *temp, t_data *p, int to_free)
-{
-	p->p->before = get_before_dollar(temp->token, p, -1, -1);
-	p->i++;
 	if (temp->token[p->i] == '?')
+	{
 		p->p->var_name = ft_strdup("1");
-	if (temp->token[p->i] == '?')
+		if (!p->p->var_name)
+			exit_dollar(p);
 		p->p->var_value = ft_itoa(g_ret_value);
+		if (!p->p->var_value)
+			exit_dollar(p);
+		p->p->to_free = 1;
+	}
 	else
 	{
-		p->p->var_name = get_var_name(temp->token + p->i);
+		p->p->var_name = get_var_name(p, temp->token + p->i);
 		if (p->p->var_name)
 			p->p->var_value = ft_getenv(p->env, p->p->var_name);
 		else
+		{
 			p->p->var_name = ft_strdup("1");
-		to_free = 0;
+			if (!p->p->var_name)
+				exit_dollar(p);
+		}
 	}
+}
+
+int	replace_var(t_token *temp, t_data *p)
+{
+	p->p->before = get_before_dollar(temp->token, p, -1, -1);
+	p->i++;
+	join_n_clean(temp, p);
 	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
-	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token \
+	if (!p->p->before_and_value)
+		exit_dollar(p);
+	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token 
 	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
 	if (!p->p->new_token)
-		return (1);
+		exit_dollar(p);
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
-	free_expand(p->p, to_free);
+	if (!temp->token)
+		exit_dollar(p);
+	free_expand(p->p);
 	temp->from_expand = 1;
 	return (0);
 }
@@ -122,7 +126,8 @@ int	expand_tokens(t_token **tokens, t_data *data)
 		{
 			while (processed_line(temp->token, data->p))
 			{
-				if (replace_var(temp, data, 1))
+				set_to_null(data->p);
+				if (replace_var(temp, data))
 					return (1);
 				data->i = 0;
 			}
