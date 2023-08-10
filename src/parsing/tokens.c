@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+void	exit_parsing(t_data *data, int code, char *source)
+{
+	free_token(data->tokens);
+	free_list(data->env);
+	free(data->p);
+	free(data);
+	print_error(code, source);
+	rl_clear_history();
+	exit (1);
+}
+
 int	get_end_token(t_parsing *p, char *str)
 {
 	int	i;
@@ -36,14 +47,14 @@ int	get_end_token(t_parsing *p, char *str)
 	return (i - 1);
 }
 
-char	*copy_str_from_to(int from, int to, char *str)
+char	*copy_str_from_to(t_data *data, int from, int to, char *str)
 {
 	char	*copy;
 	int		i;
 
 	copy = malloc(sizeof(char) * (to - from + 2));
 	if (!copy)
-		return (NULL);
+		exit_parsing(data, E_MALLOC, "malloc in copy_str_from_to");
 	i = 0;
 	while (str && from <= to)
 	{
@@ -55,7 +66,7 @@ char	*copy_str_from_to(int from, int to, char *str)
 	return (copy);
 }
 
-int	cutting_line(t_token **temp, t_parsing *p, char *str)
+int	cutting_line(t_data *data, t_token **temp, t_parsing *p, char *str)
 {
 	char	*token;
 
@@ -65,13 +76,12 @@ int	cutting_line(t_token **temp, t_parsing *p, char *str)
 		{
 			p->start = p->i;
 			p->i = get_end_token(p, str);
-			token = copy_str_from_to(p->start, p->i, str);
-			if (!token)
-				printf("error while cutting input (probably malloc)\n");
-			if (!token)
-				return (1);
+			token = copy_str_from_to(data, p->start, p->i, str);
 			if (ft_tokenadd_back(temp, ft_tokennew(token)))
-				return (free(token), 1);
+			{
+				free(token);
+				exit_parsing(data, E_MALLOC, "tokennew");
+			}
 		}
 		p->i++;
 	}

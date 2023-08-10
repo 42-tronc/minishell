@@ -23,6 +23,18 @@ int	is_tilde(t_parsing *p, char *str)
 	return (0);
 }
 
+void	exit_tilde(t_data *data, int code, char *source, char *copy)
+{
+	free(copy);
+	free_token(data->tokens);
+	free_list(data->env);
+	free(data->p);
+	free(data);
+	print_error(code, source);
+	rl_clear_history();
+	exit (1);
+}
+
 int	replace_tilde(t_token *temp, t_data *data)
 {
 	char	*copy;
@@ -30,19 +42,19 @@ int	replace_tilde(t_token *temp, t_data *data)
 	(void)data;
 	copy = ft_strdup(temp->token);
 	if (!copy)
-		return (1);
+		exit_tilde(data, E_MALLOC, "replace_tilde", copy);
 	free(temp->token);
 	if (copy && (copy[1] == '/' || !copy[1]))
 	{
 		temp->token = ft_strjoin(ft_getenv(data->env, "HOME"), copy + 1);
 		if (!temp->token)
-			return (free(copy), 1);
+			exit_tilde(data, E_MALLOC, "replace_tilde", copy);
 	}
 	else
 	{
 		temp->token = ft_strdup(copy);
 		if (!temp->token)
-			return (free(copy), 1);
+			exit_tilde(data, E_MALLOC, "replace_tilde", copy);
 	}
 	free(copy);
 	return (0);
