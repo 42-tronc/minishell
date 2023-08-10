@@ -74,6 +74,7 @@ struct s_parsing {
 	int		quote;
 	int		dquote;
 	int		all_id;
+	int		to_free;
 	char	*before;
 	char	*var_value;
 	char	*before_and_value;
@@ -212,17 +213,22 @@ void		free_cutting_expand(char **array, t_token *temp);
 int			cutting_expand(t_data *data);
 
 // dollar.c
-char		*get_var_name(char *str);
+char		*get_var_name(t_data *data, char *str);
 char		*get_before_dollar(char *str, t_data *p, int i, int size);
-void		free_expand(t_parsing *p, int to_free);
-int			replace_var(t_token *temp, t_data *p, int to_free);
+int			replace_var(t_token *temp, t_data *p);
 int			expand_tokens(t_token **tokens, t_data *data);
+void		join_n_clean(t_token *temp, t_data *p);
 
 // dollar2.c
+void		free_expand(t_parsing *p);
 int			next_char(char c);
 int			processed_line(char *s, t_parsing *p);
 int			str_cpy_dollar(char *dst, char *src, int index);
-char		*ft_strjoin_dollar(char const *s1, char const *s2);
+char		*ft_strjoin_dollar(t_data *data, char const *s1, char const *s2);
+
+// dollar3.c
+void		exit_dollar(t_data *data, int code, char *source);
+void		set_to_null(t_parsing *p);
 
 // envp.c
 void		free_list(t_env *lst);
