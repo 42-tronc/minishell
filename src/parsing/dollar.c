@@ -30,7 +30,7 @@ char	*get_var_name(t_data *data, char *str)
 		return (NULL);
 	res = malloc(sizeof(char) * (i + 1));
 	if (!res)
-		exit_dollar(data);
+		exit_dollar(data, E_MALLOC, "get_var_main");
 	j = -1;
 	while (++j < i)
 		res[j] = str[j];
@@ -58,7 +58,7 @@ char	*get_before_dollar(char *str, t_data *p, int i, int size)
 		return (NULL);
 	res = malloc(sizeof(char) * (size + 1));
 	if (!res)
-		exit_dollar(p);
+		exit_dollar(p, E_MALLOC, "get_before_dollar");
 	while (++i < size)
 		res[i] = str[i];
 	res[i] = '\0';
@@ -72,10 +72,10 @@ void	join_n_clean(t_token *temp, t_data *p)
 	{
 		p->p->var_name = ft_strdup("1");
 		if (!p->p->var_name)
-			exit_dollar(p);
+			exit_dollar(p, E_MALLOC, "ft_strdup (var_name)");
 		p->p->var_value = ft_itoa(g_ret_value);
 		if (!p->p->var_value)
-			exit_dollar(p);
+			exit_dollar(p, E_MALLOC, "ft_itoa ($?)");
 		p->p->to_free = 1;
 	}
 	else
@@ -87,7 +87,7 @@ void	join_n_clean(t_token *temp, t_data *p)
 		{
 			p->p->var_name = ft_strdup("1");
 			if (!p->p->var_name)
-				exit_dollar(p);
+				exit_dollar(p, E_MALLOC, "ft_strdup");
 		}
 	}
 }
@@ -104,7 +104,7 @@ int	replace_var(t_token *temp, t_data *p)
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
 	if (!temp->token)
-		exit_dollar(p);
+		exit_dollar(p, E_MALLOC, "ft_strdup (temp->token in expand)");
 	free_expand(p->p);
 	temp->from_expand = 1;
 	return (0);
