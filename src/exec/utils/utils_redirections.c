@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 09:58:59 by croy              #+#    #+#             */
-/*   Updated: 2023/08/08 15:15:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	handle_heredoc(t_data *data, t_cmd_block *cmd_block)
 	int	tmp_pipe[2];
 
 	if (pipe(tmp_pipe) == -1)
-		exit_error(data, E_PIPE, "handle_heredoc");
+		clean_exit(data, E_PIPE, "handle_heredoc");
 	if (dup2(tmp_pipe[STDIN_FILENO], STDIN_FILENO) == -1)
 	{
 		close_fd(tmp_pipe[STDIN_FILENO]);
 		close_fd(tmp_pipe[STDOUT_FILENO]);
-		exit_error(data, E_DUP2, "handle_heredoc");
+		clean_exit(data, E_DUP2, "handle_heredoc");
 	}
 	write(tmp_pipe[STDOUT_FILENO], cmd_block->heredoc,
 		ft_strlen(cmd_block->heredoc));
@@ -48,7 +48,7 @@ void	check_input(t_data *data, int block)
 		if (dup2(data->cmd_block[block]->in_fd, STDIN_FILENO) == -1)
 		{
 			close_fd(data->cmd_block[block]->in_fd);
-			exit_error(data, E_DUP2, "check_input");
+			clean_exit(data, E_DUP2, "check_input");
 		}
 		close_fd(data->cmd_block[block]->in_fd);
 	}
@@ -61,7 +61,7 @@ void	check_input(t_data *data, int block)
 				STDIN_FILENO) == -1)
 		{
 			close_fd(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
-			exit_error(data, E_DUP2, "check_input");
+			clean_exit(data, E_DUP2, "check_input");
 		}
 		close_fd(data->cmd_block[block]->pipe_fd[STDIN_FILENO]);
 	}
@@ -84,7 +84,7 @@ void	check_output(t_data *data, int block)
 		if (dup2(data->cmd_block[block]->out_fd, STDOUT_FILENO) == -1)
 		{
 			close_fd(data->cmd_block[block]->out_fd);
-			exit_error(data, E_DUP2, "check_output");
+			clean_exit(data, E_DUP2, "check_output");
 		}
 		close_fd(data->cmd_block[block]->out_fd);
 	}
@@ -94,7 +94,7 @@ void	check_output(t_data *data, int block)
 				STDOUT_FILENO) == -1)
 		{
 			close_fd(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
-			exit_error(data, E_DUP2, "check_output");
+			clean_exit(data, E_DUP2, "check_output");
 		}
 		close_fd(data->cmd_block[block]->pipe_fd[STDOUT_FILENO]);
 	}
@@ -122,7 +122,7 @@ int	create_pipe(t_data *data)
 		if (pipe(data->cmd_block[i]->pipe_fd) == -1)
 		{
 			error_close_pipes(data, i - 1);
-			exit_error(data, E_PIPE, "create_pipe");
+			clean_exit(data, E_PIPE, "create_pipe");
 		}
 		i++;
 	}

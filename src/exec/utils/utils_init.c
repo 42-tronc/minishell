@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/07/25 17:53:36 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:42:18 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	fill_env(t_data *data, char **envp)
 				envp[i][j] = '\0';
 				current = ft_env_new(data, envp[i], envp[i] + j + 1);
 				if (!current)
-					exit_error(data, E_MALLOC, "fill_env");
+					clean_exit(data, E_MALLOC, "fill_env");
 				ft_env_add_back(&(data->env), current);
 				break ;
 			}
@@ -103,6 +103,7 @@ int	init_data(t_data *data)
 		data->cmd_block[i] = ft_calloc(1, sizeof(t_cmd_block));
 		if (!data->cmd_block[i])
 		{
+			print_error(E_MALLOC, "init_data");
 			free_cmd_block(data);
 			return (EXIT_FAILURE);
 		}
