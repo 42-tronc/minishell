@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 11:03:31 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 11:52:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**get_cmd_args(t_token *input, char *command_path, size_t i)
 		{
 			array[i] = ft_strdup(input->token);
 			if (!array[i++])
-				return ((void)printf("Error malloc get_cmd_args\n"),
+				return (print_error(E_MALLOC, "get_cmd_args"),
 					free_array(array), NULL);
 		}
 		input = input->next;
