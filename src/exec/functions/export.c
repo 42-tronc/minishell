@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/08/04 15:16:24 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	add_env_entry(t_data *data, t_token *input, int block)
 		{
 			var = ft_strdup(input->token);
 			if (!var)
-				exit_error(data, E_MALLOC, "add_env_entry");
+				clean_exit(data, E_MALLOC, "add_env_entry");
 			value = ft_strchr(var, '=');
 			if (value)
 				*value = '\0';

@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:19:50 by croy              #+#    #+#             */
-/*   Updated: 2023/06/24 20:42:40 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*ft_env_new(t_data *data, char *var, char *value)
 
 	dst = malloc(sizeof(t_env));
 	if (!dst)
-		exit_error(data, E_MALLOC, "ft_env_new");
+		clean_exit(data, E_MALLOC, "ft_env_new");
 	dst->var = NULL;
 	dst->value = NULL;
 	if (var)
@@ -39,7 +39,7 @@ t_env	*ft_env_new(t_data *data, char *var, char *value)
 		if (!dst->value)
 			free(dst->var);
 		free(dst);
-		exit_error(data, E_MALLOC, "ft_env_new");
+		clean_exit(data, E_MALLOC, "ft_env_new");
 	}
 	dst->next = NULL;
 	return (dst);

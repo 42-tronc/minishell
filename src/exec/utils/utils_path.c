@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:31:15 by croy              #+#    #+#             */
-/*   Updated: 2023/08/04 17:10:51 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*get_validpath(t_data *data, t_token *input, char **env_array)
 		return (free(command_path), NULL);
 	if (ft_getpaths(data) == 2)
 		return (free(command_path), \
-		free_array(env_array), exit_error(data, E_MALLOC, "ft_getpaths"), NULL);
+		free_array(env_array), clean_exit(data, E_MALLOC, "ft_getpaths"), NULL);
 	free(command_path);
 	while (data->paths[++i])
 	{
