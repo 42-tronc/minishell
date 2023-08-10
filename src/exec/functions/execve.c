@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/02 11:39:33 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
 
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
-		exit_error(data, E_MALLOC, "env_to_array 1");
+		clean_exit(data, E_MALLOC, "env_to_array 1");
 	i = 0;
 	while (env)
 	{
@@ -78,13 +78,13 @@ char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
 		if (!copy && env->var)
 			free_array(array);
 		if (!copy && env->var)
-			exit_error(data, E_MALLOC, "env_to_array 2");
+			clean_exit(data, E_MALLOC, "env_to_array 2");
 		array[i] = ft_strjoin(copy, env->value);
 		free(copy);
 		if (!array[i] && env->value)
 			free_array(array);
 		if (!array[i] && env->value)
-			exit_error(data, E_MALLOC, "env_to_array 3");
+			clean_exit(data, E_MALLOC, "env_to_array 3");
 		env = env->next;
 		i++;
 	}

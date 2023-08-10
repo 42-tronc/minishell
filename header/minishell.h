@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/08 14:49:29 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:37:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ void		close_parent_fd(t_data *data, int block);
 void		close_pipes(t_data *data, int block);
 
 // utils.c
-void		exit_error(t_data *data, int code, char *source);
+void		print_error(int code, char *source);
+void		clean_exit(t_data *data, int code, char *source);
 int			count_arguments(t_token *input);
 void		swap_var(char **current, char **next);
 
