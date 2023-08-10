@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 11:03:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	**get_cmd_args(t_token *input, char *command_path, size_t i)
 	size = count_arguments(input) + 1;
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
-		return (NULL);
+		return (print_error(E_MALLOC, "get_cmd_args"), NULL);
 	input = input->next;
 	array[0] = ft_strdup(command_path);
 	if (!array[0])
-		return (printf("Error Malloc in get_cmd_args\n"), free(array), NULL);
+		return (print_error(E_MALLOC, "get_cmd_args"), free(array), NULL);
 	while (input && i < size)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
