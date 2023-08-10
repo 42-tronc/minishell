@@ -52,7 +52,7 @@ int	check_last_token(t_token *temp)
 	|| !ft_strcmp(temp->type, PIPE))
 	{
 		g_ret_value = 2;
-		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
+		ft_putendl_fd(" syntax error near unexpected token `newline'", 2);
 		return (1);
 	}
 	return (0);
@@ -67,7 +67,7 @@ int	syntax_error(t_data *data)
 	{
 		if (!t->prev && !ft_strcmp(t->type, PIPE))
 		{
-			ft_putendl_fd("syntax error near unexpected token", 2);
+			ft_putendl_fd(" syntax error near unexpected token", 2);
 			g_ret_value = 2;
 			return (1);
 		}
@@ -75,7 +75,7 @@ int	syntax_error(t_data *data)
 		{
 			if (similar_type(t))
 			{
-				ft_putendl_fd("syntax error near unexpected token", 2);
+				ft_putendl_fd(" syntax error near unexpected token", 2);
 				g_ret_value = 2;
 				return (1);
 			}

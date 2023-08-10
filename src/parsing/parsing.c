@@ -58,7 +58,9 @@ int	right_symbols(t_parsing *p, char *str)
 		p_quote(p, str[i]);
 		if (p->quote == 0 && p->dquote == 0 && triple_symbol(str, i))
 		{
-			ft_putendl_fd("syntax error near unexpected token", 2);
+			ft_putstr_fd(" syntax error near unexpected token `", 2);
+			write(2, &str[i], 1);
+			ft_putendl_fd("'", 2);
 			g_ret_value = 2;
 			return (0);
 		}
