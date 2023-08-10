@@ -101,7 +101,7 @@ int	replace_var(t_token *temp, t_data *p)
 	if (!p->p->before_and_value)
 		exit_dollar(p);
 	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token 
-	+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
+			+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
 	if (!p->p->new_token)
 		exit_dollar(p);
 	free(temp->token);
