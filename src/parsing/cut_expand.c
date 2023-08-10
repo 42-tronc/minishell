@@ -37,36 +37,27 @@ static void	link_list(t_data *d, t_token *prev, t_token *next, t_token *temp)
 void	add_token_in_middle(t_token	*prev, t_token *next, char **a, t_data *d)
 {
 	int		i;
-	int		k;
 	t_token	*temp;
+	t_token	*save;
 
 	temp = NULL;
 	i = -1;
-	k = -1;
 	while (a[++i])
 	{
-		ft_tokenadd_back(&temp, ft_tokennew(a[i]));
-		while (++k <= i)
+		ft_tokenadd_back(&temp, ft_tokennew(ft_strdup(a[i])));
+		save = temp;
+		while (save)
 		{
-			if (!temp->token)
+			if (!save || !save->token)
 			{
 				free_token(temp);
-				free_token(d->tokens);
-				free(d->p);
-				free_list(d->env);
-				free(d);
-				exit (1);
+				free_array(a);
+				exit_parsing(d, E_MALLOC, "add_token_in_middle");
 			}
+			save = save->next;
 		}
 	}
 	link_list(d, prev, next, temp);
-}
-
-void	free_cutting_expand(char **array, t_token *temp)
-{
-	free(array);
-	free(temp->token);
-	free(temp);
 }
 
 int	cutting_expand(t_data *data)
@@ -87,7 +78,9 @@ int	cutting_expand(t_data *data)
 			if (!array)
 				return (1);
 			add_token_in_middle(temp->prev, temp->next, array, data);
-			free_cutting_expand(array, temp);
+			free_array(array);
+			free(temp->token);
+			free(temp);
 		}
 		temp = save;
 	}
