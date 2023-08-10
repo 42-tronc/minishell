@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 09:37:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 11:47:20 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,10 +232,6 @@ void		set_to_null(t_parsing *p);
 
 // envp.c
 void		free_list(t_env *lst);
-
-// envp_lst.c
-void		ft_envadd_back(t_env **env, t_env *new);
-t_env		*ft_envnew(char *var, char *value);
 
 // identification.c
 int			is_first_cmd(t_token *head);
