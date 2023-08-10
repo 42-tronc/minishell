@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+void	free_expand(t_parsing *p)
+{
+	if (p->to_free != 0)
+		free(p->var_value);
+	if (p->var_name)
+		free(p->var_name);
+	if (p->before)
+		free(p->before);
+	if (p->before_and_value)
+		free(p->before_and_value);
+	if (p->new_token)
+		free(p->new_token);
+}
+
 int	next_char(char c)
 {
 	if (c == '@' || c == '#' || c == '%' || c == '^' || c == '*' || c == '-'
