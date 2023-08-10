@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-void	exit_dollar(t_data *data)
+void	exit_dollar(t_data *data, int code, char *source)
 {
 	free_expand(data->p);
 	free_token(data->tokens);
 	free_list(data->env);
 	free(data->p);
 	free(data);
-	printf("error malloc in expand functions\n");
+	print_error(code, source);
 	rl_clear_history();
 	exit (1);
 }

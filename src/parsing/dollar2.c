@@ -94,7 +94,7 @@ char	*ft_strjoin_dollar(t_data *data, char const *s1, char const *s2)
 		return (NULL);
 	dst = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!dst)
-		exit_dollar(data);
+		exit_dollar(data, E_MALLOC, "ft_strjoin_dollar");
 	index = str_cpy_dollar(dst, (char *)s1, 0);
 	index = str_cpy_dollar(dst, (char *)s2, index);
 	dst[index] = '\0';

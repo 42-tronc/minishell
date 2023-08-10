@@ -227,7 +227,7 @@ int			str_cpy_dollar(char *dst, char *src, int index);
 char		*ft_strjoin_dollar(t_data *data, char const *s1, char const *s2);
 
 // dollar3.c
-void		exit_dollar(t_data *data);
+void		exit_dollar(t_data *data, int code, char *source);
 void		set_to_null(t_parsing *p);
 
 // envp.c
