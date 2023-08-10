@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:43:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/08 15:07:03 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 09:48:04 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ void	close_all_pipes(t_data *data)
 	{
 		close_fd(data->cmd_block[i]->pipe_fd[0]);
 		close_fd(data->cmd_block[i]->pipe_fd[1]);
-		// if (data->cmd_block[i]->pipe_fd[0] > 0)
-		// {
-		// 	close(data->cmd_block[i]->pipe_fd[0]);
-		// 	data->cmd_block[i]->pipe_fd[0] = -1;
-		// }
-		// if (data->cmd_block[i]->pipe_fd[1] > 0)
-		// {
-		// 	close(data->cmd_block[i]->pipe_fd[1]);
-		// 	data->cmd_block[i]->pipe_fd[1] = -1;
-		// }
 		i++;
 	}
 }
