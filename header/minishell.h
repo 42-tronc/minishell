@@ -224,7 +224,7 @@ void		free_expand(t_parsing *p);
 int			next_char(char c);
 int			processed_line(char *s, t_parsing *p);
 int			str_cpy_dollar(char *dst, char *src, int index);
-char		*ft_strjoin_dollar(char const *s1, char const *s2);
+char		*ft_strjoin_dollar(t_data *data, char const *s1, char const *s2);
 
 // dollar3.c
 void		exit_dollar(t_data *data);

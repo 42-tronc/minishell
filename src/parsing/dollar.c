@@ -97,13 +97,10 @@ int	replace_var(t_token *temp, t_data *p)
 	p->p->before = get_before_dollar(temp->token, p, -1, -1);
 	p->i++;
 	join_n_clean(temp, p);
-	p->p->before_and_value = ft_strjoin_dollar(p->p->before, p->p->var_value);
-	if (!p->p->before_and_value)
-		exit_dollar(p);
-	p->p->new_token = ft_strjoin_dollar(p->p->before_and_value, temp->token 
+	p->p->before_and_value = ft_strjoin_dollar(p, p->p->before, 
+			p->p->var_value);
+	p->p->new_token = ft_strjoin_dollar(p, p->p->before_and_value, temp->token 
 			+ ft_strlen(p->p->before) + ft_strlen(p->p->var_name) + 1);
-	if (!p->p->new_token)
-		exit_dollar(p);
 	free(temp->token);
 	temp->token = ft_strdup(p->p->new_token);
 	if (!temp->token)

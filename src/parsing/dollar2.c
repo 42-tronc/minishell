@@ -85,7 +85,7 @@ int	str_cpy_dollar(char *dst, char *src, int index)
  * @param s2 second string to add to s1
  * @return char* concatenated string of s1+s2 NULL if allocation fails
  */
-char	*ft_strjoin_dollar(char const *s1, char const *s2)
+char	*ft_strjoin_dollar(t_data *data, char const *s1, char const *s2)
 {
 	size_t	index;
 	char	*dst;
@@ -94,9 +94,7 @@ char	*ft_strjoin_dollar(char const *s1, char const *s2)
 		return (NULL);
 	dst = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!dst)
-		printf("error malloc strjoin dollar\n");
-	if (!dst)
-		return (NULL);
+		exit_dollar(data);
 	index = str_cpy_dollar(dst, (char *)s1, 0);
 	index = str_cpy_dollar(dst, (char *)s2, index);
 	dst[index] = '\0';
