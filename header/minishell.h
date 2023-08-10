@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 11:47:20 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 12:33:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,10 @@ t_env		*ft_env_new(t_data *data, char *var, char *value);
 void		ft_env_add_back(t_env **lst, t_env *new);
 char		*ft_getenv(t_env *env, char *var);
 int			ft_setenv(t_data *data, t_env **env, char *var, char *value);
+
+// utils_execve.c
+char		*execve_nopath(t_data *data, t_token *input,
+				char **env_array, char *command_path);
 
 // utils_files.c
 int			save_here_doc(t_data *data, t_token *input, char *line, int block);

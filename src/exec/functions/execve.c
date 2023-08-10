@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 11:52:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 12:32:44 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	command_path = get_validpath(data, input, env_array);
 	if (!command_path && !ft_getenv(data->env, "PATH")
 		&& access(input->token, F_OK) == 0)
-		command_path = ft_strdup(input->token);
+		command_path = execve_nopath(data, input, env_array, command_path);
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{

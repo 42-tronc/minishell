@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/08/10 11:47:00 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/08/10 13:38:12 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,7 @@ DIR_EXEC_FUNCTIONS := $(SRC_FOLDER)exec/functions/
 SRC_EXEC_FUNCTIONS := cd.c echo.c env.c execve.c exit.c export.c pwd.c unset.c
 
 DIR_EXEC_UTILS := $(SRC_FOLDER)exec/utils/
-SRC_EXEC_UTILS := split_paths.c utils_close.c utils_env.c utils_files.c utils_files2.c utils_free.c utils_heredoc.c utils_init.c utils_path.c utils_redirections.c utils_subshell.c utils.c
+SRC_EXEC_UTILS := split_paths.c utils_close.c utils_env.c utils_execve.c utils_files.c utils_files2.c utils_free.c utils_heredoc.c utils_init.c utils_path.c utils_redirections.c utils_subshell.c utils.c
 
 DIR_PARSING := $(SRC_FOLDER)parsing/
 SCR_PARSING := check_in_quotes.c  tokens.c tokens2.c cut_expand.c parsing.c envp.c replace_list.c tokens_lst.c dollar.c dollar2.c dollar3.c identification.c prepare.c tilde.c rm_quotes.c syntax_error.c signal.c signal2.c
