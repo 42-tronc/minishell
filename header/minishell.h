@@ -213,7 +213,6 @@ void		check_in_quotes(t_token **tokens, t_data *data);
 // cut_expand.c
 void		add_token_in_middle(t_token	*prev, t_token *next, \
 char **a, t_data *d);
-void		free_cutting_expand(char **array, t_token *temp);
 int			cutting_expand(t_data *data);
 
 // dollar.c
@@ -281,13 +280,15 @@ int			syntax_error(t_data *data);
 
 // tilde.c
 int			is_tilde(t_parsing *p, char *str);
+void		exit_tilde(t_data *data, int code, char *source, char *copy);
 int			replace_tilde(t_token *temp, t_data *data);
 int			expand_tilde(t_token **tokens, t_data *data);
 
 // tokens.c
+void		exit_parsing(t_data *data, int code, char *source);
 int			get_end_token(t_parsing *p, char *str);
-char		*copy_str_from_to(int from, int to, char *str);
-int			cutting_line(t_token **temp, t_parsing *p, char *str);
+char		*copy_str_from_to(t_data *data, int from, int to, char *str);
+int			cutting_line(t_data *data, t_token **temp, t_parsing *p, char *str);
 
 // tokens2.c
 int			is_symbol(int c);

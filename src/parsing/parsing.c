@@ -83,6 +83,7 @@ int	getting_line(t_data *data, char *str)
 	{
 		free_list(data->env);
 		free(data);
+		print_error(E_MALLOC, "ft_calloc in getting_line");
 		exit(1);
 	}
 	str = readline(BOLD WHITE"minishell> "RESET);
@@ -97,7 +98,7 @@ int	getting_line(t_data *data, char *str)
 			g_ret_value = 2;
 			return (free(str), 1);
 		}
-		if (cutting_line(&data->tokens, data->p, str))
+		if (cutting_line(data, &data->tokens, data->p, str))
 			return (free(str), 1);
 	}
 	return (free(str), 0);

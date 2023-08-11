@@ -70,14 +70,14 @@ int	remove_quotes(t_token **tokens, t_data *data)
 		{
 			new = malloc(sizeof(char) * (get_size(data->p, temp->token) + 1));
 			if (!new)
-				return (1);
+				exit_parsing(data, E_MALLOC, "remove_quotes");
 			copy_without_quotes(new, temp->token, data->p);
 			if (ft_strcmp(temp->token, new))
 				temp->in_quote = 1;
 			free(temp->token);
 			temp->token = ft_strdup(new);
 			if (!temp->token)
-				return (free(new), 1);
+				exit_tilde(data, E_MALLOC, "remove_quotes", new);
 			free(new);
 		}
 		temp = temp->next;
