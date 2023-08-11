@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#pragma GCC diagnostic ignored "-Wunused-function"
 
 static void	fill_default_env(t_data *data)
 {
-	char	*shlvl;
 	char	*cwd;
+	char	*shlvl;
 
 	if (!ft_getenv(data->env, "SHLVL"))
 		ft_setenv(data, &(data->env), "SHLVL", "1");
@@ -27,14 +28,14 @@ static void	fill_default_env(t_data *data)
 	else
 	{
 		shlvl = ft_itoa(ft_atoi(ft_getenv(data->env, "SHLVL")) + 1);
-		ft_setenv(data, &(data->env), "SHLVL", shlvl);
-		free(shlvl);
+		if (!shlvl)
+			clean_exit(data, E_MALLOC, "fill_default_env");
+		ft_setenv_mallocd(data, &(data->env), "SHLVL", shlvl, shlvl);
 	}
 	if (!ft_getenv(data->env, "PWD"))
 	{
 		cwd = getcwd(NULL, 0);
-		ft_setenv(data, &(data->env), "PWD", cwd);
-		free(cwd);
+		ft_setenv_mallocd(data, &(data->env), "OLDPWD", cwd, cwd);
 	}
 	ft_setenv(data, &(data->env), "OLDPWD", NULL);
 }
@@ -72,7 +73,7 @@ void	fill_env(t_data *data, char **envp)
 		}
 		i++;
 	}
-	fill_default_env(data);
+	// fill_default_env(data);
 }
 
 void	count_cmd_ct(t_data *data)
