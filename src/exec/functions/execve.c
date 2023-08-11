@@ -63,15 +63,13 @@ int	env_size(t_env *env)
 	return (size);
 }
 
-char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
+char	**env_to_array(t_data *data, t_env *env, int i, char *copy)
 {
-	int		i;
 	char	**array;
 
-	array = malloc(sizeof(char *) * (size + 1));
+	array = malloc(sizeof(char *) * (env_size(env) + 1));
 	if (!array)
 		clean_exit(data, E_MALLOC, "env_to_array 1");
-	i = 0;
 	while (env)
 	{
 		copy = ft_strjoin(env->var, "=");
@@ -82,9 +80,10 @@ char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
 		array[i] = ft_strjoin(copy, env->value);
 		free(copy);
 		if (!array[i] && env->value)
+		{
 			free_array(array);
-		if (!array[i] && env->value)
 			clean_exit(data, E_MALLOC, "env_to_array 3");
+		}
 		env = env->next;
 		i++;
 	}
@@ -125,7 +124,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	char	**env_array;
 
 	status = 0;
-	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
+	env_array = env_to_array(data, data->env, 0, NULL);
 	data->paths = NULL;
 	command_path = get_validpath(data, input, env_array);
 	if (!command_path && !ft_getenv(data->env, "PATH")
