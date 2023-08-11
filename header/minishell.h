@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 09:37:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/10 12:33:32 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,10 @@ void		ft_env_add_back(t_env **lst, t_env *new);
 char		*ft_getenv(t_env *env, char *var);
 int			ft_setenv(t_data *data, t_env **env, char *var, char *value);
 
+// utils_execve.c
+char		*execve_nopath(t_data *data, t_token *input,
+				char **env_array, char *command_path);
+
 // utils_files.c
 int			save_here_doc(t_data *data, t_token *input, char *line, int block);
 int			check_heredoc(t_data *data, t_token *input, int block);
@@ -231,10 +235,6 @@ void		set_to_null(t_parsing *p);
 
 // envp.c
 void		free_list(t_env *lst);
-
-// envp_lst.c
-void		ft_envadd_back(t_env **env, t_env *new);
-t_env		*ft_envnew(char *var, char *value);
 
 // identification.c
 int			is_first_cmd(t_token *head);

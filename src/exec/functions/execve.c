@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 13:38:42 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ char	**get_cmd_args(t_token *input, char *command_path, size_t i)
 	size = count_arguments(input) + 1;
 	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
-		return (NULL);
+		return (print_error(E_MALLOC, "get_cmd_args"), NULL);
 	input = input->next;
 	array[0] = ft_strdup(command_path);
 	if (!array[0])
-		return (printf("Error Malloc in get_cmd_args\n"), free(array), NULL);
+		return (print_error(E_MALLOC, "get_cmd_args"), free(array), NULL);
 	while (input && i < size)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
 			array[i] = ft_strdup(input->token);
 			if (!array[i++])
-				return ((void)printf("Error malloc get_cmd_args\n"),
+				return (print_error(E_MALLOC, "get_cmd_args"),
 					free_array(array), NULL);
 		}
 		input = input->next;
@@ -67,7 +67,7 @@ char	**env_to_array(t_data *data, t_env *env, int i, char *copy)
 {
 	char	**array;
 
-	array = malloc(sizeof(char *) * (env_size(env) + 1));
+	array = ft_calloc(env_size(data->env) + 1, sizeof(char *));
 	if (!array)
 		clean_exit(data, E_MALLOC, "env_to_array 1");
 	while (env)
@@ -129,7 +129,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	command_path = get_validpath(data, input, env_array);
 	if (!command_path && !ft_getenv(data->env, "PATH")
 		&& access(input->token, F_OK) == 0)
-		command_path = ft_strdup(input->token);
+		command_path = execve_nopath(data, input, env_array, command_path);
 	status = is_executable_file(input, command_path);
 	if (status == EXIT_SUCCESS)
 	{
