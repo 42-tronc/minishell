@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 15:36:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 17:01:00 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,9 +305,6 @@ void		delete_token(t_token **head_ref, t_token *del);
 int			ft_tokenadd_back(t_token **lst, t_token *new);
 t_token		*ft_tokennew(void *content);
 void		free_token(t_token *tokens);
-
-// exec_char.c
-char		**get_array_cmd(t_token *temp);
 
 // minishell.c
 void		exec_code(t_data *data);

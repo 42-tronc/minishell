@@ -6,7 +6,7 @@
 #    By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 13:33:54 by croy              #+#    #+#              #
-#    Updated: 2023/08/11 15:23:06 by croy             ###   ########lyon.fr    #
+#    Updated: 2023/08/11 17:00:51 by croy             ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ SRC = $(addprefix $(SRC_FOLDER), $(SRC_EXEC_FUNCTIONS) $(SRC_EXEC_UTILS) $(SRC_U
 OBJ = $(subst $(SRC_FOLDER),$(OBJ_DIR),$(SRC:.c=.o))
 
 DIR_UTILS := $(SRC_FOLDER)utils/
-SRC_UTILS := minishell.c exec_char.c
+SRC_UTILS := minishell.c
 
 DIR_EXEC_FUNCTIONS := $(SRC_FOLDER)exec/functions/
 SRC_EXEC_FUNCTIONS := cd.c echo.c env.c execve.c exit.c export.c pwd.c unset.c
