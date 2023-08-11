@@ -162,10 +162,12 @@ int			count_arguments(t_token *input);
 void		swap_var(char **current, char **next);
 
 // utils_env.c
-t_env		*ft_env_new(t_data *data, char *var, char *value);
-void		ft_env_add_back(t_env **lst, t_env *new);
 char		*ft_getenv(t_env *env, char *var);
 int			ft_setenv(t_data *data, t_env **env, char *var, char *value);
+
+// utils_env2.c
+t_env		*ft_env_new(t_data *data, char *var, char *value);
+void		ft_env_add_back(t_env **lst, t_env *new);
 
 // utils_execve.c
 char		*execve_nopath(t_data *data, t_token *input,
