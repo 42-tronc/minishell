@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tilde.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:57:43 by aascedu           #+#    #+#             */
-/*   Updated: 2023/05/31 10:57:44 by aascedu          ###   ########.fr       */
+/*   Updated: 2023/08/11 12:31:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	replace_tilde(t_token *temp, t_data *data)
 	{
 		temp->token = ft_strjoin(ft_getenv(data->env, "HOME"), copy + 1);
 		if (!temp->token)
-			return (free(copy), 1);
+			return (print_error(E_MALLOC, "replace_tilde"), free(copy), 1);
 	}
 	else
 	{
