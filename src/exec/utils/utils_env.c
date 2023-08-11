@@ -6,61 +6,11 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:19:50 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 13:24:56 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 15:22:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Creates a new t_env entry with the given variable and value.
- *
- * @param var The variable string.
- * @param value The value string.
- * @return t_env* A pointer to the newly created t_env entry.
- * @note The returned pointer should be freed when no longer needed.
- * @note If the allocation fails, the function exits with an error.
- */
-t_env	*ft_env_new(t_data *data, char *var, char *value)
-{
-	t_env	*dst;
-
-	dst = malloc(sizeof(t_env));
-	if (!dst)
-		clean_exit(data, E_MALLOC, "ft_env_new");
-	dst->var = NULL;
-	dst->value = NULL;
-	if (var)
-		dst->var = ft_strdup(var);
-	if (dst->var && value)
-		dst->value = ft_strdup(value);
-	if (!dst->var || (value && !dst->value))
-	{
-		if (!dst->value)
-			free(dst->var);
-		free(dst);
-		clean_exit(data, E_MALLOC, "ft_env_new");
-	}
-	dst->next = NULL;
-	return (dst);
-}
-
-void	ft_env_add_back(t_env **lst, t_env *new)
-{
-	t_env	*temp;
-
-	if (!lst || !new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	temp = *lst;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
-}
 
 char	*ft_getenv(t_env *env, char *var)
 {
@@ -92,6 +42,18 @@ static int	ft_addenv(t_data *data, t_env **env, char *var, char *value)
 	return (0);
 }
 
+void ft_setenv_mallocd(t_data *data, t_env **env, char *var, char *value, char *malc)
+{
+	int	status;
+
+	data->need_free = 1;
+	status = ft_setenv(data, env, var, value);
+	free(malc);
+	data->need_free = 0;
+	if (status == -1)
+		clean_exit(data, E_MALLOC, "ft_setenv 2727");
+}
+
 int	ft_setenv(t_data *data, t_env **env, char *var, char *value)
 {
 	t_env	*current;
@@ -107,9 +69,12 @@ int	ft_setenv(t_data *data, t_env **env, char *var, char *value)
 				return (0);
 			free(current->value);
 			current->value = ft_strdup(value);
-			free(value);
 			if (!current->value)
-				clean_exit(data, E_MALLOC, "ft_setenv");
+			{
+				if (data->need_free)
+					return (-1);
+				clean_exit(data, E_MALLOC, "ft_setenv 1");
+			}
 			return (0);
 		}
 		current = current->next;

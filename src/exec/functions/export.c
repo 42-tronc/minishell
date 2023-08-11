@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 15:18:52 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ int	add_env_entry(t_data *data, t_token *input, int block)
 				value++;
 			if (check_var_name(var, "export"))
 				return (free(var), 1);
-			ft_setenv(data, &(data->env), var, value);
-			free(var);
+			ft_setenv_mallocd(data, &(data->env), var, value, var);
 		}
 		input = input->next;
 	}

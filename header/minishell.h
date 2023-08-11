@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 12:33:32 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 15:23:31 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ struct s_data {
 	char		**paths;
 	int			cmd_ct;
 	int			status;
+	int			need_free;
 	int			i;
 	t_parsing	*p;
 	t_token		*tokens;
@@ -162,10 +163,12 @@ int			count_arguments(t_token *input);
 void		swap_var(char **current, char **next);
 
 // utils_env.c
-t_env		*ft_env_new(t_data *data, char *var, char *value);
-void		ft_env_add_back(t_env **lst, t_env *new);
 char		*ft_getenv(t_env *env, char *var);
 int			ft_setenv(t_data *data, t_env **env, char *var, char *value);
+
+// utils_env2.c
+t_env		*ft_env_new(t_data *data, char *var, char *value);
+void		ft_env_add_back(t_env **lst, t_env *new);
 
 // utils_execve.c
 char		*execve_nopath(t_data *data, t_token *input,
@@ -187,6 +190,7 @@ void		free_in_while(t_data *data);
 char		*ft_strjoin_heredoc(char *s1, char *s2);
 
 // utils_init.c
+void		ft_setenv_mallocd(t_data *data, t_env **env, char *var, char *value, char *malc);
 void		fill_env(t_data *data, char **envp);
 int			init_data(t_data *data);
 
