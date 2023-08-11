@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 12:20:35 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 12:25:09 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,13 @@ int	env_size(t_env *env)
 	return (size);
 }
 
-char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
+char	**env_to_array(t_data *data, t_env *env, int i, char *copy)
 {
-	int		i;
 	char	**array;
 
-	array = ft_calloc(size + 1, sizeof(char *));
+	array = ft_calloc(env_size(data->env) + 1, sizeof(char *));
 	if (!array)
 		clean_exit(data, E_MALLOC, "env_to_array 1");
-	i = 0;
 	while (env)
 	{
 		copy = ft_strjoin(env->var, "=");
@@ -80,17 +78,12 @@ char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
 		if (!copy && env->var)
 			clean_exit(data, E_MALLOC, "env_to_array 2");
 		array[i] = ft_strjoin(copy, env->value);
+		free(copy);
 		if (!array[i] && env->value)
 		{
-			free(copy);
 			free_array(array);
 			clean_exit(data, E_MALLOC, "env_to_array 3");
 		}
-		free(copy);
-		if (!array[i] && env->value)
-			free_array(array);
-		if (!array[i] && env->value)
-			clean_exit(data, E_MALLOC, "env_to_array 4");
 		env = env->next;
 		i++;
 	}
@@ -131,7 +124,7 @@ int	execve_cmd(t_data *data, t_token *input, int block)
 	char	**env_array;
 
 	status = 0;
-	env_array = env_to_array(data, data->env, env_size(data->env), NULL);
+	env_array = env_to_array(data, data->env, 0, NULL);
 	data->paths = NULL;
 	command_path = get_validpath(data, input, env_array);
 	if (!command_path && !ft_getenv(data->env, "PATH")
