@@ -68,7 +68,7 @@ char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
 	int		i;
 	char	**array;
 
-	array = malloc(sizeof(char *) * (size + 1));
+	array = ft_calloc(size + 1, sizeof(char *));
 	if (!array)
 		clean_exit(data, E_MALLOC, "env_to_array 1");
 	i = 0;
