@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:19:50 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 15:22:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 15:43:38 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static int	ft_addenv(t_data *data, t_env **env, char *var, char *value)
 	return (0);
 }
 
-void ft_setenv_mallocd(t_data *data, t_env **env, char *var, char *value, char *malc)
+void	ft_setenv_mallocd(t_data *data, char *var, char *value, char *malc)
 {
 	int	status;
 
 	data->need_free = 1;
-	status = ft_setenv(data, env, var, value);
+	status = ft_setenv(data, &(data->env), var, value);
 	free(malc);
 	data->need_free = 0;
 	if (status == -1)
