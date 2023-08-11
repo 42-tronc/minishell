@@ -6,18 +6,18 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 15:23:52 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 15:46:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#pragma GCC diagnostic ignored "-Wunused-function"
 
 static void	fill_default_env(t_data *data)
 {
 	char	*cwd;
 	char	*shlvl;
 
+	data->need_free = 0;
 	if (!ft_getenv(data->env, "SHLVL"))
 		ft_setenv(data, &(data->env), "SHLVL", "1");
 	else if (ft_atoi(ft_getenv(data->env, "SHLVL")) >= 999)
@@ -30,12 +30,12 @@ static void	fill_default_env(t_data *data)
 		shlvl = ft_itoa(ft_atoi(ft_getenv(data->env, "SHLVL")) + 1);
 		if (!shlvl)
 			clean_exit(data, E_MALLOC, "fill_default_env");
-		ft_setenv_mallocd(data, &(data->env), "SHLVL", shlvl, shlvl);
+		ft_setenv_mallocd(data, "SHLVL", shlvl, shlvl);
 	}
 	if (!ft_getenv(data->env, "PWD"))
 	{
 		cwd = getcwd(NULL, 0);
-		ft_setenv_mallocd(data, &(data->env), "OLDPWD", cwd, cwd);
+		ft_setenv_mallocd(data, "OLDPWD", cwd, cwd);
 	}
 	ft_setenv(data, &(data->env), "OLDPWD", NULL);
 }
@@ -73,7 +73,7 @@ void	fill_env(t_data *data, char **envp)
 		}
 		i++;
 	}
-	// fill_default_env(data);
+	fill_default_env(data);
 }
 
 void	count_cmd_ct(t_data *data)
@@ -95,7 +95,6 @@ int	init_data(t_data *data)
 	int		i;
 
 	count_cmd_ct(data);
-	data->need_free = 0;
 	data->cmd_block = ft_calloc(data->cmd_ct + 1, sizeof(t_cmd_block *));
 	if (!data->cmd_block)
 		print_error(E_MALLOC, "init_data");

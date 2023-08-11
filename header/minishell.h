@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:55:43 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 15:23:31 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 15:36:41 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void		free_in_while(t_data *data);
 char		*ft_strjoin_heredoc(char *s1, char *s2);
 
 // utils_init.c
-void		ft_setenv_mallocd(t_data *data, t_env **env, char *var, char *value, char *malc);
+void		ft_setenv_mallocd(t_data *data, char *var, char *value, char *malc);
 void		fill_env(t_data *data, char **envp);
 int			init_data(t_data *data);
 
