@@ -126,7 +126,7 @@ int			print_env(t_data *data, t_token *input, int block);
 // execve.c
 char		**get_cmd_args(t_token *input, char *command_path, size_t i);
 int			env_size(t_env *env);
-char		**env_to_array(t_data *data, t_env *env, int size, char *copy);
+char		**env_to_array(t_data *data, t_env *env, int i, char *copy);
 int			execve_cmd(t_data *data, t_token *input, int block);
 
 // exit.c

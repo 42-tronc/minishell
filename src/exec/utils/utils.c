@@ -35,6 +35,7 @@ void	clean_exit(t_data *data, int code, char *source)
 	print_error(code, source);
 	close_all_pipes(data);
 	free_quit(data);
+	rl_clear_history();
 	exit(EXIT_FAILURE);
 }
 
