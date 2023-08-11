@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 09:53:27 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 15:23:52 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	init_data(t_data *data)
 	int		i;
 
 	count_cmd_ct(data);
+	data->need_free = 0;
 	data->cmd_block = ft_calloc(data->cmd_ct + 1, sizeof(t_cmd_block *));
 	if (!data->cmd_block)
 		print_error(E_MALLOC, "init_data");
