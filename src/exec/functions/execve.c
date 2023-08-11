@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:11:04 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 12:32:44 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 12:20:35 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,17 @@ char	**env_to_array(t_data *data, t_env *env, int size, char *copy)
 		if (!copy && env->var)
 			clean_exit(data, E_MALLOC, "env_to_array 2");
 		array[i] = ft_strjoin(copy, env->value);
+		if (!array[i] && env->value)
+		{
+			free(copy);
+			free_array(array);
+			clean_exit(data, E_MALLOC, "env_to_array 3");
+		}
 		free(copy);
 		if (!array[i] && env->value)
 			free_array(array);
 		if (!array[i] && env->value)
-			clean_exit(data, E_MALLOC, "env_to_array 3");
+			clean_exit(data, E_MALLOC, "env_to_array 4");
 		env = env->next;
 		i++;
 	}
