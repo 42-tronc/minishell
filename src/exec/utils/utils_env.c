@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:19:50 by croy              #+#    #+#             */
-/*   Updated: 2023/08/10 09:34:26 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/11 13:24:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,9 @@ int	ft_setenv(t_data *data, t_env **env, char *var, char *value)
 				return (0);
 			free(current->value);
 			current->value = ft_strdup(value);
+			free(value);
 			if (!current->value)
-				return (-1);
+				clean_exit(data, E_MALLOC, "ft_setenv");
 			return (0);
 		}
 		current = current->next;
