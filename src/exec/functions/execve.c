@@ -72,22 +72,21 @@ char	**env_to_array(t_data *data, t_env *env, int i, char *copy)
 		clean_exit(data, E_MALLOC, "env_to_array 1");
 	while (env)
 	{
-		copy = ft_strjoin(env->var, "=");
-		if (!copy && env->var)
-			free_array(array);
-		if (!copy && env->var)
-			clean_exit(data, E_MALLOC, "env_to_array 2");
-		array[i] = ft_strjoin(copy, env->value);
-		free(copy);
-		if (!array[i] && env->value)
+		if (env->value)
 		{
-			free_array(array);
-			clean_exit(data, E_MALLOC, "env_to_array 3");
+			copy = ft_strjoin(env->var, "=");
+			if (!copy && env->var)
+				return (free_array(array), 
+					clean_exit(data, E_MALLOC, "env_to_array 2"), NULL);
+			array[i] = ft_strjoin(copy, env->value);
+			free(copy);
+			if (!array[i])
+				return (free_array(array), 
+					clean_exit(data, E_MALLOC, "env_to_array 3"), NULL);
+			i++;
 		}
 		env = env->next;
-		i++;
 	}
-	array[i] = NULL;
 	return (array);
 }
 
