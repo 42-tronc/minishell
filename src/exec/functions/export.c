@@ -36,32 +36,6 @@ static void	export_sort(t_env *env)
 	}
 }
 
-int	check_var_name(char *var, char *fn)
-{
-	int	i;
-	int	status;
-
-	status = 0;
-	i = -1;
-	if (!var || !var[0])
-		status = 1;
-	while (var && var[++i])
-	{
-		if (!ft_isalpha(var[0]) && var[0] != '_')
-			status = 1;
-		if (!ft_isalnum(var[i]) && var[i] != '_')
-			status = 1;
-	}
-	if (status)
-	{
-		write(2, fn, ft_strlen(fn));
-		write(2, ": ", 2);
-		write(2, var, ft_strlen(var));
-		ft_putendl_fd(": not a valid identifier", 2);
-	}
-	return (status);
-}
-
 int	add_env_entry(t_data *data, t_token *input, int block)
 {
 	char	*var;
