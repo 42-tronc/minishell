@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 17:43:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/13 10:30:01 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,48 @@ static void	export_sort(t_env *env)
 	}
 }
 
-int	add_env_entry(t_data *data, t_token *input, int block)
+static int	add_env_if_arg(t_data *data, t_token *input)
 {
+	int		exit_code;
 	char	*var;
 	char	*value;
 
+	exit_code = EXIT_SUCCESS;
+	var = ft_strdup(input->token);
+	if (!var)
+		clean_exit(data, E_MALLOC, "add_env_entry");
+	value = ft_strchr(var, '=');
+	if (value)
+		*value = '\0';
+	if (value)
+		value++;
+	if (check_var_name(var, "export"))
+	{
+		free(var);
+		exit_code = EXIT_FAILURE;
+	}
+	else
+		ft_setenv_mallocd(data, var, value, var);
+	return (exit_code);
+}
+
+int	add_env_entry(t_data *data, t_token *input, int block)
+{
+	int	exit_code;
+
+	exit_code = 0;
 	if (!input)
 		return (1);
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
-			var = ft_strdup(input->token);
-			if (!var)
-				clean_exit(data, E_MALLOC, "add_env_entry");
-			value = ft_strchr(var, '=');
-			if (value)
-				*value = '\0';
-			if (value)
-				value++;
-			if (check_var_name(var, "export"))
-				free(var);
-			else
-				ft_setenv_mallocd(data, var, value, var);
+			if (add_env_if_arg(data, input))
+				exit_code = 1;
 		}
 		input = input->next;
 	}
-	return (0);
+	return (exit_code);
 }
 
 static int	export_print(t_data *data, t_token *input, int block)
