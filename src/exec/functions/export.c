@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:35:26 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 17:43:54 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/13 10:30:01 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,59 +36,48 @@ static void	export_sort(t_env *env)
 	}
 }
 
-int	check_var_name(char *var, char *fn)
+static int	add_env_if_arg(t_data *data, t_token *input)
 {
-	int	i;
-	int	status;
+	int		exit_code;
+	char	*var;
+	char	*value;
 
-	status = 0;
-	i = -1;
-	if (!var || !var[0])
-		status = 1;
-	while (var && var[++i])
+	exit_code = EXIT_SUCCESS;
+	var = ft_strdup(input->token);
+	if (!var)
+		clean_exit(data, E_MALLOC, "add_env_entry");
+	value = ft_strchr(var, '=');
+	if (value)
+		*value = '\0';
+	if (value)
+		value++;
+	if (check_var_name(var, "export"))
 	{
-		if (!ft_isalpha(var[0]) && var[0] != '_')
-			status = 1;
-		if (!ft_isalnum(var[i]) && var[i] != '_')
-			status = 1;
+		free(var);
+		exit_code = EXIT_FAILURE;
 	}
-	if (status)
-	{
-		write(2, fn, ft_strlen(fn));
-		write(2, ": ", 2);
-		write(2, var, ft_strlen(var));
-		ft_putendl_fd(": not a valid identifier", 2);
-	}
-	return (status);
+	else
+		ft_setenv_mallocd(data, var, value, var);
+	return (exit_code);
 }
 
 int	add_env_entry(t_data *data, t_token *input, int block)
 {
-	char	*var;
-	char	*value;
+	int	exit_code;
 
+	exit_code = 0;
 	if (!input)
 		return (1);
 	while (input && input->pipe_block == block)
 	{
 		if (ft_strcmp(input->type, ARG) == 0)
 		{
-			var = ft_strdup(input->token);
-			if (!var)
-				clean_exit(data, E_MALLOC, "add_env_entry");
-			value = ft_strchr(var, '=');
-			if (value)
-				*value = '\0';
-			if (value)
-				value++;
-			if (check_var_name(var, "export"))
-				free(var);
-			else
-				ft_setenv_mallocd(data, var, value, var);
+			if (add_env_if_arg(data, input))
+				exit_code = 1;
 		}
 		input = input->next;
 	}
-	return (0);
+	return (exit_code);
 }
 
 static int	export_print(t_data *data, t_token *input, int block)

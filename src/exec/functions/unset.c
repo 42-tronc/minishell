@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:25:08 by croy              #+#    #+#             */
-/*   Updated: 2023/08/04 15:21:17 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/13 10:16:10 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,32 @@ void	free_env_node(t_env *node)
 	free(node->var);
 	free(node->value);
 	free(node);
+}
+
+int	check_var_name(char *var, char *fn)
+{
+	int	i;
+	int	status;
+
+	status = 0;
+	i = -1;
+	if (!var || !var[0])
+		status = 1;
+	while (var && var[++i])
+	{
+		if (!ft_isalpha(var[0]) && var[0] != '_')
+			status = 1;
+		if (!ft_isalnum(var[i]) && var[i] != '_')
+			status = 1;
+	}
+	if (status)
+	{
+		write(2, fn, ft_strlen(fn));
+		write(2, ": ", 2);
+		write(2, var, ft_strlen(var));
+		ft_putendl_fd(": not a valid identifier", 2);
+	}
+	return (status);
 }
 
 static void	unset_key(t_env **env, const char *token)
