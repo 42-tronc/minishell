@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:57:10 by croy              #+#    #+#             */
-/*   Updated: 2023/08/11 15:46:41 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/14 10:09:15 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	fill_default_env(t_data *data)
 	if (!ft_getenv(data->env, "PWD"))
 	{
 		cwd = getcwd(NULL, 0);
-		ft_setenv_mallocd(data, "OLDPWD", cwd, cwd);
+		ft_setenv_mallocd(data, "PWD", cwd, cwd);
 	}
 	ft_setenv(data, &(data->env), "OLDPWD", NULL);
 }
