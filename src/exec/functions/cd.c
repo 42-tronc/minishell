@@ -6,7 +6,7 @@
 /*   By: croy <croy@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:22:58 by croy              #+#    #+#             */
-/*   Updated: 2023/08/02 14:00:38 by croy             ###   ########lyon.fr   */
+/*   Updated: 2023/08/14 10:07:56 by croy             ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,20 @@ static int	check_arg_count(t_token *input)
 	return (EXIT_SUCCESS);
 }
 
+static int	change_dir(t_data *data, char *path)
+{
+	char	*cwd;
+
+	if (chdir(path) == -1)
+		return (perror(BOLD RED "cd" RESET), EXIT_FAILURE);
+	else
+	{
+		cwd = getcwd(NULL, 0);
+		ft_setenv_mallocd(data, "PWD", cwd, cwd);
+	}
+	return (EXIT_SUCCESS);
+}
+
 /**
  * @brief Changes the current working directory
  * `cd` or `cd ~` will go to the home directory
@@ -93,8 +107,8 @@ int	ft_cd(t_data *data, t_token *input, int block)
 	path = get_cd_path(data, input);
 	if (!path)
 		return (EXIT_FAILURE);
-	if (chdir(path) == -1)
-		return (perror(BOLD RED "cd" RESET), EXIT_FAILURE);
+	if (change_dir(data, path))
+		return (EXIT_FAILURE);
 	if (!error_oldpwd)
 		ft_setenv(data, &(data->env), "OLDPWD", previous);
 	return (EXIT_SUCCESS);
